@@ -1,0 +1,17 @@
+li {
+    margin: 16px 0;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .sidebartext {
+    color: #171E0A;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  

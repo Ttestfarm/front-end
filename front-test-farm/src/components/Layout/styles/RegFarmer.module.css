@@ -46,18 +46,107 @@ label {
   margin-bottom: 30px;
 }
 
-.name {
+.farm-name {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 25px;
 }
 
-.email {
+.farmer-name {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 25px;
+}
+
+.pixurl {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.pixurl-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  width: 130px;
+  height: 130px;
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  background-color: transparent;
+}
+
+/* .pixurl-upload {
+  display: flex;
+} */
+
+.farm-tel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.farm-address {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.farm-address-code {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 370px;
+}
+
+.farm-address-code > input {
+  width: 222px;
+}
+
+.registration-num {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.farm-accountno {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+select {
+  padding: 0 20px;
+  font-size: 1rem;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  background-color: transparent;
+  color: #191919;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+.farm-interest {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 13px;
 }
 
 .certify {
@@ -80,65 +169,12 @@ label {
   margin-bottom: 5px;
 }
 
-.password {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 25px;
+.msg {
+  color: #0D8FED;
+  font-size: 15px;
 }
 
-.address {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 25px;
-}
-
-.address-code {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 370px;
-}
-
-.address-code > input {
-  width: 222px;
-}
-
-.address-default {
-  display: flex;
-  align-items: flex-start;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #191919;
-}
-
-.address-default > input {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  border: 1px solid #ACACA9;
-  background-color: transparent;
-  border-radius: 3px;
-}
-
-.nickname {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 25px;
-}
-
-.tel {
-  margin-bottom: 25px;
-}
-
-.tel > input:last-of-type {
-  background-color: #F5F5F7;
-}
-
-.join-btn {
+.reg-btn {
   width: 370px;
   height: 56px;
   color: #ffffff;

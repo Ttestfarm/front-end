@@ -4,30 +4,26 @@
 
 import React, { Fragment } from "react";
 
-import styles from "./styles/Join.module.css";
+import styles from "./styles/ModifyUser.module.css";
 
-const Join = () => {
+const ModifyUser = () => {
   return (
     <Fragment>
       <div className={styles.wrap}>
         <div className={styles["wrap-center"]}>
 
           <div className={styles.title}>
-            <div>회원가입</div>
+            <div>내 정보 관리</div>
           </div>
 
           <div className={styles.name}>
             <label for="name">이름</label> 
-            <input id="name" placeholder={"이름을 입력해 주세요."} />
+            <input id="name" placeholder={"이름을 입력해 주세요."} value={"박명수"} />
           </div>
 
           <div className={styles.email}>
-            <div className={styles.certify}>
-              <label for="email">이메일</label>
-              <button id="email-certify-req" className={styles["certify-btn"]}>인증번호 요청</button>
-            </div>
-            <input type="text" id="email" placeholder={"이메일을 입력해 주세요."} />
-            <input type="text" id="email-cert-num" placeholder={"인증번호를 입력해 주세요."} />
+            <label for="email">이메일</label>
+            <input type="text" id="email" value={"myungsoo@naver.com"} disabled />
           </div>
 
           <div className={styles.password}>
@@ -39,20 +35,20 @@ const Join = () => {
           <div className={styles.address}>
             <label for="address">주소</label>
             <div className={styles["address-code"]}>
-              <input type="text" id="address-code" placeholder={"우편번호"} />
+              <input type="text" id="address-code" placeholder={"우편번호"} value={"12345"} />
               <button id="find-address-code" className={styles["certify-btn"]}>우편번호 찾기</button>
             </div>
-            <input type="text" id="address-road" placeholder={"도로명 주소"} />
-            <input type="text" id="address-detail" placeholder={"상세 주소를 입력해 주세요."} />
+            <input type="text" id="address-road" placeholder={"도로명 주소"} value={"경기 이천시 명수로 12"} />
+            <input type="text" id="address-detail" placeholder={"상세 주소를 입력해 주세요."} value={"345번지"} />
             <div className={styles["address-default"]}>
-              <input type="checkbox" id="address-default" />
+              <input type="checkbox" id="address-default" checked />
               <div>기본 배송지로 설정하기</div>
             </div>
           </div>
 
           <div className={styles.nickname}>
             <label for="nickname">닉네임</label> 
-            <input type="text" id="nickname" placeholder={"닉네임을 입력해 주세요."} />
+            <input type="text" id="nickname" placeholder={"닉네임을 입력해 주세요."} value={"깨스활명수"} />
           </div>
 
           <div className={styles.tel}>
@@ -60,11 +56,14 @@ const Join = () => {
               <label for="tel">핸드폰 번호</label>
               <button id="tel-certify-req" className={styles["certify-btn"]}>인증번호 요청</button>
             </div>
-            <input type="text" id="tel" placeholder={"핸드폰 번호를 입력해 주세요."} />
+            <input type="text" id="tel" placeholder={"핸드폰 번호를 입력해 주세요."} value={"010-1111-2345"} />
             <input type="text" id="tel-cert-num" placeholder={"인증번호를 입력해 주세요."} disabled />
           </div>
 
-          <button id="join" className={styles["join-btn"]}>회원가입 완료</button>
+          <div className={styles.btns}>
+            <button id="modify" className={styles["modify-btn"]}>수정 완료</button>
+            <button id="cancel" className={styles["cancel-btn"]}>취소</button>
+          </div>
 
         </div>
       </div>
@@ -72,4 +71,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default ModifyUser;

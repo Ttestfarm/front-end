@@ -1,9 +1,8 @@
 .wrap {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   text-align: center;
-
   background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('../../../assets/login-bg.png');
   min-height: calc(100vh - 80px);
   background-repeat: no-repeat;
@@ -63,7 +62,7 @@
   background-color: #FEE500;
   border: 1px solid #FEE500;
   margin-bottom: 12px;
-
+  
 }
 
 .kakao-naver > a:first-of-type:visited {
@@ -72,7 +71,7 @@
 
 .kakao-naver > a:first-of-type > img {
   height: 20px;
-  width: 22px;
+  width: 20px;
   margin-right: 10px;
 }
 
@@ -87,10 +86,10 @@
 }
 
 .kakao-naver > a:last-of-type > img {
-  height: 20px;
-  width: 20px;
+  height: 27px;
+  width: 27px;
   fill: #ffffff;
-  margin-right: 10px;
+  margin-right: 3px;
 }
 
 .email-login {

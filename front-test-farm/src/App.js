@@ -5,15 +5,21 @@ import Login from './components/Layout/Login';
 import FindPw from './components/Layout/FindPw';
 import FindEmail from './components/Layout/FindEmail';
 import Join from './components/Layout/Join';
+import ModifyUser from './components/Layout/ModifyUser';
+import RegFarmer from './components/Layout/RegFarmer';
+import ModifyFarm from './components/Layout/ModifyFarm';
 
 function App() {
   return (
     <Fragment>
       <Header />
-      {/* <Login /> */}
+      <Login />
       <Join />
-      {/* <FindPw /> */}
-      {/* <FindEmail /> */}
+      <ModifyUser />
+      <FindEmail />
+      <FindPw />
+      <RegFarmer />
+      <ModifyFarm />
     </Fragment>
   );
 }

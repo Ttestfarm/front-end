@@ -1,5 +1,5 @@
-import { RouterProvider,createBrowserRouter } from 'react-router-dom';
-import { Fragment } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 import './App.css';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
@@ -21,50 +21,47 @@ const router = createBrowserRouter([
     id: 'root',
     loader: tokenLoader,
     children: [
-      {index: true, element : <HomePage />},
+      { index: true, element: <HomePage /> },
       {
         path: '/login',
         element: <LoginPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/join',
         element: <JoinPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/find-email',
         element: <FindEmailPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/find-pw',
         element: <FindPwPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/modify-user',
         element: <ModifyUserPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/reg-farmer',
         element: <RegFarmerPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
       {
         path: '/modify-farm',
         element: <ModifyFarmPage />,
-        errorElement: <ErrorPage />
+        errorElement: <ErrorPage />,
       },
-    ]
+    ],
   },
-])
+]);
 function App() {
-  return (
-    <RouterProvider router={router}/>
-      
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

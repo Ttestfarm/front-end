@@ -1,0 +1,41 @@
+.delivery-list {
+  width: 90%;
+  margin: 150px auto;
+
+  border-radius: 24px;
+  border: 5px solid #75786C;
+
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.delivery-list-btns {
+  text-align: right;
+  width: 90%;
+  margin-top: 25px;
+
+}
+
+.delivery-list-btns .btn1 {
+  width: 103px;
+  height: 32px;
+  margin: 0 20px;
+
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: #F0EEA3;
+}
+
+.delivery-list-btns .btn2 {
+  width: 103px;
+  height: 32px;
+  flex-shrink: 0;
+
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: #FFA985;
+}

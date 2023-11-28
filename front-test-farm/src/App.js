@@ -1,26 +1,27 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Fragment } from "react";
 import "./App.css";
-import Header from "./components/Layout/Header";
-import FarmerCard from "./pages/Farmers/FarmerCard";
-import FarmersList from "./pages/Farmers/FarmersList";
-import FarmerDetailCard from "./pages/FarmersDetail/FarmerDetailCard";
-import FarmerDetailList from "./pages/FarmersDetail/FarmerDetailList";
-import ProductRegForm from "./pages/ProductRegistration/ProductRegForm";
-import ProductRegiForm from "./pages/ProductRegistration/ProductRegiForm";
-import ProductsForm from "./pages/ProductRegistration/ProductsForm";
+import RootLayout from "./pages/Root";
+import ErrorPage from "./pages/Error";
+import HomePage from "./pages/Home";
+import Login from "./components/Layout/Login";
+import FindPw from "./components/Layout/FindPw";
+import FindEmail from "./components/Layout/FindEmail";
+import Join from "./components/Layout/Join";
+import { tokenLoader } from "./util/auth";
 
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <RootLayout />,
+        errorElement: <ErrorPage />,
+        id: "root",
+        loader: tokenLoader,
+        children: [{ index: true, element: <HomePage /> }],
+    },
+]);
 function App() {
-    return (
-        <Fragment>
-            <Header />
-            <FarmersList />
-            {/* <FarmerDetailList /> */}
-            {/* <FarmerDetailCard /> */}
-            {/* <ProductRegForm /> */}
-            {/* <ProductRegiForm /> */}
-            {/* <ProductsForm /> */}
-        </Fragment>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;

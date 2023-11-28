@@ -1,7 +1,7 @@
 import React from 'react';
 import PageContent from '../components/PageContent';
 import { useRouteError } from 'react-router-dom';
-import MainNavigation from './../components/Layout/MainNavigation';
+import MainNavigation from '../components/Layout/MainNavigation';
 
 const Error = () => {
   const error = useRouteError();

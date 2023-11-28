@@ -4,13 +4,13 @@ import './App.css';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
 import HomePage from './pages/Home';
-import Login from './components/Layout/Login';
-import FindPw from './components/Layout/FindPw';
-import FindEmail from './components/Layout/FindEmail';
-import Join from './components/Layout/Join';
-import ModifyUser from './components/Layout/ModifyUser';
-import RegFarmer from './components/Layout/RegFarmer';
-import ModifyFarm from './components/Layout/ModifyFarm';
+import LoginPage from './pages/Login';
+import JoinPage from './pages/Join';
+import FindEmailPage from './pages/FindEmail';
+import FindPwPage from './pages/FindPw';
+import ModifyUserPage from './pages/ModifyUser';
+import RegFarmerPage from './pages/RegFarmer';
+import ModifyFarmPage from './pages/ModifyFarm';
 import { tokenLoader } from './util/auth';
 
 const router = createBrowserRouter([
@@ -21,8 +21,44 @@ const router = createBrowserRouter([
     id: 'root',
     loader: tokenLoader,
     children: [
-    {index: true, element : <HomePage />}
-  ]}
+      {index: true, element : <HomePage />},
+      {
+        path: '/login',
+        element: <LoginPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/join',
+        element: <JoinPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/find-email',
+        element: <FindEmailPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/find-pw',
+        element: <FindPwPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/modify-user',
+        element: <ModifyUserPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/reg-farmer',
+        element: <RegFarmerPage />,
+        errorElement: <ErrorPage />
+      },
+      {
+        path: '/modify-farm',
+        element: <ModifyFarmPage />,
+        errorElement: <ErrorPage />
+      },
+    ]
+  },
 ])
 function App() {
   return (

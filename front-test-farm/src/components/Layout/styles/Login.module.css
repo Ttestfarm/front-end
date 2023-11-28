@@ -86,10 +86,9 @@
 }
 
 .kakao-naver > a:last-of-type > img {
-  height: 27px;
-  width: 27px;
-  fill: #ffffff;
-  margin-right: 3px;
+  height: 18px;
+  width: 18px;
+  margin-right: 12px;
 }
 
 .email-login {

@@ -1,8 +1,11 @@
+// 상태관리 & 수정필요사항
+// - 입력여부 상태관리 -> 하단 메시지
+
 import React, { Fragment } from "react";
 
-import style from "./styles/FindPw.module.css";
+import style from '../components/Layout/styles/FindPw.module.css';
 
-const FindPw = () => {
+const FindPwPage = () => {
   return (
     <Fragment>
       <div className={style.wrap}>
@@ -30,4 +33,4 @@ const FindPw = () => {
   );
 };
 
-export default FindPw;
+export default FindPwPage;

@@ -1,12 +1,13 @@
 // 상태관리 & 수정필요사항
-// - 닉네임 중복체크 추가 필요
+// - 입력여부 상태관리 -> 하단 메시지
+// - 닉네임 중복체크 버튼 추가 필요
 // - 핸드폰번호 인증번호 입력창 disabled 였다가 요청버튼 누르면 활성화
 
 import React, { Fragment } from "react";
 
-import style from "./styles/Join.module.css";
+import style from '../components/Layout/styles/Join.module.css';
 
-const Join = () => {
+const JoinPage = () => {
   return (
     <Fragment>
       <div className={style.wrap}>
@@ -72,4 +73,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default JoinPage;

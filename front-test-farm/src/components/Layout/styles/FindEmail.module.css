@@ -51,10 +51,6 @@ label {
   outline: none;
 }
 
-/* .input > input:first-of-type {
-  margin-bottom: 20px;
-} */
-
 .input > input:nth-of-type(1) {
   margin-bottom: 20px;
 }

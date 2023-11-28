@@ -1,11 +1,12 @@
 // 상태관리 & 수정필요사항
-// - 핸드폰번호 인증번호 입력창 disabled 였다가 요청버튼 누르면 활성화
+// - 입력여부 상태관리 -> 하단 메시지
+// - 핸드폰번호 인증번호 입력창 disabled -> 요청버튼 누르면 활성화
 
 import React, { Fragment } from "react";
 
-import style from "./styles/FindEmail.module.css";
+import style from '../components/Layout/styles/FindEmail.module.css';
 
-const FindEmail = () => {
+const FindEmailPage = () => {
   return (
     <Fragment>
       <div className={style.wrap}>
@@ -37,4 +38,4 @@ const FindEmail = () => {
   );
 };
 
-export default FindEmail;
+export default FindEmailPage;

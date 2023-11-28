@@ -1,13 +1,12 @@
 // 상태관리 & 수정필요사항
-// - 소셜로그인 로고 크기 조절 및 정렬 / img 삽입 방식 통일?
-// 배경이미지에 워터마크 있는데 변경할지 그대로할지
+// - 소셜로그인 로고 img 삽입 방식 통일?
 
 import React, { Fragment } from "react";
 
-import style from "./styles/Login.module.css";
-import naver from '../../assets/naver.png';
+import style from '../components/Layout/styles/Login.module.css';
+import naver from '../assets/naver.png';
 
-const Login = () => {
+const LoginPage = () => {
   return (
     <Fragment>
       <div className={style.wrap}>
@@ -51,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

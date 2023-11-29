@@ -8,6 +8,7 @@ const RootLayout = () => {
   const submit = useSubmit();
 
   useEffect(() => {
+    console.log('root!');
     if (!token) return;
 
     if (token === 'EXPIRED') {
@@ -25,9 +26,9 @@ const RootLayout = () => {
     <>
       <MainNavigation />
       <main>
-        <Outlet/>
+        <Outlet />
       </main>
     </>
-  )
-}
+  );
+};
 export default RootLayout;

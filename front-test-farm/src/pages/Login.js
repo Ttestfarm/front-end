@@ -1,53 +1,51 @@
 // 상태관리 & 수정필요사항
 // - 소셜로그인 로고 img 삽입 방식 통일?
 
-import React, { Fragment } from "react";
-
-import style from '../components/Layout/styles/Login.module.css';
-import naver from '../assets/naver.png';
+import React from 'react';
+import { json, redirect } from 'react-router-dom';
+import LoginForm from '../components/Auth/LoginForm';
 
 const LoginPage = () => {
-  return (
-    <Fragment>
-      <div className={style.wrap}>
-        <div className={style["wrap-center"]}>
-
-          <div className={style["text-group"]}>
-            <div>로그인·회원가입</div>
-            <div>못생겨서 오히려 좋아.</div>
-            <div>못난이 농산물 거래, 언프리티 팜</div>
-          </div>
-
-          <div className={style["kakao-naver"]}>
-            <a id="kakao-login" href="#">
-              <img src="https://d3cpiew7rze14b.cloudfront.net/assets/app/kakao_icon.svg" alt="카카오 로그인" />
-              <span>카카오로 계속하기</span>
-            </a>
-            <a id="naver-login" href="#">
-              <img src={naver} alt="naver-logo" />
-              <span>네이버로 계속하기</span>
-            </a>
-          </div>
-
-          <div className={style["email-login"]}>
-            <div>이메일로 계속하기</div>
-            <input type="text" id="email" placeholder={"이메일을 입력해 주세요."}></input>
-            <input type="password" id="password" placeholder={"비밀번호를 입력해 주세요."}></input>
-            <div className={style.find}>
-              <a id="find-email" href="#">이메일 찾기</a>
-              <a id="find-password" href="#">비밀번호 찾기</a>
-            </div>
-            <button id="login" className={style["login-btn"]}>로그인</button>
-          </div>
-
-          <div className={style.join}>
-            <span>아직 회원이 아니신가요?</span>
-            <a id="join" href="#">회원가입</a>
-          </div>
-        </div>
-      </div>
-    </Fragment>
-  );
+  return <LoginForm />;
 };
 
 export default LoginPage;
+
+/* **********
+ *로컬 로그인
+ ************/
+//가입양식이 제출되면 제출한 데이터를 얻어와야지
+export async function action({ request }) {
+  //레알 데이터 얻어옴
+  const data = await request.formData();
+  const authData = {
+    email: data.get('email'),
+    password: data.get('password'),
+  };
+  console.log(authData);
+  const response = await fetch('http://localhost:8090/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(authData),
+  });
+
+  if (response.status === 422 || response.status === 401) {
+    return response;
+  }
+  if (!response.ok)
+    throw json({ message: '로그인 인증에 실패했어요.' }, { status: 500 });
+
+  const resData = await response.json();
+  const token = resData.token;
+
+  //토큰 로컬스토리지에 저장
+  localStorage.setItem('token', token);
+
+  //토큰 유효시간 설정
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem('expiration', expiration.toISOString());
+  return redirect('/');
+}

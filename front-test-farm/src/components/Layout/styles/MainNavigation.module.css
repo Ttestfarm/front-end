@@ -38,9 +38,7 @@
   color: var(--color-primary-800);
   /* text-decoration: underline; */
 }
-/* .header li {
-  margin-right: 30px;
-} */
+
 .button {
   font: inherit;
   cursor: pointer;

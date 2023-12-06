@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './QutoForm.css';
+// import './style/QutoForm.css';
 import { Link } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 
 
-const UglyRequestForm = () => {
+const QuotForm = () => {
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
@@ -105,4 +105,4 @@ const UglyRequestForm = () => {
   );
 };
 
-export default UglyRequestForm;
+export default QuotForm;

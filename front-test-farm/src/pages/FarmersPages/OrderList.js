@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './style/QuotStatus.css';
 import Pagination from './Pagination';
 
-const CompletePayment = () => {
+const OrderList = () => {
   // const [quotList, setQuotList] = useState([]);
   const quotList = [{
     'Quotation_number': 89822,
@@ -60,4 +61,4 @@ const CompletePayment = () => {
   );
 };
 
-export default CompletePayment;
+export default OrderList;

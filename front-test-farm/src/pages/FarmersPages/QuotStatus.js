@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './QuotStatus.css';
+import './style/QuotStatus.css';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination';
 
-const QuotationStatus = () => {
+const QuotStatus = () => {
   // const [quotList, setQuotList] = useState([]);
   const quotList = [{
     'Quotation_number': 12345,
@@ -58,4 +58,4 @@ const QuotationStatus = () => {
   );
 };
 
-export default QuotationStatus;
+export default QuotStatus;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './UglyRequestList.css';
+import './style/RequestList.css';
 import { Link } from 'react-router-dom';
 
-const UglyRequestList = () => {
+const RequestList = () => {
   // const [ReqList, setReqList] = useState({});
   const ReqList = [{
     reqNum: '23332',
@@ -61,4 +61,4 @@ const UglyRequestList = () => {
   );
 };
 
-export default UglyRequestList;
+export default RequestList;

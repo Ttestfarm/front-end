@@ -1,8 +1,8 @@
 import React from 'react';
-import './CompleatePaymentDetail.css';
+import './style/OrderDetail.css';
 import { Link } from 'react-router-dom';
 
-const CompleatePaymentDetail = () => {
+const OrderDetail = () => {
   const quot = {
     'Quotation_number': 89822,
     'product_name': '마늘쫑',
@@ -54,4 +54,4 @@ const CompleatePaymentDetail = () => {
   );
 };
 
-export default CompleatePaymentDetail;
+export default OrderDetail;

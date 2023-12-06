@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './QutoDetail.css';
+import './style/QutoDetail.css';
 import { Link } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 

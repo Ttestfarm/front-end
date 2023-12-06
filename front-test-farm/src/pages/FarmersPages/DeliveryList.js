@@ -1,5 +1,5 @@
 import React from 'react';
-import './DeliveryList.css';
+import './style/DeliveryList.css';
 import Pagination from './Pagination';
 
 const DeliveryList = () => {

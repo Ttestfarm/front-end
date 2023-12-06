@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import './style/QutoForm.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 
 
 const QuotForm = () => {
+  const {requestId} = useParams();
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
   const selectImg = null;
+
+  useEffect(() => {
+    console.log(requestId);
+  }, []);
 
   const fileChange = (e) => {
     let filearr = e.target.files;

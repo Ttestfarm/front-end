@@ -7,19 +7,32 @@ const RequestList = () => {
   const [reqList, setReqList] = useState([]);
   const [test, setTest] = useState({});
   // const [intProduct, setIntProduct] = useState(); // farmer InterestProduct1 값이 기본값으로 저장
-  const intProduct = '당근';
+  const [interestList, setInterestList] = useState([]);
+  const [selInt, setSelInt] = useState();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8090/farmer/requestlist`, { params: { farmerId: 1, farmInterest: '당근'} })
+      .get(`http://localhost:8090/farmer/farmInterest`, { params: { farmerId: 1} })
       .then((res) => {
-        console.log(res.data);
-        setReqList([...res.data]);
+        setReqList([...res.data.reqList]);
+        setInterestList([...res.data.interestList]);
+        setSelInt(res.data.interestList[0]);
+
       }).catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const changeInterest = (interestOne) => {
+    axios
+      .get(`http://localhost:8090/farmer/requestlist`, { params: { farmerId: 1, farmInterest: interestOne } })
+      .then((res) => {
+        setReqList([...res.data]);
+        setSelInt(interestOne);
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <div className='container'>
       <div className="content-header">
@@ -35,13 +48,11 @@ const RequestList = () => {
           </span>
         </div>
         <div className="dropdown">
-          <button className="dropbtn">관심 품목</button>
+          <button className="dropbtn">{selInt}</button>
           <div className="dropdown-content">
-            <a href="#">관심품목1</a>
-            <a href="#">관심품목2</a>
-            <a href="#">관심품목3</a>
-            <a href="#">관심품목4</a>
-            <a href="#">관심품목5</a>
+            {interestList !== null && interestList.map((interest, idx) => 
+            <a href="#" key={idx} onClick={() => changeInterest(interest)}>{interest == null ? "없음" : interest}</a>
+            )}
           </div>
         </div>
       </div>
@@ -54,7 +65,7 @@ const RequestList = () => {
             <p>배송지 : {req.address}</p>
           </div>
           <div className='request-btn'>
-            <button><Link className='a' to={`/quotform/${req.requestId}`}>견적 보내기</Link></button>
+            <button><Link className='a' to={`/quotform/${req.requestId}/${req.requestProduct}`}>견적 보내기</Link></button>
             <p>요청서 번호 : {req.requestId}</p>
           </div>
         </div>

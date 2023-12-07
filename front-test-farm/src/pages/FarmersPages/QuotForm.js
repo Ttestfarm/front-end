@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-// import './style/QutoForm.css';
+import './style/QuotForm.css';
 import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 
 
 const QuotForm = () => {
-  const {requestId} = useParams();
+  const request = useParams();
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
   const selectImg = null;
 
   useEffect(() => {
-    console.log(requestId);
+    console.log(request.requestId);
+    console.log(request.requestProduct);
   }, []);
 
   const fileChange = (e) => {
@@ -44,7 +45,7 @@ const QuotForm = () => {
         <div className='quto-form-input'>
           <div>
             <label htmlFor='product'>못난이 농산물</label>
-            <input type='text' name='product' />
+            <input type='text' name='product' value={request.requestProduct} disabled/>
           </div>
           <div>
             <label htmlFor='amount'>수량 혹은 kg</label>

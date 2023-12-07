@@ -43,7 +43,7 @@ function App() {
         <Routes>
           <Route path='/' element={<OrderList />} />
           <Route path='/requestlist' element={<RequestList />} />
-          <Route path='/quotform/:requestId' element={<QuotForm />} />
+          <Route path='/quotform/:requestId/:requestProduct' element={<QuotForm />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

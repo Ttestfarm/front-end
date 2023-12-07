@@ -1,17 +1,19 @@
-import { RouterProvider,createBrowserRouter } from 'react-router-dom';
-import { Fragment } from 'react';
-import './App.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/Error';
-import HomePage from './pages/Home';
-import LoginPage from './pages/Login';
-import JoinPage from './pages/Join';
+import HomePage from './pages/Home/Home';
+import RegistUserPage from './pages/Registration/RegistUser';
+import LoginPage from './pages/Login/Login';
+
 import FindEmailPage from './pages/FindEmail';
 import FindPwPage from './pages/FindPw';
 import ModifyUserPage from './pages/ModifyUser';
 import RegFarmerPage from './pages/RegFarmer';
+import RegistFarmerPage from './pages/Registration/RegistFarmer';
 import ModifyFarmPage from './pages/ModifyFarm';
 import { tokenLoader } from './util/auth';
+import { action as logoutAction } from './pages/Logout';
 
 const router = createBrowserRouter([
   {
@@ -21,50 +23,44 @@ const router = createBrowserRouter([
     id: 'root',
     loader: tokenLoader,
     children: [
-      {index: true, element : <HomePage />},
+      { index: true, element: <HomePage /> },
       {
-        path: '/login',
-        element: <LoginPage />,
-        errorElement: <ErrorPage />
+        path: 'join',
+        element: <RegistUserPage />,
       },
       {
-        path: '/join',
-        element: <JoinPage />,
-        errorElement: <ErrorPage />
+        path: 'login',
+        element: <LoginPage />,
       },
       {
         path: '/find-email',
         element: <FindEmailPage />,
-        errorElement: <ErrorPage />
       },
       {
         path: '/find-pw',
         element: <FindPwPage />,
-        errorElement: <ErrorPage />
       },
       {
         path: '/modify-user',
         element: <ModifyUserPage />,
-        errorElement: <ErrorPage />
       },
       {
         path: '/reg-farmer',
-        element: <RegFarmerPage />,
-        errorElement: <ErrorPage />
+        element: <RegistFarmerPage page="reg-farmer" />,
       },
       {
         path: '/modify-farm',
-        element: <ModifyFarmPage />,
-        errorElement: <ErrorPage />
+        element: <RegistFarmerPage page="modify-farm" />,
       },
-    ]
+      {
+        path: 'logout',
+        action: logoutAction,
+      },
+    ],
   },
-])
+]);
 function App() {
-  return (
-    <RouterProvider router={router}/>
-      
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -76,8 +76,4 @@ const Invoice = () => {
   );
 };
 
-<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/Invoice.js
 export default Invoice;
-=======
-export default Calculate;
->>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/Calculate.js

@@ -22,8 +22,8 @@
   justify-content: space-between;
 
   border-radius: 24px;
-  border: 3px solid #75786C;
-  background: #FEFCF4;
+  border: 3px solid #75786c;
+  background: #fefcf4;
 
   font-weight: 700;
 }
@@ -36,16 +36,16 @@
 
   border-radius: 5px;
   border: 1px solid #000;
-  background: #FEFCF4;
+  background: #fefcf4;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .request-content {
-  margin-left: 70px
+  margin-left: 70px;
 }
 
 .request-content p:not(:first-of-type) {
-  margin-left: 50px
+  margin-left: 50px;
 }
 
 .request-content span {
@@ -64,10 +64,10 @@
   margin: 15px 15px 25px 15px;
 
   border-radius: 10px;
-  background: #49680D;
+  background: #49680d;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-  color: #FFF;
+  color: #fff;
   font-size: 20px;
   font-weight: 700;
 }
@@ -78,5 +78,5 @@
 
 .a {
   font-size: 20px;
-  color: #FFF;
+  color: #fff;
 }

@@ -1,7 +1,6 @@
 .wrap {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   text-align: center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url('../../assets/login-bg.png');

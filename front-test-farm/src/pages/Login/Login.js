@@ -1,18 +1,84 @@
-import { useEffect, useRef } from 'react';
-import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
+// 상태관리 & 수정필요사항
+// - 소셜로그인 로고 img 삽입 방식 통일?
 
-import style from './LoginForm.module.css';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  Form,
+  Link,
+  json,
+  redirect,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom';
+
+import style from './Login.module.css';
 import naver from '../../assets/naver.png';
+import * as API from '../../api';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
 
-const LoginForm = () => {
-  const data = useActionData(); //Form 전송한 작업 함수가 리턴한 데이터 얻어옴
+const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const setToken = useSetRecoilState(tokenAtom);
+  const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const inputRef = useRef();
-  const isSubmitting = navigation.state === 'submittiong';
+
+  const isSubmitting = navigation.state === 'submitting';
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = new FormData(e.target);
+      const loginData = {
+        //백엔드로 보낼 데이터
+        userEmail: data.get('email'),
+        userPassword: data.get('password'),
+      };
+      console.log('loginData ', loginData);
+
+      const response = await API.post('/login', loginData);
+      console.log(response);
+      const token = response.data.token;
+      //const userInfo = response.data.userInfo;
+
+      //토큰 유효시간 설정
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + 1);
+      localStorage.setItem('expiration', expiration.toISOString());
+      localStorage.setItem('token', token);
+      setToken(token);
+      //setUserInfo(userInfo);
+      navigate('/');
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.response.data,
+      });
+    }
+  };
 
   return (
     <div className={style.wrap}>
@@ -47,30 +113,23 @@ const LoginForm = () => {
         </Form>
 
         <Form
-          method="POST"
+          onSubmit={submitHandler}
           className={style['email-login']}
         >
-          {data && data.errors && (
-            <ul>
-              {/* error 가 객체이기 때문에 내장함수 사용가능 */}
-              {Object.values(data.errors).map((err) => (
-                <li key={err}>{err}</li>
-              ))}
-            </ul>
-          )}
-          {data && data.message && <p>{data.message}</p>}
           <div>이메일로 계속하기</div>
           <input
             ref={inputRef}
             type="text"
             id="email"
             name="email"
+            onChange={onChangeInput}
             placeholder={'이메일을 입력해 주세요.'}
           />
           <input
             type="password"
             id="password"
             name="password"
+            onChange={onChangeInput}
             placeholder={'비밀번호를 입력해 주세요.'}
           />
           <div className={style.find}>
@@ -105,4 +164,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;

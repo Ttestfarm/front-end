@@ -3,11 +3,11 @@
   width: 700px;
   height: 700px;
   margin: 100px auto 30px auto;
-  fill: #FAF9ED;
+  fill: #faf9ed;
   stroke-width: 5px;
-  stroke: #75786C;
+  stroke: #75786c;
 
-  border: 5px solid #75786C;
+  border: 5px solid #75786c;
   border-radius: 24px;
 
   color: #000;
@@ -30,7 +30,6 @@
   justify-content: center; */
 }
 
-
 .quto-form-input div {
   width: 100%;
   margin-top: 15px;
@@ -46,7 +45,7 @@ textarea {
   font-size: 16px;
   border-radius: 15px;
   border: 1px solid #000;
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 .quto-form-input .append {
@@ -61,7 +60,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
 
-  color: rgba(0, 0, 0, 0.70);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 15px;
   font-weight: 400;
 }
@@ -71,7 +70,7 @@ textarea {
   height: 25px;
   overflow: hidden;
   position: relative;
-  background: #49680D;
+  background: #49680d;
   color: rgba(255, 255, 255, 0.87);
   border-radius: 5px;
   display: inline-block;
@@ -115,7 +114,7 @@ textarea {
   margin: 40px 10px 10px 10px;
   border-radius: 5px;
 
-  background: #49680D;
+  background: #49680d;
   color: rgba(255, 255, 255, 0.87);
   font-size: 20px;
 }
@@ -125,7 +124,7 @@ textarea {
   height: 300px;
   margin: 0 auto;
 
-  background-color: #E2E4D4;
+  background-color: #e2e4d4;
   font-size: 20px;
   font-weight: 500;
 
@@ -164,5 +163,5 @@ textarea {
 
 .a {
   font-size: 20px;
-  color: #FFF;
+  color: #fff;
 }

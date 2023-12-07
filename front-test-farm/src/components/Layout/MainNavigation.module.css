@@ -31,11 +31,11 @@
 
 .list a {
   text-decoration: none;
-  color: var(--color-primary-400);
+  color: #ffffff;
 }
 .list a:hover,
 .list a.active {
-  color: var(--color-primary-800);
+  color: var(--color-highlight);
   /* text-decoration: underline; */
 }
 

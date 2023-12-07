@@ -1,18 +1,45 @@
-.input {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
+/* .input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .input label {
-    font-weight: bold;
-    margin-right: 1rem;
+  font-weight: bold;
+  margin-right: 1rem;
 }
 
 .input input {
-    width: 3rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font: inherit;
-    padding-left: 0.5rem;
+  width: 3rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font: inherit;
+  padding-left: 0.5rem;
+} */
+
+.input {
+  margin-bottom: 1.5rem;
+}
+.input label {
+  color: #b40e0e;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-main);
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  margin-bottom: 0.15rem;
+}
+
+.input input {
+  display: block;
+}
+
+.input input::placeholder {
+  font-size: 13px;
+  color: #acaca9;
 }

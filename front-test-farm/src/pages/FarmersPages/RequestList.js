@@ -50,12 +50,14 @@ const RequestList = () => {
         <div className="dropdown">
           <button className="dropbtn">{selInt}</button>
           <div className="dropdown-content">
-            {interestList !== null && interestList.map((interest, idx) =>
-              <a href="#" key={idx} onClick={() => changeInterest(interest)}>{interest == null ? "없음" : interest}</a>
-            )}
-          </div>
-        </div>
-      </div>
+            {
+              interestList !== null && interestList.map((interest, idx) =>
+                <a href="#" key={idx} onClick={() => changeInterest(interest)}>{interest == null ? "없음" : interest}</a>
+              )
+            }
+          </div >
+        </div >
+      </div >
       {reqList !== null ? reqList.map((req) =>
         <div className='request-box' key={req.requestId}>
           <div className='request-content'>

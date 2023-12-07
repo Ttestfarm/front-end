@@ -93,8 +93,4 @@ const RequestList = () => {
   );
 };
 
-<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/RequestList.js
 export default RequestList;
-=======
-export default UglyRequestList;
->>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/UglyRequestList.js

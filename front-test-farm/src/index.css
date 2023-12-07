@@ -13,6 +13,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --color-main: #464c3a;
+  --color-button: #b7c06d;
+  --color-highlight: #c9f087;
 }
 body {
   margin: 0;
@@ -22,4 +26,7 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+a {
+  text-decoration: none;
 }

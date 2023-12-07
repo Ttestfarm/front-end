@@ -17,6 +17,13 @@
   width: 370px;
 }
 
+label {
+  color: #191919;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
 .title {
   font-weight: 700;
   font-size: 26px;
@@ -30,12 +37,6 @@
   margin-bottom: 30px;
 }
 
-.input > div {
-  color: #191919;
-  font-size: 18px;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
 
 .input > input {
   height: 56px;
@@ -49,10 +50,6 @@
   color: #191919;
   outline: none;
 }
-
-/* .input > input:first-of-type {
-  margin-bottom: 20px;
-} */
 
 .input > input:nth-of-type(1) {
   margin-bottom: 20px;
@@ -69,6 +66,7 @@
 .certify {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 370px;
 }
 
@@ -82,30 +80,35 @@
   color: #ffffff;
   border: 1px solid #49680D;
   background-color: #49680D;
+  margin-bottom: 5px;
 }
 
 .btns {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 370px;
 }
 
-.btns > button {
-  width: 130px;
-  height: 30px;
-  border-radius: 5px;
+.find-btn {
+  width: 173px;
+  height: 56px;
+  color: #ffffff;
+  background-color: #49680D;
+  border: 1px solid #49680D;
+  border-radius: 10px;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
 }
-.find-btn {
-  color: #ffffff;
-  border: 1px solid #49680D;
-  background-color: #49680D;
-}
 
 .cancel-btn {
+  width: 173px;
+  height: 56px;
   color: #191919;
   background-color: transparent;
-  border: 1px solid #2B331D;
+  border: 1px solid #49680D;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
 }

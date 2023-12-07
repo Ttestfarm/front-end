@@ -3,7 +3,7 @@
   margin: 150px auto;
 
   border-radius: 24px;
-  border: 5px solid #75786C;
+  border: 5px solid #75786c;
 
   color: #000;
   font-family: Inter;
@@ -17,7 +17,6 @@
   text-align: right;
   width: 90%;
   margin-top: 25px;
-
 }
 
 .delivery-list-btns .btn1 {
@@ -27,7 +26,7 @@
 
   border-radius: 5px;
   border: 1px solid #000;
-  background: #F0EEA3;
+  background: #f0eea3;
 }
 
 .delivery-list-btns .btn2 {
@@ -37,5 +36,5 @@
 
   border-radius: 5px;
   border: 1px solid #000;
-  background: #FFA985;
+  background: #ffa985;
 }

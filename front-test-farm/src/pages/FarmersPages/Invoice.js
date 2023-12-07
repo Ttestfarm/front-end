@@ -11,34 +11,48 @@ const Invoice = () => {
   var dateString = year + '-' + month + '-' + day;
   return (
     <>
-      <div className='cal-form'>
+      <div className="cal-form">
         <h2>조회하기</h2>
-        <div className='cal-search'>
-          <div className='cal-search-date'>
+        <div className="cal-search">
+          <div className="cal-search-date">
             <h3>조회기간</h3>
-            <input type="date" name="sdate" value={dateString} />
+            <input
+              type="date"
+              name="sdate"
+              value={dateString}
+            />
             &nbsp;~&nbsp;
-            <input type="date" name="edate" value={dateString} max={dateString} />
+            <input
+              type="date"
+              name="edate"
+              value={dateString}
+              max={dateString}
+            />
           </div>
-          <div className='cal-search-state'>
+          <div className="cal-search-state">
             <h3>정산구분</h3>
             <select name="state">
-              <option value="전체" selected>전체</option>
-              <option value="미정산" >미정산</option>
-              <option value="정산완료" >정산완료</option>
+              <option
+                value="전체"
+                selected
+              >
+                전체
+              </option>
+              <option value="미정산">미정산</option>
+              <option value="정산완료">정산완료</option>
             </select>
           </div>
-          <div className='cal-search-btns'>
+          <div className="cal-search-btns">
             <button>검색</button>
             <button>초기화</button>
           </div>
         </div>
-        <div className='cal-result'>
-          <div className='cal-result-money'>
+        <div className="cal-result">
+          <div className="cal-result-money">
             <span>정산금액</span>
             <span>50,000</span>
           </div>
-          <div className='cal-result-list'>
+          <div className="cal-result-list">
             <table>
               <tr>
                 <th>정산예정일</th>
@@ -62,4 +76,8 @@ const Invoice = () => {
   );
 };
 
+<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/Invoice.js
 export default Invoice;
+=======
+export default Calculate;
+>>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/Calculate.js

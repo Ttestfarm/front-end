@@ -1,0 +1,130 @@
+.form-control {
+  margin-bottom: 1.5rem;
+}
+.form-control label {
+  color: #b40e0e;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-main);
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  margin-bottom: 0.15rem;
+}
+
+/* .form-control input {
+  display: block;
+} */
+
+.form-control input::placeholder {
+  font-size: 13px;
+  color: #acaca9;
+}
+.certify {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 370px;
+}
+
+.certify-btn {
+  width: 130px;
+  height: 28px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+  border: 1px solid #49680d;
+  background-color: #49680d;
+  margin-bottom: 5px;
+}
+
+.address-code {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 370px;
+}
+
+.address-code > input {
+  width: 222px;
+}
+
+.address-default {
+  display: flex;
+  align-items: flex-start;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #191919;
+}
+
+.address-default > p {
+  display: block;
+  margin: 0;
+  font-size: 14px;
+}
+.address-default > input {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  border: 1px solid #acaca9;
+  background-color: transparent;
+  border-radius: 3px;
+}
+.join-btn {
+  width: 370px;
+  height: 56px;
+  color: #ffffff;
+  background-color: #49680d;
+  border: 1px solid #49680d;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.join-btn:hover,
+.join-btn:active {
+  background-color: var(--color-button);
+  border-color: var(--color-button);
+}
+.join-btn:disabled,
+.join-btn:disabled:hover,
+.join-btn:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.invalid input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
+
+.error-text {
+  display: flex;
+  align-items: flex-start;
+  color: #b40e0e;
+  margin: 0;
+  padding-left: 0.8rem;
+  font-size: 12px;
+}
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 13px;
+}

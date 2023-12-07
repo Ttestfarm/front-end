@@ -1,0 +1,17 @@
+.all {
+  width: 1250px;
+  height: 2212px;
+  /* height: 100vh; */
+  border-radius: 10px;
+  border: 5px solid #75786c;
+  background: #fefcf4;
+  margin-top: 150px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 30px;
+  /* padding-bottom: 30px; */
+  margin-bottom: 30px;
+}

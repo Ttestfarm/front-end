@@ -7,6 +7,7 @@ import naver from '../../assets/naver.png';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
+import axios from 'axios';
 
 const LoginPage = () => {
   const [, setEmail] = useState('');
@@ -52,9 +53,20 @@ const LoginPage = () => {
 
       const response = await axios.post(`${API.serverUrl}/login`, loginData);
 
-      const token = response.data.token;
+      //const token = response.data.token;
       //const userInfo = response.data.userInfo;
+      //const response = await axios.post('http://localhost:8090/login', loginData);
+      console.log('reponse', response);
 
+      // response에 header와 authorization이 있는지 확인 하는 코드
+      if (response.headers && response.headers['authorization']) {
+        console.log('here');
+      }
+      const token = response.headers['authorization'];
+      console.log(token);
+      const userInfo = response.data.userInfo;
+
+      console.log('1', userInfo);
       //토큰 유효시간 설정
       const expiration = new Date();
       expiration.setHours(expiration.getHours() + 1);
@@ -62,7 +74,7 @@ const LoginPage = () => {
       localStorage.setItem('expiration', expiration.toISOString());
       localStorage.setItem('token', token);
       setToken(token);
-      //setUserInfo(userInfo);
+      // setUserInfo(userInfo);
       navigate('/');
     } catch (error) {
       setIsErrorModal({

@@ -1,8 +1,8 @@
 import React from 'react';
-import './CompleatePaymentDetail.css';
+import './style/OrderDetail.css';
 import { Link } from 'react-router-dom';
 
-const CompleatePaymentDetail = () => {
+const OrderDetail = () => {
   const quot = {
     Quotation_number: 89822,
     product_name: '마늘쫑',
@@ -84,4 +84,8 @@ const CompleatePaymentDetail = () => {
   );
 };
 
+<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/OrderDetail.js
+export default OrderDetail;
+=======
 export default CompleatePaymentDetail;
+>>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/CompleatePaymentDetail.js

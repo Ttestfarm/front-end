@@ -3,7 +3,7 @@
 // - 사진 업로드 input 정렬 & 디자인
 // - 사진 업로드 시 image view
 // - 계좌번호 select - 컴포넌트 list로?
-// - 관심품목설정 notice부분 html 구조 변경? / 텍스트 부분 색 변경
+// - 관심품목설정 notice부분 html 구조 변경? / 텍스트 부분 색 변경 / 최대 5개 안내 추가
 
 import React, { Fragment } from "react";
 

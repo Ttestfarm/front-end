@@ -16,10 +16,6 @@
   margin-bottom: 0.15rem;
 }
 
-/* .form-control input {
-  display: block;
-} */
-
 .form-control input::placeholder {
   font-size: 13px;
   color: #acaca9;

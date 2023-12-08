@@ -1,15 +1,6 @@
-// 상태관리 & 수정필요사항
-// - 소셜로그인 로고 img 삽입 방식 통일?
-
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  Form,
-  Link,
-  json,
-  redirect,
-  useNavigate,
-  useNavigation,
-} from 'react-router-dom';
+import { Form, Link, useNavigate, useNavigation } from 'react-router-dom';
+import axios from 'axios';
 
 import style from './Login.module.css';
 import naver from '../../assets/naver.png';
@@ -18,8 +9,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [, setEmail] = useState('');
+  const [, setPassword] = useState('');
 
   const setToken = useSetRecoilState(tokenAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -59,14 +50,15 @@ const LoginPage = () => {
       };
       console.log('loginData ', loginData);
 
-      const response = await API.post('/login', loginData);
-      console.log(response);
+      const response = await axios.post(`${API.serverUrl}/login`, loginData);
+
       const token = response.data.token;
       //const userInfo = response.data.userInfo;
 
       //토큰 유효시간 설정
       const expiration = new Date();
       expiration.setHours(expiration.getHours() + 1);
+
       localStorage.setItem('expiration', expiration.toISOString());
       localStorage.setItem('token', token);
       setToken(token);
@@ -75,7 +67,7 @@ const LoginPage = () => {
     } catch (error) {
       setIsErrorModal({
         state: true,
-        message: error.response.data,
+        message: error.response,
       });
     }
   };

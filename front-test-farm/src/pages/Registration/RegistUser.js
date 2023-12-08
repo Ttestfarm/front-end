@@ -146,7 +146,7 @@ const RegistUserPage = () => {
         message: '언프리티팜의 회원 가입을 환영합니다!',
       });
 
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       setIsErrorModal({
         state: true,

@@ -12,7 +12,6 @@ import { action as logoutAction } from './pages/Logout';
 
 import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
 import FindFarmerPage from './pages/FindFarmers/FindFarmer';
-import { loader as farmersLoader } from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
@@ -38,23 +37,12 @@ const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> },
       { path: 'logout', action: logoutAction },
       {
-        path: 'findfarmer',
+        path: '/findfarmer?',
         element: <FindFarmerRootLayout />,
         children: [
           {
             index: true,
             element: <FindFarmerPage />,
-            loader: farmersLoader,
-          },
-          {
-            path: ':sortType',
-            element: <FindFarmerPage />,
-            loader: farmersLoader,
-          },
-          {
-            path: ':keyword',
-            element: <FindFarmerPage />,
-            loader: farmersLoader,
           },
           {
             path: ':farmerId',
@@ -95,7 +83,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <FindFarmerPage />,
-            loader: farmersLoader,
           },
         ],
       },

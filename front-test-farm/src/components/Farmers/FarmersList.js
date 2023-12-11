@@ -6,7 +6,7 @@ import style from './FarmersList.module.css';
 const FarmersList = ({ farmers }) => {
   //const [cards, setCards] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [sortType, setSortType] = useState('');
+
   //const [sortedFarmers, setSortedFarmers] = useState(false);
 
   const keywordChangeHandler = (e) => {
@@ -15,12 +15,17 @@ const FarmersList = ({ farmers }) => {
   };
 
   const sortTypeChangeHandler = (sortOption) => {
-    setSortType(sortOption);
+    axios
+      .get(`?keyword=${keyword}&sortType=${sortOption}`)
+      .then((response) => {
+        setCards(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
   };
 
-  const searchClickHandler = () => {
-    
-  };
+  const searchClickHandler = () => {};
 
   //   useEffect(() => {
   //       axios

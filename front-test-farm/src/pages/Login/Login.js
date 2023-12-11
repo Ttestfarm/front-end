@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import style from './Login.module.css';
 import naver from '../../assets/naver.png';
-import axios from 'axios';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';

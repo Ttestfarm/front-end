@@ -3,7 +3,7 @@ import styles from './FarmerCard.module.css'; // CSS 모듈을 변수로 가져�
 import star from '../../assets/star.png';
 import heart from '../../assets/heart.png';
 
-const FarmerCard = ({ farmname, farmaddress, category, imageUrl }) => {
+const FarmerCard = ({ farmer }) => {
   const imageStyle = {
     border: '3px solid #75786c',
     borderRadius: '50%',
@@ -11,9 +11,7 @@ const FarmerCard = ({ farmname, farmaddress, category, imageUrl }) => {
     height: '150px',
   };
 
-  const starRating = 4.5; // 별점 평균 값 (예시)
-  const starCount = 200; // 별점 개수 (예시)
-  const heartCount = 100; // 하트 개수 (예시)
+  console.log(farmer);
 
   return (
     <div className={styles['farmer-card']}>
@@ -23,7 +21,7 @@ const FarmerCard = ({ farmname, farmaddress, category, imageUrl }) => {
 
       <div className={styles['image-container']}>
         <img
-          src={imageUrl}
+          src={farmer?.farmPixurl}
           alt="Farmer Card"
           style={imageStyle}
         />
@@ -34,21 +32,22 @@ const FarmerCard = ({ farmname, farmaddress, category, imageUrl }) => {
             src={star}
             alt="Star"
           />
-          <span>{starRating}</span> (<span>{starCount}</span>) &nbsp;
+          <span>{farmer.rating}</span> (<span>{farmer.reviewCount}</span>)
+          &nbsp;
         </div>
         <div className={styles['heart-info']}>
           <img
             src={heart}
             alt="Heart"
           />
-          <span>{heartCount}</span>
+          <span>{farmer.followCount}</span>
         </div>
       </div>
 
       <div className={styles['card-details']}>
-        <div className={styles['farmname']}>{farmname}</div>
-        <div className={styles['farmaddress']}>{farmaddress}</div>
-        <div className={styles['category']}>{category}</div>
+        <div className={styles['farmname']}>{farmer?.farmName}</div>
+        <div className={styles['farmaddress']}>{farmer?.farmAddress}</div>
+        <div className={styles['category']}>{farmer?.farmInterest}</div>
       </div>
     </div>
   );

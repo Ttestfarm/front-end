@@ -13,6 +13,7 @@ import {
 
 import style from './Login.module.css';
 import naver from '../../assets/naver.png';
+import axios from 'axios';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
@@ -58,11 +59,13 @@ const LoginPage = () => {
         userPassword: data.get('password'),
       };
       console.log('loginData ', loginData);
-
-      const response = await API.post('/login', loginData);
+      
+      const response = await axios.post(`${API.serverUrl}/login`, loginData);
       console.log(response);
-      const token = response.data.token;
-      //const userInfo = response.data.userInfo;
+
+      const token = response.headers['authorization'];
+      console.log(token);
+      const userInfo = response.data.userInfo;
 
       //토큰 유효시간 설정
       const expiration = new Date();

@@ -11,7 +11,7 @@ import { isErrorModalAtom, isSuccessModalAtom } from '../../recoil/Atoms';
 
 // 유효성 검사 함수
 const isNotEmpty = (value) =>
-  /^[가-힝a-zA-Z]{2,}$/.exec(value) && value.length <= 5;
+  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length <= 5;
 
 const isEmail = (value) =>
   value

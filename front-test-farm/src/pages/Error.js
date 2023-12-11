@@ -16,12 +16,15 @@ const Error = () => {
 
   if (error.status === 404) {
     title = 'Not Found';
-    message = 'Could not find resource or page';
+    message = 'OH! NO! 404...🤯';
   }
   return (
     <>
       <MainNavigation />
-      <PageContent title={title}>
+      <PageContent
+        title={title}
+        style={{ marginTop: '80px' }}
+      >
         <p>{message}</p>
       </PageContent>
     </>

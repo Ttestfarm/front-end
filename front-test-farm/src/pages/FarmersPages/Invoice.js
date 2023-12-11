@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Calculate.css';
+import './style/Invoice.css';
 
-const Calculate = () => {
+const Invoice = () => {
   const [calList, setCalList] = useState([]);
   let today = new Date();
   let year = today.getFullYear();
@@ -76,4 +76,4 @@ const Calculate = () => {
   );
 };
 
-export default Calculate;
+export default Invoice;

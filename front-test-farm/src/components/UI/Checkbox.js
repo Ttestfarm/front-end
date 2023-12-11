@@ -1,4 +1,5 @@
 import style from './Checkbox.module.css';
+
 export const Checkbox = ({ children, disabled, checked, onChange }) => {
   return (
     <div className={style.checkbox}>
@@ -9,7 +10,7 @@ export const Checkbox = ({ children, disabled, checked, onChange }) => {
           checked={checked}
           onChange={({ target: { checked } }) => onChange(checked)}
         />
-        {children}
+        <p>{children}</p>
       </label>
     </div>
   );

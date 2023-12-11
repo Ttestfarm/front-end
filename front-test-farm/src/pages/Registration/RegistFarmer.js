@@ -5,6 +5,7 @@ import style from './RegistFarmer.module.css';
 import picDefault from '../../assets/pic-default.png';
 import { Checkbox } from '../../components/UI/Checkbox';
 import * as API from '../../api/index';
+import Postcode from '../../api/PostCode';
 import { Form, Navigate, useNavigate } from 'react-router-dom';
 import HandleRegistrationNumCheck from '../../api/registrationNumCheck';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -20,16 +21,16 @@ import { bankOption } from '../../util/payment';
 import { userInfoAtom } from './../../recoil/Atoms';
 // 유효성 검사 함수
 const isNotEmpty = (value) =>
-  /^[가-힝a-zA-Z]{2,}$/.exec(value) && value.length >= 2;
+  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length >= 2;
 const isTel = (value) =>
   value.trim().match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/) ||
   value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
-//
 const isNotEmptyValue = (value) => value.trim() !== '';
 
 const RegistFarmerPage = ({ page }) => {
-  const [userInfo] = useRecoilState(userInfoAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
+  const [farmerInfo, setFarmerInfo] = useState({});
   const [file, setFile] = useState('');
   const [myFarmTel, setMyFarmTel] = useState(false);
   const [registrationNum, setRegistrationNum] = useState(false);
@@ -43,22 +44,45 @@ const RegistFarmerPage = ({ page }) => {
 
   const [formDatas, setFormDatas] = useState({
     farmName: '',
+    farmTel: '',
+    myFarmTel: '',
     farmAddress: '',
+    farmAddressDetail: '',
+    registrationNum: '',
+    farmBank: '',
+    farmAccountNum: '',
+    farmInterest: '',
+    farmpixurl: '',
   });
+
+  useEffect(() => {
+    if (farmerInfo) {
+      setFormDatas({
+        farmName: farmerInfo?.farmer?.farmName,
+        farmTel: farmerInfo?.farmer?.farmTel,
+        farmAddress: farmerInfo?.farmer?.farmAddress,
+        farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
+        registrationNum: farmerInfo?.farmer?.registrationNum,
+        farmBank: farmerInfo?.farmer?.farmBank,
+        farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
+        farmInterest: farmerInfo?.farmer?.farmInterest,
+      });
+    }
+  }, [farmerInfo]);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (page === '/reg-farmer' && farmerInfo) {
-  //     navigate('/farmers');
-  //   }
-  // }, [farmerInfo]);
+  useEffect(() => {
+    if (page === 'reg-farmer' && userInfo) {
+      navigate('/farmers');
+    }
+  }, [userInfo]);
 
-  // useEffect(() => {
-  //   if (page === '/modify-farm' && !localStorage.getItem('token')) {
-  //     navigate('/login');
-  //   }
-  // }, [farmerInfo]);
+  useEffect(() => {
+    if (page === 'modify-farm' && !localStorage.getItem('token')) {
+      navigate('/login');
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     return () => {
@@ -94,36 +118,44 @@ const RegistFarmerPage = ({ page }) => {
     reset: resetfarmTel,
   } = useUserInput(isTel);
 
+  // const {
+  //   value: { postcodeAddress },
+  //   isValid: farmAddressIsValid,
+  //   hasError: farmAddressHasError,
+  //   valueChangeHandler: farmAddressChangeHandler,
+  //   inputBlurHandler: farmAddressBlurHandler,
+  //   reset: resetfarmAddress,
+  // } = useUserInput(isNotEmptyValue);
+
   const {
-    value: farmAddressValue,
-    isValid: farmAddressIsValid,
-    hasError: farmAddressHasError,
-    valueChangeHandler: farmAddressChangeHandler,
-    inputBlurHandler: farmAddressBlurHandler,
-    reset: resetfarmAddress,
+    value: farmAddressDetailValue,
+    isValid: farmAddressDetailIsValid,
+    hasError: farmAddressDetailHasError,
+    valueChangeHandler: farmAddressDetailChangeHandler,
+    inputBlurHandler: farmAddressDetailBlurHandler,
+    reset: resetfarmAddressDetail,
   } = useUserInput(isNotEmptyValue);
 
   const {
-    value: farmDetailAddressValue,
-    isValid: farmDetailAddressIsValid,
-    hasError: farmDetailAddressHasError,
-    valueChangeHandler: farmDetailAddressChangeHandler,
-    inputBlurHandler: farmDetailAddressBlurHandler,
-    reset: resetfarmDetailAddress,
+    value: registrationNumValue,
+    valueChangeHandler: registrationNumChangeHandler,
+    inputBlurHandler: registrationNumBlurHandler,
+    reset: resetRegistrationNum,
   } = useUserInput(isNotEmptyValue);
+
   const {
-    value: farmAccountValue,
-    isValid: farmAccountIsValid,
+    value: farmAccountNumValue,
+    isValid: farmAccountNumIsValid,
     hasError: farmAccountHasError,
-    valueChangeHandler: farmAccountChangeHandler,
-    inputBlurHandler: ffarmAccountBlurHandler,
-    reset: resetfarmAccount,
+    valueChangeHandler: farmAccountNumChangeHandler,
+    inputBlurHandler: farmAccountNumBlurHandler,
+    reset: resetfarmAccountNum,
   } = useUserInput(isNotEmptyValue);
 
   const {
     value: farmInterestValue,
     isValid: farmInterestIsValid,
-    hasError: farmInterestHasError,
+
     valueChangeHandler: farmInterestChangeHandler,
     inputBlurHandler: farmInterestBlurHandler,
     reset: resetfarmInterest,
@@ -136,36 +168,37 @@ const RegistFarmerPage = ({ page }) => {
     console.log('file', imageSrc);
   };
 
-  const AuthNumberHandler = (e) => {
+  //주소찾기 모달 열기
+  const onClicktoggleAddressModal = async (e) => {
     e.preventDefault();
-  };
-
-  const onClicktoggleAddressModal = async () => {
     setIsPostcodeModal((prev) => !prev);
   };
 
-  const registrationNumCheckHandler = useCallback(
-    async (e) => {
-      const registrationNum = e.target.value;
-      try {
-        const data = await HandleRegistrationNumCheck(registrationNum);
-        if (data === '01') {
-          setRegistrationNum(true); // 영업중으로 확인되는 사업자
-          setRegiNumMsg('✓ 확인되었습니다.');
-        } else {
-          setRegistrationNum(false); // 휴업, 폐업으로 확인되는 사업자
-          setRegiNumMsg('사업자 등록번호 오류입니다.');
-        }
-      } catch (error) {
+  const registrationNumCheckHandler = async (e) => {
+    e.preventDefault();
+    const registrationNum = registrationNumValue;
+
+    try {
+      const data = await HandleRegistrationNumCheck(registrationNum);
+      if (data === '01') {
+        setRegistrationNum(true); // 영업중으로 확인되는 사업자
+        setRegiNumMsg('✓ 확인되었습니다.');
+      } else {
+        setRegistrationNum(false); // 휴업, 폐업으로 확인되는 사업자
+        setRegiNumMsg('사업자 등록번호 오류입니다.');
         setIsErrorModal({
           state: true,
-          message: error.message,
+          message: '등록할 수 없는 번호입니다.',
         });
-        console.log(error);
       }
-    },
-    [registrationNum, setRegistrationNum]
-  );
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+      console.log(error);
+    }
+  };
 
   const selectHandler = (e) => {
     setSelected(e.target.value);
@@ -176,8 +209,8 @@ const RegistFarmerPage = ({ page }) => {
   if (
     farmNameIsValid &&
     farmTelIsValid &&
-    farmAddressIsValid &&
-    farmDetailAddressIsValid
+    farmAddressDetailIsValid &&
+    registrationNum
   ) {
     formIsValid = true;
   }
@@ -185,26 +218,43 @@ const RegistFarmerPage = ({ page }) => {
   const RegistHandler = async (e) => {
     e.preventDefault();
 
+    console.log('page', page);
     const formData = new FormData();
-    formData.append('farmName', formDatas.farmName);
-    formData.append('farmTel', formData.farmTel);
-    formData.append('farmAddress', formData.farmAddress);
+    formData.append('farmName', farmNameValue);
+    formData.append('farmTel', farmTelValue);
+    formData.append('myFarmTel', myFarmTel);
+    formData.append('farmAddress', postcodeAddress);
+    formData.append('farmAddressDetail', farmAddressDetailValue);
+    formData.append('registrationNum', registrationNumValue);
+    formData.append('farmInterest', farmInterestValue);
     formData.append('farmPixurl', file);
-    formData.append(
-      'farmAddress',
-      formData.farmAddress + formData.farmDetailAddress
-    );
-    formData.append('registrationNum', formData.registrationNum);
 
     try {
-      if (page === '/reg-farmer') {
-        await API.post('/reg-farmer', formData);
+      if (page === 'reg-farmer') {
+        console.log('제출용', formData);
+        const result = await API.post('/reg-farmer', formData);
+        console.log('------------------');
+        console.log('result', result);
+        // setIsSucessModal({
+        //   state: true,
+        //   message: '파머 등록 성공!',
+        // });
+        // navigate('/farmers');
+      } else {
+        await API.put(`/modify-farm/${userInfo?.user?.farmerId}`, formData);
         setIsSucessModal({
           state: true,
-          message: '파머 등록을 환영합니다.',
+          message: '파머 정보 수정이 완료 되었습니다.',
         });
+        navigate('/farmers');
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      // setIsErrorModal({
+      //   state: true,
+      //   message: error.response,
+      // });
+    }
   };
 
   const farmNameStyles = farmNameHasError
@@ -241,6 +291,7 @@ const RegistFarmerPage = ({ page }) => {
             ref={inputRef}
             type="text"
             id="farmName"
+            name="farmName"
             value={farmNameValue}
             onChange={farmNameChangeHandler}
             onBlur={farmNameBlurHandler}
@@ -274,16 +325,7 @@ const RegistFarmerPage = ({ page }) => {
         </div>
 
         <div className={farmTelStyles}>
-          <div className={style.certify}>
-            <label htmlFor="farmTel">팜 전화번호</label>
-            <button
-              id="tel-certify-req"
-              onClick={AuthNumberHandler}
-              className={style['certify-btn']}
-            >
-              인증번호 요청
-            </button>
-          </div>
+          <label htmlFor="farmTel">팜 전화번호</label>
           <input
             type="text"
             id="farmTel"
@@ -296,61 +338,49 @@ const RegistFarmerPage = ({ page }) => {
           {farmTelHasError && (
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
-          <input
-            type="text"
-            id="tel-cert-num"
-            placeholder={'인증번호를 입력해 주세요.'}
-            disabled
-          />
+
           <Checkbox
             checked={myFarmTel}
             onChange={setMyFarmTel}
           >
-            기본 전화번호로 설정하기
+            <span>기본 전화번호로 설정하기</span>
           </Checkbox>
-          {/* {farmTelHasError && (
-            <p className={style['error-text']}>phone 인증번호를 입력하세요.</p>
-          )} */}
         </div>
 
         <div className={farmAddressStyles}>
           <div className={style.certify}>
             <label htmlFor="farmAddress">팜 주소</label>
             <button
-              id="find-address-code"
               className={style['certify-btn']}
               onClick={onClicktoggleAddressModal}
             >
-              우편번호 찾기
+              주소 찾기
             </button>
           </div>
 
           <input
             type="text"
-            id="farm-address-road"
             name="farmAddress"
-            // value={postcodeAddresss || farmerInfo.registrationNum}
-            onChange={farmAddressChangeHandler}
-            onBlur={farmAddressBlurHandler}
+            value={postcodeAddress}
+            // onChange={farmAddressChangeHandler}
+            // onBlur={farmAddressBlurHandler}
             placeholder={'도로명 주소'}
             disabled
           />
           <input
             type="text"
-            id="farm-address-detail"
-            name={farmDetailAddressValue}
-            value={formDatas.farmDetailAddress}
-            onChange={farmDetailAddressChangeHandler}
-            onBlur={farmDetailAddressBlurHandler}
+            name="farmAddressDetail"
+            value={farmAddressDetailValue}
+            onChange={farmAddressDetailChangeHandler}
+            onBlur={farmAddressDetailBlurHandler}
             placeholder={'상세 주소를 입력해 주세요.'}
           />
         </div>
 
         <div className={registrationNumStyles}>
           <div className={style.certify}>
-            <label htmlFor="tel">사업자 등록번호</label>
+            <label htmlFor="registrationNum">사업자 등록번호</label>
             <button
-              id="tel-certify-req"
               className={style['certify-btn']}
               onClick={registrationNumCheckHandler}
             >
@@ -359,11 +389,10 @@ const RegistFarmerPage = ({ page }) => {
           </div>
           <input
             type="text"
-            id="tel"
             name="registrationNum"
-            // value={registrationValue}
-            // onChange={registrationNumChangeHandler}
-            // onBlur={registrationNumBlurHandler}
+            value={registrationNumValue}
+            onChange={registrationNumChangeHandler}
+            onBlur={registrationNumBlurHandler}
             placeholder={'사업자 등록번호를 입력해 주세요.'}
           />
           <p className={style['error-text']}>{regiNumMsg}</p>
@@ -373,7 +402,7 @@ const RegistFarmerPage = ({ page }) => {
           <label htmlFor="farmAccountNum">계좌번호</label>
           <select
             id="bank-select"
-            name="farmAccountNum"
+            name="farmBank"
             onChange={selectHandler}
             value={selected}
           >
@@ -388,8 +417,9 @@ const RegistFarmerPage = ({ page }) => {
           </select>
           <input
             type="text"
-            id="farm-accountno"
-            name="farmBank"
+            name="farmAccountNum"
+            value={farmAccountNumValue}
+            onChange={farmAccountNumChangeHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
         </div>
@@ -400,6 +430,8 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farm-interest"
             name="farmInterest"
+            value={farmInterestValue}
+            onChange={farmInterestChangeHandler}
             placeholder={'예) #토마토 #바나나 #사과'}
           />
 
@@ -414,7 +446,6 @@ const RegistFarmerPage = ({ page }) => {
         </div>
 
         <button
-          id="join"
           className={style['join-btn']}
           disabled={!formIsValid}
           onClick={RegistHandler}
@@ -422,6 +453,7 @@ const RegistFarmerPage = ({ page }) => {
           완료
         </button>
       </Form>
+      {isPostcodeModal && <Postcode />}
     </RegistSection>
   );
 };

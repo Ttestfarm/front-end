@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './style/QuotStatus.css';
 import Pagination from './Pagination';
 
-const CompletePayment = () => {
+const OrderList = () => {
   // const [quotList, setQuotList] = useState([]);
   const quotList = [
     {
@@ -70,4 +71,8 @@ const CompletePayment = () => {
   );
 };
 
+<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/OrderList.js
+export default OrderList;
+=======
 export default CompletePayment;
+>>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/CompletePayment.js

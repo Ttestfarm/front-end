@@ -36,6 +36,7 @@
 .list a:hover,
 .list a.active {
   color: var(--color-highlight);
+  font-size: large;
   /* text-decoration: underline; */
 }
 

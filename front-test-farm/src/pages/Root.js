@@ -11,7 +11,6 @@ import { isErrorModalAtom, isSuccessModalAtom } from './../recoil/Atoms';
 const RootLayout = ({ children }) => {
   const token = useLoaderData();
   const submit = useSubmit();
-  
 
   useEffect(() => {
     console.log('root!');
@@ -28,8 +27,6 @@ const RootLayout = ({ children }) => {
       submit(null, { action: '/logout', method: 'post' });
     }, tokenDuration); // 백엔드에서 토큰 만료가  1시간 설정되있으니까
   }, [token, submit]);
-
-
 
   //성공/실패 모달 관련 설정
   const [isSuccessModal, setIsSuccessModal] =
@@ -64,7 +61,7 @@ const RootLayout = ({ children }) => {
           message={isErrorModal.message}
         />
       )}
-      <main>
+      <main style={{ marginTop: '80px' }}>
         <Outlet />
       </main>
     </>

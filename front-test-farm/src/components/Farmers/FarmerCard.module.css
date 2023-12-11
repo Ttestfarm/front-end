@@ -1,0 +1,65 @@
+.farmer-card {
+  background-color: #fefcf4;
+  border: 5px solid #75786c;
+  border-radius: 10px;
+  width: 300px;
+  height: 430px;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  font-weight: 500;
+  margin: 22px;
+}
+
+.card-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.image-container {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  flex-shrink: 0;
+}
+
+.info {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0px;
+}
+
+.farmname,
+.farmaddress,
+.category {
+  font-size: 20px;
+  /* font-weight: 500; */
+}
+.card-details {
+  margin-top: 27px;
+}
+.farmaddress {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.category {
+  margin-bottom: 42px;
+}
+.detail {
+  display: inline-block;
+  background-color: #2b331d;
+  color: #ffffff;
+  border: none;
+  height: 30px;
+  width: 90px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 15px;
+  margin-bottom: 0px;
+}

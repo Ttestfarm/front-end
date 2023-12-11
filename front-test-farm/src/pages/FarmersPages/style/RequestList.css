@@ -1,0 +1,137 @@
+.container {
+  width: 90%;
+  margin-top: 150px;
+  margin: 150px auto 0px auto;
+
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.request-box {
+  width: 90%;
+  height: 200px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 24px;
+  border: 3px solid #75786c;
+  background: #fefcf4;
+
+  font-weight: 700;
+}
+
+.warning-text {
+  text-align: center;
+  width: 600px;
+  margin-bottom: 30px;
+  padding: 5px;
+
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: #fefcf4;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.request-content {
+  margin-left: 70px;
+}
+
+.request-content p:not(:first-of-type) {
+  margin-left: 50px;
+}
+
+.request-content span {
+  font-weight: 400;
+}
+
+.request-btn {
+  text-align: center;
+  margin-right: 30px;
+}
+
+.request-btn button {
+  text-align: center;
+  width: 200px;
+  height: 55px;
+  margin: 15px 15px 25px 15px;
+
+  border-radius: 10px;
+  background: #49680d;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.request-btn p {
+  margin: 0;
+}
+
+.a {
+  font-size: 20px;
+  color: #FFF;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #49680D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+/* .dropdown:hover .dropbtn {background-color: #49680D;} */

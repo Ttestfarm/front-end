@@ -1,25 +1,15 @@
 * {
   box-sizing: border-box;
-  font-family: Inter;
-}
-.row {
-  width: 800px;
 }
 
-/* 공통스타일 */
 input[type="text"],
 select,
 textarea {
-  width: 400px;
+  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 4px;
   resize: vertical;
-  background: #fff;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 }
 
 input[type="text"] {
@@ -32,25 +22,19 @@ label {
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
-/* 버튼스타일 */
-.rewrite,
-.reg,
-.back {
-  width: 150px;
-  height: 50px;
-  text-align: center;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border-radius: 20px;
-  cursor: pointer;
-}
-.reg {
-  background: #49680d;
-  color: rgba(255, 255, 255, 0.87);
+
+input[type="submit"] {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px 20px;
   border: none;
-  margin: 0 53px;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
 }
 .rewrite,
 .back {
@@ -65,93 +49,30 @@ label {
   background: rgba(254, 252, 244, 0.8);
   border-radius: 24px;
   border: 5px solid #75786c;
-  padding: 100px;
-}
-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-/* 레이아웃관련 */
-.col1,
-.col11 label {
-  font-size: 25px;
-}
-.col1 {
-  line-height: normal;
-}
-.col1,
-.col11 {
-  float: left;
-  width: 40%;
-  margin-top: 6px;
-  font-style: normal;
-  font-weight: 700;
-  padding-right: 70px;
-  padding-left: 30px;
-}
-.col111 {
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
+  padding: 20px;
+  /* padding-left: ; */
+  width: 1000px;
 }
 
-.col2 {
-  float: right;
-  width: 60%;
+.col-25 {
+  float: left;
+  width: 28.5%;
   margin-top: 6px;
-  padding-top: 0.5em;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  /* padding-right: 85px; */
+}
+
+.col-75 {
+  float: left;
+  width: 71.5%;
+  margin-top: 6px;
 }
 
 .row::after {
   content: "";
   display: table;
   clear: both;
-}
-
-.radioStyle span {
-  width: 130px;
-  height: 30px;
-  font-size: 18px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  border: 1px solid #49680d;
-  color: #49680d;
-  text-align: center;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  display: flex;
-}
-
-.radioStyle [type="radio"]:checked + span {
-  background: #49680d;
-  color: #fff;
-  font-weight: 700;
-}
-
-.radioStyle [type="radio"] {
-  display: none;
-}
-
-.input[type="file"]::file-selector-button {
-  width: 130px;
-  height: 30px;
-  border-radius: 5px;
-  border: none;
-  background: #49680d;
-  color: #fff;
-  text-align: center;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  cursor: pointer;
-  &:hover {
-    color: #fff;
-  }
-}
-.buttons {
-  text-align: center;
 }

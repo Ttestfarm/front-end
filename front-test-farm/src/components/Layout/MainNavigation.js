@@ -1,11 +1,54 @@
-import React, { Fragment } from "react";
-import { NavLink, useRouteLoaderData } from "react-router-dom";
+import React, { Fragment, useEffect } from "react";
+import { NavLink, Link, Form } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
-import style from "./styles/MainNavigation.module.css";
+import style from "./MainNavigation.module.css";
+import { motion } from "framer-motion";
+import { useRecoilState } from "recoil";
+import { isErrorModalAtom, tokenAtom, userInfoAtom } from "../../recoil/Atoms";
+import * as API from "../../api";
 
 const MainNavigation = (props) => {
-  const token = useRouteLoaderData("root");
+  const [token, setToken] = useRecoilState(tokenAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+  }, []);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        // 백엔드 서버 안킨 상태에서 토큰 있으면 실행되는걸로 바꿔둠
+        if (token) {
+          const result = await API.get("/login/userInfo");
+          setUserInfo(result.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserInfo();
+  }, [token]);
+
+  const logoutHandler = () => {
+    if (token) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("expiration");
+      setUserInfo("");
+      window.location.reload();
+    } else {
+      setIsErrorModal({
+        state: true,
+        message: "로그아웃에 실패하였습니다.",
+      });
+    }
+  };
+
   return (
     <Fragment>
       <header className={style.header}>
@@ -23,7 +66,7 @@ const MainNavigation = (props) => {
             </li>
             <li>
               <NavLink
-                to="/"
+                to="/matching"
                 className={({ isActive }) =>
                   isActive ? style.active : undefined
                 }
@@ -33,37 +76,68 @@ const MainNavigation = (props) => {
             </li>
             <li>
               <NavLink
-                to="/"
+                to="/findfarmer"
                 className={({ isActive }) =>
                   isActive ? style.active : undefined
                 }
               >
-                못난이 마켓
+                파머 찾기
               </NavLink>
             </li>
+            {token && (
+              <li>
+                <NavLink
+                  to="/mypage"
+                  className={({ isActive }) =>
+                    isActive ? style.active : undefined
+                  }
+                >
+                  마이 페이지
+                </NavLink>
+              </li>
+            )}
+            {token && (
+              <li>
+                <NavLink
+                  to="/farmer"
+                  className={({ isActive }) =>
+                    isActive ? style.active : undefined
+                  }
+                >
+                  파머 페이지
+                </NavLink>
+              </li>
+            )}
+          </ul>
+        </nav>
+
+        <nav>
+          <ul className={style.list}>
+            <li>{token && <span>{userInfo?.userName} 님</span>}</li>
             <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? style.active : undefined
-                }
-              >
-                마이 페이지
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? style.active : undefined
-                }
-              >
-                파머 페이지
-              </NavLink>
+              {!token ? (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 500 }}
+                  className={style.button}
+                >
+                  <Link to="/login">로그인</Link>
+                </motion.button>
+              ) : (
+                <Form action="/logout">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 500 }}
+                    className={style.button}
+                    onClick={logoutHandler}
+                  >
+                    로그아웃
+                  </motion.button>
+                </Form>
+              )}
             </li>
           </ul>
         </nav>
-        <button className={style.button}>로그인</button>
       </header>
     </Fragment>
   );

@@ -1,0 +1,21 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  color: var(--color-main);
+}
+
+.checkbox label {
+  margin-left: 8px;
+  align-items: center;
+  flex-direction: row;
+}
+.checkbox input[type='checkbox'] {
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+}
+.checkbox p {
+  font-size: small;
+  margin-left: 4px;
+  color: rgb(73, 111, 163);
+}

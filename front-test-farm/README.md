@@ -1,10 +1,21 @@
 # React 공유 방법
-1. 상단의 Fork를 이용해 (auto main 체크 해제) 내(본인) Repository로 복사
-2. 자신의 로컬(내 PC)에 원하는 위치(VS Cdoe에서 React 자주 사용하는 위치 추천)에 clone
-3. VS Code에 Terminal(cmd)로 위에서 clone한 위치로 이동 (이동 명령어 cd ~)
-4. 명령어 ***npm install*** 입력 하면 node_modules 이 다운로드
+-node 버전 v16.20.2
 
-## 유의사항
-1. 현재 Terminal이 PowerShell은 아닌지 확인
-2. 현재 위치 확인
-3. node.js Version 확인(v16.20.2) version이 맞지 않으면 재설치 추천
+#1. 회원가입 
+- 가입절차의 최소화를 위해 로컬 로그인으로 가입 시 이메일 중복확인,이름, 비밀번호 입력만으로 가입 
+- 이메일, 비밀번호 중복확인 등 유효성 검사 후 회원 가입 
+- 양식 제출 후 input 입력 값 reset
+
+#2. 로그인 
+- 소셜로그인 (카카오, 네이버) 가입 시 자동 회원가입 및 로그인으로 진행 
+- 이메일 입력 input 창 오토 포커싱
+- 통신 진행 중인 경우 UI로 구현 => Submitting... 
+- form 제출 후 
+ 
+# . 에러페이지
+- useRouteError() : loader 에서 throw new Response로 발생시킨 error data 를 받아올 수 있다. 
+
+# 모달 
+- backdrop 클릭시 모달 창 닫힐 수 있게 핸들러 함수 전달하기 해야됩니다!
+
+- 

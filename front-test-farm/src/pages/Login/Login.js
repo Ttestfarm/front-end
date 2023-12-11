@@ -7,7 +7,6 @@ import naver from '../../assets/naver.png';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
-import axios from 'axios';
 
 const LoginPage = () => {
   const [, setEmail] = useState('');
@@ -64,9 +63,7 @@ const LoginPage = () => {
       }
       const token = response.headers['authorization'];
       console.log(token);
-      const userInfo = response.data.userInfo;
 
-      console.log('1', userInfo);
       //토큰 유효시간 설정
       const expiration = new Date();
       expiration.setHours(expiration.getHours() + 1);
@@ -77,9 +74,10 @@ const LoginPage = () => {
       // setUserInfo(userInfo);
       navigate('/');
     } catch (error) {
+      console.log('12', error);
       setIsErrorModal({
         state: true,
-        message: error.response,
+        message: error.response.data,
       });
     }
   };

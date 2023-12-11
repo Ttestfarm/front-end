@@ -2,19 +2,33 @@ import React, { useEffect, useState } from 'react';
 import './style/QuotForm.css';
 import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
+import axios from 'axios';
 
 
 const QuotForm = () => {
   const request = useParams();
+  const [quot, setQuot] = useState({
+    'requestId': `${request.requestId}`,
+    'farmerId': '',
+    'product': `${request.requestProduct}`,
+    'price': '',
+    'comment': '',
+    'picture': '',
+  });
+  const selectImg = null;
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
-  const selectImg = null;
 
-  useEffect(() => {
-    console.log(request.requestId);
-    console.log(request.requestProduct);
-  }, []);
+  const sendQuot = (data) => {
+    // setQuot = {}
+    console.log(data);
+    // axios.post('http://localhost:8090/regquot', quot)
+    //   .then(res =>
+    //     console.log(res))
+    //   .catch(err =>
+    //     console.log(err))
+  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -80,8 +94,8 @@ const QuotForm = () => {
           )}
         </div>
         <div className='quto-form-btns'>
-          <button className='quto-form-btn'><Link className='a' to={'/uglyrequestlist'}>견석서 보내기</Link></button>
-          <button className='quto-form-btn'><Link className='a' to={'/uglyrequestlist'}>돌아가기</Link></button>
+          <button className='quto-form-btn'><Link className='a' onClick={sendQuot()}>견석서 보내기</Link></button>
+          <button className='quto-form-btn'><Link className='a' to={'/requestlist'}>돌아가기</Link></button>
         </div>
       </div>
 

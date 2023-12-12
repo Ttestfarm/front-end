@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "logout", action: logoutAction },
       {
-        path: "/findfarmer?",
+        path: "findfarmer",
         element: <FindFarmerRootLayout />,
         children: [
           {

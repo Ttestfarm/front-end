@@ -11,7 +11,6 @@ const FarmerCard = ({ farmer }) => {
     height: '150px',
   };
 
-  console.log(farmer);
 
   return (
     <div className={styles['farmer-card']}>

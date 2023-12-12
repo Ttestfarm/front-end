@@ -40,7 +40,7 @@ const MainNavigation = (props) => {
       localStorage.removeItem("token");
       localStorage.removeItem("expiration");
       setUserInfo("");
-      window.location.reload();
+      window.location.href = "/";
     } else {
       setIsErrorModal({
         state: true,

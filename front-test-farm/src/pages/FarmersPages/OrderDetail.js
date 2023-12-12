@@ -1,27 +1,50 @@
-import React from 'react';
-import './style/OrderDetail.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import './style/OrderDeatil.css';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const OrderDetail = () => {
-  const quot = {
-    Quotation_number: 89822,
-    product_name: '마늘쫑',
-    quantity: 3,
-    total_price: 30000,
-    request_name: '김덕배',
-    request_number: '010-9643-2948',
-    request_address: ' 서울 금천구 가산디지털1로 70 ',
-    state: '결제완료',
-    date: '2023.11.21',
-    request_comment: '문앞에놓아주세요',
+  const [ord, setOrd] = useState({});
+  const farmerId = 1;
+  const { ordersId, type } = useParams();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [cancelText, setCancelText] = useState();
+
+  useEffect(() => {
+    axios.get(`http://localhost:8090/farmer/orderdetail/${farmerId}/${ordersId}/${type}`)
+      .then(res => {
+        setOrd(res.data);
+      }).catch((err) => {
+        console.log(err);
+      })
+  }, []);
+
+  const changeCancelText = () => {
+    setCancelText();
+  }
+
+  const openModal = () => {
+    setModalOpen(true);
+    // document.getElementById("myModal").style.display = "block";
+  };
+  
+  const closeModal = () => {
+    setModalOpen(false);
+    // document.getElementById("myModal").style.display = "none";
+  };
+
+  const handleOutsideClick = (event) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
   };
 
   return (
     <div className="compleate-detail-form">
       <div className="compleate-detail-form-header">
-        <h2>주문번호 {quot.Quotation_number}</h2>
+        <h2>주문번호 {ord.ordersId}</h2>
         <span>
-          {quot.state} {quot.date}
+          {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.date}
         </span>
       </div>
       <hr />
@@ -29,15 +52,23 @@ const OrderDetail = () => {
         <h3>배송정보</h3>
         <p>
           <span>수령인</span>
-          <span>{quot.request_name}</span>
+          <span>{ord.name}</span>
         </p>
         <p>
           <span>연락처</span>
-          <span>{quot.request_number}</span>
+          <span>{ord.tel}</span>
         </p>
         <p>
           <span>배송주소</span>
-          <span>{quot.request_address}</span>
+          <span>{ord.address}</span>
+        </p>
+        <p>
+          <span>품목</span>
+          <span>{ord.product}</span>
+        </p>
+        <p>
+          <span>수량</span>
+          <span>{ord.quantity}kg</span>
         </p>
       </div>
       <hr />
@@ -45,7 +76,7 @@ const OrderDetail = () => {
         <h3>배송메모</h3>
         <p>
           <span>수령장소</span>
-          <span>{quot.request_comment}</span>
+          <span>{ }</span>
         </p>
       </div>
       <hr />
@@ -53,27 +84,44 @@ const OrderDetail = () => {
         <h3>결제정보</h3>
         <p>
           <span>결제수단</span>
-          <span>{}</span>
+          <span>{ord.paymentBank}</span>
         </p>
         <p>
           <span>상품금액</span>
-          <span>{}</span>
+          <span>{ord.price}</span>
         </p>
         <p>
           <span>배송비</span>
-          <span>{}</span>
+          <span>{ord.delivery === 0 ? "무료" : ord.delivery}</span>
         </p>
         <p>
           <h3>총 결제금액</h3>
-          <span>{}</span>
+          <span>{ord.paymentPrice}</span>
         </p>
       </div>
       <hr />
       <div className="compleate-detail-form-btns">
         <button className="compleate-detail-form-btn">
-          <Link to={'/completepayment'}>목록으로</Link>
+          <Link to={'/orderList'}>목록으로</Link>
         </button>
-        <button className="compleate-detail-form-btn">판매 취소</button>
+        <button className="compleate-detail-form-btn" id="myBtn" onClick={openModal}>판매 취소</button>
+        
+        {isModalOpen && (
+          <div id="myModal" className="modal" onClick={handleOutsideClick}>
+            {/* 모달 내용 */}
+            <div className="modal-content">
+              <span className="close" onClick={closeModal}>&times;</span>
+              <h2>판매 취소</h2>
+              취소 사유 : 
+              <input type='text' />
+              <div>
+                {/* <button onClick={handleOutsideClick}>닫기</button> */}
+                <button>확인</button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
       <div className="compleate-detail-form-notice">
         <span>
@@ -84,8 +132,4 @@ const OrderDetail = () => {
   );
 };
 
-<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/OrderDetail.js
 export default OrderDetail;
-=======
-export default CompleatePaymentDetail;
->>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/CompleatePaymentDetail.js

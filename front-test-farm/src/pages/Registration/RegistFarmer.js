@@ -72,11 +72,11 @@ const RegistFarmerPage = ({ page }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (page === 'reg-farmer' && userInfo) {
-      navigate('/farmers');
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (page === 'reg-farmer') {
+  //     navigate('/farmers');
+  //   }
+  // }, [userInfo]);
 
   useEffect(() => {
     if (page === 'modify-farm' && !localStorage.getItem('token')) {

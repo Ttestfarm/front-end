@@ -1,15 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FarmerCard from '../../components/Farmers/FarmerCard';
-import style from './FarmersList.module.css';
+import style from './FindFarmer.module.css';
 import * as API from '../../api/index';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom } from '../../recoil/Atoms';
-import queryString from 'query-string';
 
 import axios from 'axios';
 
-const FindFarmerPage = ({ farmers, location }) => {
+const FindFarmerPage = ({ farmers }) => {
   const [keyword, setKeyword] = useState('all');
   const [sortType, setSortType] = useState('latest');
   const [page, setPage] = useState(1);
@@ -17,7 +16,6 @@ const FindFarmerPage = ({ farmers, location }) => {
 
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
-  // const query = queryString.parse(location.farmerList);
   //파머 리스트 불러오기
   useEffect(() => {
     const getFarmerList = async () => {
@@ -43,38 +41,26 @@ const FindFarmerPage = ({ farmers, location }) => {
     setKeyword(e.target.value);
   };
 
-  //키워드 초기화
-  const keywordResetHandler = (e) => {
+  //초기화
+  const keywordResetHandler = async () => {
     setKeyword('all');
-  };
-
-  //키워드 입력 시 검색
-  const onClickKeywordHandler = async (keyword) => {
     try {
       const response = await API.get(
-        //`findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-        'findfarmer',
-        { keyword, sortType, page }
+        '/findfarmer?keyword=all&sortType=latest&page=1'
       );
-      setFarmerList(response?.data?.farmerList);
-      if (response.data.farmerList.length === 0) {
-        setIsErrorModal({
-          state: true,
-          message: '검색된 항목이 없습니다.',
-        });
-      }
+      setFarmerList(response.data.farmerList);
     } catch (error) {
-      setIsErrorModal({
-        state: true,
-        message: error.message,
-      });
+      console.log(error);
     }
   };
 
-  const paramsChangeHandler = async (keyword, sortType, page) => {
+  //키워드 입력 시 검색
+  const onClickKeywordHandler = async () => {
     try {
       const response = await API.get(
         `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
+        // 'findfarmer',
+        // { keyword, sortType, page }
       );
       setFarmerList(response.data.farmerList);
     } catch (error) {
@@ -84,24 +70,63 @@ const FindFarmerPage = ({ farmers, location }) => {
       });
     }
   };
+
+  // const paramsChangeHandler = async () => {
+  //   try {
+  //     const response = await API.get(
+  //       `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
+  //     );
+  //     setFarmerList(response.data.farmerList);
+  //   } catch (error) {
+  //     setIsErrorModal({
+  //       state: true,
+  //       message: error.message,
+  //     });
+  //   }
+  // };
+
   //sorting 변경
   const onClickRating = async () => {
-    setSortType('rating');
-    paramsChangeHandler();
+    try {
+      const response = await API.get(
+        `/findfarmer?keyword=${keyword}&sortType=rating&page=${page}`
+      );
+      setFarmerList(response.data.farmerList);
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+    }
+    // setSortType('rating');
+    // paramsChangeHandler();
   };
   const onClickfollowCount = async () => {
-    setSortType('followCount');
-    paramsChangeHandler();
+    try {
+      const response = await API.get(
+        `/findfarmer?keyword=${keyword}&sortType=followCount&page=${page}`
+      );
+
+      setFarmerList(response.data.farmerList);
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+    }
+    // setSortType('followCount');
+    // paramsChangeHandler();
   };
+
   //최신 순 클릭 시
   const onClickFarmerReload = async () => {
     try {
       setSortType('latest');
 
       const response = await API.get(
-        `findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
+        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
       );
-      setFarmerList(response?.data);
+      setFarmerList(response.data.farmerList);
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +150,7 @@ const FindFarmerPage = ({ farmers, location }) => {
           />
           <button
             className={style['button']}
-            onClick={paramsChangeHandler}
+            onClick={onClickKeywordHandler}
           >
             검색
           </button>
@@ -145,9 +170,9 @@ const FindFarmerPage = ({ farmers, location }) => {
         </div>
 
         <div>
-          <Link to="reg-farmer">
-            <button>파머 등록</button>
-          </Link>
+          <button>
+            <Link to="reg-farmer">파머 등록</Link>
+          </button>
         </div>
       </section>
       {/* {groupedCards.map((group, index) => (
@@ -162,7 +187,7 @@ const FindFarmerPage = ({ farmers, location }) => {
                 farmer={farmer}
               />
             ))
-          : '등록된 파머가 없습니다.'}
+          : '파머 목록이 없습니다.'}
       </div>
     </Fragment>
   );

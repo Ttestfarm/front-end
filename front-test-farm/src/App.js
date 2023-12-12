@@ -15,6 +15,9 @@ import ModifyFarmPage from './pages/ModifyFarm';
 import { tokenLoader } from './util/auth';
 import { action as logoutAction } from './pages/Logout';
 
+import RequestList from './pages/FarmersPages/RequestList';
+import QuotForm from './pages/FarmersPages/QuotForm';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -56,6 +59,14 @@ const router = createBrowserRouter([
         path: 'logout',
         action: logoutAction,
       },
+      {
+        path: 'requestlist',
+        element: <RequestList />
+      },
+      {
+        path: 'quotform',
+        element: <QuotForm />
+      }
     ],
   },
 ]);

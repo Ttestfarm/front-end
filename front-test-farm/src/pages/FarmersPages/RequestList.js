@@ -14,6 +14,7 @@ const RequestList = () => {
     axios
       .get(`http://localhost:8090/farmer/farmInterest`, { params: { farmerId: 1 } })
       .then((res) => {
+        console.log(res);
         setReqList([...res.data.reqList]);
         setInterestList([...res.data.interestList]);
         setSelInt(res.data.interestList[0]);

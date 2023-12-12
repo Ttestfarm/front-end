@@ -1,4 +1,4 @@
-import style from './styles/PageContent.module.css';
+import style from './PageContent.module.css';
 
 function PageContent({ title, children }) {
   return (

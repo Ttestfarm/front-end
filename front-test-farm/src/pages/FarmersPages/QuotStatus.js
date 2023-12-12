@@ -1,36 +1,84 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style/QuotStatus.css';
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
 import Pagination from './Pagination';
+import axios from 'axios';
+
 
 const QuotStatus = () => {
-  // const [quotList, setQuotList] = useState([]);
-  const quotList = [
-    {
-      Quotation_number: 12345,
-      product_name: '마늘쫑',
-      quantity: 3,
-      total_price: 30000,
-      address: ' 서울 가산구 가산동',
-      Quotation_status: '대기중',
-    },
-    {
-      Quotation_number: 12346,
-      product_name: '사과',
-      quantity: 5,
-      total_price: 60000,
-      address: ' 대전 대덕구 대덕로',
-      Quotation_status: '대기중',
-    },
-  ];
+  const [quotList, setQuotList] = useState([]);
+  const [farmerId, SetFarmerId] = useState(1);
+  const [page, setPage] = useState(1);
+  // 0 : 견적서 취소, 1 : 대기중, 2 : 기간 만료, 3 : 결제완료
+  const [state, SetState] = useState(1);
+  const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8090/farmer/quotlist/${farmerId}/${state}/${page}`)
+      .then((res) => {
+        setQuotList([...res.data.quotList]);
+        // setPage([...res.data.pageInfo]);
+        console.log(res.data.quotList);
+        // setQuotList([...res.data.reqList]);
+
+      }).catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const changeState = (state) => {
+    SetState(state);
+    axios.get(`http://localhost:8090/farmer/quotlist/${farmerId}/${state}/${page}`)
+    .then((res) => {
+      setQuotList([...res.data.quotList]);
+      // setPage([...res.data.pageInfo]);
+      console.log(res.data.quotList);
+      // setQuotList([...res.data.reqList]);
+      setCancelList([]);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const addCancelList = (Id) =>  {
+    const index = cancelList.indexOf(Id);
+    if(index !== -1) {
+      cancelList.splice(index, 1);
+    } else {
+      setCancelList([...cancelList, Id]);
+    }
+  }
+
+  const cancelQuot = () => {
+    try {
+      const response = axios.post(`http://localhost:8090/farmer/quotdelete`, { "farmerId":farmerId, "ids":cancelList },
+      {headers: { "Content-Type": `application/json`}})
+      console.log("삭제 성공");
+    } catch(err) {
+      console.log(err);
+      console.log("삭제 실패");
+    }
+  }
 
   return (
     <div className="quotation-status">
       <div className="quotation-status-header">
-        <button className="quotation-delete-btn">견적서 취소</button>
+        <button className="quotation-delete-btn" onClick={cancelQuot}>견적서 취소</button>
         <span>
           #무분별한 견적서 취소는 서비스 이용에 패널티가 부여됩니다. 주의하세요!
         </span>
+        <div className="dropdown">
+          <button className="dropbtn">
+          {state}
+            </button>
+          <div className="dropdown-content">
+            <a href="#" key="0" onClick={() => changeState("0")}>견적서 취소</a>
+            <a href="#" key="1" onClick={() => changeState("1")}>대기중</a>
+            <a href="#" key="2" onClick={() => changeState("2")}>기간 만료</a>
+            <a href="#" key="3" onClick={() => changeState("3")}>결제 완료</a>
+          </div>
+        </div>
       </div>
       <div className="quotation-list">
         <table>
@@ -43,21 +91,21 @@ const QuotStatus = () => {
             <th>주소</th>
             <th>상태</th>
           </tr>
-          {quotList.length != 0 &&
-            quotList.map((quto) => {
+          {quotList.length > 0 &&
+            quotList.map((quot) => {
               return (
-                <tr key={quto.Quotation_number}>
+                <tr key={quot.quotationId}>
                   <td>
-                    <input type="checkbox" />
+                    <input type="checkbox" onClick={() => addCancelList(quot.quotationId)}/>
                   </td>
                   <td>
-                    <Link to={'/quotdetail'}>{quto.Quotation_number}</Link>
+                    <Link to={`/quotdetail/${quot.quotationId}`}>{quot.quotationId}</Link>
                   </td>
-                  <td>{quto.product_name}</td>
-                  <td>{quto.quantity}kg</td>
-                  <td>{quto.total_price}</td>
-                  <td>{quto.address}</td>
-                  <td>{quto.Quotation_status}</td>
+                  <td>{quot.product}</td>
+                  <td>{quot.quantity}kg</td>
+                  <td>{quot.price}</td>
+                  <td>{quot.address}</td>
+                  <td>{quot.state}</td>
                 </tr>
               );
             })}
@@ -68,8 +116,4 @@ const QuotStatus = () => {
   );
 };
 
-<<<<<<< HEAD
 export default QuotStatus;
-=======
-export default QuotationStatus;
->>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4

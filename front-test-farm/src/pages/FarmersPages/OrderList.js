@@ -1,35 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './style/QuotStatus.css';
 import Pagination from './Pagination';
+import axios from 'axios';
 
 const OrderList = () => {
-  // const [quotList, setQuotList] = useState([]);
-  const quotList = [
-    {
-      Quotation_number: 89822,
-      product_name: '마늘쫑',
-      quantity: 3,
-      total_price: 30000,
-      name: '김덕배',
-      number: '010-9643-2948',
-      address: ' 서울 금천구 가산디지털1로 70 ',
-    },
-    {
-      Quotation_number: 99823,
-      product_name: '사과',
-      quantity: 5,
-      total_price: 60000,
-      name: '나종로',
-      number: '010-1234-2552',
-      address: '서울 종로구 종로 1 교보생명빌딩 지하1층',
-    },
-  ];
+  const [ordList, setOrdList] = useState([]); 
+  const farmerId = 1;
+  const [type, setType] = useState("1"); // 1: 매칭, 2: 주문
+  const page = 1;
+  const [isOpen, setIsOpen] = useState(false);
+  
+
+
+  const onClickButton = () => {
+    setIsOpen(true);
+  };
+
+  useEffect(() => {
+    axios.get(`http://localhost:8090/farmer/orderlist/${farmerId}/${type}/${page}`)
+    .then(res => {
+      setOrdList([...res.data.ordersList]);
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
+
+  const changeType = (idx) => {
+    if(idx === type) {
+      alert("이미 선택");
+    } else {
+      console.log("here");
+      setType(idx);
+      let type = idx;
+      let page = 1;
+      axios.get(`http://localhost:8090/farmer/orderlist/${farmerId}/${type}/${page}`)
+    .then(res => {
+      setOrdList([...res.data.ordersList]);
+    }).catch(err => {
+      console.log(err);
+    })
+    }
+  };
+
   return (
     <div className="quotation-status">
       <div className="quotation-status-header">
-        <button className="quotation-delete-btn">발송 완료</button>
         <span>#배송 완료 된 견적서는 배송 현황에서 볼 수 있습니다!</span>
+        <div className="dropdown">
+          <button className="dropbtn">
+          {type}
+            </button>
+          <div className="dropdown-content">
+            <a href="#" key="1" onClick={() => changeType("1")}>매칭</a>
+            <a href="#" key="2" onClick={() => changeType("2")}>주문</a>
+          </div>
+        </div>
       </div>
       <div className="quotation-list">
         <table>
@@ -43,24 +69,28 @@ const OrderList = () => {
             <th>연락처</th>
             <th>주소</th>
           </tr>
-          {quotList.length != 0 &&
-            quotList.map((quto) => {
+          {ordList.length > 0 &&
+            ordList.map((ord) => {
               return (
-                <tr key={quto.Quotation_number}>
+                <tr key={ord.ordersId}>
                   <td>
-                    <input type="checkbox" />
+                    <button className="quotation-delete-btn" onClick={onClickButton}>발송</button>
+                    {isOpen && (
+
+                      alert("hello")
+                    )}
                   </td>
                   <td>
-                    <Link to={'/compleatepaymentdetail'}>
-                      {quto.Quotation_number}
+                    <Link to={`/orderdetail/${ord.ordersId}/${type}`}>
+                      {ord.ordersId}
                     </Link>
                   </td>
-                  <td>{quto.product_name}</td>
-                  <td>{quto.quantity}kg</td>
-                  <td>{quto.total_price}</td>
-                  <td>{quto.name}</td>
-                  <td>{quto.number}</td>
-                  <td>{quto.address}</td>
+                  <td>{ord.product}</td>
+                  <td>{ord.quantity}kg</td>
+                  <td>{ord.price}</td>
+                  <td>{ord.name}</td>
+                  <td>{ord.tel}</td>
+                  <td>{ord.address}</td>
                 </tr>
               );
             })}
@@ -71,8 +101,4 @@ const OrderList = () => {
   );
 };
 
-<<<<<<< HEAD:front-test-farm/src/pages/FarmersPages/OrderList.js
 export default OrderList;
-=======
-export default CompletePayment;
->>>>>>> 75d9dc7054cda0add59e549d3186b07b2046aac4:front-test-farm/src/pages/FarmersPages/CompletePayment.js

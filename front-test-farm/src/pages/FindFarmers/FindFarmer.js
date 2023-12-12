@@ -5,7 +5,6 @@ import style from './FarmersList.module.css';
 import * as API from '../../api/index';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom } from '../../recoil/Atoms';
-import queryString from 'query-string';
 
 import axios from 'axios';
 
@@ -17,7 +16,6 @@ const FindFarmerPage = ({ farmers, location }) => {
 
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
-  // const query = queryString.parse(location.farmerList);
   //파머 리스트 불러오기
   useEffect(() => {
     const getFarmerList = async () => {

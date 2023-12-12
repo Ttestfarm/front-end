@@ -73,7 +73,7 @@ const RegistFarmerPage = ({ page }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (page === 'reg-farmer' && userInfo.farmerId !== null) {
+    if (page === 'reg-farmer' && userInfo && userInfo.farmerId !== null) {
       navigate('/farmers');
     }
   }, [userInfo.farmerId]);

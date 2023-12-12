@@ -11,6 +11,7 @@ const FarmerCard = ({ farmer }) => {
     height: '150px',
   };
 
+
   return (
     <div className={styles['farmer-card']}>
       <div className={styles['card-header']}>

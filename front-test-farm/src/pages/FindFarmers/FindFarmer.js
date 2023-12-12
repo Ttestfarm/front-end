@@ -42,49 +42,22 @@ const FindFarmerPage = ({ farmers }) => {
     }
   };
 
-  //키워드 입력 시 검색
-  const onClickKeywordHandler = async () => {
-    try {
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-        // 'findfarmer',
-        // { keyword, sortType, page }
-      );
-      setFarmerList(response.data.farmerList);
-    } catch (error) {
-      setIsErrorModal({
-        state: true,
-        message: error.message,
-      });
-    }
-  };
-
   //params 별로 정렬
   const paramsChangeHandler = async (keyword, sortType, page) => {
     try {
       const response = await API.get(
         `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
       );
+      console.log('1---------');
+      console.log(response.data);
+      console.log('2---------');
+      setSortType(sortType);
       setFarmerList(response.data.farmerList);
     } catch (error) {
       setIsErrorModal({
         state: true,
         message: error.message,
       });
-    }
-  };
-
-  //최신 순 클릭 시
-  const onClickFarmerReload = async () => {
-    try {
-      setSortType('latest');
-
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-      );
-      setFarmerList(response.data.farmerList);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -101,7 +74,7 @@ const FindFarmerPage = ({ farmers }) => {
           />
           <button
             className={style['button']}
-            onClick={onClickKeywordHandler}
+            onClick={() => paramsChangeHandler(keyword, sortType, page)}
           >
             검색
           </button>
@@ -113,7 +86,9 @@ const FindFarmerPage = ({ farmers }) => {
           </button>
         </div>
         <div>
-          <button onClick={onClickFarmerReload}>최신 순</button>
+          <button onClick={() => paramsChangeHandler(keyword, 'latest', page)}>
+            최신 순
+          </button>
           {' | '}
           <button onClick={() => paramsChangeHandler(keyword, 'rating', page)}>
             별점 순

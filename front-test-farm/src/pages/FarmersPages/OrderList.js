@@ -13,7 +13,7 @@ const OrderList = () => {
 
   const [isOpen, setIsOpen] = useState(false); // 발송 Modal
 
-  const key = "OstBNzBg0PI7Tr96ol661A"; // 택배 API key
+  const key = ""; // 택배 API key
   const [company, setCompany] = useState([]); // 택배사 데이터 저장
   const [code, setCode] = useState("00"); // 택배사 코드 저장
   const [invoice, setInvoice] = useState(); // 송장 번호 저장
@@ -72,7 +72,7 @@ const OrderList = () => {
     setIsOpen(false);
   };
 
-  const handleOutsideClick = (event) => { // Modal 위부 클릭 닫기
+  const handleOutsideClick = (event) => { // Modal 외부 클릭 닫기
     if (event.target === event.currentTarget) {
       closeModal();
     }
@@ -101,6 +101,7 @@ const OrderList = () => {
           setCode("00");
           setInvoice("");
           setIsOpen(false);
+          // 페이지 다시 요청
         })
         .catch(err => {
           alert(err.data);
@@ -142,7 +143,7 @@ const OrderList = () => {
                 <button className="quotation-delete-btn" onClick={() => onClickButton(ord.ordersId, ord.product, ord.quantity)}>발송</button>
               </td>
               <td>
-                <Link to={`/orderdetail/${ord.ordersId}/${type}`}>
+                <Link to={`orderdetail/${ord.ordersId}/${type}`}>
                   {ord.ordersId}
                 </Link>
               </td>

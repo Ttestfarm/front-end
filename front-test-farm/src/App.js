@@ -94,7 +94,43 @@ const router = createBrowserRouter([
             index: true,
             element: <FindFarmerPage />,
           },
-],
+          {
+            path: 'modify-farm',
+            element: <RegistFarmerPage page="modify-farm" />
+          },
+          {
+            path: 'requestlist',
+            element: <RequestList />,
+          },
+          {
+            path: 'quotform/:requestId/:requestProduct',
+            element: <QuotForm />,
+          },
+          {
+            path: 'quotstatus',
+            element: <QuotStatus />
+          },
+          {
+            path: 'quotdetail/:quotationId',
+            element: <QuotDetail />
+          },
+          {
+            path: 'orderlist',
+            element: <OrderList />
+          },
+          {
+            path: 'orderlist/orderdetail/:ordersId/:type',
+            element: <OrderDetail />
+          },
+          {
+            path: 'deliverylist',
+            element: <DeliveryList />
+          },
+          {
+            path: 'invoice',
+            element: <Invoice />
+          }
+        ],
       },
       // {
       //   path: '/find-email',
@@ -108,49 +144,9 @@ const router = createBrowserRouter([
       //   path: '/modify-user',
       //   element: <ModifyUserPage />,
       // },
-          {
-            path: '/modify-farm',
-            element: <RegistFarmerPage page="modify-farm" />,
-          },
-          {
-            path: 'logout',
-            action: logoutAction,
-          },
-          {
-            path: '/requestlist',
-            element: <RequestList />,
-          },
-          {
-            path: '/quotform/:requestId/:requestProduct',
-            element: <QuotForm />,
-          },
-          {
-            path: '/quotstatus',
-            element: <QuotStatus />
-          },
-          {
-            path: '/quotdetail/:quotationId',
-            element: <QuotDetail />
-          },
-          {
-            path: '/orderlist',
-            element: <OrderList />
-          },
-          {
-            path: '/orderdetail/:ordersId/:type',
-            element: <OrderDetail />
-          },
-          {
-            path: '/deliverylist',
-            element: <DeliveryList />
-          },
-          {
-            path: '/invoice',
-            element: <Invoice />
-          }
-        ],
-      },
-      ]);
+    ],
+  }
+]);
 function App() {
   return <RouterProvider router={router} />;
 }

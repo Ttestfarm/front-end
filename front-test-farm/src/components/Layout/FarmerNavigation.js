@@ -9,7 +9,7 @@ const FarmerNavigation = () => {
       <ul className={style.list}>
         <li>
           <NavLink
-            to="/farmerpage"
+            to="/farmerpage/requestlist"
             className={({ isActive }) => (isActive ? style.active : undefined)}
             end
           >
@@ -26,7 +26,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/followlist"
+            to="/farmerpage/quotstatus"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             견적서 현황
@@ -34,7 +34,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/modify-user"
+            to="/farmerpage/orderlist"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             결제 완료 현황
@@ -42,7 +42,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/modify-user"
+            to="/farmerpage/deliverylist"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             배송 현황
@@ -50,7 +50,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/modify-user"
+            to="/farmerpage/invoice"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             정산 내역

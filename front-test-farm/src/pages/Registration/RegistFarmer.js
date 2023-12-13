@@ -19,13 +19,8 @@ import {
 
 import { bankOption } from '../../util/payment';
 import { userInfoAtom } from './../../recoil/Atoms';
-// // 유효성 검사 함수
-// const isNotEmpty = (value) =>
-//   /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length >= 2;
-// const isTel = (value) =>
-//   value.trim().match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/) ||
-//   value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
-// const isNotEmptyValue = (value) => value.trim() !== '';
+
+//계좌번호 셀렉트박스 디자인 수정해야합니다!!
 
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -147,7 +142,7 @@ const RegistFarmerPage = ({ page }) => {
   const {
     value: farmAccountNumValue,
     isValid: farmAccountNumIsValid,
-    hasError: farmAccountHasError,
+    hasError: farmAccountNumHasError,
     valueChangeHandler: farmAccountNumChangeHandler,
     inputBlurHandler: farmAccountNumBlurHandler,
     reset: resetfarmAccountNum,
@@ -162,11 +157,17 @@ const RegistFarmerPage = ({ page }) => {
     reset: resetfarmInterest,
   } = useUserInput(val.isNotEmptyValue);
 
+  //이미지
   const onFileChange = (e) => {
     // setFile(e.target.files[0]);
+    //이미지 바꾸면 화면에 출력하기
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
     console.log('file', imageSrc);
+
+    if (e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
 
   //주소찾기 모달 열기
@@ -175,6 +176,7 @@ const RegistFarmerPage = ({ page }) => {
     setIsPostcodeModal((prev) => !prev);
   };
 
+  //사업자등록번호 확인
   const registrationNumCheckHandler = async (e) => {
     e.preventDefault();
     const registrationNum = registrationNumValue;
@@ -211,6 +213,7 @@ const RegistFarmerPage = ({ page }) => {
     farmNameIsValid &&
     farmTelIsValid &&
     farmAddressDetailIsValid &&
+    farmAccountNumIsValid &&
     registrationNum
   ) {
     formIsValid = true;
@@ -223,17 +226,22 @@ const RegistFarmerPage = ({ page }) => {
     const formData = new FormData();
     formData.append('farmName', farmNameValue);
     formData.append('farmTel', farmTelValue);
-    formData.append('myFarmTel', myFarmTel);
+    formData.append('telSelected', myFarmTel);
     formData.append('farmAddress', postcodeAddress);
     formData.append('farmAddressDetail', farmAddressDetailValue);
     formData.append('registrationNum', registrationNumValue);
     formData.append('farmInterest', farmInterestValue);
-    formData.append('farmPixurl', file);
+    if (file !== null) {
+      formData.append('farmPixurl', file.name);
+    }
 
     try {
       if (page === 'reg-farmer') {
         console.log('제출용', formData);
-        const result = await API.post('/reg-farmer', formData);
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+        const result = await API.formPost('/reg-farmer', formData);
         console.log('------------------');
         console.log('result', result);
         // setIsSucessModal({
@@ -279,7 +287,7 @@ const RegistFarmerPage = ({ page }) => {
       ? `${style['form-control']} ${style.invalid}`
       : style['form-control'];
 
-  const farmAccountStyles = farmAccountHasError
+  const farmAccountStyles = farmAccountNumHasError
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
@@ -318,7 +326,7 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="file"
             id="file"
-            name="pixurl"
+            name="file"
             accept="image/*"
             onChange={onFileChange}
             hidden
@@ -421,8 +429,14 @@ const RegistFarmerPage = ({ page }) => {
             name="farmAccountNum"
             value={farmAccountNumValue}
             onChange={farmAccountNumChangeHandler}
+            onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
+          {farmAccountNumHasError && (
+            <p className={style['error-text']}>
+              정산을 위해 계좌입력은 필수사항입니다.
+            </p>
+          )}
         </div>
 
         <div className={style['form-control']}>

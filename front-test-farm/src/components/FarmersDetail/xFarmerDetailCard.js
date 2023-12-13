@@ -1,26 +1,17 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import backBtn from '../../assets/back_btn.png';
 import star from '../../assets/star.png';
 import heart from '../../assets/heart.png';
-import ReviewList from './ReviewList';
-import style from './FarmerDetailCard.module.css';
-const FarmerDetailCard = ({}) => {
-  // farmname, farmaddress, farmername, imageUrl
-  const exampleData = {
-    farmname: '명수팜',
-    farmaddress: '경기 이천시 명수로 112',
-    farmername: '박명수',
-    imageUrl: 'farmer.png', // 이미지 URL을 적절한 것으로 대체해주세요
-    starRating: 4.5,
-    starCount: 200,
-    heartCount: 100,
-  };
 
-  const image = {
-    border: '3px solid #75786c',
-    borderRadius: '50%',
-    width: '200px',
-    height: '200px',
-  };
+import style from './FarmerDetailCard.module.css';
+import { useRecoilValue } from 'recoil';
+import { userInfoAtom } from '../../recoil/Atoms';
+
+const FarmerDetailCard = ({}) => {
+  const userInfo = useRecoilValue(userInfoAtom);
+  const navigate = useNavigate();
+  // farmname, farmaddress, farmername, imageUrl
 
   const {
     farmname,
@@ -34,14 +25,24 @@ const FarmerDetailCard = ({}) => {
 
   return (
     <div className={style.farmerdetailcard}>
-      <button className={style.farmEdit}>팜 정보 수정</button>
-
-      <div className={style.imagewithrating}>
+      <section className={style.btnSection}>
+        <button className={style.farmEdit}>
+          <Link to={`/farmer/modify-farm/${userInfo.farmerId}`}>
+            팜 정보 수정
+          </Link>
+        </button>
+        <button onClick={() => navigate(-1)}>
+          <img
+            src={backBtn}
+            alt="go to back btn"
+          />
+        </button>
+      </section>
+      <section className={style.leftSection}>
         <div className={style.imageContainer}>
           <img
-            src="farmer.png"
-            alt="Farmer Card"
-            style={image}
+            src={farmer.farmPixUrl}
+            alt="farmer"
           />
         </div>
         <div className={style.info}>
@@ -61,7 +62,7 @@ const FarmerDetailCard = ({}) => {
             <span>{heartCount}</span>
           </div>
         </div>
-      </div>
+      </section>
       <div className={style.flexContainer}>
         <div className={style.farmDetails}>
           <div className={style.farmNames}>

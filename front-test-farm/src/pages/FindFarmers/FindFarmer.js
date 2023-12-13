@@ -48,9 +48,7 @@ const FindFarmerPage = ({ farmers }) => {
       const response = await API.get(
         `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
       );
-      console.log('1---------');
-      console.log(response.data);
-      console.log('2---------');
+
       setSortType(sortType);
       setFarmerList(response.data.farmerList);
     } catch (error) {

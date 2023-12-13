@@ -71,7 +71,6 @@ const LoginPage = () => {
       localStorage.setItem('expiration', expiration.toISOString());
       localStorage.setItem('token', token);
       setToken(token);
-      // setUserInfo(userInfo);
       navigate('/');
     } catch (error) {
       console.log('12', error);

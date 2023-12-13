@@ -7,7 +7,7 @@ const OrderDetail = () => {
   const [ord, setOrd] = useState({});
   const farmerId = 1;
   const { ordersId, type } = useParams();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false); // 판매 취소 Modal
   const [cancelText, setCancelText] = useState();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const OrderDetail = () => {
     setModalOpen(true);
     // document.getElementById("myModal").style.display = "block";
   };
-  
+
   const closeModal = () => {
     setModalOpen(false);
     // document.getElementById("myModal").style.display = "none";
@@ -105,14 +105,14 @@ const OrderDetail = () => {
           <Link to={'/orderList'}>목록으로</Link>
         </button>
         <button className="compleate-detail-form-btn" id="myBtn" onClick={openModal}>판매 취소</button>
-        
+
         {isModalOpen && (
           <div id="myModal" className="modal" onClick={handleOutsideClick}>
             {/* 모달 내용 */}
             <div className="modal-content">
               <span className="close" onClick={closeModal}>&times;</span>
               <h2>판매 취소</h2>
-              취소 사유 : 
+              취소 사유 :
               <input type='text' />
               <div>
                 {/* <button onClick={handleOutsideClick}>닫기</button> */}

@@ -30,20 +30,20 @@ const QuotStatus = () => {
   const changeState = (state) => {
     SetState(state);
     axios.get(`http://localhost:8090/farmer/quotlist/${farmerId}/${state}/${page}`)
-    .then((res) => {
-      setQuotList([...res.data.quotList]);
-      // setPage([...res.data.pageInfo]);
-      console.log(res.data.quotList);
-      // setQuotList([...res.data.reqList]);
-      setCancelList([]);
-    }).catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        setQuotList([...res.data.quotList]);
+        // setPage([...res.data.pageInfo]);
+        console.log(res.data.quotList);
+        // setQuotList([...res.data.reqList]);
+        setCancelList([]);
+      }).catch((err) => {
+        console.log(err);
+      });
   };
 
-  const addCancelList = (Id) =>  {
+  const addCancelList = (Id) => {
     const index = cancelList.indexOf(Id);
-    if(index !== -1) {
+    if (index !== -1) {
       cancelList.splice(index, 1);
     } else {
       setCancelList([...cancelList, Id]);
@@ -52,10 +52,10 @@ const QuotStatus = () => {
 
   const cancelQuot = () => {
     try {
-      const response = axios.post(`http://localhost:8090/farmer/quotdelete`, { "farmerId":farmerId, "ids":cancelList },
-      {headers: { "Content-Type": `application/json`}})
+      const response = axios.post(`http://localhost:8090/farmer/quotdelete`, { "farmerId": farmerId, "ids": cancelList },
+        { headers: { "Content-Type": `application/json` } })
       console.log("삭제 성공");
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       console.log("삭제 실패");
     }
@@ -70,8 +70,8 @@ const QuotStatus = () => {
         </span>
         <div className="dropdown">
           <button className="dropbtn">
-          {state}
-            </button>
+            {state}
+          </button>
           <div className="dropdown-content">
             <a href="#" key="0" onClick={() => changeState("0")}>견적서 취소</a>
             <a href="#" key="1" onClick={() => changeState("1")}>대기중</a>
@@ -92,23 +92,22 @@ const QuotStatus = () => {
             <th>상태</th>
           </tr>
           {quotList.length > 0 &&
-            quotList.map((quot) => {
-              return (
-                <tr key={quot.quotationId}>
-                  <td>
-                    <input type="checkbox" onClick={() => addCancelList(quot.quotationId)}/>
-                  </td>
-                  <td>
-                    <Link to={`/quotdetail/${quot.quotationId}`}>{quot.quotationId}</Link>
-                  </td>
-                  <td>{quot.product}</td>
-                  <td>{quot.quantity}kg</td>
-                  <td>{quot.price}</td>
-                  <td>{quot.address}</td>
-                  <td>{quot.state}</td>
-                </tr>
-              );
-            })}
+            quotList.map(quot => (
+              <tr key={quot.quotationId}>
+                <td>
+                  <input type="checkbox" onClick={() => addCancelList(quot.quotationId)} />
+                </td>
+                <td>
+                  <Link to={`/quotdetail/${quot.quotationId}`}>{quot.quotationId}</Link>
+                </td>
+                <td>{quot.product}</td>
+                <td>{quot.quantity}kg</td>
+                <td>{quot.price}</td>
+                <td>{quot.address}</td>
+                <td>{quot.state}</td>
+              </tr>
+            )
+            )}
         </table>
       </div>
       <Pagination />

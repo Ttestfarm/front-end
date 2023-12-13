@@ -12,9 +12,8 @@ import { action as logoutAction } from './pages/Logout';
 
 import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
 import FindFarmerPage from './pages/FindFarmers/FindFarmer';
-import { loader as farmersLoader } from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
-import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
+//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
@@ -53,23 +52,13 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <FindFarmerPage />,
-            loader: farmersLoader,
-          },
-          {
-            path: ':sortType',
-            element: <FindFarmerPage />,
-            loader: farmersLoader,
-          },
-          {
-            path: ':keyword',
-            element: <FindFarmerPage />,
-            loader: farmersLoader,
           },
           {
             path: ':farmerId',
-            id: 'farmer-detail',
-            loader: farmerDetailLoader,
-            children: [{ index: true, element: <FarmerDetailPage /> }],
+            element: <FarmerDetailPage />,
+            // id: 'farmer-detail',
+            // loader: farmerDetailLoader,
+            // children: [{ index: true, element: <FarmerDetailPage /> }],
           },
           {
             path: 'reg-farmer',
@@ -104,7 +93,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <FindFarmerPage />,
-            loader: farmersLoader,
           },
         ],
       },

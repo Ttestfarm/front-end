@@ -1,106 +1,110 @@
-import React, { Suspense } from 'react';
-import {
-  useRouteLoaderData,
-  json,
-  redirect,
-  defer,
-  Await,
-} from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
+import React, { Fragment, useState, useEffect } from 'react';
+import style from './FarmerDetail.module.css';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import backBtn from '../../assets/back_btn.png';
+import star from '../../assets/star.png';
+import heart from '../../assets/heart.png';
+
+import ProductsList from '../../components/FarmersDetail/ProductsList';
+import ReviewList from '../../components/FarmersDetail/ReviewList';
+
+import { useRecoilState } from 'recoil';
+import { userInfoAtom } from './../../recoil/Atoms';
 
 import * as API from '../../api/index';
 
-import FarmerDetailCard from './../../components/FarmersDetail/FarmerDetailCard';
-import ProductDetailCard from './../../components/FarmersDetail/ProductDetailCard';
-import ReviewList from '../../components/FarmersDetail/ReviewList';
-
-import { useErrorModal } from './../../hooks/useModal';
+//전화번호 파싱해야합니다!!
+//css 수정해야합니다!!
 
 const FarmerDetailPage = () => {
-  const { farmerInfo, products, reviews } = useRouteLoaderData('farmer-detail');
+  const [farmerInfo, setFarmerInfo] = useState({});
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+
+  const farmerId = useParams().farmerId;
+  const navigate = useNavigate();
+
+  //초기 랜더링 시 파머 정보 불러오기
+  useEffect(() => {
+    const getFarmerInfo = async () => {
+      const response = await API.get(`/findfarmer/${farmerId}`);
+
+      setFarmerInfo(response.data);
+    };
+    getFarmerInfo();
+  }, []);
 
   return (
-    <>
-      <Suspense fallback={<p style={{ textAlign: 'center' }}>로딩중...</p>}>
-        <Await resolve={farmerInfo}>
-          {(loadedFarmerInfo) => <FarmerDetailCard event={loadedFarmerInfo} />}
-        </Await>
-      </Suspense>
-      <Suspense fallback={<p style={{ textAlign: 'center' }}>로딩중...</p>}>
-        <Await resolve={products}>
-          {(loadedProducts) => <ProductDetailCard events={loadedProducts} />}
-        </Await>
-      </Suspense>
-      <Suspense fallback={<p style={{ textAlign: 'center' }}>로딩중...</p>}>
-        <Await resolve={reviews}>
-          {(loadedReviews) => <ReviewList events={loadedReviews} />}
-        </Await>
-      </Suspense>
-    </>
+    <div className={style.container}>
+      <main className={style.farmerInfoCard}>
+        <button
+          className={style.backBtn}
+          onClick={() => navigate(-1)}
+        >
+          <img
+            src={backBtn}
+            alt="go to back btn"
+          />
+        </button>
+
+        <section className={style.leftSection}>
+          <div className={style.imageContainer}>
+            <img
+              src={farmerInfo}
+              alt="farmer"
+            />
+          </div>
+          <div className={style.info}>
+            <div className={style.ratingInfo}>
+              <img
+                src={star}
+                alt="Star"
+              />
+              <span>{farmerInfo.rating}</span> (
+              <span>{farmerInfo.reviewCount}</span>)
+            </div>
+            &nbsp;
+            <div className={style.heartinfo}>
+              <img
+                src={heart}
+                alt="Heart"
+              />
+              <span>{farmerInfo.followCount}</span>
+            </div>
+          </div>
+        </section>
+
+        <div className={style.flexContainer}>
+          <div className={style.farmDetails}>
+            <div className={style.farmNames}>
+              {' '}
+              <span className={style.farmName}>농장 이름</span>
+              <span className={style.farmNameData}>{farmerInfo.farmName}</span>
+            </div>
+            <br />
+            <div className={style.farmerNames}>
+              <span className={style.farmerName}>팜 연락처</span>
+              <span className={style.farmerNameData}>{farmerInfo.farmTel}</span>
+            </div>
+            <br />
+            <div className={style.farmsAddress}>
+              <span className={style.farmAddress}>농장 주소</span>
+              <span className={style.farmAddressData}>
+                {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
+              </span>
+            </div>
+          </div>
+        </div>
+      </main>
+      <main className={style.main}>
+        <header className={style.header}>못난이 마켓에 판매중인 상품</header>
+        <ProductsList farmerId={farmerId} />
+      </main>
+      <main className={style.main}>
+        <header className={style.header}>후기</header>
+        <ReviewList farmerId={farmerId} />
+      </main>
+    </div>
   );
 };
 
 export default FarmerDetailPage;
-
-//파머정보 상세보기 화면
-const loadFarmerInfo = async (farmerId) => {
-  try {
-    const response = await API.get(`/${farmerId}`);
-
-    if (response.status !== 200) {
-      throw new Error('해당 파머 정보를 불러오기에 실패했습니다.');
-    }
-
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('에러 발생:', error.message);
-    throw error;
-  }
-};
-
-//파머 판매상품 보기 화면
-const loadProducts = async (farmerId) => {
-  const response = await API.get(`${farmerId}/products`);
-
-  if (!response.ok) {
-    throw json(
-      { message: '파머가 판매중인 상품 불러오기 실패' },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData.products;
-  }
-};
-
-//파머 후기 보기 화면
-const loadReviews = async (farmerId) => {
-  const response = await API.get(`${farmerId}/reviews`);
-
-  if (!response.ok) {
-    throw json(
-      { message: '파머 리뷰 조회 실패' },
-      {
-        status: 500,
-      }
-    );
-  } else {
-    const resData = await response.json();
-    return resData.reivews;
-  }
-};
-
-//속도가 다른 요청을 defer로 가져옴
-export const loader = async ({ request, params }) => {
-  const farmerId = params.farmerId;
-
-  return defer({
-    farmerInfo: await loadFarmerInfo(farmerId),
-    products: loadProducts(farmerId),
-    reviews: loadReviews(farmerId),
-  });
-};

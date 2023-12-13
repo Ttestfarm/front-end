@@ -1,79 +1,126 @@
-import { useLoaderData, json, defer, Await } from 'react-router-dom';
-import React, { Suspense } from 'react'; // 데이터가 도착하기 전에 폴백을 보여주기 위해 사용하는 리액트
+import React, { Fragment, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import FarmerCard from '../../components/Farmers/FarmerCard';
+import style from './FindFarmer.module.css';
 import * as API from '../../api/index';
+import { useSetRecoilState } from 'recoil';
+import { isErrorModalAtom } from '../../recoil/Atoms';
 
-import FarmersList from '../../components/Farmers/FarmersList';
-//import { farmerCardsData } from '../../components/Farmers/dummyData';
+const FindFarmerPage = ({ farmers }) => {
+  const [keyword, setKeyword] = useState('all');
+  const [sortType, setSortType] = useState('latest');
+  const [page, setPage] = useState(1);
+  const [farmerList, setFarmerList] = useState([]);
 
-const FindFarmerPage = ({ params }) => {
-  //data 의 events 키에 해당하는 리턴 값을 구조분해할당
-  const { farmers, sortType, keyword } = useLoaderData();
-  console.log(farmers, sortType, keyword);
+  const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
+
+  //파머 리스트 불러오기
+  useEffect(() => {
+    paramsChangeHandler(keyword, sortType, page);
+  }, []);
+
+  //페이징
+  const onChangePage = (_, value) => {
+    setPage(value);
+  };
+
+  //키워드 검색어 입력
+  const keywordChangeHandler = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  //초기화
+  const keywordResetHandler = async () => {
+    setKeyword('all');
+    try {
+      const response = await API.get(
+        '/findfarmer?keyword=all&sortType=latest&page=1'
+      );
+      setFarmerList(response.data.farmerList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //params 별로 정렬
+  const paramsChangeHandler = async (keyword, sortType, page) => {
+    try {
+      const response = await API.get(
+        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
+      );
+
+      setSortType(sortType);
+      setFarmerList(response.data.farmerList);
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+    }
+  };
 
   return (
-    <Suspense
-      fallback={
-        <p style={{ textAlign: 'center' }}>
-          farmer 리스트를 불러오는 중<br /> 로딩화면있으면 좋겠당....
-        </p>
-      }
-    >
-      <Await resolve={farmers}>
-        {(loadedFarmers) => <FarmersList events={loadedFarmers} />}
-      </Await>
-    </Suspense>
+    <Fragment>
+      <section className={style.wrapper}>
+        <div className={style.search}>
+          <input
+            type="text"
+            className={style['input-text']}
+            value={keyword}
+            onChange={keywordChangeHandler}
+            placeholder="품목명을 입력하세요"
+          />
+          <button
+            className={style['button']}
+            onClick={() => paramsChangeHandler(keyword, sortType, page)}
+          >
+            검색
+          </button>
+          <button
+            className={style['button']}
+            onClick={keywordResetHandler}
+          >
+            초기화
+          </button>
+        </div>
+        <div>
+          <button onClick={() => paramsChangeHandler(keyword, 'latest', page)}>
+            최신 순
+          </button>
+          {' | '}
+          <button onClick={() => paramsChangeHandler(keyword, 'rating', page)}>
+            별점 순
+          </button>
+          {' | '}
+          <button
+            onClick={() => paramsChangeHandler(keyword, 'followCount', page)}
+          >
+            찜이 많은 순
+          </button>
+        </div>
+
+        <div>
+          <button>
+            <Link to="reg-farmer">파머 등록</Link>
+          </button>
+        </div>
+      </section>
+      {/* {groupedCards.map((group, index) => (
+        key={index}
+        className={style.farmercardgrid}
+      > */}
+      <div>
+        {farmerList?.length > 0
+          ? farmerList.map((farmer) => (
+              <FarmerCard
+                key={farmer.farmerId}
+                farmer={farmer}
+              />
+            ))
+          : '파머 목록이 없습니다.'}
+      </div>
+    </Fragment>
   );
 };
 
 export default FindFarmerPage;
-
-//파머리스트 불러오기
-const loadFarmers = async ({ keyword, sortType }) => {
-  //데이터 쌓으면 삭제할 부분
-  // const farmers = farmerCardsData;
-  // console.log('farmers', farmers);
-  // return farmers;
-  //끝
-  console.log('2');
-  try {
-    let response;
-
-    if (keyword) {
-      response = await API.get(`/${keyword}`);
-      console.log('1');
-    } else {
-      switch (sortType) {
-        case 'rating':
-          response = await API.get(`/rating`);
-          console.log('2');
-          break;
-        case 'followCount':
-          response = await API.get(`/followCount`);
-          console.log('3');
-          break;
-        default:
-          response = await API.get('');
-          console.log('4');
-          break;
-      }
-    }
-    if (response.status !== 200) {
-      throw new Error('파머리스트 불러오기에 실패했습니다.');
-    }
-
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const loader = ({ params }) => {
-  const { keyword, sortType } = params;
-  console.log('1', keyword, sortType);
-  return defer({
-    farmers: loadFarmers({ keyword, sortType }),
-    keyword,
-    sortType,
-  });
-};

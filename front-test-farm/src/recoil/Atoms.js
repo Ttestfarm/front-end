@@ -18,7 +18,6 @@ export const userInfoAtom = atom({
   key: 'userInfo',
   default: null,
   effects_UNSTABLE: [persistAtom],
-  dangerouslyAllowMutability: true, //firebase auth 사용했을 때 로그아웃해도 recoil 상태가 안변했는데 이거 했더니 되었음
 });
 
 export const updateAtom = atom({

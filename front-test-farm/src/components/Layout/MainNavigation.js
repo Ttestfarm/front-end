@@ -40,7 +40,7 @@ const MainNavigation = (props) => {
       localStorage.removeItem('token');
       localStorage.removeItem('expiration');
       setUserInfo('');
-      window.location.reload();
+      window.location.href = '/';
     } else {
       setIsErrorModal({
         state: true,
@@ -99,6 +99,7 @@ const MainNavigation = (props) => {
                 </NavLink>
               </li>
             )}
+            {/* token && userInfo && userInfo.farmerId!==null */}
             {token && (
               <li>
                 <NavLink

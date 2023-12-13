@@ -15,8 +15,8 @@ const OrderList = () => {
 
   const key = "OstBNzBg0PI7Tr96ol661A"; // 택배 API key
   const [company, setCompany] = useState([]); // 택배사 데이터 저장
-  const [code, setCode] = useState(); // 택배사 코드 저장
-  const [invoice, setInvoice] = useState(); // 송자 번호 저장
+  const [code, setCode] = useState("00"); // 택배사 코드 저장
+  const [invoice, setInvoice] = useState(); // 송장 번호 저장
 
   useEffect(() => { // 배송 현황(매칭) 리스트
     axios.get(`http://localhost:8090/farmer/orderlist/${farmerId}/${type}/${page}`)
@@ -25,6 +25,7 @@ const OrderList = () => {
         return axios.get(`http://info.sweettracker.co.kr/api/v1/companylist`, { params: { "t_key": key } })
       })
       .then(res => {
+        // console.log(res.data.Company.filter(item => item.International == "false"))
         const filteredCompanies = [...res.data.Company.filter(item => item.International == "false")];
         setCompany([...filteredCompanies]);
       })
@@ -50,9 +51,17 @@ const OrderList = () => {
     }
   };
 
+  const [ordersId, setOrdersId] = useState();
+  const [product, setProduct] = useState();
+  const [quantity, setQuantity] = useState();
   // Modal 관련
-  const onClickButton = () => {
+  const onClickButton = (ordersId, product, quantity) => {
+    // console.log(ordersId, product, quantity);
     setIsOpen(true);
+
+    setOrdersId(ordersId);
+    setProduct(product);
+    setQuantity(quantity);
   };
 
   const openModal = () => {
@@ -74,21 +83,30 @@ const OrderList = () => {
   }
 
   const handleInvoice = (e) => { // 송장 번호
-    setInvoice(String(e.target.value));
+    // setInvoice(String(e.target.value));
+    setInvoice(e.target.value);
   }
 
   const sendparcel = (ordersId) => { // 발송 함수
-    console.log(code);
-    console.log(invoice);
-    axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}`)
-      .then(res => {
-        console.log(res);
-        setCode("");
-        setInvoice("");
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    if (code === "00") {
+      alert("택배사를 선택해주세요.");
+    } else {
+      console.log(ordersId);
+      console.log(code);
+      console.log(invoice);
+      axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}`)
+        .then(res => {
+          alert(res.data);
+          console.log(res);
+          setCode("00");
+          setInvoice("");
+          setIsOpen(false);
+        })
+        .catch(err => {
+          alert(err.data);
+          console.log(err);
+        })
+    }
   }
 
 
@@ -121,29 +139,7 @@ const OrderList = () => {
           {ordList.length > 0 && ordList.map(ord => (
             <tr key={ord.ordersId}>
               <td>
-                <button className="quotation-delete-btn" onClick={onClickButton}>발송</button>
-                {isOpen && (<div id="myModal" className="modal" onClick={handleOutsideClick}>
-                  {/* 모달 내용 */}
-                  <div className="modal-content">
-                    <span className="close" onClick={closeModal}>&times;</span>
-                    <h2>발송 입력</h2>
-                    <p>주문 번호 :{ord.ordersId}</p>
-                    <p>품 목 :{ord.product}</p>
-                    <p>수 량 :{ord.quantity}</p>
-                    <div>
-                      택 배 사 :
-                      <select name="tcode" onChange={handleSelect}>
-                        {company.length > 0 && company.map(com => (
-                          <option key={com.Code} value={com.Code}>{com.Name}</option>
-                        )
-                        )}
-                      </select>
-                    </div>
-                    <p>송장 번호 : <input type='text' value={invoice} onChange={handleInvoice} /></p>
-                    <button onClick={() => sendparcel(ord.ordersId)}>발송</button>
-                  </div>
-                </div>
-                )}
+                <button className="quotation-delete-btn" onClick={() => onClickButton(ord.ordersId, ord.product, ord.quantity)}>발송</button>
               </td>
               <td>
                 <Link to={`/orderdetail/${ord.ordersId}/${type}`}>
@@ -160,6 +156,29 @@ const OrderList = () => {
           ))}
         </table>
       </div>
+      {isOpen && (<div id="myModal" className="modal" onClick={handleOutsideClick}>
+        {/* 모달 내용 */}
+        <div className="modal-content">
+          <span className="close" onClick={closeModal}>&times;</span>
+          <h2>발송 입력</h2>
+          <p>주문 번호 : {ordersId}</p>
+          <p>품 목 :{product}</p>
+          <p>수 량 :{quantity}</p>
+          <div>
+            택 배 사 :
+            <select name="tcode" onChange={handleSelect}>
+              <option value="00" selected>선택</option>
+              {company.length > 0 && company.map(com => (
+                <option key={com.Code} value={com.Code}>{com.Name}</option>
+              )
+              )}
+            </select>
+          </div>
+          <p>송장 번호 : <input type='text' value={invoice} onChange={handleInvoice} /></p>
+          <button onClick={() => sendparcel(ordersId)}>발송</button>
+        </div>
+      </div>
+      )}
       <Pagination />
     </div>
   );

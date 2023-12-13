@@ -233,7 +233,7 @@ const RegistFarmerPage = ({ page }) => {
     try {
       if (page === 'reg-farmer') {
         console.log('제출용', formData);
-        const result = await API.post('/reg-farmer', formData);
+        const result = await API.formPost('/reg-farmer', formData);
         console.log('------------------');
         console.log('result', result);
         // setIsSucessModal({

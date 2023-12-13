@@ -6,8 +6,6 @@ import * as API from '../../api/index';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom } from '../../recoil/Atoms';
 
-import axios from 'axios';
-
 const FindFarmerPage = ({ farmers }) => {
   const [keyword, setKeyword] = useState('all');
   const [sortType, setSortType] = useState('latest');
@@ -18,17 +16,7 @@ const FindFarmerPage = ({ farmers }) => {
 
   //파머 리스트 불러오기
   useEffect(() => {
-    const getFarmerList = async () => {
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-      );
-
-      console.log('123', response?.data?.farmerList);
-      //setFarmerList([...farmerList, ...response.data.farmerList]);
-      setFarmerList(response.data.farmerList);
-    };
-
-    getFarmerList();
+    paramsChangeHandler(keyword, sortType, page);
   }, []);
 
   //페이징
@@ -54,14 +42,14 @@ const FindFarmerPage = ({ farmers }) => {
     }
   };
 
-  //키워드 입력 시 검색
-  const onClickKeywordHandler = async () => {
+  //params 별로 정렬
+  const paramsChangeHandler = async (keyword, sortType, page) => {
     try {
       const response = await API.get(
         `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-        // 'findfarmer',
-        // { keyword, sortType, page }
       );
+
+      setSortType(sortType);
       setFarmerList(response.data.farmerList);
     } catch (error) {
       setIsErrorModal({
@@ -70,72 +58,6 @@ const FindFarmerPage = ({ farmers }) => {
       });
     }
   };
-
-  // const paramsChangeHandler = async () => {
-  //   try {
-  //     const response = await API.get(
-  //       `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-  //     );
-  //     setFarmerList(response.data.farmerList);
-  //   } catch (error) {
-  //     setIsErrorModal({
-  //       state: true,
-  //       message: error.message,
-  //     });
-  //   }
-  // };
-
-  //sorting 변경
-  const onClickRating = async () => {
-    try {
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=rating&page=${page}`
-      );
-      setFarmerList(response.data.farmerList);
-    } catch (error) {
-      setIsErrorModal({
-        state: true,
-        message: error.message,
-      });
-    }
-    // setSortType('rating');
-    // paramsChangeHandler();
-  };
-  const onClickfollowCount = async () => {
-    try {
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=followCount&page=${page}`
-      );
-
-      setFarmerList(response.data.farmerList);
-    } catch (error) {
-      setIsErrorModal({
-        state: true,
-        message: error.message,
-      });
-    }
-    // setSortType('followCount');
-    // paramsChangeHandler();
-  };
-
-  //최신 순 클릭 시
-  const onClickFarmerReload = async () => {
-    try {
-      setSortType('latest');
-
-      const response = await API.get(
-        `/findfarmer?keyword=${keyword}&sortType=${sortType}&page=${page}`
-      );
-      setFarmerList(response.data.farmerList);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // let groupedCards = farmerCardsData;
-  // for (let i = 0; i < farmerList.length; i += 4) {
-  //   groupedCards.push(farmerList.slice(i, i + 4));
-  // }
 
   return (
     <Fragment>
@@ -150,7 +72,7 @@ const FindFarmerPage = ({ farmers }) => {
           />
           <button
             className={style['button']}
-            onClick={onClickKeywordHandler}
+            onClick={() => paramsChangeHandler(keyword, sortType, page)}
           >
             검색
           </button>
@@ -162,11 +84,19 @@ const FindFarmerPage = ({ farmers }) => {
           </button>
         </div>
         <div>
-          <button onClick={() => onClickFarmerReload()}>최신 순</button>
+          <button onClick={() => paramsChangeHandler(keyword, 'latest', page)}>
+            최신 순
+          </button>
           {' | '}
-          <button onClick={onClickRating}>별점 순</button>
+          <button onClick={() => paramsChangeHandler(keyword, 'rating', page)}>
+            별점 순
+          </button>
           {' | '}
-          <button onClick={onClickfollowCount}>찜이 많은 순</button>
+          <button
+            onClick={() => paramsChangeHandler(keyword, 'followCount', page)}
+          >
+            찜이 많은 순
+          </button>
         </div>
 
         <div>

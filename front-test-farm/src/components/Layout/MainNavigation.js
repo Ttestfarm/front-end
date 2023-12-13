@@ -99,6 +99,7 @@ const MainNavigation = (props) => {
                 </NavLink>
               </li>
             )}
+            {/* token && userInfo && userInfo.farmerId!==null */}
             {token && (
               <li>
                 <NavLink

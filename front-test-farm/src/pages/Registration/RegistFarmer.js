@@ -9,7 +9,7 @@ import Postcode from '../../api/PostCode';
 import { Form, Navigate, useNavigate } from 'react-router-dom';
 import HandleRegistrationNumCheck from '../../api/registrationNumCheck';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-
+import * as val from '../../util/validation';
 import {
   isSuccessModalAtom,
   isErrorModalAtom,
@@ -19,13 +19,13 @@ import {
 
 import { bankOption } from '../../util/payment';
 import { userInfoAtom } from './../../recoil/Atoms';
-// 유효성 검사 함수
-const isNotEmpty = (value) =>
-  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length >= 2;
-const isTel = (value) =>
-  value.trim().match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/) ||
-  value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
-const isNotEmptyValue = (value) => value.trim() !== '';
+// // 유효성 검사 함수
+// const isNotEmpty = (value) =>
+//   /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length >= 2;
+// const isTel = (value) =>
+//   value.trim().match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/) ||
+//   value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
+// const isNotEmptyValue = (value) => value.trim() !== '';
 
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -108,7 +108,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmNameChangeHandler,
     inputBlurHandler: farmNameBlurHandler,
     reset: resetfarmName,
-  } = useUserInput(isNotEmpty);
+  } = useUserInput(val.isNotEmptyfarmName);
 
   const {
     value: farmTelValue,
@@ -117,7 +117,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmTelChangeHandler,
     inputBlurHandler: farmTelBlurHandler,
     reset: resetfarmTel,
-  } = useUserInput(isTel);
+  } = useUserInput(val.isTel);
 
   // const {
   //   value: { postcodeAddress },
@@ -135,14 +135,14 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmAddressDetailChangeHandler,
     inputBlurHandler: farmAddressDetailBlurHandler,
     reset: resetfarmAddressDetail,
-  } = useUserInput(isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue);
 
   const {
     value: registrationNumValue,
     valueChangeHandler: registrationNumChangeHandler,
     inputBlurHandler: registrationNumBlurHandler,
     reset: resetRegistrationNum,
-  } = useUserInput(isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue);
 
   const {
     value: farmAccountNumValue,
@@ -151,7 +151,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmAccountNumChangeHandler,
     inputBlurHandler: farmAccountNumBlurHandler,
     reset: resetfarmAccountNum,
-  } = useUserInput(isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue);
 
   const {
     value: farmInterestValue,
@@ -160,7 +160,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmInterestChangeHandler,
     inputBlurHandler: farmInterestBlurHandler,
     reset: resetfarmInterest,
-  } = useUserInput(isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue);
 
   const onFileChange = (e) => {
     // setFile(e.target.files[0]);

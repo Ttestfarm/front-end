@@ -1,5 +1,5 @@
 import React from 'react';
-import FarmerDetailCard from './FarmerDetailCard';
+import FarmerDetailCard from './xFarmerDetailCard';
 import Pagination from './Pagination';
 import ReviewList from './ReviewList';
 import ReviewCard from './ReviewCard';

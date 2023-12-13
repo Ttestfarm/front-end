@@ -13,7 +13,7 @@ import { action as logoutAction } from './pages/Logout';
 import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
 import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
-import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
+//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import QuotListPage from './pages/MyPages/QuotList';
@@ -46,9 +46,10 @@ const router = createBrowserRouter([
           },
           {
             path: ':farmerId',
-            id: 'farmer-detail',
-            loader: farmerDetailLoader,
-            children: [{ index: true, element: <FarmerDetailPage /> }],
+            element: <FarmerDetailPage />,
+            // id: 'farmer-detail',
+            // loader: farmerDetailLoader,
+            // children: [{ index: true, element: <FarmerDetailPage /> }],
           },
           {
             path: 'reg-farmer',

@@ -52,7 +52,7 @@ const RegistFarmerPage = ({ page }) => {
     farmBank: '',
     farmAccountNum: '',
     farmInterest: '',
-    farmpixurl: '',
+    farmPixurl: '',
   });
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const RegistFarmerPage = ({ page }) => {
         farmBank: farmerInfo?.farmer?.farmBank,
         farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
         farmInterest: farmerInfo?.farmer?.farmInterest,
+        farmPixurl: farmerInfo?.farmer?.farmPixurl,
       });
     }
   }, [farmerInfo]);

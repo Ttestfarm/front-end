@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './style/QuotForm.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
+import axios from 'axios';
 
 
 const QuotForm = () => {
   const request = useParams();
+  const navigate = useNavigate();
+  const [formDatas, setformDatas] = useState({
+    'requestId': `${request.requestId}`,
+    'farmerId': 1,
+    'product': `${request.requestProduct}`,
+    'quantity': '',
+    'price': '',
+    'comment': '',
+    'picture': '',
+  });
+  let selectImg = null;
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
-  const selectImg = null;
-
-  useEffect(() => {
-    console.log(request.requestId);
-    console.log(request.requestProduct);
-  }, []);
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -37,54 +43,86 @@ const QuotForm = () => {
     document.getElementById("file").click();
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setformDatas((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  const SendHandler = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+
+    data.append('requestId', formDatas.requestId);
+    data.append('farmerId', formDatas.farmerId);
+    data.append('quotationProduct', formDatas.product);
+    data.append('quotationQuantity', formDatas.quantity);
+    data.append('quotationPrice', formDatas.price);
+    data.append('quotationComment', formDatas.comment);
+    data.append('quotationPicture', null);
+   
+    axios.post('http://localhost:8090/farmer/regquot', data, {headers: { "Content-Type": `application/json`}})
+      .then(res => {
+        console.log(res);
+        alert(res.data);
+        navigate('/requestlist');
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <div>
       <div className='quto-form'>
         <h2 className='quto-form-header'>견적서</h2>
-
-        <div className='quto-form-input'>
-          <div>
-            <label htmlFor='product'>못난이 농산물</label>
-            <input type='text' name='product' value={request.requestProduct} disabled />
-          </div>
-          <div>
-            <label htmlFor='amount'>수량 혹은 kg</label>
-            <input type='text' name='amount' />
-          </div>
-          <div>
-            <label htmlFor='price'>금액</label>
-            <input type='text' name='price' />
-          </div>
-          <div>
-            <label htmlFor='append'>추가 설명</label>
-            <textarea className='append' style={{ resize: 'none' }} name='append' placeholder='파머님이 추가로 고객님에게 남기고 싶은 말을 적어주세요.' />
-          </div>
-        </div>
-
-        <div className='quto-form-picture'>
-          <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
-          <div className="custom-file-input">
-            <label htmlFor='file'>사진 첨부</label>
-            <input name='file' type='file' id='file' multiple="multiple" accept='image/*' onChange={fileChange} />
-          </div>
-        </div>
-        <div className='images'>
-          {files.map((file, index) =>
-            <div key={index}>
-              {file !== image ?
-                <button onClick={() => deleteClick(index)}>x</button> :
-                ''
-              }
-              <img src={image} alt='이미지 없음' id={index} width={"100px"} height={"100px"} onClick={imageClick} />
+        <form>
+          <div className='quto-form-input'>
+            <div>
+              <label htmlFor='product'>못난이 농산물</label>
+              <input type='text' name='product' value={request.requestProduct} disabled />
             </div>
-          )}
-        </div>
-        <div className='quto-form-btns'>
-          <button className='quto-form-btn'><Link className='a' to={'/uglyrequestlist'}>견석서 보내기</Link></button>
-          <button className='quto-form-btn'><Link className='a' to={'/uglyrequestlist'}>돌아가기</Link></button>
-        </div>
-      </div>
+            <div>
+              <label htmlFor='quantity'>수량 혹은 kg</label>
+              <input type='text' name='quantity' onChange={handleInputChange}/>
+            </div>
+            <div>
+              <label htmlFor='price'>금액</label>
+              <input type='text' name='price' onChange={handleInputChange}/>
+            </div>
+            <div>
+              <label htmlFor='comment'>추가 설명</label>
+              <textarea className='append' style={{ resize: 'none' }} name='comment' placeholder='파머님이 추가로 고객님에게 남기고 싶은 말을 적어주세요.' onChange={handleInputChange}/>
+            </div>
+          </div>
 
+          <div className='quto-form-picture'>
+            <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
+            <div className="custom-file-input">
+              <label htmlFor='file'>사진 첨부</label>
+              <input name='file' type='file' id='file' multiple="multiple" accept='image/*' onChange={fileChange} />
+            </div>
+          </div>
+          <div className='images'>
+            {files.map((file, index) =>
+              <div key={index}>
+                {file !== image ?
+                  <button onClick={() => deleteClick(index)}>x</button> :
+                  ''
+                }
+                <img src={image} alt='이미지 없음' id={index} width={"100px"} height={"100px"} onClick={imageClick} />
+              </div>
+            )}
+          </div>
+          <div className='quto-form-btns'>
+            <button className='quto-form-btn'><Link className='a' onClick={SendHandler}>견석서 보내기</Link></button>
+            <button className='quto-form-btn'><Link className='a' to={'/requestlist'}>돌아가기</Link></button>
+          </div>
+        </form>
+      </div>
       <div className='request-notice'>
         <div className='request-notice-icon'>
           <div className='request-notice-icon-circle'>

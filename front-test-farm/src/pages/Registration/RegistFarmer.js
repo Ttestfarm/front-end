@@ -94,7 +94,7 @@ const RegistFarmerPage = ({ page }) => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, []); 
 
   const {
     value: farmNameValue,
@@ -253,7 +253,7 @@ const RegistFarmerPage = ({ page }) => {
         await API.put(`/modify-farm/${userInfo?.user?.farmerId}`, formData);
         setIsSucessModal({
           state: true,
-          message: '파머 정보 수정이 완료 되었습니다.',
+          messa3ge: '파머 정보 수정이 완료 되었습니다.',
         });
         navigate('/farmers');
       }

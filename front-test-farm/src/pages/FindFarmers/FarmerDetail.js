@@ -32,6 +32,7 @@ const FarmerDetailPage = () => {
     };
     getFarmerInfo();
   }, []);
+  console.log('farmer', farmerInfo);
 
   return (
     <div className={style.container}>

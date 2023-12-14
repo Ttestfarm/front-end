@@ -83,7 +83,6 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <FindFarmerPage />,
           },
         ],
       },
@@ -94,10 +93,6 @@ const router = createBrowserRouter([
       // {
       //   path: '/find-pw',
       //   element: <FindPwPage />,
-      // },
-      // {
-      //   path: '/modify-user',
-      //   element: <ModifyUserPage />,
       // },
       {
         path: '/modify-farm',

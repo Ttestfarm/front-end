@@ -5,23 +5,25 @@ import axios from 'axios';
 
 const DeliveryList = () => {
   const [deliveryList, setDeliveryList] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [state, setState] = useState("1"); // 0:오류, 1:배송중, 2:배송완료
 
+  const [token, setToken] = useState(null);
   const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+    return localStorage.getItem("token");
   };
 
   useEffect(() => {
+    const farmerToken = getToken();
+    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`, {
       headers: {
-        Authorization: `${getToken()}`
+        Authorization: `${farmerToken}`
       },
     })
       .then(res => {
-        console.log(res);
         setDeliveryList([...res.data.deliveryList]);
-        console.log(res.data.deliveryList);
+        setPage(res.data.pageInfo);
       })
       .catch(err => {
         console.log(err);
@@ -32,8 +34,19 @@ const DeliveryList = () => {
     if (state === select) {
       alert("이미 선택 하셨습니다.");
     } else {
+      axios.get(`http://localhost:8090/farmer/deliverylist/${select}/${page.curPage}`, {
+        headers: {
+          Authorization: `${token}`
+        },
+      })
+        .then(res => {
+          setDeliveryList([...res.data.deliveryList]);
+          setPage(res.data.pageInfo);
+        })
+        .catch(err => {
+          console.log(err);
+        })
       setState(select);
-      // axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page})
     }
   }
 
@@ -54,8 +67,14 @@ const DeliveryList = () => {
             <th>상태</th>
           </tr>
           {deliveryList.length > 0 ? deliveryList.map(dlist => (
-            <tr>
-              <td></td>
+            <tr key={dlist.deliveryId}>
+              <td>{dlist.ordersId}</td>
+              <td>{dlist.tname}</td>
+              <td>{dlist.tinvoice}</td>
+              <td>{dlist.deliveryState}</td>
+              <td>{dlist.product}</td>
+              <td>{dlist.price}</td>
+              <td>{dlist.address}</td>
             </tr>
           ))
             : "배송 리스트가 없습니다."

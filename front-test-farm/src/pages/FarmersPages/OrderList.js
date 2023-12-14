@@ -25,7 +25,7 @@ const OrderList = () => {
 
   useEffect(() => { // 배송 현황(매칭) 리스트
     const farmerToken = getToken();
-    token(farmerToken);
+    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
       headers: {
         Authorization: `${farmerToken}`
@@ -109,7 +109,7 @@ const OrderList = () => {
       console.log(ordersId);
       console.log(code);
       console.log(invoice);
-      axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}` ,{
+      axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}`, {
         headers: {
           Authorization: `${token}`
         },

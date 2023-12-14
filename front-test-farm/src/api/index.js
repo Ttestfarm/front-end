@@ -1,14 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 //  http://localhost:8090
-const backendPort = '8090';
-const serverUrl = 'http://' + window.location.hostname + ':' + backendPort;
+const backendPort = "8090";
+const serverUrl = "http://" + window.location.hostname + ":" + backendPort;
 const imgUrl =
-  'http://' + window.location.hostname + ':' + backendPort + '/uploads/';
+  "http://" + window.location.hostname + ":" + backendPort + "/uploads/";
 
 async function get(endpoint) {
+  console.log(serverUrl + endpoint);
   return axios.get(serverUrl + endpoint, {
     headers: {
-      Authorization: `${localStorage.getItem('token')}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
   });
 }
@@ -18,8 +19,8 @@ async function post(endpoint, data) {
 
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(bodyData),
   });
@@ -28,8 +29,8 @@ async function post(endpoint, data) {
 async function formPost(endpoint, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 }
@@ -39,16 +40,16 @@ async function put(endpoint, data) {
 
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 }
 
-async function del(endpoint, params = '') {
-  return axios.delete(serverUrl + endpoint + '/' + params, {
+async function del(endpoint, params = "") {
+  return axios.delete(serverUrl + endpoint + "/" + params, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 }

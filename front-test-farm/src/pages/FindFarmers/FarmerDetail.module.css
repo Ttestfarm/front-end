@@ -11,8 +11,9 @@
   flex-direction: column;
   gap: 2rem;
 }
-.main {
-}
+/* .main {
+  /* display: block; */
+
 .header {
   display: flex;
 
@@ -31,6 +32,9 @@
   margin-right: 15px;
   margin-top: 21px;
   float: right;
+  border: 0;
+  background-color: #e2e4d4;
+  cursor: pointer;
 }
 .farmEdit {
   width: 130px;
@@ -64,12 +68,15 @@
 }
 .imageContainer {
   margin-bottom: 1rem;
-}
-.imageContainer img {
   border: 3px solid #75786c;
   border-radius: 50%;
   width: 200px;
   height: 200px;
+  object-fit: fill;
+  overflow: hidden;
+}
+.imageContainer img {
+  object-fit: fill;
 }
 
 .farmDetails {

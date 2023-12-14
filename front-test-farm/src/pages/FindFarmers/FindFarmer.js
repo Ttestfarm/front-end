@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import FarmerCard from '../../components/Farmers/FarmerCard';
-import style from './FindFarmer.module.css';
-import * as API from '../../api/index';
-import { useSetRecoilState } from 'recoil';
-import { isErrorModalAtom } from '../../recoil/Atoms';
+import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import FarmerCard from "../../components/Farmers/FarmerCard";
+import style from "./FindFarmer.module.css";
+import * as API from "../../api/index";
+import { useSetRecoilState } from "recoil";
+import { isErrorModalAtom } from "../../recoil/Atoms";
 
 const FindFarmerPage = ({ farmers }) => {
-  const [keyword, setKeyword] = useState('all');
-  const [sortType, setSortType] = useState('latest');
+  const [keyword, setKeyword] = useState("all");
+  const [sortType, setSortType] = useState("latest");
   const [page, setPage] = useState(1);
   const [farmerList, setFarmerList] = useState([]);
 
@@ -31,10 +31,10 @@ const FindFarmerPage = ({ farmers }) => {
 
   //초기화
   const keywordResetHandler = async () => {
-    setKeyword('all');
+    setKeyword("all");
     try {
       const response = await API.get(
-        '/findfarmer?keyword=all&sortType=latest&page=1'
+        "/findfarmer?keyword=all&sortType=latest&page=1"
       );
       setFarmerList(response.data.farmerList);
     } catch (error) {
@@ -62,40 +62,38 @@ const FindFarmerPage = ({ farmers }) => {
   return (
     <Fragment>
       <section className={style.wrapper}>
+        <div className={style["sorts"]}>
+          <button onClick={() => paramsChangeHandler(keyword, "latest", page)}>
+            최신 순
+          </button>
+          {" | "}
+          <button onClick={() => paramsChangeHandler(keyword, "rating", page)}>
+            별점 순
+          </button>
+          {" | "}
+          <button
+            onClick={() => paramsChangeHandler(keyword, "followCount", page)}
+          >
+            찜이 많은 순
+          </button>
+        </div>
         <div className={style.search}>
           <input
             type="text"
-            className={style['input-text']}
+            className={style["input-text"]}
             value={keyword}
             onChange={keywordChangeHandler}
             placeholder="품목명을 입력하세요"
           />
+
           <button
-            className={style['button']}
+            className={style["button"]}
             onClick={() => paramsChangeHandler(keyword, sortType, page)}
           >
             검색
           </button>
-          <button
-            className={style['button']}
-            onClick={keywordResetHandler}
-          >
+          <button className={style["button"]} onClick={keywordResetHandler}>
             초기화
-          </button>
-        </div>
-        <div>
-          <button onClick={() => paramsChangeHandler(keyword, 'latest', page)}>
-            최신 순
-          </button>
-          {' | '}
-          <button onClick={() => paramsChangeHandler(keyword, 'rating', page)}>
-            별점 순
-          </button>
-          {' | '}
-          <button
-            onClick={() => paramsChangeHandler(keyword, 'followCount', page)}
-          >
-            찜이 많은 순
           </button>
         </div>
 
@@ -109,15 +107,12 @@ const FindFarmerPage = ({ farmers }) => {
         key={index}
         className={style.farmercardgrid}
       > */}
-      <div>
+      <div className={style["farmercardlist"]}>
         {farmerList?.length > 0
           ? farmerList.map((farmer) => (
-              <FarmerCard
-                key={farmer.farmerId}
-                farmer={farmer}
-              />
+              <FarmerCard key={farmer.farmerId} farmer={farmer} />
             ))
-          : '파머 목록이 없습니다.'}
+          : "파머 목록이 없습니다."}
       </div>
     </Fragment>
   );

@@ -6,14 +6,22 @@ import axios from 'axios';
 const DeliveryList = () => {
   const [deliveryList, setDeliveryList] = useState([]);
   const [page, setPage] = useState(1);
-  const [state, setState] = useState(1); // 0:오류, 1:배송중, 2:배송완료
+  const [state, setState] = useState("1"); // 0:오류, 1:배송중, 2:배송완료
+
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`)
+    axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`, {
+      headers: {
+        Authorization: `${getToken()}`
+      },
+    })
       .then(res => {
         console.log(res);
-        setDeliveryList([...res.data.dlist]);
-        console.log(res.data.dlist);
+        setDeliveryList([...res.data.deliveryList]);
+        console.log(res.data.deliveryList);
       })
       .catch(err => {
         console.log(err);
@@ -25,7 +33,7 @@ const DeliveryList = () => {
       alert("이미 선택 하셨습니다.");
     } else {
       setState(select);
-      // axios.get()
+      // axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page})
     }
   }
 

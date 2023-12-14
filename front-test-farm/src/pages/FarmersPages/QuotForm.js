@@ -10,17 +10,21 @@ const QuotForm = () => {
   const navigate = useNavigate();
   const [formDatas, setformDatas] = useState({
     'requestId': `${request.requestId}`,
-    'farmerId': 1,
     'product': `${request.requestProduct}`,
     'quantity': '',
     'price': '',
     'comment': '',
     'picture': '',
   });
+  
   let selectImg = null;
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
+  
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -57,14 +61,19 @@ const QuotForm = () => {
     const data = new FormData();
 
     data.append('requestId', formDatas.requestId);
-    data.append('farmerId', formDatas.farmerId);
     data.append('quotationProduct', formDatas.product);
     data.append('quotationQuantity', formDatas.quantity);
     data.append('quotationPrice', formDatas.price);
     data.append('quotationComment', formDatas.comment);
     data.append('quotationPicture', null);
    
-    axios.post('http://localhost:8090/farmer/regquot', data, {headers: { "Content-Type": `application/json`}})
+    axios.post('http://localhost:8090/farmer/regquot', data, 
+    {headers: 
+      { 
+        "Content-Type": `application/json`,
+        Authorization: `${getToken()}`
+      }
+    })
       .then(res => {
         console.log(res);
         alert(res.data);
@@ -119,7 +128,7 @@ const QuotForm = () => {
           </div>
           <div className='quto-form-btns'>
             <button className='quto-form-btn'><Link className='a' onClick={SendHandler}>견석서 보내기</Link></button>
-            <button className='quto-form-btn'><Link className='a' to={'/requestlist'}>돌아가기</Link></button>
+            <button className='quto-form-btn'><Link className='a' to={'/farmerpage/requestlist'}>돌아가기</Link></button>
           </div>
         </form>
       </div>

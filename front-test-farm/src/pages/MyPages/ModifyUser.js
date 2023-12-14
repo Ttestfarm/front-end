@@ -52,9 +52,6 @@ const ModifyUserPage = () => {
     if (address1 && address2) {
       setUpdateData({ ...updateData, address1, address2 });
     }
-    // if (address2) {
-    //   setUpdateData({ ...updateData, address2 });
-    // }
   }, [address1, address2]);
 
   //주소창 닫으면 값 리셋
@@ -105,14 +102,14 @@ const ModifyUserPage = () => {
   //   reset: resetAddressDetail,
   // } = useUserInput(val.isNotEmptyValue);
 
-  // const {
-  //   value: userTel,
-  //   isValid: telIsValid,
-  //   hasError: telHasError,
-  //   valueChangeHandler: telChangeHandler,
-  //   inputBlurHandler: telBlurHandler,
-  //   reset: resetTel,
-  // } = useUserInput(val.isTel);
+  const {
+    value: userTel,
+    isValid: telIsValid,
+    hasError: telHasError,
+    valueChangeHandler: telChangeHandler,
+    inputBlurHandler: telBlurHandler,
+    reset: resetTel,
+  } = useUserInput(val.isTel);
 
   const pwCheckHandler = (e) => {
     const inputPassword = e.target.value;
@@ -134,8 +131,12 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(`/modify-user/sendSMS?tel=${updateData.userTel}`).then(
+    await API.get(`/modify-user/sendSMS?userTel=${updateData.userTel}`).then(
       (response) => {
+        setIsSucessModal({
+          state: true,
+          message: '인증번호를 발송했어요!',
+        });
         console.log(response.data);
         setAuthNum(response.data);
       }
@@ -163,19 +164,19 @@ const ModifyUserPage = () => {
     formIsValid = true;
   }
   const RegistHandler = async () => {
-    const updateDataToSend = {
-      userName: updateData.userName,
-      //userEmail,
-      passwordValue: updateData.passwordValue,
-      address1: updateData.address1,
-      address2: updateData.address2,
-      address3: updateData.address3,
-      userTel: updateData.userTel,
-    };
+    // const updateData = {
+    //   userName: updateData.userName,
+    //   //userEmail,
+    //   passwordValue: updateData.passwordValue,
+    //   address1: updateData.address1,
+    //   address2: updateData.address2,
+    //   address3: updateData.address3,
+    //   userTel: updateData.userTel,
+    // };
 
-    console.log('보낼데이터', updateDataToSend);
     try {
-      await axios.put(`${API.serverUrl}/modify-user`, updateDataToSend);
+      console.log('보낼데이터', updateData);
+      await axios.put(`${API.serverUrl}/modify-user`, updateData);
       // resetName();
       // resetPassword();
       // resetRepassword();
@@ -317,10 +318,6 @@ const ModifyUserPage = () => {
             id="tel-certify-req"
             onClick={() => {
               sendSMS();
-              setIsSucessModal({
-                state: true,
-                message: '인증번호를 발송했어요!',
-              });
             }}
             className={style['certify-btn']}
           >
@@ -329,7 +326,7 @@ const ModifyUserPage = () => {
         </div>
         <input
           type="text"
-          name="tel"
+          name="userTel"
           value={updateData.userTel}
           onChange={inputHandle}
           //onBlur={telBlurHandler}

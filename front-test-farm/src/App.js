@@ -95,7 +95,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'modify-farm',
-            element: <RegistFarmerPage page="modify-farm" />
+            element: <RegistFarmerPage page="modify-farm" />,
           },
           {
             path: 'requestlist',
@@ -107,28 +107,28 @@ const router = createBrowserRouter([
           },
           {
             path: 'quotstatus',
-            element: <QuotStatus />
+            element: <QuotStatus />,
           },
           {
             path: 'quotdetail/:quotationId',
-            element: <QuotDetail />
+            element: <QuotDetail />,
           },
           {
             path: 'orderlist',
-            element: <OrderList />
+            element: <OrderList />,
           },
           {
             path: 'orderlist/orderdetail/:ordersId/:type',
-            element: <OrderDetail />
+            element: <OrderDetail />,
           },
           {
             path: 'deliverylist',
-            element: <DeliveryList />
+            element: <DeliveryList />,
           },
           {
             path: 'invoice',
-            element: <Invoice />
-          }
+            element: <Invoice />,
+          },
         ],
       },
       // {
@@ -144,7 +144,7 @@ const router = createBrowserRouter([
       //   element: <ModifyUserPage />,
       // },
     ],
-  }
+  },
 ]);
 function App() {
   return <RouterProvider router={router} />;

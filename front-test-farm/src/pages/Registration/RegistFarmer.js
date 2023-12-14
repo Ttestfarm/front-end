@@ -94,7 +94,7 @@ const RegistFarmerPage = ({ page }) => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []); 
+  }, []);
 
   const {
     value: farmNameValue,
@@ -230,6 +230,8 @@ const RegistFarmerPage = ({ page }) => {
     formData.append('farmAddress', postcodeAddress);
     formData.append('farmAddressDetail', farmAddressDetailValue);
     formData.append('registrationNum', registrationNumValue);
+    formData.append('farmBank', selected);
+    formData.append('farmAccountNum', farmAccountNumValue);
     formData.append('farmInterest', farmInterestValue);
     if (file !== null) {
       formData.append('farmPixurl', file.name);
@@ -241,7 +243,7 @@ const RegistFarmerPage = ({ page }) => {
         for (const [key, value] of formData.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const result = await API.formPost('/reg-farmer', formData);
+        const result = await API.formPost('/findfarmer/reg-farmer', formData);
         console.log('------------------');
         console.log('result', result);
         // setIsSucessModal({

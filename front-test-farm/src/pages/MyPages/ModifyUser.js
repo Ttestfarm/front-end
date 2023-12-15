@@ -164,16 +164,6 @@ const ModifyUserPage = () => {
     formIsValid = true;
   }
   const RegistHandler = async () => {
-    // const updateData = {
-    //   userName: updateData.userName,
-    //   //userEmail,
-    //   passwordValue: updateData.passwordValue,
-    //   address1: updateData.address1,
-    //   address2: updateData.address2,
-    //   address3: updateData.address3,
-    //   userTel: updateData.userTel,
-    // };
-
     try {
       console.log('보낼데이터', updateData);
       await axios.put(`${API.serverUrl}/modify-user`, updateData);

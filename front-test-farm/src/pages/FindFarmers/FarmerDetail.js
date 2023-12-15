@@ -17,85 +17,91 @@ import * as API from '../../api/index';
 //css 수정해야합니다!!
 
 const FarmerDetailPage = () => {
-  const [farmerInfo, setFarmerInfo] = useState({});
+  const [farmerInfo, setFarmerInfo] = useState(null);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
   const farmerId = useParams().farmerId;
   const navigate = useNavigate();
-
   //초기 랜더링 시 파머 정보 불러오기
   useEffect(() => {
+    console.log('Aa');
     const getFarmerInfo = async () => {
       const response = await API.get(`/findfarmer/${farmerId}`);
-
+      console.log(response.data);
       setFarmerInfo(response.data);
     };
     getFarmerInfo();
   }, []);
-  console.log('farmer', farmerInfo);
 
   return (
     <div className={style.container}>
-      <main className={style.farmerInfoCard}>
-        <button
-          className={style.backBtn}
-          onClick={() => navigate(-1)}
-        >
-          <img
-            src={backBtn}
-            alt="go to back btn"
-          />
-        </button>
-
-        <section className={style.leftSection}>
-          <div className={style.imageContainer}>
+      {farmerInfo != null && (
+        <main className={style.farmerInfoCard}>
+          <button
+            className={style.backBtn}
+            onClick={() => navigate(-1)}
+          >
             <img
-              src={farmerInfo}
-              alt="farmer"
+              src={backBtn}
+              alt="go to back btn"
             />
-          </div>
-          <div className={style.info}>
-            <div className={style.ratingInfo}>
+          </button>
+          <section className={style.leftSection}>
+            <div className={style.imageContainer}>
               <img
-                src={star}
-                alt="Star"
+                src={farmerInfo}
+                alt="farmer"
               />
-              <span>{farmerInfo.rating}</span> (
-              <span>{farmerInfo.reviewCount}</span>)
             </div>
-            &nbsp;
-            <div className={style.heartinfo}>
-              <img
-                src={heart}
-                alt="Heart"
-              />
-              <span>{farmerInfo.followCount}</span>
+            <div className={style.info}>
+              <div className={style.ratingInfo}>
+                <img
+                  src={star}
+                  alt="Star"
+                />
+                <span>{farmerInfo.farmer.rating}</span> (
+                <span>{farmerInfo.farmer.reviewCount}</span>)
+              </div>
+              &nbsp;
+              <div className={style.heartinfo}>
+                <img
+                  src={heart}
+                  alt="Heart"
+                />
+                <span>{farmerInfo.farmer.followCount}</span>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <div className={style.flexContainer}>
-          <div className={style.farmDetails}>
-            <div className={style.farmNames}>
-              {' '}
-              <span className={style.farmName}>농장 이름</span>
-              <span className={style.farmNameData}>{farmerInfo.farmName}</span>
-            </div>
-            <br />
-            <div className={style.farmerNames}>
-              <span className={style.farmerName}>팜 연락처</span>
-              <span className={style.farmerNameData}>{farmerInfo.farmTel}</span>
-            </div>
-            <br />
-            <div className={style.farmsAddress}>
-              <span className={style.farmAddress}>농장 주소</span>
-              <span className={style.farmAddressData}>
-                {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
-              </span>
+          <div className={style.flexContainer}>
+            <div className={style.farmDetails}>
+              <div className={style.farmNames}>
+                {' '}
+                <span className={style.farmName}>농장 이름</span>
+                <span className={style.farmNameData}>
+                  {farmerInfo.farmer.farmName}
+                </span>
+              </div>
+              <br />
+              <div className={style.farmerNames}>
+                <span className={style.farmerName}>팜 연락처</span>
+                <span className={style.farmerNameData}>
+                  {farmerInfo.farmer.farmTel}
+                </span>
+              </div>
+              <br />
+              <div className={style.farmsAddress}>
+                <span className={style.farmAddress}>농장 주소</span>
+                <span className={style.farmAddressData}>
+                  {farmerInfo.farmer.farmAddress +
+                    ' ' +
+                    farmerInfo.farmer.farmAddressDetail}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
       <main className={style.main}>
         <header className={style.header}>못난이 마켓에 판매중인 상품</header>
         <ProductsList farmerId={farmerId} />

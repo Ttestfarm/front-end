@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import RegistSection from './../../components/UI/RegistSection';
-import useUserInput from '../../hooks/use-userInput';
 import style from './RegistFarmer.module.css';
+
+import useUserInput from '../../hooks/use-userInput';
 import picDefault from '../../assets/pic-default.png';
 import { Checkbox } from '../../components/UI/Checkbox';
 import * as API from '../../api/index';
@@ -243,16 +244,18 @@ const RegistFarmerPage = ({ page }) => {
         for (const [key, value] of formData.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const result = await API.formPost('/findfarmer/reg-farmer', formData);
-        console.log('------------------');
-        console.log('result', result);
+        const response = await API.formPost('/findfarmer/reg-farmer', formData);
+        console.log(response.data);
         // setIsSucessModal({
         //   state: true,
         //   message: '파머 등록 성공!',
         // });
         // navigate('/farmers');
       } else {
-        await API.put(`/modify-farm/${userInfo?.user?.farmerId}`, formData);
+        await API.put(
+          `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
+          formData
+        );
         setIsSucessModal({
           state: true,
           messa3ge: '파머 정보 수정이 완료 되었습니다.',

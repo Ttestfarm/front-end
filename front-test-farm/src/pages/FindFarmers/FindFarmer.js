@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import FarmerCard from '../../components/Farmers/FarmerCard';
 import style from './FindFarmer.module.css';
-import * as API from '../../api/index';
+//import * as API from '../../api/index';
+import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom } from '../../recoil/Atoms';
 import { AnimatePresence } from 'framer-motion';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-const FindFarmerPage = ({ farmers }) => {
+const FindFarmerPage = () => {
   const [keyword, setKeyword] = useState('all');
   const [sortType, setSortType] = useState('latest');
   const [page, setPage] = useState(1);
@@ -35,7 +37,7 @@ const FindFarmerPage = ({ farmers }) => {
     if (ppage > pageInfo.allPage) return;
 
     try {
-      const response = await API.get(
+      const response = await axios.get(
         `/findfarmer?keyword=${keyword}&sortType=${psortType}&page=${ppage}`
       );
 
@@ -149,7 +151,7 @@ const FindFarmerPage = ({ farmers }) => {
 
       <AnimatePresence>
         {btnView ? (
-          <button
+          <ArrowCircleUpIcon
             initial={{ opacity: 0, y: 50 }}
             animate={{
               opacity: 1,
@@ -157,9 +159,7 @@ const FindFarmerPage = ({ farmers }) => {
             }}
             exit={{ opacity: 0, y: 50 }}
             onClick={scrollToTop}
-          >
-            꼭대기로올라가기버튼
-          </button>
+          ></ArrowCircleUpIcon>
         ) : null}
       </AnimatePresence>
       <div ref={ref}></div>

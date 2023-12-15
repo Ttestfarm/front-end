@@ -16,6 +16,8 @@ import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 //import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
+import ReqListPage from './pages/MyPages/ReqList';
+import QuotListPage from './pages/MyPages/QuotList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import BuylistPage from './pages/MyPages/Buylist';
@@ -23,7 +25,6 @@ import OrderedProductPage from './pages/MyPages/OrderedProduct';
 
 import RequestList from './pages/FarmersPages/RequestList';
 import QuotForm from './pages/FarmersPages/QuotForm';
-import QuotListPage from './pages/MyPages/QuotList';
 import QuotStatus from './pages/FarmersPages/QuotStatus';
 import QuotDetail from './pages/FarmersPages/QuotDetail';
 import OrderList from './pages/FarmersPages/OrderList';
@@ -49,10 +50,7 @@ const router = createBrowserRouter([
         path: 'findfarmer',
         element: <FindFarmerRootLayout />,
         children: [
-          {
-            index: true,
-            element: <FindFarmerPage />,
-          },
+          { index: true, element: <FindFarmerPage /> },
           {
             path: ':farmerId',
             element: <FarmerDetailPage />,
@@ -70,7 +68,7 @@ const router = createBrowserRouter([
         path: 'mypage',
         element: <MyPageRootLayout />,
         children: [
-          { index: true, element: <QuotListPage /> },
+          { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },

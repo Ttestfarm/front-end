@@ -35,8 +35,7 @@ const RegistFarmerPage = ({ page }) => {
 
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
-  const [postcodeAddress, setPostcodeAddress] =
-    useRecoilState(postcodeAddressAtom);
+  const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
 
   const [formDatas, setFormDatas] = useState({
     farmName: '',
@@ -83,9 +82,9 @@ const RegistFarmerPage = ({ page }) => {
 
   useEffect(() => {
     return () => {
-      setPostcodeAddress('');
+      setAddress2('');
     };
-  }, [setPostcodeAddress]);
+  }, [setAddress2]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -228,7 +227,7 @@ const RegistFarmerPage = ({ page }) => {
     formData.append('farmName', farmNameValue);
     formData.append('farmTel', farmTelValue);
     formData.append('telSelected', myFarmTel);
-    formData.append('farmAddress', postcodeAddress);
+    formData.append('farmAddress', address2);
     formData.append('farmAddressDetail', farmAddressDetailValue);
     formData.append('registrationNum', registrationNumValue);
     formData.append('farmBank', selected);
@@ -375,7 +374,7 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddress"
-            value={postcodeAddress}
+            value={address2}
             // onChange={farmAddressChangeHandler}
             // onBlur={farmAddressBlurHandler}
             placeholder={'도로명 주소'}

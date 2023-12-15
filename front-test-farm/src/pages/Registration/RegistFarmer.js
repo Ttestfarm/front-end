@@ -234,7 +234,7 @@ const RegistFarmerPage = ({ page }) => {
     formData.append('farmAccountNum', farmAccountNumValue);
     formData.append('farmInterest', farmInterestValue);
     if (file !== null) {
-      formData.append('farmPixurl', file);
+      formData.append('farmPixurl', file.name);
     }
 
     try {
@@ -243,9 +243,9 @@ const RegistFarmerPage = ({ page }) => {
         for (const [key, value] of formData.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const result = await API.formPost('/reg-farmer', formData);
-        console.log('------------------');
-        console.log('result', result);
+        const response = await API.formPost('/findfarmer/reg-farmer', formData);
+
+        console.log('response', response);
         // setIsSucessModal({
         //   state: true,
         //   message: '파머 등록 성공!',

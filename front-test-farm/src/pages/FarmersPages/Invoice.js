@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import calendar from './calendar';
 import './style/Invoice.css';
 
 const Invoice = () => {

@@ -1,0 +1,50 @@
+.farmercardgrid {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.wrapper {
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  padding: 3rem 0;
+  margin: auto;
+}
+.sorts button {
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+.search {
+  display: flex;
+}
+
+.input-text {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 35px;
+  border-radius: 5px;
+  border: 0.5px solid #191919;
+  background: #e2e4d4;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  font-size: 16px;
+}
+.button {
+  width: 45px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e2e4d4;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: none;
+  margin-right: 10px;
+}
+.farmercardlist {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 0 auto;
+}

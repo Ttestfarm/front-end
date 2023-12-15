@@ -22,19 +22,11 @@ const FarmerDetailPage = () => {
 
   const farmerId = useParams().farmerId;
   const navigate = useNavigate();
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
   //초기 랜더링 시 파머 정보 불러오기
   useEffect(() => {
     console.log("Aa");
     const getFarmerInfo = async () => {
-      const response = await API.get(`/findfarmer/${farmerId}`, {
-        headers: {
-          Authorization: `${getToken()}`,
-        },
-      });
-
+      const response = await API.get(`/findfarmer/${farmerId}`);
       console.log(response.data);
       setFarmerInfo(response.data);
     };

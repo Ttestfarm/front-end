@@ -20,7 +20,7 @@ async function post(endpoint, data) {
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(bodyData),
   });
@@ -30,7 +30,7 @@ async function formPost(endpoint, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
   });
 }
@@ -41,7 +41,7 @@ async function put(endpoint, data) {
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
   });
 }
@@ -49,7 +49,7 @@ async function put(endpoint, data) {
 async function del(endpoint, params = "") {
   return axios.delete(serverUrl + endpoint + "/" + params, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
   });
 }

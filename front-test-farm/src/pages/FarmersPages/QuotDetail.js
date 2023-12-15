@@ -1,10 +1,32 @@
-import React, { useState } from 'react';
-import './style/QutoDetail.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import './style/QuotDetail.css';
+import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
+import axios from 'axios';
 
 const QuotDetail = () => {
+  const quotation = useParams();
+  const [farmerId, SetFarmerId] = useState(1);
   const [files, setFiles] = useState([image, image, image, image, image]);
+  const [quot, setQuot] = useState({
+    quotationProduct: null,
+    quotationQuantity: null,
+    quotationPrice: null,
+    quotationComment: null,
+    quotationPicture: null
+  });
+
+  useEffect(() => {
+    try {
+        axios.get(`http://localhost:8090/farmer/quotdetail/${farmerId}/${quotation.quotationId}`)
+        .then(res => {
+          setQuot(res.data);
+        });
+
+    } catch(err) {
+      console.log(err);
+    }
+  }, []);
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -22,13 +44,6 @@ const QuotDetail = () => {
     setFiles([...files]);
   };
 
-  const quot = {
-    Quotation_number: 12345,
-    product_name: '마늘쫑',
-    quantity: 3,
-    total_price: 30000,
-    comment: '수줍은 초록빛 사랑, 충주 못난이 마늘쫑의 달콤함에 빠져 보세요.',
-  };
 
   return (
     <div className="quot-detail-form">
@@ -39,7 +54,7 @@ const QuotDetail = () => {
           <input
             type="text"
             name="product"
-            value={quot.product_name}
+            value={quot.quotationProduct}
             disabled
           />
         </div>
@@ -48,7 +63,7 @@ const QuotDetail = () => {
           <input
             type="text"
             name="amount"
-            value={quot.quantity + 'kg'}
+            value={quot.quotationQuantity + 'kg'}
             disabled
           />
         </div>
@@ -57,7 +72,7 @@ const QuotDetail = () => {
           <input
             type="text"
             name="price"
-            value={quot.total_price}
+            value={quot.quotationPrice}
             disabled
           />
         </div>
@@ -67,7 +82,7 @@ const QuotDetail = () => {
             className="append"
             style={{ resize: 'none' }}
             name="append"
-            value={quot.comment}
+            value={quot.quotationComment}
             disabled
           />
         </div>

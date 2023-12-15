@@ -1,7 +1,4 @@
 export const FilePreview = (files, itemsPerRow) => {
-  if (!files || files.length === 0) {
-    return null; // 파일이 없거나 null일 경우, 미리보기를 생성하지 않고 null 반환
-  }
   return (
     files.length !== 0 &&
     files.map((file, index) => (

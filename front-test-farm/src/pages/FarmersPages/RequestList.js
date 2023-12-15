@@ -9,11 +9,23 @@ const RequestList = () => {
   // const [intProduct, setIntProduct] = useState(); // farmer InterestProduct1 값이 기본값으로 저장
   const [interestList, setInterestList] = useState([]);
   const [selInt, setSelInt] = useState();
+  const [token, setToken] = useState(null);
+
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8090/farmer/farmInterest`, { params: { farmerId: 1 } })
+    const farmerToken = getToken();
+    setToken(farmerToken);
+    axios.get(`http://localhost:8090/farmer/farmInterest`,
+     {
+      headers: {
+        Authorization: `${farmerToken}`
+      },
+    })
       .then((res) => {
+        console.log(res);
         setReqList([...res.data.reqList]);
         setInterestList([...res.data.interestList]);
         setSelInt(res.data.interestList[0]);
@@ -24,8 +36,12 @@ const RequestList = () => {
   }, []);
 
   const changeInterest = (interestOne) => {
-    axios
-      .get(`http://localhost:8090/farmer/requestlist`, { params: { farmerId: 1, farmInterest: interestOne } })
+    axios.get(`http://localhost:8090/farmer/requestlist?farmInterest=${interestOne}`, 
+      {
+        headers: {
+          Authorization: `${token}`
+        }
+      })
       .then((res) => {
         setReqList([...res.data]);
         setSelInt(interestOne);
@@ -58,7 +74,7 @@ const RequestList = () => {
           </div >
         </div >
       </div >
-      {reqList !== null ? reqList.map((req) =>
+      {reqList.length !== 0 ? reqList.map((req) =>
         <div className='request-box' key={req.requestId}>
           <div className='request-content'>
             <p>{req.name} <span>님</span></p>
@@ -67,17 +83,15 @@ const RequestList = () => {
             <p>배송지 : {req.address}</p>
           </div>
           <div className='request-btn'>
-            <button><Link className='a' to={`/quotform/${req.requestId}/${req.requestProduct}`}>견적 보내기</Link></button>
+            <button><Link className='a' to={`/farmerpage/quotform/${req.requestId}/${req.requestProduct}`}>견적 보내기</Link></button>
             <p>요청서 번호 : {req.requestId}</p>
           </div>
         </div>
       ) :
-        <div className='request-box'>
-          <span>none list</span>
+        <div>
+          <p>{selInt}의 요청서가 없습니다.</p>
         </div>
-
       }
-
     </div >
   );
 };

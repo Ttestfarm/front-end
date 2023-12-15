@@ -1,15 +1,21 @@
 import React from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import style from './PostCode.module.css';
-import { isPostcodeModalAtom, postcodeAddressAtom } from '../recoil/Atoms';
+import {
+  isPostcodeModalAtom,
+  postcodeAddressAtom,
+  zonecodeAtom,
+} from '../recoil/Atoms';
 import { useRecoilState } from 'recoil';
 import ModalContainer from './../components/UI/Modal';
 
 const Postcode = () => {
   const [, setPostcodeAddress] = useRecoilState(postcodeAddressAtom);
   const [, setIsPostcodeModal] = useRecoilState(isPostcodeModalAtom);
+  const [, setZonecode] = useRecoilState(zonecodeAtom);
 
   const handleComplete = (data) => {
+    let address1 = data.zonecode;
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -24,8 +30,10 @@ const Postcode = () => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
       console.log(extraAddress);
       console.log(fullAddress);
+      console.log(address1);
     }
 
+    setZonecode(address1);
     setPostcodeAddress(fullAddress);
     setIsPostcodeModal(false);
   };

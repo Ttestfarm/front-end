@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import RegistSection from './../../components/UI/RegistSection';
-import useUserInput from '../../hooks/use-userInput';
 import style from './RegistFarmer.module.css';
+
+import useUserInput from '../../hooks/use-userInput';
 import picDefault from '../../assets/pic-default.png';
 import { Checkbox } from '../../components/UI/Checkbox';
 import * as API from '../../api/index';
@@ -19,13 +20,8 @@ import {
 
 import { bankOption } from '../../util/payment';
 import { userInfoAtom } from './../../recoil/Atoms';
-// // 유효성 검사 함수
-// const isNotEmpty = (value) =>
-//   /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length >= 2;
-// const isTel = (value) =>
-//   value.trim().match(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/) ||
-//   value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
-// const isNotEmptyValue = (value) => value.trim() !== '';
+
+//계좌번호 셀렉트박스 디자인 수정해야합니다!!
 
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -39,8 +35,7 @@ const RegistFarmerPage = ({ page }) => {
 
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
-  const [postcodeAddress, setPostcodeAddress] =
-    useRecoilState(postcodeAddressAtom);
+  const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
 
   const [formDatas, setFormDatas] = useState({
     farmName: '',
@@ -87,9 +82,9 @@ const RegistFarmerPage = ({ page }) => {
 
   useEffect(() => {
     return () => {
-      setPostcodeAddress('');
+      setAddress2('');
     };
-  }, [setPostcodeAddress]);
+  }, [setAddress2]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -147,7 +142,7 @@ const RegistFarmerPage = ({ page }) => {
   const {
     value: farmAccountNumValue,
     isValid: farmAccountNumIsValid,
-    hasError: farmAccountHasError,
+    hasError: farmAccountNumHasError,
     valueChangeHandler: farmAccountNumChangeHandler,
     inputBlurHandler: farmAccountNumBlurHandler,
     reset: resetfarmAccountNum,
@@ -162,11 +157,17 @@ const RegistFarmerPage = ({ page }) => {
     reset: resetfarmInterest,
   } = useUserInput(val.isNotEmptyValue);
 
+  //이미지
   const onFileChange = (e) => {
     // setFile(e.target.files[0]);
+    //이미지 바꾸면 화면에 출력하기
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
     console.log('file', imageSrc);
+
+    if (e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
 
   //주소찾기 모달 열기
@@ -175,6 +176,7 @@ const RegistFarmerPage = ({ page }) => {
     setIsPostcodeModal((prev) => !prev);
   };
 
+  //사업자등록번호 확인
   const registrationNumCheckHandler = async (e) => {
     e.preventDefault();
     const registrationNum = registrationNumValue;
@@ -211,6 +213,7 @@ const RegistFarmerPage = ({ page }) => {
     farmNameIsValid &&
     farmTelIsValid &&
     farmAddressDetailIsValid &&
+    farmAccountNumIsValid &&
     registrationNum
   ) {
     formIsValid = true;
@@ -223,29 +226,39 @@ const RegistFarmerPage = ({ page }) => {
     const formData = new FormData();
     formData.append('farmName', farmNameValue);
     formData.append('farmTel', farmTelValue);
-    formData.append('myFarmTel', myFarmTel);
-    formData.append('farmAddress', postcodeAddress);
+    formData.append('telSelected', myFarmTel);
+    formData.append('farmAddress', address2);
     formData.append('farmAddressDetail', farmAddressDetailValue);
     formData.append('registrationNum', registrationNumValue);
+    formData.append('farmBank', selected);
+    formData.append('farmAccountNum', farmAccountNumValue);
     formData.append('farmInterest', farmInterestValue);
-    formData.append('farmPixurl', file);
+    if (file !== null) {
+      formData.append('farmPixurl', file.name);
+    }
 
     try {
       if (page === 'reg-farmer') {
         console.log('제출용', formData);
-        const result = await API.post('/reg-farmer', formData);
-        console.log('------------------');
-        console.log('result', result);
+        for (const [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
+        const response = await API.formPost('/findfarmer/reg-farmer', formData);
+
+        console.log('response', response);
         // setIsSucessModal({
         //   state: true,
         //   message: '파머 등록 성공!',
         // });
         // navigate('/farmers');
       } else {
-        await API.put(`/modify-farm/${userInfo?.user?.farmerId}`, formData);
+        await API.put(
+          `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
+          formData
+        );
         setIsSucessModal({
           state: true,
-          message: '파머 정보 수정이 완료 되었습니다.',
+          messa3ge: '파머 정보 수정이 완료 되었습니다.',
         });
         navigate('/farmers');
       }
@@ -279,7 +292,7 @@ const RegistFarmerPage = ({ page }) => {
       ? `${style['form-control']} ${style.invalid}`
       : style['form-control'];
 
-  const farmAccountStyles = farmAccountHasError
+  const farmAccountStyles = farmAccountNumHasError
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
@@ -318,7 +331,7 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="file"
             id="file"
-            name="pixurl"
+            name="file"
             accept="image/*"
             onChange={onFileChange}
             hidden
@@ -362,7 +375,7 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddress"
-            value={postcodeAddress}
+            value={address2}
             // onChange={farmAddressChangeHandler}
             // onBlur={farmAddressBlurHandler}
             placeholder={'도로명 주소'}
@@ -421,8 +434,14 @@ const RegistFarmerPage = ({ page }) => {
             name="farmAccountNum"
             value={farmAccountNumValue}
             onChange={farmAccountNumChangeHandler}
+            onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
+          {farmAccountNumHasError && (
+            <p className={style['error-text']}>
+              정산을 위해 계좌입력은 필수사항입니다.
+            </p>
+          )}
         </div>
 
         <div className={style['form-control']}>

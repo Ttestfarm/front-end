@@ -1,0 +1,119 @@
+.main-top-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(68, 67, 67, 0.7)),
+    url('../../assets/main_img.jpg');
+  height: 530px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+  background-blend-mode: darken;
+  margin-top: 80px;
+}
+p {
+  padding: 0;
+  margin: 0.1rem;
+}
+.logo {
+  width: 483px;
+  height: 198px;
+}
+.text-box {
+  width: 70%;
+}
+.text-box > p {
+  color: whitesmoke;
+  font-size: 1.2rem;
+  /* padding: 0; */
+  /* margin: 0.1rem; */
+}
+
+.main-left {
+  flex: 1;
+  display: flex; /*세로 가운데 정렬*/
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.main-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.main-second {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  background-color: aliceblue;
+  text-align: center;
+}
+
+.main-third {
+  width: 55%;
+  margin: 2rem auto;
+  display: flex;
+  gap: 3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.third-img {
+  display: flex;
+  flex: 1;
+
+  justify-content: flex-end;
+}
+.third-text {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.main-fourth {
+  width: 50%;
+  margin: 4rem auto;
+  display: flex;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.fourth-text {
+  flex: 1.5;
+  padding-left: 3rem;
+}
+.fourth-img {
+  flex: 1;
+}
+.farmer-join {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin: 4rem auto;
+  font-size: 1.2rem;
+  font-weight: 700;
+  gap: 2rem;
+}
+.farmer-join-text {
+  flex: 2;
+  padding-left: 3rem;
+}
+.farmer-join-btn {
+  margin-right: 2rem;
+  flex: 1;
+  align-items: flex-start;
+}
+.join-btn {
+  color: #fff;
+  width: 200px;
+  height: 45px;
+  background-color: #858a57;
+  border-radius: 10px;
+  border: 1px solid #858a57;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}

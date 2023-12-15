@@ -21,15 +21,25 @@
   width: 4.5em;
   height: 4.5rem;
 }
-.header ul {
-  list-style: none;
+
+.list {
+  /* list-style: none; */
   display: flex;
   align-items: center;
+  gap: 1.875rem;
 }
 
-.header li {
-  margin-right: 30px;
+.list a {
+  text-decoration: none;
+  color: #ffffff;
 }
+.list a:hover,
+.list a.active {
+  color: var(--color-highlight);
+  font-size: large;
+  /* text-decoration: underline; */
+}
+
 .button {
   font: inherit;
   cursor: pointer;

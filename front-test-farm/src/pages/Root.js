@@ -33,12 +33,6 @@ const RootLayout = ({ children }) => {
     useRecoilState(isSuccessModalAtom);
   const [isErrorModal, setIsErrorModal] = useRecoilState(isErrorModalAtom);
 
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0); // 스크롤 맨 위로 이동
-  // }, [location]);
-
   const onClose = () => {
     setIsSuccessModal({ state: false, message: '' });
     setIsErrorModal({ state: false, message: '' });

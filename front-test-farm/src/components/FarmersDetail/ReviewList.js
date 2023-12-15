@@ -9,7 +9,7 @@ import * as API from '../../api/index';
 const ReviewList = ({ farmerId }) => {
   const [reviewList, setReviewList] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageInfo] = useState({});
+  const [pageInfo, setPageInfo] = useState({});
 
   useEffect(() => {
     const getLists = async () => {
@@ -17,7 +17,9 @@ const ReviewList = ({ farmerId }) => {
       console.log(response.data.pageInfo);
       console.log(response.data.reviewList);
       setReviewList(response.data.reviewList);
+      setPageInfo(response.data.pageInfo);
     };
+
     getLists();
   }, [page]);
 
@@ -27,12 +29,11 @@ const ReviewList = ({ farmerId }) => {
 
   return (
     <div className={style.reviewList}>
-      
       <main className={style.productList}>
         {reviewList.length > 0
           ? reviewList.map((review) => (
               <ReviewCard
-                key={reviewList.reviewId}
+                key={review.reviewId}
                 review={review}
               />
             ))

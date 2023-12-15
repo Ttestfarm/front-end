@@ -31,7 +31,11 @@ export const isPostcodeModalAtom = atom({
 });
 
 export const postcodeAddressAtom = atom({
-  key: 'postcodeAddress',
+  key: 'address2',
+  default: '',
+});
+export const zonecodeAtom = atom({
+  key: 'address1',
   default: '',
 });
 

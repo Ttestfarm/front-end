@@ -14,6 +14,7 @@ const RequestList = () => {
     axios
       .get(`http://localhost:8090/farmer/farmInterest`, { params: { farmerId: 1 } })
       .then((res) => {
+        console.log(res);
         setReqList([...res.data.reqList]);
         setInterestList([...res.data.interestList]);
         setSelInt(res.data.interestList[0]);
@@ -58,7 +59,7 @@ const RequestList = () => {
           </div >
         </div >
       </div >
-      {reqList !== null ? reqList.map((req) =>
+      {reqList.length !== 0 ? reqList.map((req) =>
         <div className='request-box' key={req.requestId}>
           <div className='request-content'>
             <p>{req.name} <span>님</span></p>
@@ -72,12 +73,10 @@ const RequestList = () => {
           </div>
         </div>
       ) :
-        <div className='request-box'>
-          <span>none list</span>
+        <div>
+          <p>{selInt}의 요청서가 없습니다.</p>
         </div>
-
       }
-
     </div >
   );
 };

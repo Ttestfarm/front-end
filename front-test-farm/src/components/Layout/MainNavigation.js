@@ -22,10 +22,9 @@ const MainNavigation = (props) => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        // 백엔드 서버 안킨 상태에서 토큰 있으면 실행되는걸로 바꿔둠
-        if (token) {
-          const result = await API.get('/login/userInfo');
-          setUserInfo(result.data);
+        if (token && !userInfo) {
+          const response = await API.get('/login/userInfo');
+          setUserInfo(response.data);
         }
       } catch (err) {
         console.log(err);
@@ -33,7 +32,7 @@ const MainNavigation = (props) => {
     };
 
     getUserInfo();
-  }, [token]);
+  }, [token, userInfo]);
 
   const logoutHandler = () => {
     if (token) {
@@ -103,7 +102,7 @@ const MainNavigation = (props) => {
             {token && (
               <li>
                 <NavLink
-                  to="/farmer"
+                  to="/farmerpage/requestlist"
                   className={({ isActive }) =>
                     isActive ? style.active : undefined
                   }

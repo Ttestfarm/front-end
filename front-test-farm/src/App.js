@@ -16,13 +16,22 @@ import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 //import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
-import QuotListPage from './pages/MyPages/QuotList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import BuylistPage from './pages/MyPages/Buylist';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
 
+import RequestList from './pages/FarmersPages/RequestList';
+import QuotForm from './pages/FarmersPages/QuotForm';
+import QuotListPage from './pages/MyPages/QuotList';
+import QuotStatus from './pages/FarmersPages/QuotStatus';
+import QuotDetail from './pages/FarmersPages/QuotDetail';
+import OrderList from './pages/FarmersPages/OrderList';
+import OrderDetail from './pages/FarmersPages/OrderDetail';
+
 import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
+import DeliveryList from './pages/FarmersPages/DeliveryList';
+import Invoice from './pages/FarmersPages/Invoice';
 
 const router = createBrowserRouter([
   {
@@ -83,7 +92,42 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <FindFarmerPage />,
+          },
+          {
+            path: 'modify-farm',
+            element: <RegistFarmerPage page="modify-farm" />,
+          },
+          {
+            path: 'requestlist',
+            element: <RequestList />,
+          },
+          {
+            path: 'quotform/:requestId/:requestProduct',
+            element: <QuotForm />,
+          },
+          {
+            path: 'quotstatus',
+            element: <QuotStatus />,
+          },
+          {
+            path: 'quotdetail/:quotationId',
+            element: <QuotDetail />,
+          },
+          {
+            path: 'orderlist',
+            element: <OrderList />,
+          },
+          {
+            path: 'orderlist/orderdetail/:ordersId/:type',
+            element: <OrderDetail />,
+          },
+          {
+            path: 'deliverylist',
+            element: <DeliveryList />,
+          },
+          {
+            path: 'invoice',
+            element: <Invoice />,
           },
         ],
       },
@@ -99,10 +143,6 @@ const router = createBrowserRouter([
       //   path: '/modify-user',
       //   element: <ModifyUserPage />,
       // },
-      {
-        path: '/modify-farm',
-        element: <RegistFarmerPage page="modify-farm" />,
-      },
     ],
   },
 ]);

@@ -1,7 +1,359 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import style from './ModifyUser.module.css';
+
+import Postcode from '../../api/PostCode';
+import useUserInput from './../../hooks/use-userInput';
+import * as API from '../../api/index';
+import * as val from '../../util/validation';
+import RegistSection from './../../components/UI/RegistSection';
+
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  isErrorModalAtom,
+  isSuccessModalAtom,
+  isPostcodeModalAtom,
+  postcodeAddressAtom,
+  userInfoAtom,
+  zonecodeAtom,
+} from '../../recoil/Atoms';
 
 const ModifyUserPage = () => {
-  return <div></div>;
+  //비밀번호 확인 유효성 검사set
+  const [, setRepassword] = useState('');
+  const [repasswordIsValid, setRepasswordIsValid] = useState(false);
+  const [checkPwdMsg, setCheckPwdMsg] = useState('');
+
+  //휴대폰 인증과정
+  const [authNum, setAuthNum] = useState('');
+  const [checkSMS, setCheckSMS] = useState('');
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [updateData, setUpdateData] = useState({ ...userInfo });
+
+  const [isPostcodeModal, setIsPostcodeModal] =
+    useRecoilState(isPostcodeModalAtom);
+  const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
+  const [address1, setAddress1] = useRecoilState(zonecodeAtom);
+
+  const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
+  const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
+
+  const navigate = useNavigate();
+
+  const inputHandle = (e) => {
+    setUpdateData({ ...updateData, [e.target.name]: e.target.value });
+  };
+
+  console.log('32', updateData);
+  useEffect(() => {
+    console.log('>?', address1);
+    if (address1 && address2) {
+      setUpdateData({ ...updateData, address1, address2 });
+    }
+  }, [address1, address2]);
+
+  //주소창 닫으면 값 리셋
+  useEffect(() => {
+    return () => {
+      setAddress2('');
+    };
+  }, [setAddress1, setAddress2]);
+
+  // const {
+  //   value: userName,
+  //   isValid: nameIsValid,
+  //   hasError: nameHasError,
+  //   valueChangeHandler: nameChangeHandler,
+  //   inputBlurHandler: nameBlurHandler,
+  //   reset: resetName,
+  // } = useUserInput(val.isNotEmptyName);
+
+  // // const {
+  // //   value: emailValue,
+  // //   isValid: emailIsValid,
+  // //   hasError: emailHasError,
+  // //   valueChangeHandler: emailChangeHandler,
+  // //   inputBlurHandler: emailBlurHandler,
+  // //   reset: resetEmail,
+  // // } = useUserInput(val.isEmail);
+  const {
+    value: passwordValue,
+    isValid: passwordIsValid,
+    hasError: passwordHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: resetPassword,
+  } = useUserInput(val.isPassword);
+
+  const {
+    value: repasswordValue,
+    valueChangeHandler: repasswordChangeHandler,
+    inputBlurHandler: repasswordBlurHandler,
+    reset: resetRepassword,
+  } = useUserInput(val.isPassword);
+
+  // const {
+  //   isValid: address3,
+  //   hasError: addressHasError,
+  //   valueChangeHandler: addressDetailChangeHandler,
+  //   inputBlurHandler: addressDetailBlurHandler,
+  //   reset: resetAddressDetail,
+  // } = useUserInput(val.isNotEmptyValue);
+
+  const {
+    value: userTel,
+    isValid: telIsValid,
+    hasError: telHasError,
+    valueChangeHandler: telChangeHandler,
+    inputBlurHandler: telBlurHandler,
+    reset: resetTel,
+  } = useUserInput(val.isTel);
+
+  const pwCheckHandler = (e) => {
+    const inputPassword = e.target.value;
+    setRepassword(inputPassword);
+    if (passwordValue !== inputPassword) {
+      setCheckPwdMsg('비밀번호가 똑같지 않아요!');
+      setRepasswordIsValid(false);
+    } else {
+      setCheckPwdMsg('똑같은 비밀번호를 입력했습니다.');
+      setRepasswordIsValid(true);
+    }
+  };
+
+  //주소찾기 모달 열기
+  const onClicktoggleAddressModal = async (e) => {
+    e.preventDefault();
+    setIsPostcodeModal((prev) => !prev);
+  };
+
+  //핸드폰 인증번호 요청
+  const sendSMS = async (e) => {
+    await API.get(`/modify-user/sendSMS?userTel=${updateData.userTel}`).then(
+      (response) => {
+        setIsSucessModal({
+          state: true,
+          message: '인증번호를 발송했어요!',
+        });
+        console.log(response.data);
+        setAuthNum(response.data);
+      }
+    );
+  };
+
+  //인증번호 확인
+  const checkSMSHandler = () => {
+    if (authNum === checkSMS) {
+      setIsSucessModal({
+        state: true,
+        message: '휴대폰 인증이 정상적으로 완료되었습니다.',
+      });
+    } else {
+      setIsErrorModal({
+        state: true,
+        message: '인증번호가 올바르지 않습니다.',
+      });
+    }
+  };
+
+  let formIsValid = false;
+
+  if (passwordIsValid && repasswordIsValid) {
+    formIsValid = true;
+  }
+  const RegistHandler = async () => {
+    try {
+      console.log('보낼데이터', updateData);
+      await axios.put(`${API.serverUrl}/modify-user`, updateData);
+      // resetName();
+      // resetPassword();
+      // resetRepassword();
+      // resetAddressDetail();
+      // resetTel();
+
+      setIsSucessModal({
+        state: true,
+        message: '회원정보가 수정되었습니다!',
+      });
+
+      navigate('/');
+    } catch (error) {
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+    }
+  };
+  // const nameStyles = nameHasError
+  //   ? `${style['form-control']} ${style.invalid}`
+  //   : style['form-control'];
+
+  const passwordStyles = passwordHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
+
+  // const addressStyles = addressHasError
+  //   ? `${style['form-control']} ${style.invalid}`
+  //   : style['form-control'];
+
+  // const telStyles = telHasError
+  //   ? `${style['form-control']} ${style.invalid}`
+  //   : style['form-control'];
+
+  return (
+    <RegistSection title={'내 정보 관리'}>
+      <div className={style['form-control']}>
+        <label htmlFor="name">이름</label>
+        <input
+          type="text"
+          name="userName"
+          value={updateData.userName}
+          onChange={inputHandle}
+          //onBlur={nameBlurHandler}
+          placeholder={'이름을 입력하세요.(최대 5글자)'}
+        />
+        {/* {nameHasError && (
+          <p className={style['error-text']}>
+            이름은 최소 2글자 이상 입력하세요 (최대 5글자)
+          </p>
+        )} */}
+      </div>
+
+      <div>
+        <div className={style['form-control']}>
+          <label htmlFor="email">이메일</label>
+          <input
+            type="text"
+            name="userEmail"
+            value={updateData.userEmail}
+            disabled
+          />
+        </div>
+      </div>
+
+      <div className={passwordStyles}>
+        <label htmlFor="password">비밀번호</label>
+        <input
+          type="password"
+          id="password"
+          value={passwordValue}
+          onChange={passwordChangeHandler}
+          //onBlur={passwordBlurHandler}
+          placeholder={'문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)'}
+        />
+        {passwordHasError && (
+          <p className={style['error-text']}>
+            문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)
+          </p>
+        )}
+        <input
+          type="password"
+          id="repassword"
+          name="repassword"
+          value={repasswordValue}
+          onChange={(e) => {
+            repasswordChangeHandler(e);
+            pwCheckHandler(e);
+          }}
+          //onBlur={repasswordBlurHandler}
+          placeholder={'비밀번호를 한 번 더 입력해 주세요.'}
+        />
+        <p className={style['error-text']}>{checkPwdMsg}</p>
+      </div>
+
+      <div className={style['form-control']}>
+        <div className={style.certify}>
+          <label htmlFor="farmAddress">주소</label>
+          <input
+            type="text"
+            disabled
+            name="address1"
+            value={updateData.address1}
+            className={style.zipcode}
+            placeholder={'우편번호'}
+          />
+          <button
+            className={style['certify-btn']}
+            onClick={onClicktoggleAddressModal}
+          >
+            주소 찾기
+          </button>
+        </div>
+
+        <input
+          type="text"
+          name="address2"
+          value={updateData.address2}
+          // onChange={farmAddressChangeHandler}
+          // onBlur={farmAddressBlurHandler}
+          placeholder={'도로명 주소'}
+          disabled
+        />
+        <input
+          type="text"
+          name="address3"
+          value={updateData.address3}
+          onChange={inputHandle}
+          //onBlur={addressDetailBlurHandler}
+          placeholder={'상세 주소를 입력해 주세요.'}
+        />
+      </div>
+
+      <div className={style['form-control']}>
+        <div className={style.certify}>
+          <label htmlFor="tel">핸드폰 번호</label>
+          <button
+            id="tel-certify-req"
+            onClick={() => {
+              sendSMS();
+            }}
+            className={style['certify-btn']}
+          >
+            인증번호 요청
+          </button>
+        </div>
+        <input
+          type="text"
+          name="userTel"
+          value={updateData.userTel}
+          onChange={inputHandle}
+          //onBlur={telBlurHandler}
+          placeholder={'01056781234 (숫자만 입력하셔도 됩니다.)'}
+        />
+
+        <div className={style.certify}>
+          <input
+            type="text"
+            name="checkSMS"
+            value={checkSMS}
+            onChange={(e) => setCheckSMS(e.target.value)}
+            placeholder={'인증번호를 입력해 주세요.'}
+          />
+          <button
+            id="tel-certify-req"
+            onClick={checkSMSHandler}
+            className={style['certify-btn']}
+          >
+            인증번호 확인
+          </button>
+        </div>
+        {/* {telHasError && (
+          <p className={style['error-text']}>phone 인증번호를 입력하세요.</p>
+        )} */}
+        <button
+          id="join"
+          className={style['join-btn']}
+          disabled={!formIsValid}
+          onClick={RegistHandler}
+        >
+          정보 수정 완료
+        </button>
+      </div>
+      {isPostcodeModal && <Postcode />}
+    </RegistSection>
+  );
 };
 
 export default ModifyUserPage;

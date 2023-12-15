@@ -30,9 +30,9 @@ const ProductsList = ({ farmerId }) => {
       <main className={style.productList}>
         {productList.length > 0
           ? productList.map((product) => (
-              <ProductCard key={productList.productId} product={product} />
+              <ProductCard key={product.productId} product={product} />
             ))
-          : "현재 판매중이 상품이 없습니다."}
+          : "현재 판매중인 상품이 없습니다."}
         <Stack spacing={2}>
           <Pagination
             className={style.pagination}

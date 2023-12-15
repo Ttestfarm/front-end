@@ -93,7 +93,7 @@ const LoginPage = () => {
         <Form className={style['kakao-naver']}>
           <Link
             id="kakao-login"
-            to="#"
+            to="http://localhost:8090/oauth2/authorization/kakao"
           >
             <img
               src="https://d3cpiew7rze14b.cloudfront.net/assets/app/kakao_icon.svg"
@@ -103,7 +103,7 @@ const LoginPage = () => {
           </Link>
           <Link
             id="naver-login"
-            to="#"
+            to="http://localhost:8090/oauth2/authorization/naver"
           >
             <img
               src={naver}

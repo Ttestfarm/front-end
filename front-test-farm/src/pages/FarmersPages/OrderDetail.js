@@ -17,8 +17,19 @@ const OrderDetail = () => {
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
 
+  const [token, setToken] = useState(null);
+  const getToken = () => {
+    return localStorage.getItem("token");
+  };
+
   useEffect(() => {
-    axios.get(`http://localhost:8090/farmer/orderdetail/${farmerId}/${ordersId}/${type}`)
+    const farmerToken = getToken();
+    setToken(farmerToken);
+    axios.get(`http://localhost:8090/farmer/orderdetail/${ordersId}/${type}`, {
+      headers: {
+        Authorization: `${farmerToken}`
+      },
+    })
       .then(res => {
         setOrd(res.data);
       }).catch((err) => {
@@ -32,19 +43,24 @@ const OrderDetail = () => {
 
   const sendCancelText = () => {
     // console.log(cancelText);
-    if(cancelText === null) {
-      axios.post(`http://localhost:8090/farmer/ordercancel`, { "farmerId" : farmerId, "ordersId" : ordersId , "cancelText" : cancelText},
-          { headers: { "Content-Type": `application/json` } })
-          .then(res => {
-            alert(res.data);
-            console.log(res.data);
-            setOpen(false);
-            // 결제 완료 페이지로 이동
-          })
-          .catch(err => {
-            alert(err.data);
-            console.log(err.data);
-          })
+    if (cancelText !== null) {
+      axios.post(`http://localhost:8090/farmer/ordercancel`, { "ordersId": ordersId, "cancelText": cancelText },
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            Authorization: `${token}`
+          }
+        })
+        .then(res => {
+          alert(res.data);
+          console.log(res.data);
+          setOpen(false);
+          // 결제 완료 페이지로 이동
+        })
+        .catch(err => {
+          alert(err.data);
+          console.log(err.data);
+        })
     } else {
       alert("사유를 적어주세요.")
     }

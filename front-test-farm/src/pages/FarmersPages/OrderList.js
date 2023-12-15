@@ -18,8 +18,19 @@ const OrderList = () => {
   const [code, setCode] = useState("00"); // 택배사 코드 저장
   const [invoice, setInvoice] = useState(); // 송장 번호 저장
 
+  const [token, setToken] = useState(null);
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
+
   useEffect(() => { // 배송 현황(매칭) 리스트
-    axios.get(`http://localhost:8090/farmer/orderlist/${farmerId}/${type}/${page}`)
+    const farmerToken = getToken();
+    setToken(farmerToken);
+    axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
+      headers: {
+        Authorization: `${farmerToken}`
+      },
+    })
       .then(res => {
         setOrdList([...res.data.ordersList]);
         return axios.get(`http://info.sweettracker.co.kr/api/v1/companylist`, { params: { "t_key": key } })
@@ -42,7 +53,11 @@ const OrderList = () => {
       setType(idx);
       let type = idx;
       let page = 1;
-      axios.get(`http://localhost:8090/farmer/orderlist/${farmerId}/${type}/${page}`)
+      axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
+        headers: {
+          Authorization: `${token}`
+        },
+      })
         .then(res => {
           setOrdList([...res.data.ordersList]);
         }).catch(err => {
@@ -94,7 +109,11 @@ const OrderList = () => {
       console.log(ordersId);
       console.log(code);
       console.log(invoice);
-      axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}`)
+      axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${invoice}`, {
+        headers: {
+          Authorization: `${token}`
+        },
+      })
         .then(res => {
           alert(res.data);
           console.log(res);

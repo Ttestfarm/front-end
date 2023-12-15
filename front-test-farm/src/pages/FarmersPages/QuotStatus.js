@@ -13,9 +13,20 @@ const QuotStatus = () => {
   const [state, SetState] = useState(1);
   const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
 
+  const [token, setToken] = useState(null);
+
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8090/farmer/quotlist/${farmerId}/${state}/${page}`)
+    const farmerToken = getToken();
+    setToken(farmerToken);
+    axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
+      headers: {
+        Authorization: `${farmerToken}`
+      },
+    })
       .then((res) => {
         setQuotList([...res.data.quotList]);
         // setPage([...res.data.pageInfo]);
@@ -29,7 +40,11 @@ const QuotStatus = () => {
 
   const changeState = (state) => {
     SetState(state);
-    axios.get(`http://localhost:8090/farmer/quotlist/${farmerId}/${state}/${page}`)
+    axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
+      headers: {
+        Authorization: `${token}`
+      },
+    })
       .then((res) => {
         setQuotList([...res.data.quotList]);
         // setPage([...res.data.pageInfo]);

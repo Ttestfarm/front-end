@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import calendar from './calendar';
 import './style/Invoice.css';
 
 const Invoice = () => {
@@ -11,7 +12,8 @@ const Invoice = () => {
   var dateString = year + '-' + month + '-' + day;
   return (
     <>
-      <div className="cal-form">
+      <calendar />
+      {/* <div className="cal-form">
         <h2>조회하기</h2>
         <div className="cal-search">
           <div className="cal-search-date">
@@ -71,7 +73,7 @@ const Invoice = () => {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

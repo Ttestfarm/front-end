@@ -131,7 +131,7 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(`/modify-user/sendSMS?userTel=${updateData.userTel}`).then(
+    await API.get(`/user/modify-user/check-sms/${updateData.userTel}`).then(
       (response) => {
         setIsSucessModal({
           state: true,
@@ -167,7 +167,7 @@ const ModifyUserPage = () => {
   const RegistHandler = async () => {
     try {
       console.log('보낼데이터', updateData);
-      await axios.put(`${API.serverUrl}/user/modify-user`, updateData);
+      await API.put(`/user/modify-user`, updateData);
       // resetName();
       // resetPassword();
       // resetRepassword();

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import style from "./QuotCard.module.css";
 import * as API from "../../api/index";
-import QuotCard from "../../components/myPages/QuotList";
+import QuotCard from "../../components/myPages/QuotCard";
 
 const ReqCard = ({ req }) => {
   //견적서 카드

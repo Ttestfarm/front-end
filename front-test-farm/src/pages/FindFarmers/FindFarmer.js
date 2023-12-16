@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import FarmerCard from "../../components/Farmers/FarmerCard";
 import style from "./FindFarmer.module.css";
-//import * as API from '../../api/index';
-import axios from "axios";
+import * as API from "../../api/index";
+//import axios from 'axios';
 import { useSetRecoilState } from "recoil";
 import { isErrorModalAtom } from "../../recoil/Atoms";
 import { AnimatePresence } from "framer-motion";
@@ -37,7 +37,7 @@ const FindFarmerPage = () => {
     if (ppage > pageInfo.allPage) return;
 
     try {
-      const response = await axios.get(
+      const response = await API.get(
         `/findfarmer?keyword=${keyword}&sortType=${psortType}&page=${ppage}`
       );
 

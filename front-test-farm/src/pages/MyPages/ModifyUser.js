@@ -163,16 +163,19 @@ const ModifyUserPage = () => {
   if (passwordIsValid && repasswordIsValid) {
     formIsValid = true;
   }
+
   const RegistHandler = async () => {
     try {
       console.log('보낼데이터', updateData);
-      await axios.put(`${API.serverUrl}/modify-user`, updateData);
+      await axios.put(`${API.serverUrl}/user/modify-user`, updateData);
       // resetName();
       // resetPassword();
       // resetRepassword();
       // resetAddressDetail();
       // resetTel();
 
+      //성공했다고 메시지
+      setUserInfo({ ...updateData });
       setIsSucessModal({
         state: true,
         message: '회원정보가 수정되었습니다!',
@@ -186,6 +189,7 @@ const ModifyUserPage = () => {
       });
     }
   };
+
   // const nameStyles = nameHasError
   //   ? `${style['form-control']} ${style.invalid}`
   //   : style['form-control'];

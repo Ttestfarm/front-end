@@ -4,28 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import style from './RegistUser.module.css';
 import useUserInput from './../../hooks/use-userInput';
 import * as API from '../../api/index';
+import * as val from '../../util/validation';
 import axios from 'axios';
 import RegistSection from './../../components/UI/RegistSection';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom, isSuccessModalAtom } from '../../recoil/Atoms';
-
-// 유효성 검사 함수
-const isNotEmpty = (value) =>
-  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length <= 5;
-
-const isEmail = (value) =>
-  value
-    .toLowerCase()
-    .match(
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-    );
-
-const isPassword = (value) =>
-  value.trim().length >= 8 &&
-  /[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.exec(value) &&
-  /[0-9]/.exec(value) &&
-  /[!@#]/.exec(value);
-// 유효성 검사 로직 끝
 
 const RegistUserPage = () => {
   //비밀번호 확인 유효성 검사set
@@ -53,7 +36,7 @@ const RegistUserPage = () => {
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
     reset: resetName,
-  } = useUserInput(isNotEmpty);
+  } = useUserInput(val.isNotEmptyName);
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -61,7 +44,7 @@ const RegistUserPage = () => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmail,
-  } = useUserInput(isEmail);
+  } = useUserInput(val.isEmail);
 
   const {
     value: passwordValue,
@@ -70,40 +53,53 @@ const RegistUserPage = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPassword,
-  } = useUserInput(isPassword);
+  } = useUserInput(val.isPassword);
 
   const {
     value: repasswordValue,
     valueChangeHandler: repasswordChangeHandler,
     inputBlurHandler: repasswordBlurHandler,
     reset: resetRepassword,
-  } = useUserInput(isPassword);
+  } = useUserInput(val.isPassword);
 
   const emailDuplicateCheackHandler = async () => {
     if (emailIsValid) {
-      try {
-        await axios
-          .post(`${API.serverUrl}/join/check-email`, {
-            userEmail: emailValue,
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.status === 409) {
-              //이미 가입된 이메일인 경우
-              console.log(response.data);
-              setIsErrorModal({ state: true, message: response.data });
-            } else if (response.status === 200) {
-              //회원가입 성공
-              setEmailChecked(true);
-              setIsSucessModal({
-                state: true,
-                message: response.data,
-              });
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   const response = await axios.post(`${API.serverUrl}/join/check-email`, {
+      //     userEmail: emailValue,
+      //   });
+
+      //   if (response.status !== 200) {
+      //     console.log('4', response.data);
+      //     setIsErrorModal({ state: true, message: response.data });
+      //   } else {
+      //     setEmailChecked(true);
+      //     setIsSucessModal({ state: true, message: response.data });
+      //   }
+
+      await axios
+        .post(`${API.serverUrl}/join/check-email`, {
+          userEmail: emailValue,
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 409) {
+            //이미 가입된 이메일인 경우
+            console.log(response.data);
+            setIsErrorModal({ state: true, message: response.data });
+          } else if (response.status === 200) {
+            //회원가입 성공
+            setEmailChecked(true);
+            setIsSucessModal({
+              state: true,
+              message: response.data,
+            });
+          }
+        })
+        .catch((e) => {// 이 부분 수정 지워야함 
+          console.log(e);
+          setIsErrorModal({ state: true, message: e.response.data });
+        });
     }
   };
 

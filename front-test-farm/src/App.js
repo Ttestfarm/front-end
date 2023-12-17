@@ -15,9 +15,12 @@ import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 //import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
+
+
+
+
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
-import QuotListPage from './pages/MyPages/QuotList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import BuylistPage from './pages/MyPages/Buylist';

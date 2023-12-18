@@ -79,30 +79,62 @@ const RegistUserPage = () => {
     reset: resetRepassword,
   } = useUserInput(isPassword);
 
+  // const emailDuplicateCheackHandler = async () => {
+  //   if (emailIsValid) {
+  //     try {
+  //       await axios
+  //         .post(`${API.serverUrl}/join/check-email`, {
+  //           userEmail: emailValue,
+  //         })
+  //         .then((response) => {
+  //           console.log(response);
+  //           if (response.status === 409) {
+  //             //이미 가입된 이메일인 경우
+  //             console.log(response.data);
+  //             setIsErrorModal({ state: true, message: response.data });
+  //           } else if (response.status === 200) {
+  //             //회원가입 성공
+  //             setEmailChecked(true);
+  //             setIsSucessModal({
+  //               state: true,
+  //               message: response.data,
+  //             });
+  //           }
+  //         });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+
   const emailDuplicateCheackHandler = async () => {
     if (emailIsValid) {
       try {
-        await axios
-          .post(`${API.serverUrl}/join/check-email`, {
-            userEmail: emailValue,
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.status === 409) {
-              //이미 가입된 이메일인 경우
-              console.log(response.data);
-              setIsErrorModal({ state: true, message: response.data });
-            } else if (response.status === 200) {
-              //회원가입 성공
-              setEmailChecked(true);
-              setIsSucessModal({
-                state: true,
-                message: response.data,
-              });
-            }
+        const response = await axios.post(`${API.serverUrl}/join/check-email`, {
+          userEmail: emailValue,
+        });
+  
+        //console.log(response);
+  
+        if (response.status === 409) {
+          //console.log(response.data);
+          setIsErrorModal({ state: true, message: response.data });
+        } else if (response.status === 200) {
+          // 회원가입 성공
+          setEmailChecked(true);
+          setIsSucessModal({
+            state: true,
+            message: response.data,
           });
+        }
       } catch (error) {
-        console.log(error);
+        // 여기에서 예외를 캐치하고 처리
+        //console.log(error);
+        if (error.response.status === 409) {
+          setIsErrorModal({ state: true, message: error.response.data });
+        } else {
+          setIsErrorModal({ state: true, message: '서버 오류가 발생했습니다.' });
+        }
       }
     }
   };

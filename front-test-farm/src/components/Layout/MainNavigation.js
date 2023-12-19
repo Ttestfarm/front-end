@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect } from 'react';
-import { NavLink, Link, Form } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+import React, { Fragment, useEffect } from "react";
+import { NavLink, Link, Form } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
+import logo from "../../assets/logo.png";
+import axios from "axios";
 
-import style from './MainNavigation.module.css';
-import { motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
-import { isErrorModalAtom, tokenAtom, userInfoAtom } from '../../recoil/Atoms';
-import * as API from '../../api';
+import style from "./MainNavigation.module.css";
+import { motion } from "framer-motion";
+import { useRecoilState } from "recoil";
+import { isErrorModalAtom, tokenAtom, userInfoAtom } from "../../recoil/Atoms";
+import * as API from "../../api";
 
 const MainNavigation = (props) => {
   const [token, setToken] = useRecoilState(tokenAtom);
@@ -14,8 +16,8 @@ const MainNavigation = (props) => {
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token'));
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
     }
   }, []);
 
@@ -23,27 +25,28 @@ const MainNavigation = (props) => {
     const getUserInfo = async () => {
       try {
         if (token && !userInfo) {
-          const response = await API.get('/login/userInfo');
+          const response = await API.get("/user/userInfo");
           setUserInfo(response.data);
         }
       } catch (err) {
         console.log(err);
       }
     };
-
+  
     getUserInfo();
   }, [token, userInfo]);
 
+
   const logoutHandler = () => {
     if (token) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('expiration');
-      setUserInfo('');
-      window.location.href = '/';
+      localStorage.removeItem("token");
+      localStorage.removeItem("expiration");
+      setUserInfo("");
+      window.location.href = "/";
     } else {
       setIsErrorModal({
         state: true,
-        message: '로그아웃에 실패하였습니다.',
+        message: "로그아웃에 실패하였습니다.",
       });
     }
   };
@@ -60,10 +63,7 @@ const MainNavigation = (props) => {
                   isActive ? style.active : undefined
                 }
               >
-                <img
-                  src={logo}
-                  alt="unpretty-farm "
-                />
+                <img src={logo} alt="unpretty-farm " />
               </NavLink>
             </li>
             <li>
@@ -121,7 +121,7 @@ const MainNavigation = (props) => {
               {!token ? (
                 <motion.button
                   whileHover={{ scale: 1.1 }}
-                  transition={{ type: 'spring', stiffness: 500 }}
+                  transition={{ type: "spring", stiffness: 500 }}
                   className={style.button}
                 >
                   <Link to="/login">로그인</Link>
@@ -130,7 +130,7 @@ const MainNavigation = (props) => {
                 <Form action="/logout">
                   <motion.button
                     whileHover={{ scale: 1.1 }}
-                    transition={{ type: 'spring', stiffness: 500 }}
+                    transition={{ type: "spring", stiffness: 500 }}
                     className={style.button}
                     onClick={logoutHandler}
                   >

@@ -26,7 +26,6 @@ const LoginPage = () => {
     if (userInfo) {
       console.log(userInfo);
       console.log(tokenAtom);
-      navigate('/');
     }
   }, [userInfo]);
 

@@ -37,6 +37,7 @@ import OrderDetail from './pages/FarmersPages/OrderDetail';
 import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
 import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
+import Oauth from './pages/Login/Oauth';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
     loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
+      { path: '/oauth/redirect/:stoken', element: <Oauth /> },
       { path: 'join', element: <RegistUserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'logout', action: logoutAction },

@@ -33,6 +33,8 @@ import OrderDetail from "./pages/FarmersPages/OrderDetail";
 import FarmerPageRootLayout from "./components/Layout/FarmerPageRootLayout";
 import DeliveryList from "./pages/FarmersPages/DeliveryList";
 import Invoice from "./pages/FarmersPages/Invoice";
+import DeliveryInfo from "./components/FarmersDetail/DeliveryInfo";
+import Payments from "./components/Payments";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,7 @@ const router = createBrowserRouter([
       { path: "join", element: <RegistUserPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "logout", action: logoutAction },
+      { path: "deliveryinfo", element: <DeliveryInfo /> },
       {
         path: "findfarmer",
         element: <FindFarmerRootLayout />,

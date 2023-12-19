@@ -46,9 +46,7 @@ const ModifyUserPage = () => {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   };
 
-  console.log('32', updateData);
   useEffect(() => {
-    console.log('>?', address1);
     if (address1 && address2) {
       setUpdateData({ ...updateData, address1, address2 });
     }
@@ -181,7 +179,7 @@ const ModifyUserPage = () => {
         message: '회원정보가 수정되었습니다!',
       });
 
-      navigate('/');
+      navigate('/mypage/modify-user');
     } catch (error) {
       setIsErrorModal({
         state: true,

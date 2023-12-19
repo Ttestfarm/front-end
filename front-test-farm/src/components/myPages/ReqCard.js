@@ -15,6 +15,7 @@ const ReqCard = ({ req }) => {
       const response = await API.get(`/user/${req.request.requestId}`);
 
       console.log(response.data);
+
       setQuotList([...response.data.quotesWithFarmer]);
     } catch (error) {
       console.log(error);
@@ -40,7 +41,7 @@ const ReqCard = ({ req }) => {
       {quotList.length > 0
         ? quotList.map((quoteItem) => (
             <QuotCard
-              key={quoteItem.quote.quotaionId}
+              key={quoteItem.quote.quotationId}
               quoteItem={quoteItem}
             />
           ))

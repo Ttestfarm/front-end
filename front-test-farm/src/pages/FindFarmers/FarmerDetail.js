@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./FarmerDetail.module.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import backBtn from "../../assets/back_btn.png";

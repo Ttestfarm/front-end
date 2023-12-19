@@ -11,9 +11,11 @@ const ReqCard = ({ req }) => {
   //견적서 리스트 요청
   const reqQuoteHandler = async () => {
     try {
+      console.log("요청아이디:", req.request.requestId);
       const response = await API.get(`/user/${req.request.requestId}`);
 
-      console.log(response.data.quote);
+      console.log(response.data);
+
       setQuotList([...response.data.quotesWithFarmer]);
     } catch (error) {
       console.log(error);
@@ -38,7 +40,7 @@ const ReqCard = ({ req }) => {
 
       {quotList.length > 0
         ? quotList.map((quoteItem) => (
-            <QuotCard key={quoteItem.quote.quotaionId} quoteItem={quoteItem} />
+            <QuotCard key={quoteItem.quote.quotationId} quoteItem={quoteItem} />
           ))
         : ""}
     </Card>

@@ -41,6 +41,7 @@ const FindFarmerPage = () => {
         `/findfarmer?keyword=${keyword}&sortType=${psortType}&page=${ppage}`
       );
 
+      console.log('res', response.data);
       setPageInfo(response.data.pageInfo);
       if (ppage === 1) {
         setFarmerList([...response.data.farmerList]);

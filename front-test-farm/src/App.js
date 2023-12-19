@@ -13,15 +13,15 @@ import { action as logoutAction } from "./pages/Logout";
 import FindFarmerRootLayout from "./components/Layout/FindFarmerRootLayout";
 import FindFarmerPage from "./pages/FindFarmers/FindFarmer";
 import FarmerDetailPage from "./pages/FindFarmers/FarmerDetail";
-//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from "./components/Layout/MyPageRootLayout";
 import ReqListPage from "./pages/MyPages/ReqList";
-//import QuotListPage from './pages/MyPages/QuotList';
 import ModifyUserPage from "./pages/MyPages/ModifyUser";
 import FollowFarmerPage from "./pages/MyPages/FollowFarmer";
 import BuylistPage from "./pages/MyPages/Buylist";
 import OrderedProductPage from "./pages/MyPages/OrderedProduct";
+
+import MatchingListPage from "./pages/Matching/MatchingList";
 
 import RequestList from "./pages/FarmersPages/RequestList";
 import QuotForm from "./pages/FarmersPages/QuotForm";
@@ -36,6 +36,8 @@ import Invoice from "./pages/FarmersPages/Invoice";
 import DeliveryInfo from "./components/FarmersDetail/DeliveryInfo";
 import Payments from "./components/Payments";
 
+import RequestForm from "./pages/Matching/RequestForm";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +51,15 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "logout", action: logoutAction },
       { path: "deliveryinfo", element: <DeliveryInfo /> },
+      {
+        path: "findfarmer",
+        path: "matching",
+        // element: <MatchingPage />,
+        children: [
+          { index: true, element: <MatchingListPage /> },
+          { path: "requestform", element: <RequestForm /> },
+        ],
+      },
       {
         path: "findfarmer",
         element: <FindFarmerRootLayout />,

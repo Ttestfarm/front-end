@@ -1,0 +1,7 @@
+.ListBox {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap; /* 필요한 경우 줄 바꿈을 허용합니다. */
+  justify-content: space-evenly;
+  margin: 2rem auto; /* 요소들을 가로 방향으로 균등하게 배치합니다. */
+}

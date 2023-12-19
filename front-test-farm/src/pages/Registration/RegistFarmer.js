@@ -246,6 +246,10 @@ const RegistFarmerPage = ({ page }) => {
         const response = await API.formPost('/findfarmer/reg-farmer', formData);
 
         console.log('response', response);
+        //기본전화번호 체크시 userInfo 에 업데이트
+        if (response.data) {
+          setUserInfo({ userTel: farmTelValue });
+        }
         // setIsSucessModal({
         //   state: true,
         //   message: '파머 등록 성공!',

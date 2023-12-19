@@ -5,6 +5,7 @@ const serverUrl = 'http://' + window.location.hostname + ':' + backendPort;
 const imgUrl =
   'http://' + window.location.hostname + ':' + backendPort + '/uploads/';
 
+
 async function get(endpoint) {
   return axios.get(serverUrl + endpoint, {
     headers: {

@@ -24,7 +24,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      console.log(userInfo);
+      console.log(tokenAtom);
     }
   }, [userInfo]);
 

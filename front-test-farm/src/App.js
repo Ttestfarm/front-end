@@ -16,6 +16,10 @@ import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 //import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
+
+
+
+
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
@@ -34,6 +38,7 @@ import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
 import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
 import RequestForm from './pages/Matching/RequestForm';
+import Oauth from './pages/Login/Oauth';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +49,7 @@ const router = createBrowserRouter([
     loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
+      { path: '/oauth/redirect/:stoken', element: <Oauth /> },
       { path: 'join', element: <RegistUserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'logout', action: logoutAction },

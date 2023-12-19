@@ -28,6 +28,7 @@ const QuotStatus = () => {
       },
     })
       .then((res) => {
+        console.log(res);
         setQuotList([...res.data.quotList]);
         // setPage([...res.data.pageInfo]);
         console.log(res.data.quotList);

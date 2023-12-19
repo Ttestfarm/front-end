@@ -77,7 +77,7 @@ const QuotForm = () => {
       .then(res => {
         console.log(res);
         alert(res.data);
-        navigate('/requestlist');
+        navigate('/farmerpage/requestlist');
       })
       .catch(err => {
         console.log(err)

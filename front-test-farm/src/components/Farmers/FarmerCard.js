@@ -2,22 +2,19 @@ import React from 'react';
 import styles from './FarmerCard.module.css'; // CSS 모듈을 변수로 가져오기
 import star from '../../assets/star.png';
 import heart from '../../assets/heart.png';
-
 import { Link } from 'react-router-dom';
 
 const FarmerCard = ({ farmer }) => {
-  const imageStyle = {
-    border: '3px solid #75786c',
-    borderRadius: '50%',
-    width: '150px',
-    height: '150px',
-  };
-
   return (
     <div className={styles['farmer-card']}>
       <div className={styles['card-header']}>
         <button className={styles.detail}>
-          <Link to={`${farmer.farmerId}`}>상세보기</Link>
+          <Link
+            to={`${farmer.farmerId}`}
+            className={styles['details']}
+          >
+            상세보기
+          </Link>
         </button>
       </div>
 
@@ -25,7 +22,7 @@ const FarmerCard = ({ farmer }) => {
         <img
           src={farmer?.farmPixurl}
           alt="Farmer Card"
-          style={imageStyle}
+          className={styles['image']}
         />
       </div>
       <div className={styles['info']}>

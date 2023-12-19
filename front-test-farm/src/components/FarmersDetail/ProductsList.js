@@ -9,6 +9,7 @@ import * as API from '../../api/index';
 const ProductsList = ({ farmerId }) => {
   const [productList, setProductList] = useState([]);
   const [page, setPage] = useState(1);
+  const [pageInfo, setPageInfo] = useState({});
 
   //파머의 판매상품 최신순 불러오기
   useEffect(() => {
@@ -17,6 +18,7 @@ const ProductsList = ({ farmerId }) => {
       console.log(response.data.pageInfo.allPage);
       console.log(response.data);
       setProductList(response.data.productList);
+      setPageInfo(response.data.pageInfo);
     };
     getLists();
   }, [page]);
@@ -27,12 +29,11 @@ const ProductsList = ({ farmerId }) => {
 
   return (
     <>
-      
       <main className={style.productList}>
         {productList.length > 0
           ? productList.map((product) => (
               <ProductCard
-                key={productList.productId}
+                key={product.productId}
                 product={product}
               />
             ))

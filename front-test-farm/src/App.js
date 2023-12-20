@@ -103,7 +103,7 @@ const router = createBrowserRouter([
             element: <RequestList />,
           },
           {
-            path: 'quotform/:requestId/:requestProduct',
+            path: 'quotform/:requestId/:requestProduct/:requestQuantity',
             element: <QuotForm />,
           },
           {
@@ -128,17 +128,12 @@ const router = createBrowserRouter([
           },
           {
             path: 'invoice',
-<<<<<<< HEAD
             element: <Invoice />
           },
           {
             path: 'regproduct',
             element: <ProductsForm/>
           }
-=======
-            element: <Invoice />,
-          },
->>>>>>> a7f82d7030faa981cf47fe8f53fc2ea746a3e75e
         ],
       },
       // {

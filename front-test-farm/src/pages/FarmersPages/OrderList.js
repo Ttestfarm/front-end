@@ -74,11 +74,11 @@ const OrderList = () => {
     const [product, setProduct] = useState();
     const [quantity, setQuantity] = useState();
     // Modal 관련
-    const onClickButton = (ordersId, product, quantity) => {
+    const onClickButton = (receiptId, product, quantity) => {
       // console.log(ordersId, product, quantity);
       setIsOpen(true);
 
-      setOrdersId(ordersId);
+      setOrdersId(receiptId);
       setProduct(product);
       setQuantity(quantity);
     };

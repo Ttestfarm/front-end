@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './style/QuotStatus.css';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 import axios from 'axios';
 
 
 const QuotStatus = () => {
   const [quotList, setQuotList] = useState([]);
-  const [farmerId, SetFarmerId] = useState(1);
   const [page, setPage] = useState(1);
-  // 0 : 견적서 취소, 1 : 대기중, 2 : 기간 만료, 3 : 결제완료
-  const [state, SetState] = useState(1);
+  //  CANCEL, READY, EXPIRED, COMPLETED 
+  const [state, SetState] = useState("READY");
   const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
-
+  const navigate = useNavigate();
   const [token, setToken] = useState(null);
 
   const getToken = () => {
@@ -39,6 +38,7 @@ const QuotStatus = () => {
       });
   }, []);
 
+  // 견적서 상태 바뀌면 List 가져오기
   const changeState = (state) => {
     SetState(state);
     axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
@@ -55,8 +55,9 @@ const QuotStatus = () => {
       }).catch((err) => {
         console.log(err);
       });
-  };
+    }
 
+  // 취소할 견적서들 리스트에 담기
   const addCancelList = (Id) => {
     const index = cancelList.indexOf(Id);
     if (index !== -1) {
@@ -67,15 +68,20 @@ const QuotStatus = () => {
   }
 
   const cancelQuot = () => {
-    try {
-      const response = axios.post(`http://localhost:8090/farmer/quotdelete`, { "farmerId": farmerId, "ids": cancelList },
-        { headers: { "Content-Type": `application/json` } })
-      console.log("삭제 성공");
-    } catch (err) {
-      console.log(err);
-      console.log("삭제 실패");
+      axios.post(`http://localhost:8090/farmer/quotdelete`, { "ids": cancelList },
+        { 
+          headers: {
+           "Content-Type": `application/json` 
+          }
+        })
+      .then((res) => {
+        window.location.reload();
+        alert(res.data);
+      })
+      .catch((err) => {
+        alert(err.data);
+      })
     }
-  }
 
   return (
     <div className="quotation-status">
@@ -86,13 +92,14 @@ const QuotStatus = () => {
         </span>
         <div className="dropdown">
           <button className="dropbtn">
-            {state}
+            {
+              state == "READY" ? "대기중" : state == "EXPIRED" ? "요청만료" : "취소"
+            }
           </button>
           <div className="dropdown-content">
-            <a href="#" key="0" onClick={() => changeState("0")}>견적서 취소</a>
-            <a href="#" key="1" onClick={() => changeState("1")}>대기중</a>
-            <a href="#" key="2" onClick={() => changeState("2")}>기간 만료</a>
-            <a href="#" key="3" onClick={() => changeState("3")}>결제 완료</a>
+            <a href="#" key="0" onClick={() => changeState("EXPIRED")}>요청 만료</a>
+            <a href="#" key="1" onClick={() => changeState("READY")}>대기중</a>
+            <a href="#" key="2" onClick={() => changeState("CANCEL")}>취소</a>
           </div>
         </div>
       </div>
@@ -111,16 +118,18 @@ const QuotStatus = () => {
             quotList.map(quot => (
               <tr key={quot.quotationId}>
                 <td>
-                  <input type="checkbox" onClick={() => addCancelList(quot.quotationId)} />
+                  {state == "READY" &&
+                    <input type="checkbox" onClick={() => addCancelList(quot.quotationId)} />
+                  }
                 </td>
                 <td>
-                  <Link to={`/quotdetail/${quot.quotationId}`}>{quot.quotationId}</Link>
+                  <Link to={`/farmerpage/quotdetail/${quot.quotationId}`}>{quot.quotationId}</Link>
                 </td>
                 <td>{quot.product}</td>
                 <td>{quot.quantity}kg</td>
                 <td>{quot.price}</td>
-                <td>{quot.address}</td>
-                <td>{quot.state}</td>
+                <td>{quot.address2}</td>
+                <td>{state == "READY" ? "대기중" : state == "EXPIRED" ? "요청만료" : "취소"}</td>
               </tr>
             )
             )}

@@ -234,7 +234,7 @@ const RegistFarmerPage = ({ page }) => {
     formData.append('farmAccountNum', farmAccountNumValue);
     formData.append('farmInterest', farmInterestValue);
     if (file !== null) {
-      formData.append('farmPixurl', file.name);
+      formData.append('farmPixurl', file);
     }
 
     try {

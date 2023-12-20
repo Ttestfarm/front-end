@@ -27,6 +27,7 @@ const MainNavigation = (props) => {
         if (token && !userInfo) {
           const response = await API.get("/user/userInfo");
           setUserInfo(response.data);
+          console.log('헤더', response.data);
         }
       } catch (err) {
         console.log(err);

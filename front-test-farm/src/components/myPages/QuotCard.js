@@ -11,6 +11,7 @@ const QuotCard = ({ quoteItem }) => {
     height: 24,
     border: 'solid',
   };
+
   return (
     <>
       <div className={style.container}>

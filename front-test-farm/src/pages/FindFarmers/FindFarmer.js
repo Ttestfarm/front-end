@@ -5,12 +5,13 @@ import FarmerCard from '../../components/Farmers/FarmerCard';
 import style from './FindFarmer.module.css';
 import * as API from '../../api/index';
 //import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
-import { isErrorModalAtom } from '../../recoil/Atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 const FindFarmerPage = () => {
+  //const token = useRecoilValue(tokenAtom);
   const [keyword, setKeyword] = useState('all');
   const [sortType, setSortType] = useState('latest');
   const [page, setPage] = useState(1);

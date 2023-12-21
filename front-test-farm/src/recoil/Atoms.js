@@ -6,13 +6,14 @@ const { persistAtom } = recoilPersist();
 export const tokenAtom = atom({
   key: 'token',
   default: '',
-});
-
-export const isLoginAtom = atom({
-  key: 'isLogin',
-  default: false,
   effects_UNSTABLE: [persistAtom],
 });
+
+// export const isLoginAtom = atom({
+//   key: 'isLogin',
+//   default: false,
+//   effects_UNSTABLE: [persistAtom],
+// });
 
 export const userInfoAtom = atom({
   key: 'userInfo',
@@ -20,10 +21,10 @@ export const userInfoAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const updateAtom = atom({
-  key: 'update',
-  default: 0,
-});
+// export const updateAtom = atom({
+//   key: 'update',
+//   default: 0,
+// });
 
 export const isPostcodeModalAtom = atom({
   key: 'isPostcodeModal',
@@ -34,6 +35,7 @@ export const postcodeAddressAtom = atom({
   key: 'address2',
   default: '',
 });
+
 export const zonecodeAtom = atom({
   key: 'address1',
   default: '',

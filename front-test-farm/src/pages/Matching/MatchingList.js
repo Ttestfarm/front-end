@@ -7,8 +7,12 @@ import style from './MatchingList.module.css';
 import * as API from '../../api/index';
 import axios from 'axios';
 import MatchingCard from '../../components/matching/MatchingCard';
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
+  const token = useRecoilValue(tokenAtom);
+  console.log('hr', token);
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);
   const [info, setInfo] = useState({
@@ -31,7 +35,7 @@ const MatchingListPage = () => {
   const fetchData = async () => {
     try {
       console.log('page', page);
-      const response = await API.get(`/matching?page=${page}`);
+      const response = await axios.get(`/matching?page=${page}`);
       const data = response.data;
 
       console.log('data', data);

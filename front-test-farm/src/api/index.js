@@ -26,6 +26,15 @@ async function post(endpoint, data) {
   });
 }
 
+async function post2(endpoint, data) {
+  return axios.post(serverUrl + endpoint, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("token")}`,
+    },
+  });
+}
+
 async function formPost(endpoint, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
@@ -54,4 +63,4 @@ async function del(endpoint, params = "") {
   });
 }
 
-export { serverUrl, imgUrl, get, post, formPost, put, del as delete };
+export { serverUrl, imgUrl, get, post, formPost, put, del as delete, post2 };

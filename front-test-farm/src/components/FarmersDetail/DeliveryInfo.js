@@ -1,65 +1,84 @@
 import React from "react";
-import style from "./DeliveryInfo.module.css";
 
-const DeliveryInfo = () => {
+const DeliveryInfo = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  name,
+  tel,
+  address,
+  quantity,
+  setName,
+  setTel,
+  setAddress,
+  setQuantity,
+}) => {
+  const closeModal = () => {
+    onClose();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 여기서 입력된 정보를 처리할 수 있습니다.
+    onSubmit();
   };
 
   return (
-    <div>
-      <h2>배송지 입력</h2>
-      <div className={style.container}>
-        <form onSubmit={handleSubmit}>
-          <div className={style.row}>
-            <div className={style["col-25"]}>
-              <label htmlFor="name">이름</label>
-            </div>
-            <div className={style["col-75"]}>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="수령인의 이름을 입력하세요"
-                required
-              />
-            </div>
+    <>
+      {isOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name">수령인 이름</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="tel">수령인 전화번호</label>
+                <input
+                  type="tel"
+                  id="tel"
+                  value={tel}
+                  onChange={(e) => setTel(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="address">수령 주소</label>
+                <textarea
+                  id="address"
+                  style={{ height: "100px" }}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+              <div>
+                <label htmlFor="quantity">수량</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  style={{ height: "100px" }}
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  required
+                ></input>
+              </div>
+
+              <button type="submit">결제하기</button>
+            </form>
           </div>
-          <div className={style.row}>
-            <div className={style["col-25"]}>
-              <label htmlFor="address">배송지</label>
-            </div>
-            <div className={style["col-75"]}>
-              <textarea
-                id="address"
-                name="address"
-                placeholder="배송지를 입력하세요"
-                style={{ height: "100px" }}
-                required
-              ></textarea>
-            </div>
-          </div>
-          <div className={style.row}>
-            <div className={style["col-25"]}>
-              <label htmlFor="phoneNumber">전화번호</label>
-            </div>
-            <div className={style["col-75"]}>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="전화번호를 입력하세요.."
-                required
-              />
-            </div>
-          </div>
-          <div className={style.row}>
-            <button className={style.reg}>입력 완료</button>
-          </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

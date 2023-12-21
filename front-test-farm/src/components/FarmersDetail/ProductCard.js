@@ -1,17 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./ProductCard.module.css";
-import { Link } from "react-router-dom";
-import Payments from "../../components/FarmersDetail/Payments"; // 파일 경로에 맞게 수정
-import DeliveryInfo from "./DeliveryInfo";
-import axios from "axios";
-import * as PortOne from "@portone/browser-sdk/v2";
+import { Link, useNavigate } from "react-router-dom";
+import DeliveryInfo from "./DeliveryInfo"; // DeliveryInfo 컴포넌트 import
 
 const ProductCard = ({ product }) => {
-  const [showPayments, setShowPayments] = useState(false);
-  const onClickPayment = () => {
-    setShowPayments(true);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 표시 여부 상태
+  const [name, setName] = useState(""); // 이름 상태
+  const [tel, setTel] = useState(""); // 전화번호 상태
+  const [address, setAddress] = useState(""); // 주소 상태
+  const [quantity, setQuantity] = useState("");
+  // 모달 열기
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
+  // 모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = () => {
+    const deliveryInfo = {
+      productName: product.productName,
+      productQuantity: product.productQuantity,
+      productPrice: product.productPrice,
+      productId: product.productId,
+      farmerId: product.farmerId,
+      stock: product.productStock,
+      name,
+      tel,
+      address,
+      quantity, //주문수량
+    };
+    navigate("/pay", { state: { deliveryInfo } });
+    setIsModalOpen(false); // 모달 닫기
+    console.log(deliveryInfo);
+  };
   return (
     <>
       <div className={style.container}>
@@ -27,11 +52,23 @@ const ProductCard = ({ product }) => {
 
         <div className={style.button}>
           <button>상세보기</button>
-          <button onClick={onClickPayment}>바로주문</button>
-          {/* <button><Link to="/DeliveryInfo">배송지 입력</Link></button> */}
+          <button onClick={openModal}>바로 주문</button>
         </div>
-        {showPayments && <Payments product={product} />}
       </div>
+
+      <DeliveryInfo
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={handleSubmit}
+        name={name}
+        tel={tel}
+        address={address}
+        quantity={quantity}
+        setName={setName}
+        setTel={setTel}
+        setAddress={setAddress}
+        setQuantity={setQuantity}
+      />
     </>
   );
 };

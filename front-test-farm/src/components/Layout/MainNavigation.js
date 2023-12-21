@@ -47,17 +47,21 @@ const MainNavigation = (props) => {
   }, [token]);
 
   const logoutHandler = () => {
-    if (token) {
-      //localStorage.removeItem('token');
-      localStorage.removeItem('expiration');
-      setUserInfo('');
-      setToken('');
-      window.location.href = '/';
-    } else {
-      setIsErrorModal({
-        state: true,
-        message: '로그아웃에 실패하였습니다.',
-      });
+    try {
+      if (token) {
+        //localStorage.removeItem('token');
+        localStorage.removeItem('expiration');
+        setUserInfo('');
+        setToken('');
+        window.location.href = '/';
+      } else {
+        setIsErrorModal({
+          state: true,
+          message: '로그아웃에 실패하였습니다.',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

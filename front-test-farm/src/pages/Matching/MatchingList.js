@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -35,7 +36,9 @@ const MatchingListPage = () => {
   const fetchData = async () => {
     try {
       console.log('page', page);
-      const response = await axios.get(`/matching?page=${page}`);
+      const response = await API.get(`/matching?page=${page}`);
+      //매칭 리스트 도  토큰 요청 없는 요청으로 바꿔야합니다.
+      //      const response = await axios.get(`/matching?page=${page}`);
       const data = response.data;
 
       console.log('data', data);
@@ -102,7 +105,9 @@ const MatchingListPage = () => {
         <p>공동구매처럼 기다릴 필요도 없습니다.</p>
         <p> 프리티 파머스가 여러분의 요청서를 확인 후 배송해 드립니다.</p>
 
-        <button>매칭 요청서 작성하기</button>
+        <button>
+          <Link to="/matching/requestform">매칭 요청서 작성하기</Link>
+        </button>
       </section>
       <section className={style.infoBox}>
         <div>

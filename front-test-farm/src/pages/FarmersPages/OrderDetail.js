@@ -13,7 +13,7 @@ import { DialogContent } from '@mui/material';
 const OrderDetail = () => {
   const [ord, setOrd] = useState({});
   const [farmerId, setFarmerId] = useState(1);
-  const { ordersId, type } = useParams();
+  const { receiptId, type } = useParams();
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
 
@@ -25,7 +25,7 @@ const OrderDetail = () => {
   useEffect(() => {
     const farmerToken = getToken();
     setToken(farmerToken);
-    axios.get(`http://localhost:8090/farmer/orderdetail/${ordersId}/${type}`, {
+    axios.get(`http://localhost:8090/farmer/orderdetail/${receiptId}/${type}`, {
       headers: {
         Authorization: `${farmerToken}`
       },
@@ -44,7 +44,7 @@ const OrderDetail = () => {
   const sendCancelText = () => {
     // console.log(cancelText);
     if (cancelText !== null) {
-      axios.post(`http://localhost:8090/farmer/ordercancel`, { "ordersId": ordersId, "cancelText": cancelText },
+      axios.post(`http://localhost:8090/farmer/ordercancel`, { "receiptId": receiptId, "cancelText": cancelText },
         {
           headers: {
             "Content-Type": `application/json`,
@@ -77,7 +77,7 @@ const OrderDetail = () => {
   return (
     <div className="compleate-detail-form">
       <div className="compleate-detail-form-header">
-        <h2>주문번호 {ord.ordersId}</h2>
+        <h2>주문번호 {ord.receiptId}</h2>
         <span>
           {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.date}
         </span>

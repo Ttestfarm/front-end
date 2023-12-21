@@ -8,10 +8,10 @@ import axios from 'axios';
 const QuotForm = () => {
   const request = useParams();
   const navigate = useNavigate();
-  const [formDatas, setformDatas] = useState({
+  const [formData, setformData] = useState({
     'requestId': `${request.requestId}`,
     'product': `${request.requestProduct}`,
-    'quantity': '',
+    'quantity': `${request.requestQuantity}`,
     'price': '',
     'comment': '',
     'picture': '',
@@ -28,14 +28,15 @@ const QuotForm = () => {
 
   const fileChange = (e) => {
     let filearr = e.target.files;
-    for (let i = 0; i < filearr.length; i++) {
-      files.splice(i, 1, './upload/' + filearr[i].name)
-      console.log('./upload/' + filearr[i].name);
+    // console.log(filearr);
+    setFiles([...filearr]);
+      // files.splice(i, 1, './upload/' + filearr[i].name)
+      // console.log('./upload/' + filearr[i].name);
       // console.log(filearr[i].name);
     }
-    let id = e.target.id;
-    setFiles([...files]);
-  }
+    // let id = e.target.id;
+    // setFiles([...files]);
+  
 
   const deleteClick = (idx) => {
     files.splice(idx, 1, image)
@@ -49,7 +50,7 @@ const QuotForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setformDatas((prevData) => ({
+    setformData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -57,30 +58,32 @@ const QuotForm = () => {
 
   const SendHandler = async (e) => {
     e.preventDefault();
+    const formDataObj = new FormData();
 
-    const data = new FormData();
+    formDataObj.append('requestId', formData.requestId);
+    formDataObj.append('quotationProduct', formData.product);
+    formDataObj.append('quotationQuantity', formData.quantity);
+    formDataObj.append('quotationPrice', formData.price);
+    formDataObj.append('quotationComment', formData.comment);
+    // files.forEach((file, index) => {
+    //   formDataObj.append(`quotationPicture${index+1}`, file);
+    // });
 
-    data.append('requestId', formDatas.requestId);
-    data.append('quotationProduct', formDatas.product);
-    data.append('quotationQuantity', formDatas.quantity);
-    data.append('quotationPrice', formDatas.price);
-    data.append('quotationComment', formDatas.comment);
-    data.append('quotationPicture', null);
-   
-    axios.post('http://localhost:8090/farmer/regquot', data, 
-    {headers: 
+    console.log(formDataObj);
+    axios.post('http://localhost:8090/farmer/regquot', formDataObj, 
+    {
+      headers: 
       { 
-        "Content-Type": `application/json`,
-        Authorization: `${getToken()}`
+        Authorization: `${getToken()}`,
+        'Content-Type': 'multipart/form-data'
       }
     })
       .then(res => {
-        console.log(res);
         alert(res.data);
-        navigate('/requestlist');
+        navigate('/farmerpage/requestlist');
       })
       .catch(err => {
-        console.log(err)
+        alert(err.data);
       })
   }
 
@@ -96,7 +99,7 @@ const QuotForm = () => {
             </div>
             <div>
               <label htmlFor='quantity'>수량 혹은 kg</label>
-              <input type='text' name='quantity' onChange={handleInputChange}/>
+              <input type='text' name='quantity' value={request.requestQuantity+"kg"} disabled />
             </div>
             <div>
               <label htmlFor='price'>금액</label>

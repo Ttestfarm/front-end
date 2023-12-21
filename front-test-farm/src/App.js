@@ -35,6 +35,9 @@ import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
 import RequestForm from './pages/Matching/RequestForm';
 import Oauth from './pages/Login/Oauth';
+import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
+import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
+import ProductsForm from './pages/ProductRegistration/ProductsForm';
 
 const router = createBrowserRouter([
   {
@@ -111,7 +114,7 @@ const router = createBrowserRouter([
             element: <RequestList />,
           },
           {
-            path: 'quotform/:requestId/:requestProduct',
+            path: 'quotform/:requestId/:requestProduct/:requestQuantity',
             element: <QuotForm />,
           },
           {
@@ -136,8 +139,12 @@ const router = createBrowserRouter([
           },
           {
             path: 'invoice',
-            element: <Invoice />,
+            element: <Invoice />
           },
+          {
+            path: 'regproduct',
+            element: <ProductsForm/>
+          }
         ],
       },
       // {

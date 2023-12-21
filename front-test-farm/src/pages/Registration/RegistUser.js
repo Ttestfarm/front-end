@@ -174,11 +174,11 @@ const RegistUserPage = () => {
           value={nameValue}
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
-          placeholder={'이름을 입력하세요.(최대 5글자)'}
+          placeholder={'이름을 입력하세요.(2~5글자)'}
         />
         {nameHasError && (
           <p className={style['error-text']}>
-            이름은 최소 2글자 이상 입력하세요 (최대 5글자)
+            이름은 최소 2글자에서 최대 5글자까지 입력하세요
           </p>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import style from './FindPw.module.css';
 import * as val from '../../util/validation';
@@ -7,6 +7,7 @@ import useUserInput from "../../hooks/use-userInput";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { isErrorModalAtom, isSuccessModalAtom } from "../../recoil/Atoms";
+import RegistSection from "../../components/UI/RegistSection";
 
 const FindPwPage = () => {
   const inputRef = useRef();
@@ -17,6 +18,30 @@ const FindPwPage = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const {
+    value: userName,
+    isValid: nameIsValid,
+    hasError: nameHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: resetName,
+  } = useUserInput(val.isNotEmptyName);
+
+  const {
+    value: userEmail,
+    isValid: emailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmail,
+  } = useUserInput(val.isEmail);
+
+  let formIsValid = false;
+
+  if (nameIsValid && emailIsValid ) {
+    formIsValid = true;
+  }
 
   const FindHandler = async () => {
     const data = {
@@ -30,6 +55,8 @@ const FindPwPage = () => {
         if (response.status === 200) {
           const userPassword = response.data;
           console.log(userPassword);
+          resetName();
+          resetEmail();
           
           setIsSucessModal({
             state: true,
@@ -51,24 +78,6 @@ const FindPwPage = () => {
     }
   };
 
-  const {
-    value: userName,
-    isValid: nameIsValid,
-    hasError: nameHasError,
-    valueChangeHandler: nameChangeHandler,
-    inputBlurHandler: nameBlurHandler,
-    reset: resetName,
-  } = useUserInput(val.isNotEmptyName);
-
-  const {
-    value: userEmail,
-    isValid: emailIsValid,
-    hasError: emailHasError,
-    valueChangeHandler: emailChangeHandler,
-    inputBlurHandler: emailBlurHandler,
-    reset: resetEmail,
-  } = useUserInput(val.isEmail);
-
   const nameStyles = nameHasError
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
@@ -78,47 +87,51 @@ const FindPwPage = () => {
     : style['form-control'];
 
   return (
-    <Fragment>
-      <div className={style.wrap}>
-        <div className={style["wrap-center"]}>
-
-          <div className={style.title}>
-            <div>비밀번호 찾기</div>
-          </div>
-
-          <div className={style.input}>
-            <label for="email">이메일</label> 
-            <input
-              ref={inputRef}
-              type="text"
-              id="email"
-              value={userEmail}
-              onChange={emailChangeHandler}
-              onBlur={emailBlurHandler}
-              placeholder={"이메일을 입력해 주세요."}
-            />
-            <label for="name">이름</label> 
-            <input
-              type="text"
-              id="name"
-              value={userName}
-              onChange={nameChangeHandler}
-              onBlur={nameBlurHandler}
-              placeholder={"이름을 입력해 주세요."}
-            />
-          </div>
-
-          <button
-            id="find-password"
-            className={style["find-btn"]}
-            // disabled={!formIsValid}
-            onClick={FindHandler}
-          >
-            비밀번호 찾기
-          </button>
-        </div>
+    <RegistSection title={'비밀번호 찾기'}>
+      <div className={emailStyles}>
+        <label htmlFor="email">이메일</label> 
+        <input
+          ref={inputRef}
+          type="text"
+          id="email"
+          value={userEmail}
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          placeholder={"이메일을 입력해 주세요."}
+        />
+        {emailHasError && (
+          <p className={style['error-text']}>
+            이메일 형식이 정확하지 않습니다.
+          </p>
+        )}
       </div>
-    </Fragment>
+
+      <div className={nameStyles}>
+        <label htmlFor="name">이름</label> 
+        <input
+          type="text"
+          id="name"
+          value={userName}
+          onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
+          placeholder={"이름을 입력해 주세요."}
+        />
+        {nameHasError && (
+          <p className={style['error-text']}>
+            이름은 최소 2글자에서 최대 5글자 입니다.
+          </p>
+        )}
+      </div>
+
+      <button
+        id="find-password"
+        className={style["find-btn"]}
+        disabled={!formIsValid}
+        onClick={FindHandler}
+      >
+        비밀번호 찾기
+      </button>
+    </RegistSection>
   );
 };
 

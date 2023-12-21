@@ -129,16 +129,15 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(`/user/modify-user/check-sms/${updateData.userTel}`).then(
-      (response) => {
-        setIsSucessModal({
-          state: true,
-          message: '인증번호를 발송했어요!',
-        });
-        console.log(response.data);
-        setAuthNum(response.data);
-      }
-    );
+    await API.get(`/modify-user/check-sms/${updateData.userTel}`)
+    .then((response) => {
+      setIsSucessModal({
+        state: true,
+        message: '인증번호를 발송했어요!',
+      });
+      console.log(response.data);
+      setAuthNum(response.data);
+    });
   };
 
   //인증번호 확인

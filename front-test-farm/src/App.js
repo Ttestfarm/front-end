@@ -39,6 +39,8 @@ import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
 import RequestForm from './pages/Matching/RequestForm';
 import Oauth from './pages/Login/Oauth';
+import FindEmailPage from './pages/Login/FindEmail';
+import FindPwPage from './pages/Login/FindPw';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,8 @@ const router = createBrowserRouter([
       { path: 'join', element: <RegistUserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'logout', action: logoutAction },
+      { path: 'find-email', element: <FindEmailPage /> },
+      { path: 'find-pw', element: <FindPwPage />  },
       {
         path: 'matching',
         // element: <MatchingPage />,
@@ -144,18 +148,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: '/find-email',
-      //   element: <FindEmailPage />,
-      // },
-      // {
-      //   path: '/find-pw',
-      //   element: <FindPwPage />,
-      // },
-      // {
-      //   path: '/modify-user',
-      //   element: <ModifyUserPage />,
-      // },
     ],
   },
 ]);

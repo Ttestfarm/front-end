@@ -137,13 +137,13 @@ const LoginPage = () => {
           <div className={style.find}>
             <Link
               id="find-email"
-              to="#"
+              to="/find-email"
             >
               이메일 찾기
             </Link>
             <Link
               id="find-password"
-              to="#"
+              to="/find-pw"
             >
               비밀번호 찾기
             </Link>

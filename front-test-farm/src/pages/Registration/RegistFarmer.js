@@ -32,6 +32,7 @@ const RegistFarmerPage = ({ page }) => {
   const [registrationNum, setRegistrationNum] = useState(false);
   const [regiNumMsg, setRegiNumMsg] = useState('');
   const [selected, setSelected] = useState('');
+  const [userTel, setUserTel] = useState('');
 
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
@@ -86,6 +87,14 @@ const RegistFarmerPage = ({ page }) => {
     };
   }, [setAddress2]);
 
+  useEffect(() => {
+    if (myFarmTel) {
+      setUserTel(userInfo.userTel || '');
+    } else {
+      setUserTel('');
+    }
+  }, [myFarmTel, userInfo]);
+
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
@@ -112,7 +121,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmTelChangeHandler,
     inputBlurHandler: farmTelBlurHandler,
     reset: resetfarmTel,
-  } = useUserInput(val.isTel);
+  } = useUserInput(val.isTel, myFarmTel);
 
   // const {
   //   value: { postcodeAddress },
@@ -211,10 +220,11 @@ const RegistFarmerPage = ({ page }) => {
 
   if (
     farmNameIsValid &&
-    farmTelIsValid &&
+    (myFarmTel || farmTelIsValid) &&
     farmAddressDetailIsValid &&
     farmAccountNumIsValid &&
-    registrationNum
+    registrationNum &&
+    file
   ) {
     formIsValid = true;
   }
@@ -248,7 +258,8 @@ const RegistFarmerPage = ({ page }) => {
         console.log('response', response);
         //기본전화번호 체크시 userInfo 에 업데이트
         if (response.data) {
-          setUserInfo({ userTel: farmTelValue });
+          setUserInfo(prevUserInfo => ({ ...prevUserInfo, userTel: farmTelValue }));
+         // setUserInfo({ userTel: farmTelValue });
         }
         // setIsSucessModal({
         //   state: true,
@@ -348,20 +359,17 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farmTel"
             name="farmTel"
-            value={farmTelValue}
+            value={myFarmTel ? userTel : farmTelValue}
             onChange={farmTelChangeHandler}
             onBlur={farmTelBlurHandler}
-            placeholder={'01056781234 (숫자만 입력하셔도 됩니다.)'}
+            placeholder={'01056781234 (숫자만 입력해주세요.)'}
           />
           {farmTelHasError && (
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
 
-          <Checkbox
-            checked={myFarmTel}
-            onChange={setMyFarmTel}
-          >
-            <span>기본 전화번호로 설정하기</span>
+          <Checkbox checked={myFarmTel} onChange={setMyFarmTel}>
+            <span>내 핸드폰 번호 사용하기</span>
           </Checkbox>
         </div>
 
@@ -460,9 +468,7 @@ const RegistFarmerPage = ({ page }) => {
           />
 
           <div className={style.notice}>
-            <span>
-              - 관심 품목으로 설정하면 해당 품목 매칭 요청서에 견적을 보낼
-            </span>
+            <span>- 관심 품목으로 설정하면 해당 품목 매칭 요청서에 견적을 보낼</span>
             <span>&nbsp;&nbsp; 수 있습니다.</span>
             <span>- 판매 가능하신 품목 위주로 설정해주세요.</span>
             <span>- #품목 키워드 형식으로 작성해주세요.</span>

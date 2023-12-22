@@ -69,13 +69,7 @@ const router = createBrowserRouter([
         element: <FindFarmerRootLayout />,
         children: [
           { index: true, element: <FindFarmerPage /> },
-          {
-            path: ':farmerId',
-            element: <FarmerDetailPage />,
-            // id: 'farmer-detail',
-            // loader: farmerDetailLoader,
-            // children: [{ index: true, element: <FarmerDetailPage /> }],
-          },
+          { path: ':farmerId', element: <FarmerDetailPage /> },
           {
             path: 'reg-farmer',
             element: <RegistFarmerPage page="reg-farmer" />,

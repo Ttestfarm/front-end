@@ -23,13 +23,6 @@ const LoginPage = () => {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     console.log(userInfo);
-  //     console.log(tokenAtom);
-  //   }
-  // }, [userInfo]);
-
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -56,7 +49,10 @@ const LoginPage = () => {
       console.log('reponse', response);
 
       const token = response.headers['authorization'];
-      console.log(token);
+
+      const res = await API.get('/user/userInfo', token);
+      console.log('here', res.data);
+      setUserInfo(res.data);
 
       setTokenDuration();
       setToken(token);

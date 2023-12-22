@@ -20,7 +20,7 @@ const OrderDetail = () => {
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
 
-  useEffect(async () => {
+  const testFunction = async() => {
     try {
       const response = await API.get(`/farmer/orderdetail/${receiptId}/${type}`, token);
       const data = response.data;
@@ -28,6 +28,9 @@ const OrderDetail = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  }
+  useEffect(() => {
+    testFunction()
   }, []);
 
   const changeCancelText = (e) => {

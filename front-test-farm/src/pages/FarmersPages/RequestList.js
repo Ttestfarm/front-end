@@ -12,19 +12,19 @@ const RequestList = () => {
   const [interestList, setInterestList] = useState([]);
   const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
-
-  useEffect(async () => {
-    try {
-      const response = await API.get(`/farmer/farmInterest`, token);
-      const data = response.data;
-      console.log(data);
-      setReqList([...data.reqList]);
-      setInterestList([...data.interestList]);
-      setSelInt(...data.interestList[0]);
-    } catch(error) {
-      console.error('Error fetching data:', error);
-    }
-  }, []);
+  
+  useEffect(() => async function effectFunc() {
+      try {
+        const response = await API.get(`/farmer/farmInterest`, token);
+        const data = response.data;
+        console.log(data);
+        setReqList([...data.reqList]);
+        setInterestList([...data.interestList]);
+        setSelInt(...data.interestList[0]);
+      } catch(error) {
+        console.error('Error fetching data:', error);
+      }
+    }, []);
 
   const changeInterest = async (interestOne) => {
     try {

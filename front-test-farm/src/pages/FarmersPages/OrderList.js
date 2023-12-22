@@ -21,8 +21,7 @@ const OrderList = () => {
   const [name, setName] = useState(); // 택배사 명 저장
   const [invoice, setInvoice] = useState(); // 송장 번호 저장
 
-
-  useEffect(async () => { // 배송 현황(매칭) 리스트
+  const testFunction = async() => {
     try {
       const response = await API.get(`/farmer/orderlist/${type}/${page}`, token);
       const data = response.data;
@@ -33,6 +32,10 @@ const OrderList = () => {
     } catch(error) {
       console.error('Error fetching data:', error);
     }
+  }
+  // 배송 현황(매칭) 리스트
+  useEffect(() => {
+    testFunction()
   }, []);
 
     const changeType = async (idx) => { // 필터 변경

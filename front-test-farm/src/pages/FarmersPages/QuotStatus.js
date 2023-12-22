@@ -15,7 +15,7 @@ const QuotStatus = () => {
   const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
   const navigate = useNavigate();
 
-  useEffect(async () => {
+  const testFunction = async() => {
     try {
       const response = await API.get(`/farmer/quotlist/${state}/${page}`, token);
       const data = response.data;
@@ -25,6 +25,9 @@ const QuotStatus = () => {
     } catch(error) {
       console.error('Error fetching data:', error);
     }
+  }
+  useEffect(() => {
+    testFunction()
   }, []);
 
   // 견적서 상태 바뀌면 List 가져오기

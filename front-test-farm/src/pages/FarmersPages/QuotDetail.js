@@ -18,15 +18,17 @@ const QuotDetail = () => {
     quotationPicture: null
   });
 
-
-  useEffect(async () => {
-        try {
-          const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
-          const data = response.data;
-          setQuot(data)
-        } catch(error) {
-          console.error('Error fetching data:', error);
-        }
+  const testFunction = async() => {
+    try {
+      const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
+      const data = response.data;
+      setQuot(data)
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  useEffect(() => {
+    testFunction()
   }, []);
 
   const fileChange = (e) => {

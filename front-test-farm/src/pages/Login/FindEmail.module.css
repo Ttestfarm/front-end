@@ -1,0 +1,128 @@
+.form-control {
+  margin-bottom: 1.5rem;
+}
+
+.form-control label {
+  color: #b40e0e;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-main);
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: bold;
+  margin-bottom: 0.15rem;
+}
+
+.form-control input {
+  padding: 0 10px;
+  font-size: 1rem;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #acaca9;
+  background-color: transparent;
+  color: #191919;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+.form-control > input::placeholder {
+  font-size: 13px;
+  color: #acaca9;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+
+.input > input {
+  height: 56px;
+  padding: 0 10px;
+  font-size: 1rem;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  background-color: transparent;
+  color: #191919;
+  outline: none;
+}
+
+.input > input:nth-of-type(1) {
+  margin-bottom: 20px;
+}
+
+.input > input:nth-of-type(2) {
+  margin-bottom: 10px;
+}
+
+.input > input:nth-of-type(3) {
+  background-color: #F5F5F7;
+}
+
+.certify {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 370px;
+}
+
+.certify-btn {
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+  border: 1px solid #49680D;
+  background-color: #49680D;
+  margin-bottom: 5px;
+}
+
+.find-btn {
+  width: 370px;
+  height: 56px;
+  color: #ffffff;
+  background-color: #49680d;
+  border: 1px solid #49680d;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.find-btn:hover,
+.find-btn:active {
+  background-color: var(--color-button);
+  border-color: var(--color-button);
+}
+.find-btn:disabled,
+.find-btn:disabled:hover,
+.find-btn:disabled:active {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.boldText {
+  font-weight: bold;
+}
+
+.error-text {
+  display: flex;
+  align-items: flex-start;
+  color: #b40e0e;
+  margin: 0;
+  padding-left: 0.8rem;
+  font-size: 12px;
+}

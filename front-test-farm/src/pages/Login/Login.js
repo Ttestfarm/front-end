@@ -7,6 +7,7 @@ import naver from '../../assets/naver.png';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
+import { setTokenDuration } from './../../util/auth';
 
 const LoginPage = () => {
   const [, setEmail] = useState('');
@@ -22,11 +23,12 @@ const LoginPage = () => {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/');
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     console.log(userInfo);
+  //     console.log(tokenAtom);
+  //   }
+  // }, [userInfo]);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -48,32 +50,18 @@ const LoginPage = () => {
         userEmail: data.get('email'),
         userPassword: data.get('password'),
       };
-      console.log('loginData ', loginData);
 
       const response = await axios.post(`${API.serverUrl}/login`, loginData);
 
-      //const token = response.data.token;
-      //const userInfo = response.data.userInfo;
-      //const response = await axios.post('http://localhost:8090/login', loginData);
       console.log('reponse', response);
 
-      // response에 header와 authorization이 있는지 확인 하는 코드
-      if (response.headers && response.headers['authorization']) {
-        console.log('here');
-      }
       const token = response.headers['authorization'];
       console.log(token);
 
-      //토큰 유효시간 설정
-      const expiration = new Date();
-      expiration.setHours(expiration.getHours() + 1);
-
-      localStorage.setItem('expiration', expiration.toISOString());
-      localStorage.setItem('token', token);
+      setTokenDuration();
       setToken(token);
       navigate('/');
     } catch (error) {
-      console.log('12', error);
       setIsErrorModal({
         state: true,
         message: error.response.data,
@@ -136,13 +124,13 @@ const LoginPage = () => {
           <div className={style.find}>
             <Link
               id="find-email"
-              to="#"
+              to="/find-email"
             >
               이메일 찾기
             </Link>
             <Link
               id="find-password"
-              to="#"
+              to="/find-pw"
             >
               비밀번호 찾기
             </Link>

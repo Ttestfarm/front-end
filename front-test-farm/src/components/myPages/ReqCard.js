@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import Card from '../UI/Card';
-import style from './QuotCard.module.css';
-import * as API from '../../api/index';
-import QuotCard from '../../pages/MyPages/QuotList';
+import React, { useState, useEffect } from "react";
+import Card from "../UI/Card";
+import style from "./QuotCard.module.css";
+import * as API from "../../api/index";
+import QuotCard from "../../components/myPages/QuotCard";
+import { useRecoilValue } from "recoil";
+import { tokenAtom } from "../../recoil/Atoms";
 
 const ReqCard = ({ req }) => {
+  const token = useRecoilValue(tokenAtom);
   //견적서 카드
   const [quotList, setQuotList] = useState([]);
 
   //견적서 리스트 요청
   const reqQuoteHandler = async () => {
     try {
-      const response = await API.get(`/user/${req.request.requestId}`);
+      console.log("요청아이디:", req.request.requestId);
+      const response = await API.get(`/user/${req.request.requestId}`, token);
 
-      console.log(response.data.quote);
+      console.log(response.data);
+
       setQuotList([...response.data.quotesWithFarmer]);
     } catch (error) {
       console.log(error);
@@ -33,17 +38,16 @@ const ReqCard = ({ req }) => {
       </section>
       <section className={style.right}>
         <p>수락을 기다리는 {req.quotationCount}개의 견적서가 있습니다.</p>
-        <button onClick={reqQuoteHandler}>견적서 보기</button>
+        <button onClick={reqQuoteHandler} disabled={req.quotationCount === 0}>
+          견적서 보기
+        </button>
       </section>
 
       {quotList.length > 0
         ? quotList.map((quoteItem) => (
-            <QuotCard
-              key={quoteItem.quote.quotaionId}
-              quoteItem={quoteItem}
-            />
+            <QuotCard key={quoteItem.quote.quotationId} quoteItem={quoteItem} />
           ))
-        : ''}
+        : ""}
     </Card>
   );
 };

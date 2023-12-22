@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const QuotDetail = () => {
   const quotation = useParams();
-  const [farmerId, SetFarmerId] = useState(1);
   const [files, setFiles] = useState([image, image, image, image, image]);
   const [quot, setQuot] = useState({
     quotationProduct: null,
@@ -16,16 +15,24 @@ const QuotDetail = () => {
     quotationPicture: null
   });
 
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
+
   useEffect(() => {
-    try {
-        axios.get(`http://localhost:8090/farmer/quotdetail/${farmerId}/${quotation.quotationId}`)
+      const farmerToken = getToken();
+        axios.get(`http://localhost:8090/farmer/quotdetail/${quotation.quotationId}`,
+        {
+         headers: {
+           Authorization: `${farmerToken}`
+         },
+       })
         .then(res => {
           setQuot(res.data);
-        });
-
-    } catch(err) {
-      console.log(err);
-    }
+        })
+        .catch(err => {
+          console.log("error");
+        })
   }, []);
 
   const fileChange = (e) => {
@@ -89,17 +96,6 @@ const QuotDetail = () => {
       </div>
       <div className="quto-detail-form-picture">
         <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
-        <div className="custom-file-input">
-          <label htmlFor="file">사진 첨부</label>
-          <input
-            name="file"
-            type="file"
-            id="file"
-            multiple="multiple"
-            accept="image/*"
-            onChange={fileChange}
-          />
-        </div>
       </div>
       <div className="images">
         {files.map((file, index) => (

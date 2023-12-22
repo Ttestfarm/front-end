@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//사업자 등록번호 확인 API
 const HandleRegistrationNumCheck = async (req) => {
   const url = `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${process.env.REACT_APP_BUSINESS_API_KEY}`;
   const { data } = await axios.post(url, {

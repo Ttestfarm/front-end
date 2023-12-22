@@ -12,7 +12,7 @@ const ProductForm = ({
 
   return (
     <div className="product-form">
-      <div className="review-contents">
+      {/* <div className="review-contents">
         <div className="nickname">{nickname}님</div>
         <div className="rating">{renderStars(starRating)}</div>
         <div className="details">
@@ -22,7 +22,7 @@ const ProductForm = ({
           <span className="quantity">{quantity}</span>
         </div>
         <div className="content">{content}</div>
-      </div>
+      </div> */}
     </div>
   );
 };

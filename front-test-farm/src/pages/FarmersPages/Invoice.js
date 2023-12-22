@@ -1,19 +1,90 @@
 import React, { useState } from 'react';
-import calendar from './calendar';
 import './style/Invoice.css';
+import axios from 'axios';
 
 const Invoice = () => {
   const [calList, setCalList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [date, setDate] = useState();
+
   let today = new Date();
   let year = today.getFullYear();
   var month = ('0' + (today.getMonth() + 1)).slice(-2);
   var day = ('0' + today.getDate()).slice(-2);
+  const dateString = year + '-' + month + '-' + day;
 
-  var dateString = year + '-' + month + '-' + day;
+  const [sDate, setSDate] = useState(null);
+  const [eDate, setEDate] = useState(dateString);
+  
+  const [state, setState] = useState("선택");
+
+  const [token, setToken] = useState(null);
+
+  const getToken = () => {
+    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
+  };
+
+  // const searchInvoice = () => {
+  //   axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
+  //       headers: {
+  //         Authorization: `${getToken()}`
+  //       },
+  //     })
+
+  // }
+
+  const handelSDate = (e) => {
+    setSDate(e.target.value);
+  }
+  
+  const handelEDate = (e) => {
+    setEDate(e.target.value);
+  }
+
+  const handelState = (e) => {
+    let tempState = e.target.value; // 상태 임시 저장 변수
+    if(tempState === "선택") {
+      alert("정산 구분을 선택해주세요.");
+    } else {
+      setState(e.target.value);
+    }
+  }
+
+  const search = () => {
+    if(sDate === null) {
+      return alert("기간을 선택해주세요.");
+    }
+    if(state === "선택") {
+      return alert("정산 구분을 선택해주세요.");
+    }
+
+    const date = sDate + "~" + eDate; // 기간 임시 저장
+    setDate(date); // 기간 저장
+
+    const farmerToken = getToken();
+    setToken(farmerToken);
+    axios.get(`http://localhost:8090/farmer/invoice/${date}/${page}` , {
+      headers: {
+        Authorization: `${farmerToken}`
+      },
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  const reset = () => {
+    setSDate(null);
+    setState("선택");
+  }
+
   return (
     <>
       <calendar />
-      {/* <div className="cal-form">
+      <div className="cal-form">
         <h2>조회하기</h2>
         <div className="cal-search">
           <div className="cal-search-date">
@@ -21,32 +92,29 @@ const Invoice = () => {
             <input
               type="date"
               name="sdate"
-              value={dateString}
+              value={sDate}
+              onChange={handelSDate}
             />
             &nbsp;~&nbsp;
             <input
               type="date"
               name="edate"
-              value={dateString}
+              value={eDate}
               max={dateString}
+              onChange={handelEDate}
             />
           </div>
           <div className="cal-search-state">
             <h3>정산구분</h3>
-            <select name="state">
-              <option
-                value="전체"
-                selected
-              >
-                전체
-              </option>
+            <select name="state" onChange={handelState}>
+              <option value="선택" selected>선택</option>
               <option value="미정산">미정산</option>
               <option value="정산완료">정산완료</option>
             </select>
           </div>
           <div className="cal-search-btns">
-            <button>검색</button>
-            <button>초기화</button>
+            <button onClick={search}>검색</button>
+            <button onClick={reset}>초기화</button>
           </div>
         </div>
         <div className="cal-result">
@@ -73,7 +141,7 @@ const Invoice = () => {
             </table>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };

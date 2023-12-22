@@ -23,7 +23,7 @@ input {
   width: 370px;
   height: 35px;
   border-radius: 10px;
-  border: 1px solid #ACACA9;
+  border: 1px solid #acaca9;
   background-color: transparent;
   color: #191919;
   outline: none;
@@ -62,7 +62,7 @@ label {
 
 .email > input {
   /* 변경 불가 상태 */
-  background-color: #F5F5F7;
+  background-color: #f5f5f7;
 }
 
 .certify {
@@ -80,8 +80,8 @@ label {
   font-weight: 600;
   cursor: pointer;
   color: #ffffff;
-  border: 1px solid #49680D;
-  background-color: #49680D;
+  border: 1px solid #49680d;
+  background-color: #49680d;
   margin-bottom: 5px;
 }
 
@@ -123,7 +123,7 @@ label {
   width: 16px;
   height: 16px;
   margin-right: 5px;
-  border: 1px solid #ACACA9;
+  border: 1px solid #acaca9;
   background-color: transparent;
   border-radius: 3px;
 }
@@ -140,7 +140,7 @@ label {
 }
 
 .tel > input:last-of-type {
-  background-color: #F5F5F7;
+  background-color: #f5f5f7;
 }
 
 .btns {
@@ -153,8 +153,8 @@ label {
   width: 173px;
   height: 56px;
   color: #ffffff;
-  background-color: #49680D;
-  border: 1px solid #49680D;
+  background-color: #49680d;
+  border: 1px solid #49680d;
   border-radius: 10px;
   font-size: 18px;
   font-weight: 600;
@@ -166,7 +166,7 @@ label {
   height: 56px;
   color: #191919;
   background-color: transparent;
-  border: 1px solid #49680D;
+  border: 1px solid #49680d;
   border-radius: 10px;
   font-size: 18px;
   font-weight: 600;

@@ -99,7 +99,11 @@ const RequestForm = () => {
         ...data,
       };
       console.log(enteredData);
-      const response = await API.post(`/matching`, token, enteredData);
+      const response = await API.post(
+        `/matching/requestform`,
+        token,
+        enteredData
+      );
 
       console.log('response', response.data);
 

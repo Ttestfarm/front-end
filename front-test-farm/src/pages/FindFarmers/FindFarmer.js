@@ -5,7 +5,7 @@ import FarmerCard from '../../components/Farmers/FarmerCard';
 import style from './FindFarmer.module.css';
 import * as API from '../../api/index';
 //import axios from 'axios';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -21,7 +21,6 @@ const FindFarmerPage = () => {
   const [btnView, setBtnView] = useState(false);
 
   const scrollRef = useRef(0);
-  const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
   //키워드 검색어 입력
   const keywordChangeHandler = (e) => {
@@ -112,12 +111,10 @@ const FindFarmerPage = () => {
         <div className={style.search}>
           <input
             type="text"
-            className={style['input-text']}
             value={keyword}
             onChange={keywordChangeHandler}
             placeholder="품목명을 입력하세요"
           />
-
           <button
             className={style['button']}
             onClick={() => listHandler(keyword, sortType, 1)}

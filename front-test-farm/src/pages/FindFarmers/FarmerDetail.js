@@ -9,10 +9,12 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ProductsList from '../../components/FarmersDetail/ProductsList';
 import ReviewList from '../../components/FarmersDetail/ReviewList';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { tokenAtom, userInfoAtom } from './../../recoil/Atoms';
 import axios from 'axios';
 import * as API from '../../api/index';
+
+import { isSuccessModalAtom } from './../../recoil/Atoms';
 
 //전화번호 파싱해야합니다!!
 //css 수정해야합니다!!
@@ -20,7 +22,10 @@ import * as API from '../../api/index';
 const FarmerDetailPage = () => {
   const token = useRecoilValue(tokenAtom);
   const [farmerInfo, setFarmerInfo] = useState(null);
+  const [farmerfollow, setFarmerfollow] = useState(false);
+
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const setIsSuccessModal = useSetRecoilState(isSuccessModalAtom);
 
   const farmerId = useParams().farmerId;
   const navigate = useNavigate();
@@ -35,15 +40,25 @@ const FarmerDetailPage = () => {
       const response = await API.get(`/findfarmer/${farmerId}`, token);
 
       console.log(response.data);
-      setFarmerInfo(response.data);
+      setFarmerInfo({
+        ...response.data.farmer,
+      });
+      setFarmerfollow(response.data.farmerfollow);
     };
     getFarmerInfo();
   }, []);
 
-  const followHandler = async () => {
-    const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
-    console.log(response.date);
-    setFarmerInfo(response.data);
+  const followHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
+      console.log('32123', response);
+
+      setFarmerInfo({ ...farmerInfo, followCount: response.data.followCount });
+      setFarmerfollow(response.data.isSelect);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log('farmerInfo', farmerInfo);
@@ -71,21 +86,21 @@ const FarmerDetailPage = () => {
               <div className={style.ratingInfo}>
                 <Rating
                   name="read-only"
-                  value={farmerInfo.farmer.rating}
+                  value={farmerInfo.rating}
                   readOnly
                 />
-                (<span>{farmerInfo.farmer.reviewCount}명</span>)
+                (<span>{farmerInfo.reviewCount}명</span>)
               </div>
 
               <div className={style.heartinfo}>
                 <PersonAddAlt1Icon
                   sx={{
-                    color: farmerInfo?.farmerfollow ? pink[500] : 'black',
+                    color: farmerfollow ? pink[500] : 'black',
                     fontSize: 30,
                   }}
                   onClick={followHandler}
                 />
-                <span>{farmerInfo.farmer.followCount}명</span>
+                <span>{farmerInfo.followCount}명</span>
               </div>
             </div>
           </section>
@@ -96,23 +111,21 @@ const FarmerDetailPage = () => {
                 {' '}
                 <span className={style.farmName}>농장 이름</span>
                 <span className={style.farmNameData}>
-                  {farmerInfo.farmer.farmName}
+                  {farmerInfo.farmName}
                 </span>
               </div>
               <br />
               <div className={style.farmerNames}>
                 <span className={style.farmerName}>팜 연락처</span>
                 <span className={style.farmerNameData}>
-                  {farmerInfo.farmer.farmTel}
+                  {farmerInfo.farmTel}
                 </span>
               </div>
               <br />
               <div className={style.farmsAddress}>
                 <span className={style.farmAddress}>농장 주소</span>
                 <span className={style.farmAddressData}>
-                  {farmerInfo.farmer.farmAddress +
-                    ' ' +
-                    farmerInfo.farmer.farmAddressDetail}
+                  {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
                 </span>
               </div>
             </div>

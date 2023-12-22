@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import style from './ReviewCard.module.css'; // 리뷰 카드의 스타일 파일 import
 
 import Rating from '@mui/material/Rating';
-//import Typography from '@mui/material/Typography';
 
 const ReviewCard = ({ review }) => {
-  const [value] = useState(0);
+  const [value] = useState(1);
   return (
     <div className={style.reviewCard}>
       <div className={style.reviewContents}>
         <div className={style.nickname}>{review.nickname}님</div>
-        {/* <div className={style.rating}>{renderStars(starRating)}</div> */}
-        {/* <Typography component="legend">Read only</Typography> */}
         <Rating
           name="read-only"
           value={value}

@@ -1,38 +1,52 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './FarmerDetail.module.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import backBtn from '../../assets/back_btn.png';
-import star from '../../assets/star.png';
-import heart from '../../assets/heart.png';
+import { Rating } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import ProductsList from '../../components/FarmersDetail/ProductsList';
 import ReviewList from '../../components/FarmersDetail/ReviewList';
 
-import { useRecoilState } from 'recoil';
-import { userInfoAtom } from './../../recoil/Atoms';
-
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { tokenAtom, userInfoAtom } from './../../recoil/Atoms';
+import axios from 'axios';
 import * as API from '../../api/index';
 
 //전화번호 파싱해야합니다!!
 //css 수정해야합니다!!
 
 const FarmerDetailPage = () => {
+  const token = useRecoilValue(tokenAtom);
   const [farmerInfo, setFarmerInfo] = useState(null);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
   const farmerId = useParams().farmerId;
   const navigate = useNavigate();
+
   //초기 랜더링 시 파머 정보 불러오기
   useEffect(() => {
-    console.log('Aa');
     const getFarmerInfo = async () => {
-      const response = await API.get(`/findfarmer/${farmerId}`);
+      // //상세보기 페이지 했을 때, 이걸로 바꿔야합니다.
+      // const response = await axios.get(
+      //   `${API.serverUrl}/findfarmer/${farmerId}`
+      // );
+      const response = await API.get(`/findfarmer/${farmerId}`, token);
+
       console.log(response.data);
       setFarmerInfo(response.data);
     };
     getFarmerInfo();
   }, []);
 
+  const followHandler = async () => {
+    const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
+    console.log(response.date);
+    setFarmerInfo(response.data);
+  };
+
+  console.log('farmerInfo', farmerInfo);
   return (
     <div className={style.container}>
       {farmerInfo != null && (
@@ -55,20 +69,23 @@ const FarmerDetailPage = () => {
             </div>
             <div className={style.info}>
               <div className={style.ratingInfo}>
-                <img
-                  src={star}
-                  alt="Star"
+                <Rating
+                  name="read-only"
+                  value={farmerInfo.farmer.rating}
+                  readOnly
                 />
-                <span>{farmerInfo.farmer.rating}</span> (
-                <span>{farmerInfo.farmer.reviewCount}</span>)
+                (<span>{farmerInfo.farmer.reviewCount}명</span>)
               </div>
-              &nbsp;
+
               <div className={style.heartinfo}>
-                <img
-                  src={heart}
-                  alt="Heart"
+                <PersonAddAlt1Icon
+                  sx={{
+                    color: farmerInfo?.farmerfollow ? pink[500] : 'black',
+                    fontSize: 30,
+                  }}
+                  onClick={followHandler}
                 />
-                <span>{farmerInfo.farmer.followCount}</span>
+                <span>{farmerInfo.farmer.followCount}명</span>
               </div>
             </div>
           </section>

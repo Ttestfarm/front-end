@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import FarmerCard from '../../components/Farmers/FarmerCard';
 import style from './FollowFarmer.module.css';
 import * as API from '../../api/index';
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilState } from 'recoil';
-import { userInfoAtom } from '../../recoil/Atoms';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from '../../recoil/Atoms';
 
 const FollowFarmerPage = () => {
+  const token = useRecoilValue(tokenAtom);
   const [farmerList, setFarmerList] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
@@ -17,20 +19,18 @@ const FollowFarmerPage = () => {
   const [btnView, setBtnView] = useState(false);
 
   const scrollRef = useRef(0);
-  //const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
   const getFollowList = async (ppage) => {
-    if (ppage > pageInfo.allPage) return;
+    if (ppage > pageInfo.allPage || !inView) return;
 
     try {
-      const response = await API.get(`/user/followlist/${ppage}`);
+      const response = await API.get(`/user/followlist?page=${ppage}`, token);
 
+      console.log('파머팔로우', response.data);
       setPageInfo(response.data.pageInfo);
-      setFarmerList([...farmerList, ...response.data.farmerList]);
+      setFarmerList([...farmerList, ...response.data.followingFarmers]);
 
       setPage((page) => ppage + 1);
-
-      console.log('요청!', response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -38,8 +38,6 @@ const FollowFarmerPage = () => {
 
   useEffect(() => {
     if (inView) {
-      console.log(inView, '무한스크롤 요청했시유');
-
       getFollowList(page);
     }
   }, [inView]);
@@ -87,7 +85,7 @@ const FollowFarmerPage = () => {
 
       <AnimatePresence>
         {btnView ? (
-          <button
+          <ArrowCircleUpIcon
             initial={{ opacity: 0, y: 50 }}
             animate={{
               opacity: 1,
@@ -95,9 +93,7 @@ const FollowFarmerPage = () => {
             }}
             exit={{ opacity: 0, y: 50 }}
             onClick={scrollToTop}
-          >
-            꼭대기로올라가기버튼
-          </button>
+          ></ArrowCircleUpIcon>
         ) : null}
       </AnimatePresence>
       <div ref={ref}></div>

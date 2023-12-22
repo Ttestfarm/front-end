@@ -1,6 +1,7 @@
 .delivery-list {
   width: 90%;
   margin: 150px auto;
+  margin-top: 150px;
 
   border-radius: 24px;
   border: 5px solid #75786c;

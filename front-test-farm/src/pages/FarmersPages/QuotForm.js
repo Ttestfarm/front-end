@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import './style/QuotForm.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
-import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 
 const QuotForm = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const request = useParams();
   const navigate = useNavigate();
   const [formData, setformData] = useState({
@@ -21,10 +24,6 @@ const QuotForm = () => {
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
-  
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -57,34 +56,27 @@ const QuotForm = () => {
   }
 
   const SendHandler = async (e) => {
-    e.preventDefault();
-    const formDataObj = new FormData();
-
-    formDataObj.append('requestId', formData.requestId);
-    formDataObj.append('quotationProduct', formData.product);
-    formDataObj.append('quotationQuantity', formData.quantity);
-    formDataObj.append('quotationPrice', formData.price);
-    formDataObj.append('quotationComment', formData.comment);
-    // files.forEach((file, index) => {
-    //   formDataObj.append(`quotationPicture${index+1}`, file);
-    // });
-
-    console.log(formDataObj);
-    axios.post('http://localhost:8090/farmer/regquot', formDataObj, 
-    {
-      headers: 
-      { 
-        Authorization: `${getToken()}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(res => {
-        alert(res.data);
-        navigate('/farmerpage/requestlist');
-      })
-      .catch(err => {
-        alert(err.data);
-      })
+    try {
+      e.preventDefault();
+      const formDataObj = new FormData();
+  
+      formDataObj.append('requestId', formData.requestId);
+      formDataObj.append('quotationProduct', formData.product);
+      formDataObj.append('quotationQuantity', formData.quantity);
+      formDataObj.append('quotationPrice', formData.price);
+      formDataObj.append('quotationComment', formData.comment);
+      files.forEach((file, index) => {
+        formDataObj.append(`quotationPicture${index+1}`, file);
+      });
+  
+      const response = await API.formPost(`/farmer/regquot'`, token, formDataObj);
+      const data = response.data;
+          
+      alert(data);
+      navigate('/farmerpage/requestlist');
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }
 
   return (

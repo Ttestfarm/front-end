@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './style/QuotStatus.css';
 import Pagination from './Pagination';
-import axios from 'axios';
-import Invoice from './Invoice';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 const OrderList = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [ordList, setOrdList] = useState([]);
   const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState("1"); // 1: 매칭, 2: 주문
@@ -19,54 +21,39 @@ const OrderList = () => {
   const [name, setName] = useState(); // 택배사 명 저장
   const [invoice, setInvoice] = useState(); // 송장 번호 저장
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
+  const testFunction = async() => {
+    try {
+      const response = await API.get(`/farmer/orderlist/${type}/${page}`, token);
+      const data = response.data;
+      setOrdList([...data.ordersList]);
+      const response2 = await API.get(`/companylist`, token);
+      const com = response2.data;
+      setCompany(...com);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  // 배송 현황(매칭) 리스트
+  useEffect(() => {
+    testFunction()
+  }, []);
 
-  useEffect(() => { // 배송 현황(매칭) 리스트
-    const farmerToken = getToken();
-    setToken(farmerToken);
-    axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
-      headers: {
-        Authorization: `${farmerToken}`
-      },
-    }).then(res => {
-        setOrdList([...res.data.ordersList]);
-        axios.get(`http://localhost:8090/farmer/companylist`, {
-          headers: {
-            Authorization: `${farmerToken}`
-          },
-        })
-          .then(res => {
-            // console.log(res.data.Company.filter(item => item.International == "false"))
-            setCompany([...res.data]);
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      })
-      }, []);
-
-    const changeType = (idx) => { // 필터 변경
+    const changeType = async (idx) => { // 필터 변경
       if (idx === type) {
         alert("이미 선택");
       } else {
-        console.log("here");
-        setType(idx);
-        let type = idx;
-        let page = 1;
-        axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
-          headers: {
-            Authorization: `${token}`
-          },
-        })
-          .then(res => {
-            setOrdList([...res.data.ordersList]);
-          }).catch(err => {
-            console.log(err);
-          })
+        try {
+          setType(idx);
+          let type = idx;
+          let page = 1;
+          const response = await API.get(`/farmer/orderlist/${type}/${page}`, token);
+          const data = response.data;
+
+          setPage(data.page);
+          setOrdList([...data.ordersList]);
+        } catch(error) {
+          console.error('Error fetching data:', error);
+        }
       }
     };
 
@@ -107,35 +94,29 @@ const OrderList = () => {
       setInvoice(e.target.value);
     }
 
-    const sendparcel = (ordersId) => { // 발송 함수
-      if (code === "00") {
-        alert("택배사를 선택해주세요.");
-      } else {
-        console.log(ordersId);
-        console.log(code);
-        console.log(name);
-        console.log(invoice);
-        
-        axios.get(`http://localhost:8090/farmer/sendparcel/${ordersId}/${code}/${name}/${invoice}`, {
-          headers: {
-            Authorization: `${token}`
-          },
-        })
-          .then(res => {
-            alert(res.data);
-            console.log(res);
-            setCode("00");
-            setInvoice("");
-            setIsOpen(false);
+    const sendparcel = async (ordersId) => { // 발송 함수
+      try {
+        if (code === "00") {
+          alert("택배사를 선택해주세요.");
+        } else {
+          console.log(ordersId);
+          console.log(code);
+          console.log(name);
+          console.log(invoice);
+          const response = await API.get(`/farmer/sendparcel/${ordersId}/${code}/${name}/${invoice}`, token);
+          const data = response.data;
+          alert(data);
+          console.log(data);
+          setCode("00");
+          setInvoice("");
+          setIsOpen(false);
             // 페이지 다시 요청
-          })
-          .catch(err => {
-            alert(err.data);
-            console.log(err);
-          })
+        }
+      } catch(error) {
+          alert(error.data);
+          console.error('Error fetching data:', error);
       }
     }
-
 
     return (
       <div className="quotation-status">

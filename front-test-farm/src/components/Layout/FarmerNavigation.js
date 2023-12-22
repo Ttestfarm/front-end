@@ -58,7 +58,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/modify-user"
+            to="/farmerpage/modify-farmer"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             팜 정보 관리

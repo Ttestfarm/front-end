@@ -11,6 +11,7 @@ const ReqListPage = () => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log( 'Url =', process.env.Url);
       const response = await API.get("/user", token); // 리코일토큰을 넣어서 요청
 
       console.log(response.data.requestWithCountList);

@@ -131,7 +131,7 @@ const FindFarmerPage = () => {
         </div>
 
         <div>
-          <button>
+          <button className={style.regBtn}>
             <Link to="reg-farmer">파머 등록</Link>
           </button>
         </div>

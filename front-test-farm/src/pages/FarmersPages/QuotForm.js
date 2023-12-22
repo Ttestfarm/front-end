@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import './style/QuotForm.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 
 
 const QuotForm = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const request = useParams();
   const navigate = useNavigate();
   const [formData, setformData] = useState({
@@ -21,10 +24,6 @@ const QuotForm = () => {
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
-  
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
@@ -74,7 +73,7 @@ const QuotForm = () => {
     {
       headers: 
       { 
-        Authorization: `${getToken()}`,
+        Authorization: `${token}`,
         'Content-Type': 'multipart/form-data'
       }
     })

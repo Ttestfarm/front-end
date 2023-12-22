@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './style/DeliveryList.css';
 import Pagination from './Pagination';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 
 const DeliveryList = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
+
   const [deliveryList, setDeliveryList] = useState([]);
   const [page, setPage] = useState(0);
   const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
-
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`, {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     })
       .then(res => {

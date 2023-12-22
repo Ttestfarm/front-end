@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './style/OrderDeatil.css';
 import { Link, useParams } from 'react-router-dom';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -11,23 +13,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DialogContent } from '@mui/material';
 
 const OrderDetail = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [ord, setOrd] = useState({});
   const [farmerId, setFarmerId] = useState(1);
   const { receiptId, type } = useParams();
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
-
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/orderdetail/${receiptId}/${type}`, {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     })
       .then(res => {

@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import './style/QuotStatus.css';
 import Pagination from './Pagination';
 import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import Invoice from './Invoice';
 
 const OrderList = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [ordList, setOrdList] = useState([]);
   const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState("1"); // 1: 매칭, 2: 주문
@@ -19,23 +22,17 @@ const OrderList = () => {
   const [name, setName] = useState(); // 택배사 명 저장
   const [invoice, setInvoice] = useState(); // 송장 번호 저장
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   useEffect(() => { // 배송 현황(매칭) 리스트
-    const farmerToken = getToken();
-    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/orderlist/${type}/${page}`, {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     }).then(res => {
         setOrdList([...res.data.ordersList]);
         axios.get(`http://localhost:8090/companylist`, {
           headers: {
-            Authorization: `${farmerToken}`
+            Authorization: `${token}`
           },
         })
           .then(res => {

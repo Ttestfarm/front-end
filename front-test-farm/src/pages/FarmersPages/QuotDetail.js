@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './style/QuotDetail.css';
 import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 
 const QuotDetail = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const quotation = useParams();
   const [files, setFiles] = useState([image, image, image, image, image]);
   const [quot, setQuot] = useState({
@@ -15,16 +18,12 @@ const QuotDetail = () => {
     quotationPicture: null
   });
 
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   useEffect(() => {
-      const farmerToken = getToken();
         axios.get(`http://localhost:8090/farmer/quotdetail/${quotation.quotationId}`,
         {
          headers: {
-           Authorization: `${farmerToken}`
+           Authorization: `${token}`
          },
        })
         .then(res => {

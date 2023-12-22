@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
-import axios from 'axios';   
 import style from './ProductsForm.module.css';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import axios from 'axios';   
 
 const ProductsForm = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [isFreeShipping, setIsFreeShipping] = useState('free'); // 상태 추가: 기본값으로 무료배송 선택
   const handleShippingChange = (e) => {
     setIsFreeShipping(e.target.value);
@@ -25,11 +28,6 @@ const ProductsForm = () => {
     shippingFee : null
   });
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
-
   const handelInputChange = (e) => {
     const {name, value} = e.target;
     setFormData({
@@ -49,13 +47,13 @@ const ProductsForm = () => {
     e.preventDefault();
 
     const formDataObj = new FormData();
-    formDataObj.append('name', formData.name);
-    formDataObj.append('quantity', formData.quantity);
-    formDataObj.append('price', formData.price);
-    formDataObj.append('stock', formData.stock);
-    formDataObj.append('description', formData.description);
+    formDataObj.append('productName', formData.name);
+    formDataObj.append('productQuantity', formData.quantity);
+    formDataObj.append('productPrice', formData.price);
+    formDataObj.append('productStock', formData.stock);
+    formDataObj.append('productDescription', formData.description);
     // formDataObj.append('name', formData.name);
-    formDataObj.append('shippingFee', formData.shippingFee);
+    formDataObj.append('ShippingCost', formData.shippingFee);
 
     formDataObj.append('titleImage', titleImage);
     images.forEach((image, index) => {
@@ -63,12 +61,10 @@ const ProductsForm = () => {
     });
 
     console.log(formDataObj);
-    const farmerToken = getToken();
-    setToken(farmerToken);
 
       axios.post(`http://localhost:8090/regproduct`,  formDataObj, {
         headers: {
-          Authorization: `${farmerToken}`,
+          Authorization: `${token}`,
           'Content-Type': 'multipart/form-data'
         },
       })

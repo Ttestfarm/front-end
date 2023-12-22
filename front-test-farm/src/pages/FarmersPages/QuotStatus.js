@@ -2,28 +2,24 @@ import React, { useEffect, useState } from 'react';
 import './style/QuotStatus.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 
 
 const QuotStatus = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [quotList, setQuotList] = useState([]);
   const [page, setPage] = useState(1);
   //  CANCEL, READY, EXPIRED, COMPLETED 
   const [state, SetState] = useState("READY");
   const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
-
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     })
       .then((res) => {
@@ -71,6 +67,7 @@ const QuotStatus = () => {
       axios.post(`http://localhost:8090/farmer/quotdelete`, { "ids": cancelList },
         { 
           headers: {
+           Authorization: `${token}`,
            "Content-Type": `application/json` 
           }
         })

@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './style/Invoice.css';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from 'axios';
 
 const Invoice = () => {
+  const [token, setToken] = useState(null);
+
   const [calList, setCalList] = useState([]);
   const [page, setPage] = useState(0);
   const [date, setDate] = useState();
@@ -17,12 +21,6 @@ const Invoice = () => {
   const [eDate, setEDate] = useState(dateString);
   
   const [state, setState] = useState("선택");
-
-  const [token, setToken] = useState(null);
-
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   // const searchInvoice = () => {
   //   axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
@@ -61,11 +59,9 @@ const Invoice = () => {
     const date = sDate + "~" + eDate; // 기간 임시 저장
     setDate(date); // 기간 저장
 
-    const farmerToken = getToken();
-    setToken(farmerToken);
     axios.get(`http://localhost:8090/farmer/invoice/${date}/${page}` , {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     })
     .then(res => {

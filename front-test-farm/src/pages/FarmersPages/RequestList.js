@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './style/RequestList.css';
 import { Link } from 'react-router-dom';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import axios from "axios";
 
 const RequestList = () => {
-  const [reqList, setReqList] = useState([]);
+  const token = useRecoilValue(tokenAtom); //리코일
   const [test, setTest] = useState({});
   // const [intProduct, setIntProduct] = useState(); // farmer InterestProduct1 값이 기본값으로 저장
   const [interestList, setInterestList] = useState([]);
+  const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
-  const [token, setToken] = useState(null);
-
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
-    
     axios.get(`http://localhost:8090/farmer/farmInterest`,
      {
       headers: {
-        Authorization: `${farmerToken}`
+        Authorization: `${token}`
       },
     })
       .then((res) => {

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { tokenAtom, userInfoAtom } from "./../../recoil/Atoms";
 import * as API from "../../api";
 import axios from "axios";

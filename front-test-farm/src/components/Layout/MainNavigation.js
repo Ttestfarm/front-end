@@ -33,11 +33,11 @@ const MainNavigation = (props) => {
       try {
         console.log("getUserInfotoken", token);
         //로컬 로그인을 했을 경우 실행
-        if (token && !userInfo) {
-          const response = await API.get("/user/userInfo", token);
-          setUserInfo(response.data);
-          console.log("헤더", response.data);
-        }
+        // if (token && !userInfo) {
+        //   const response = await API.get("/user/userInfo", token);
+        //   setUserInfo(response.data);
+        //   console.log("헤더", response.data);
+        // }
       } catch (err) {
         console.log(err);
       }

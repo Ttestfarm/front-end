@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from 'axios';
+import * as API from '../../api/index';
 
 const QuotStatus = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -15,43 +15,32 @@ const QuotStatus = () => {
   const [cancelList, setCancelList] = useState([]); // 견적서 취소 리스트
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
-      headers: {
-        Authorization: `${token}`
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setQuotList([...res.data.quotList]);
-        // setPage([...res.data.pageInfo]);
-        console.log(res.data.quotList);
-        // setQuotList([...res.data.reqList]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  useEffect(async () => {
+    try {
+      const response = await API.get(`/farmer/quotlist/${state}/${page}`, token);
+      const data = response.data;
+
+      setPage([...data.pageInfo]);
+      setQuotList([...data.quotList]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }, []);
 
   // 견적서 상태 바뀌면 List 가져오기
-  const changeState = (state) => {
-    SetState(state);
-    axios
-      .get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        setQuotList([...res.data.quotList]);
-        // setPage([...res.data.pageInfo]);
-        console.log(res.data.quotList);
-        // setQuotList([...res.data.reqList]);
-        setCancelList([]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const changeState = async (state) => {
+    try {
+      const response = await API.get(`/farmer/quotlist/${state}/${page}`, token);
+      const data = response.data;
+      
+      setPage(data.pageInfo);
+      setQuotList([...data.quotList]);
+       // setQuotList([...res.data.reqList]);
+       SetState(state);
+       setCancelList([]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   // 취소할 견적서들 리스트에 담기
@@ -64,24 +53,16 @@ const QuotStatus = () => {
     }
   };
 
-  const cancelQuot = () => {
-    axios
-      .post(
-        `http://localhost:8090/farmer/quotdelete`,
-        { ids: cancelList },
-        {
-          headers: {
-           Authorization: `${token}`,
-           "Content-Type": `application/json` 
-          }
-        })
-      .then((res) => {
-        window.location.reload();
-        alert(res.data);
-      })
-      .catch((err) => {
-        alert(err.data);
-      });
+  const cancelQuot = async () => {
+    try {
+      const response = await API.post(`/farmer/quotdelete`, token, { ids: cancelList });
+      const data = response.data;
+      window.location.reload();
+      alert(data);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+      alert(error);
+    }
   };
 
   return (

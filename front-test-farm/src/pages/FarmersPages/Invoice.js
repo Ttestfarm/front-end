@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style/Invoice.css';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from 'axios';
+import * as API from '../../api/index';
 
 const Invoice = () => {
   const [token, setToken] = useState(null);
@@ -48,28 +48,26 @@ const Invoice = () => {
     }
   }
 
-  const search = () => {
-    if(sDate === null) {
-      return alert("기간을 선택해주세요.");
+  const search = async () => {
+    try {
+      if(sDate === null) {
+        return alert("기간을 선택해주세요.");
+      }
+      if(state === "선택") {
+        return alert("정산 구분을 선택해주세요.");
+      }
+  
+      const date = sDate + "~" + eDate; // 기간 임시 저장
+      setDate(date); // 기간 저장
+  
+      const response = await API.get(`/farmer/invoice/${date}/${page}`, token);
+      const data = response.data;
+      console.log(data);
+      setPage(data.pageInfo);
+      setCalList(data.calList);
+    } catch(error) {
+      console.error('Error fetching data:', error);
     }
-    if(state === "선택") {
-      return alert("정산 구분을 선택해주세요.");
-    }
-
-    const date = sDate + "~" + eDate; // 기간 임시 저장
-    setDate(date); // 기간 저장
-
-    axios.get(`http://localhost:8090/farmer/invoice/${date}/${page}` , {
-      headers: {
-        Authorization: `${token}`
-      },
-    })
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    })
   }
 
   const reset = () => {

@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from 'axios';
+import * as API from '../../api/index';
 
 
 const QuotForm = () => {
@@ -56,34 +56,27 @@ const QuotForm = () => {
   }
 
   const SendHandler = async (e) => {
-    e.preventDefault();
-    const formDataObj = new FormData();
-
-    formDataObj.append('requestId', formData.requestId);
-    formDataObj.append('quotationProduct', formData.product);
-    formDataObj.append('quotationQuantity', formData.quantity);
-    formDataObj.append('quotationPrice', formData.price);
-    formDataObj.append('quotationComment', formData.comment);
-    files.forEach((file, index) => {
-      formDataObj.append(`quotationPicture${index+1}`, file);
-    });
-
-    console.log(formDataObj);
-    axios.post('http://localhost:8090/farmer/regquot', formDataObj, 
-    {
-      headers: 
-      { 
-        Authorization: `${token}`,
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(res => {
-        alert(res.data);
-        navigate('/farmerpage/requestlist');
-      })
-      .catch(err => {
-        alert(err.data);
-      })
+    try {
+      e.preventDefault();
+      const formDataObj = new FormData();
+  
+      formDataObj.append('requestId', formData.requestId);
+      formDataObj.append('quotationProduct', formData.product);
+      formDataObj.append('quotationQuantity', formData.quantity);
+      formDataObj.append('quotationPrice', formData.price);
+      formDataObj.append('quotationComment', formData.comment);
+      files.forEach((file, index) => {
+        formDataObj.append(`quotationPicture${index+1}`, file);
+      });
+  
+      const response = await API.formPost(`/farmer/regquot'`, token, formDataObj);
+      const data = response.data;
+          
+      alert(data);
+      navigate('/farmerpage/requestlist');
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }
 
   return (

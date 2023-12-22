@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from 'axios';
+import * as API from '../../api/index';
 
 const QuotDetail = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -19,19 +19,14 @@ const QuotDetail = () => {
   });
 
 
-  useEffect(() => {
-        axios.get(`http://localhost:8090/farmer/quotdetail/${quotation.quotationId}`,
-        {
-         headers: {
-           Authorization: `${token}`
-         },
-       })
-        .then(res => {
-          setQuot(res.data);
-        })
-        .catch(err => {
-          console.log("error");
-        })
+  useEffect(async () => {
+        try {
+          const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
+          const data = response.data;
+          setQuot(data)
+        } catch(error) {
+          console.error('Error fetching data:', error);
+        }
   }, []);
 
   const fileChange = (e) => {

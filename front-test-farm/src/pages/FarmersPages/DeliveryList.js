@@ -3,7 +3,7 @@ import './style/DeliveryList.css';
 import Pagination from './Pagination';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from 'axios';
+import * as API from '../../api/index';
 
 const DeliveryList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -12,40 +12,32 @@ const DeliveryList = () => {
   const [page, setPage] = useState(0);
   const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
-  useEffect(() => {
-    axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`, {
-      headers: {
-        Authorization: `${token}`
-      },
-    })
-      .then(res => {
-        setDeliveryList([...res.data.deliveryList]);
-        setPage(res.data.pageInfo);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  useEffect( async () => {
+    try {
+      const response = await API.get(`/farmer/deliverylist/${state}/${page}`, token);
+      const data = response.data;
+      setDeliveryList([...data.deliveryList]);
+      setPage(data.pageInfo);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }       
   }, []);
 
-  const changeState = (select) => {
-    if (state === select) {
-      alert("이미 선택 하셨습니다.");
-    } else {
-      axios.get(`http://localhost:8090/farmer/deliverylist/${select}/${page.curPage}`, {
-        headers: {
-          Authorization: `${token}`
-        },
-      })
-        .then(res => {
-          setDeliveryList([...res.data.deliveryList]);
-          setPage(res.data.pageInfo);
-        })
-        .catch(err => {
-          console.log(err);
-        })
+  const changeState = async (select) => {
+    try {
       setState(select);
+      if (state === select) {
+        alert("이미 선택 하셨습니다.");
+      } else {
+        const response = await API.get(`/farmer/deliverylist/${select}/${page.curPage}`, token);
+        const data = response.data;
+        setDeliveryList([...data.deliveryList]);
+        setPage(data.pageInfo);
+      } 
+    } catch(error) {
+      console.error('Error fetching data:', error);
     }
-  }
+  };
 
   return (
     <div className="delivery-list">

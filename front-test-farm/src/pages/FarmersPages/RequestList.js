@@ -3,7 +3,7 @@ import './style/RequestList.css';
 import { Link } from 'react-router-dom';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
-import axios from "axios";
+import * as API from '../../api/index';
 
 const RequestList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -13,37 +13,28 @@ const RequestList = () => {
   const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
 
-  useEffect(() => {
-    axios.get(`http://localhost:8090/farmer/farmInterest`,
-     {
-      headers: {
-        Authorization: `${token}`
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setReqList([...res.data.reqList]);
-        setInterestList([...res.data.interestList]);
-        setSelInt(res.data.interestList[0]);
-
-      }).catch((err) => {
-        console.log(err);
-      });
+  useEffect(async () => {
+    try {
+      const response = await API.get(`/farmer/farmInterest`, token);
+      const data = response.data;
+      console.log(data);
+      setReqList([...data.reqList]);
+      setInterestList([...data.interestList]);
+      setSelInt(...data.interestList[0]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }, []);
 
-  const changeInterest = (interestOne) => {
-    axios.get(`http://localhost:8090/farmer/requestlist?farmInterest=${interestOne}`, 
-      {
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-      .then((res) => {
-        setReqList([...res.data]);
-        setSelInt(interestOne);
-      }).catch((err) => {
-        console.log(err);
-      });
+  const changeInterest = async (interestOne) => {
+    try {
+      const response = await API.get(`/farmer/requestlist?farmInterest=${interestOne}`, token);
+      const data = response.data;
+      setReqList([...data]);
+      setSelInt(interestOne);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }
   return (
     <div className='container'>

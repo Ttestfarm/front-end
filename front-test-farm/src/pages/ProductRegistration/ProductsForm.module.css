@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-input[type="text"],
+/* input[type="text"],
 select,
 textarea {
   width: 100%;
@@ -14,7 +14,7 @@ textarea {
 
 input[type="text"] {
   height: 35px;
-}
+} */
 textarea {
   height: 70px;
 }
@@ -23,7 +23,7 @@ label {
   display: inline-block;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   background-color: #04aa6d;
   color: white;
   padding: 12px 20px;
@@ -33,7 +33,7 @@ input[type="submit"] {
   float: right;
 }
 
-input[type="submit"]:hover {
+input[type='submit']:hover {
   background-color: #45a049;
 }
 .rewrite,
@@ -72,7 +72,7 @@ input[type="submit"]:hover {
 }
 
 .row::after {
-  content: "";
+  content: '';
   display: table;
   clear: both;
 }

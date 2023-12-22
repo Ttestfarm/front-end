@@ -13,17 +13,20 @@ const RequestList = () => {
   const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
   
-  useEffect(() => async function effectFunc() {
-      try {
-        const response = await API.get(`/farmer/farmInterest`, token);
-        const data = response.data;
-        console.log(data);
-        setReqList([...data.reqList]);
-        setInterestList([...data.interestList]);
-        setSelInt(...data.interestList[0]);
-      } catch(error) {
-        console.error('Error fetching data:', error);
-      }
+  const effectFunc = async () => {
+    try {
+      const response = await API.get(`/farmer/farmInterest`, token);
+      const data = response.data;
+      console.log(data);
+      setReqList([...data.reqList]);
+      setInterestList([...data.interestList]);
+      setSelInt(...data.interestList[0]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+  useEffect(() => {
+    effectFunc();
     }, []);
 
   const changeInterest = async (interestOne) => {
@@ -75,8 +78,8 @@ const RequestList = () => {
           </div>
         </div>
       ) :
-        <div>
-          <p>{selInt}의 요청서가 없습니다.</p>
+        <div >
+          <p className='noneList'>{selInt}의 요청서가 없습니다.</p>
         </div>
       }
     </div >

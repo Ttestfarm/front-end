@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import style from './BuyList.module.css';
-import BuyCard from '../../components/myPages/BuyCard';
-import * as API from '../../api/index';
+import React, { useState, useEffect } from "react";
+import style from "./BuyList.module.css";
+import BuyCard from "../../components/myPages/BuyCard";
+import * as API from "../../api/index";
 
 const BuyListPage = () => {
   const [buyList, setBuyList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await API.get('/user/');
+      const response = await API.get("/user/");
     }
   }, [buyList]);
   return (
@@ -36,10 +36,7 @@ const BuyListPage = () => {
       <section>
         {buyList.length > 0 &&
           buyList.map((buyItem) => (
-            <BuyCard
-              key={buyItem.orders.ordersId}
-              buyItem={buyItem}
-            />
+            <BuyCard key={buyItem.orders.ordersId} buyItem={buyItem} />
           ))}
       </section>
     </>

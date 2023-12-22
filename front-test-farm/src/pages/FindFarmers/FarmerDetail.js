@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import style from './FarmerDetail.module.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import backBtn from '../../assets/back_btn.png';
-import { Rating } from '@mui/material';
-import { pink } from '@mui/material/colors';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import React, { useState, useEffect } from "react";
+import style from "./FarmerDetail.module.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import backBtn from "../../assets/back_btn.png";
+import { Rating } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
-import ProductsList from '../../components/FarmersDetail/ProductsList';
-import ReviewList from '../../components/FarmersDetail/ReviewList';
+import ProductsList from "../../components/FarmersDetail/ProductsList";
+import ReviewList from "../../components/FarmersDetail/ReviewList";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { tokenAtom, userInfoAtom } from './../../recoil/Atoms';
-import axios from 'axios';
-import * as API from '../../api/index';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { tokenAtom, userInfoAtom } from "./../../recoil/Atoms";
+import axios from "axios";
+import * as API from "../../api/index";
 
-import { isSuccessModalAtom } from './../../recoil/Atoms';
+import { isSuccessModalAtom } from "./../../recoil/Atoms";
 
 //전화번호 파싱해야합니다!!
 //css 수정해야합니다!!
@@ -52,7 +52,7 @@ const FarmerDetailPage = () => {
     e.preventDefault();
     try {
       const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
-      console.log('32123', response);
+      console.log("32123", response);
 
       setFarmerInfo({ ...farmerInfo, followCount: response.data.followCount });
       setFarmerfollow(response.data.isSelect);
@@ -61,41 +61,28 @@ const FarmerDetailPage = () => {
     }
   };
 
-  console.log('farmerInfo', farmerInfo);
+  console.log("farmerInfo", farmerInfo);
   return (
     <div className={style.container}>
       {farmerInfo != null && (
         <main className={style.farmerInfoCard}>
-          <button
-            className={style.backBtn}
-            onClick={() => navigate(-1)}
-          >
-            <img
-              src={backBtn}
-              alt="go to back btn"
-            />
+          <button className={style.backBtn} onClick={() => navigate(-1)}>
+            <img src={backBtn} alt="go to back btn" />
           </button>
           <section className={style.leftSection}>
             <div className={style.imageContainer}>
-              <img
-                src={farmerInfo}
-                alt="farmer"
-              />
+              <img src={farmerInfo} alt="farmer" />
             </div>
             <div className={style.info}>
               <div className={style.ratingInfo}>
-                <Rating
-                  name="read-only"
-                  value={farmerInfo.rating}
-                  readOnly
-                />
-                (<span>{farmerInfo.reviewCount}명</span>)
+                <Rating name="read-only" value={farmerInfo.rating} readOnly />(
+                <span>{farmerInfo.reviewCount}명</span>)
               </div>
 
               <div className={style.heartinfo}>
                 <PersonAddAlt1Icon
                   sx={{
-                    color: farmerfollow ? pink[500] : 'black',
+                    color: farmerfollow ? pink[500] : "black",
                     fontSize: 30,
                   }}
                   onClick={followHandler}
@@ -108,7 +95,7 @@ const FarmerDetailPage = () => {
           <div className={style.flexContainer}>
             <div className={style.farmDetails}>
               <div className={style.farmNames}>
-                {' '}
+                {" "}
                 <span className={style.farmName}>농장 이름</span>
                 <span className={style.farmNameData}>
                   {farmerInfo.farmName}
@@ -125,7 +112,7 @@ const FarmerDetailPage = () => {
               <div className={style.farmsAddress}>
                 <span className={style.farmAddress}>농장 주소</span>
                 <span className={style.farmAddressData}>
-                  {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
+                  {farmerInfo.farmAddress + " " + farmerInfo.farmAddressDetail}
                 </span>
               </div>
             </div>

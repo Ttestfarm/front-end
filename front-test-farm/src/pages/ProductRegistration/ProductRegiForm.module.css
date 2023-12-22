@@ -79,7 +79,7 @@
   line-height: normal;
 }
 
-.input[type='file']::file-selector-button {
+.input[type="file"]::file-selector-button {
   width: 130px;
   height: 30px;
   border-radius: 5px;
@@ -109,7 +109,7 @@
   margin: 0px 5px 0px 5px;
 }
 
-.radioStyle [type='radio'] {
+.radioStyle [type="radio"] {
   display: none;
 }
 
@@ -132,7 +132,7 @@
   cursor: pointer;
 }
 
-.radioStyle [type='radio']:checked + span {
+.radioStyle [type="radio"]:checked + span {
   /* border: 3px solid #ee8432; */
   background: #49680d;
   stroke-width: 1px;

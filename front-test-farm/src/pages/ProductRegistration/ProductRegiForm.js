@@ -1,88 +1,58 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 // import Input from "../UI/Input";
 // import { InputHTMLAttributes } from "react";
 // import Input from "../../components/UI/Input"; // Input 컴포넌트 경로 지정
-import { FilePreview } from '../../components/Functions/FilePreview';
-import style from './ProductRegiForm.module.css';
+import { FilePreview } from "../../components/Functions/FilePreview";
+import style from "./ProductRegiForm.module.css";
 const ProductRegiForm = () => {
   const [isFreeShipping, setIsFreeShipping] = useState(true); // 상태 추가: 기본값으로 무료배송 선택
   const handleShippingChange = (e) => {
-    setIsFreeShipping(e.target.value === '무료배송');
+    setIsFreeShipping(e.target.value === "무료배송");
   };
 
   const [isAdditionalFeeEnabled, setIsAdditionalFeeEnabled] = useState(true); //기본값 설정 선택
 
   const handleAdditionalFeeChange = (e) => {
-    setIsAdditionalFeeEnabled(e.target.value === '설정');
+    setIsAdditionalFeeEnabled(e.target.value === "설정");
   };
   const [files, setFiles] = useState([]);
 
   return (
     <form className={`${style.form} ${style.center}`}>
       <div className={style.product}>
-        <label
-          htmlFor="productName"
-          className={style.label}
-        >
+        <label htmlFor="productName" className={style.label}>
           상품명
         </label>
-        <input
-          className={style.productName}
-          placeholder="상품명"
-        />
+        <input className={style.productName} placeholder="상품명" />
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="Quantity"
-          className={style.label}
-        >
+        <label htmlFor="Quantity" className={style.label}>
           판매
         </label>
         <input className={style.quantity} />
         <div className={style.quant}>개수 혹은 kg단위로 적어주세요 </div>
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="price"
-          className={style.label}
-        >
+        <label htmlFor="price" className={style.label}>
           판매가
         </label>
-        <input
-          className={style.price}
-          placeholder="판매가"
-        />
+        <input className={style.price} placeholder="판매가" />
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="stock"
-          className={style.label}
-        >
+        <label htmlFor="stock" className={style.label}>
           재고수량
         </label>
-        <input
-          className={style.stock}
-          placeholder="재고수량"
-        />
+        <input className={style.stock} placeholder="재고수량" />
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="description"
-          className={style.label}
-        >
+        <label htmlFor="description" className={style.label}>
           상품설명
         </label>
-        <textarea
-          className={style.descript}
-          placeholder="상품 설명"
-        ></textarea>
+        <textarea className={style.descript} placeholder="상품 설명"></textarea>
       </div>
 
       <div className={`${style.product} ${style.img}`}>
-        <label
-          htmlFor="thumbnail"
-          className={style.labelImage}
-        >
+        <label htmlFor="thumbnail" className={style.labelImage}>
           상품 대표 이미지
         </label>
         <input
@@ -93,35 +63,20 @@ const ProductRegiForm = () => {
           onChange={(e) => setFiles(Array.from(e.target.files))}
         />
 
-        <input
-          className="thumbNail"
-          type="file"
-          hidden
-        />
+        <input className="thumbNail" type="file" hidden />
       </div>
       {FilePreview(files, 1)}
       <div className={`${style.product} ${style.img}`}>
         {/* <div className={style.imgs}> */}
         <label className={style.labelImage}>상품 추가 이미지</label>
 
-        <input
-          className={style.input}
-          type="file"
-          name="file"
-          multiple
-        />
+        <input className={style.input} type="file" name="file" multiple />
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="category"
-          className={style.label}
-        >
+        <label htmlFor="category" className={style.label}>
           카테고리 등록
         </label>
-        <input
-          className={style.category}
-          placeholder="카테고리 등록"
-        />
+        <input className={style.category} placeholder="카테고리 등록" />
       </div>
 
       <div className={`${style.radio} ${style.img}`}>
@@ -156,10 +111,7 @@ const ProductRegiForm = () => {
       </div>
       <div className={style.product}>
         <>
-          <label
-            htmlFor="shippingCondition"
-            className={style.label}
-          >
+          <label htmlFor="shippingCondition" className={style.label}>
             배송비 조건
           </label>
           <input
@@ -200,10 +152,7 @@ const ProductRegiForm = () => {
         </div>
       </div>
       <div className={style.product}>
-        <label
-          htmlFor="additionalFee"
-          className={style.label}
-        >
+        <label htmlFor="additionalFee" className={style.label}>
           추가 배송비
         </label>
         <input

@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import axios from 'axios';   
-import style from './ProductsForm.module.css';
+import React, { useRef, useState } from "react";
+import axios from "axios";
+import style from "./ProductsForm.module.css";
 
 const ProductsForm = () => {
-  const [isFreeShipping, setIsFreeShipping] = useState('free'); // 상태 추가: 기본값으로 무료배송 선택
+  const [isFreeShipping, setIsFreeShipping] = useState("free"); // 상태 추가: 기본값으로 무료배송 선택
   const handleShippingChange = (e) => {
     setIsFreeShipping(e.target.value);
   };
@@ -11,18 +11,18 @@ const ProductsForm = () => {
   const [isAdditionalFeeEnabled, setIsAdditionalFeeEnabled] = useState(true); //기본값 설정 선택
 
   const handleAdditionalFeeChange = (e) => {
-    setIsAdditionalFeeEnabled(e.target.value === '설정');
+    setIsAdditionalFeeEnabled(e.target.value === "설정");
   };
   const [titleImage, setTitleImage] = useState();
   const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
-    name : '',
-    quantity : '',
-    price : null,
-    stock : null,
-    description : '',
-    category : '',
-    shippingFee : null
+    name: "",
+    quantity: "",
+    price: null,
+    stock: null,
+    description: "",
+    category: "",
+    shippingFee: null,
   });
 
   const [token, setToken] = useState(null);
@@ -31,60 +31,62 @@ const ProductsForm = () => {
   };
 
   const handelInputChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({
-      ...formData, [name]: value,
+      ...formData,
+      [name]: value,
     });
   };
 
   const handelTitleImageChange = (e) => {
     setTitleImage(e.target.files[0]);
-  }
+  };
 
   const handelImageChange = (e) => {
     setImages([...images, ...e.target.files]);
-  }
+  };
 
   const submitServer = async (e) => {
     e.preventDefault();
 
     const formDataObj = new FormData();
 
-    formDataObj.append('titleImage', titleImage);
+    formDataObj.append("titleImage", titleImage);
     images.forEach((image, index) => {
       formDataObj.append(`image${index + 1}`, image);
     });
-    formDataObj.append('name', formData.name);
+    formDataObj.append("name", formData.name);
 
     console.log(formDataObj);
     const farmerToken = getToken();
     setToken(farmerToken);
 
-      axios.post(`http://localhost:8090/regproduct`,  formDataObj, {
+    axios
+      .post(`http://localhost:8090/regproduct`, formDataObj, {
         headers: {
           Authorization: `${farmerToken}`,
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data",
         },
       })
-      .then(res => {
-        console.log(res)
-      }) 
-      .catch(err => {
-        console.log(err);
+      .then((res) => {
+        console.log(res);
       })
-    }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div style={{marginLeft : "250px"}}>
+    <div style={{ marginLeft: "250px" }}>
       <h2>Products Form</h2>
 
       <div className={style.container}>
         <form onSubmit={submitServer}>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="name">상품명</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="productName"
@@ -96,10 +98,10 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="quantity">판매</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="Quantity"
@@ -110,10 +112,10 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="price">판매가</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="price"
@@ -125,10 +127,10 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="stock">재고수량</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="stock"
@@ -140,26 +142,26 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="description">상품설명</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <textarea
                 id="productDescription"
                 name="description"
                 value={formData.description}
                 placeholder="상품 설명을 입력하세요.."
-                style={{ height: '200px' }}
+                style={{ height: "200px" }}
                 onChange={handelInputChange}
               ></textarea>
             </div>
           </div>
 
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="titleImage">상품 대표 이미지</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 className={style.input}
                 type="file"
@@ -167,19 +169,16 @@ const ProductsForm = () => {
                 accept="image/*"
                 onChange={handelTitleImageChange}
               />
-              <input
-                className="thumbNail"
-                type="file"
-                hidden
-              />{}
+              <input className="thumbNail" type="file" hidden />
+              {}
             </div>
           </div>
 
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="images">상품 추가 이미지</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 className={style.input}
                 type="file"
@@ -188,19 +187,15 @@ const ProductsForm = () => {
                 multiple
                 onChange={handelImageChange}
               />
-              <input
-                className="thumbNail"
-                type="file"
-                hidden
-              />{' '}
+              <input className="thumbNail" type="file" hidden />{" "}
             </div>
           </div>
 
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="category">카테고리 등록</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="category"
@@ -212,15 +207,15 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="shippingType">배송비</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="radio"
                 name="shippingType"
                 value="free"
-                checked={isFreeShipping == 'free'}
+                checked={isFreeShipping == "free"}
                 onChange={handleShippingChange}
               />
               무료배송
@@ -235,10 +230,10 @@ const ProductsForm = () => {
             </div>
           </div>
           <div className={style.row}>
-            <div className={style['col-25']}>
+            <div className={style["col-25"]}>
               <label htmlFor="shippingFee">배송비 조건</label>
             </div>
-            <div className={style['col-75']}>
+            <div className={style["col-75"]}>
               <input
                 type="text"
                 id="productPrice"
@@ -246,7 +241,7 @@ const ProductsForm = () => {
                 value={formData.shippingFee}
                 placeholder="가격을 입력하세요.."
                 onChange={handelInputChange}
-                disabled={isFreeShipping == 'free'}
+                disabled={isFreeShipping == "free"}
               />
               <div>개마다 기본 배송비 부과</div>
             </div>
@@ -255,12 +250,12 @@ const ProductsForm = () => {
           {/* <div className={style.row}>
             <div className={style['col-25']}>
               <label htmlFor="AdditionalFee">
-                {' '}
+                {" "}
                 제주, 도서 산간 추가 배송비
               </label>
             </div>
-            <div className={style['col-75']}>
-              {' '}
+            <div className={style["col-75"]}>
+              {" "}
               <input
                 type="radio"
                 value="설정"
@@ -280,10 +275,10 @@ const ProductsForm = () => {
             </div>
           </div> */}
           {/* <div className={style.row}> */}
-            {/* <div className={style['col-25']}>
+          {/* <div className={style['col-25']}>
               <label htmlFor="additionalFees"> 추가 배송비</label>
             </div> */}
-            {/* <div className={style['col-75']}>
+          {/* <div className={style['col-75']}>
               <input
                 type="text"
                 placeholder="추가 배송비"
@@ -294,7 +289,9 @@ const ProductsForm = () => {
           <br />
           <div className={style.row}>
             <button className={style.rewrite}>다시쓰기</button>
-            <button className={style.reg} type="submit">상품 등록</button>
+            <button className={style.reg} type="submit">
+              상품 등록
+            </button>
             <button className={style.back}>돌아가기</button>
           </div>
         </form>

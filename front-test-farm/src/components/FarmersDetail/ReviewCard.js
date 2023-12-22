@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import style from './ReviewCard.module.css'; // 리뷰 카드의 스타일 파일 import
+import React, { useState } from "react";
+import style from "./ReviewCard.module.css"; // 리뷰 카드의 스타일 파일 import
 
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating";
 
 const ReviewCard = ({ review }) => {
   const [value] = useState(1);
@@ -9,11 +9,7 @@ const ReviewCard = ({ review }) => {
     <div className={style.reviewCard}>
       <div className={style.reviewContents}>
         <div className={style.nickname}>{review.nickname}님</div>
-        <Rating
-          name="read-only"
-          value={value}
-          readOnly
-        />
+        <Rating name="read-only" value={value} readOnly />
         <div className={style.details}>
           <span className={style.date}>{review.date}</span>
           <span className={style.farmName}>{review.farmName}</span>

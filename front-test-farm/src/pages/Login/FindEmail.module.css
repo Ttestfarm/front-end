@@ -35,6 +35,39 @@
   color: #acaca9;
 }
 
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+
+.input > input {
+  height: 56px;
+  padding: 0 10px;
+  font-size: 1rem;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  background-color: transparent;
+  color: #191919;
+  outline: none;
+}
+
+.input > input:nth-of-type(1) {
+  margin-bottom: 20px;
+}
+
+.input > input:nth-of-type(2) {
+  margin-bottom: 10px;
+}
+
+.input > input:nth-of-type(3) {
+  background-color: #F5F5F7;
+}
+
 .certify {
   display: flex;
   justify-content: space-between;
@@ -44,53 +77,18 @@
 
 .certify-btn {
   width: 130px;
-  height: 28px;
+  height: 30px;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   color: #ffffff;
-  border: 1px solid #49680d;
-  background-color: #49680d;
+  border: 1px solid #49680D;
+  background-color: #49680D;
   margin-bottom: 5px;
 }
 
-.address-code {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 370px;
-}
-
-.address-code > input {
-  width: 222px;
-}
-
-.address-default {
-  display: flex;
-  align-items: flex-start;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #191919;
-}
-
-.address-default > p {
-  display: block;
-  margin: 0;
-  font-size: 14px;
-}
-
-.address-default > input {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  border: 1px solid #acaca9;
-  background-color: transparent;
-  border-radius: 3px;
-}
-
-.join-btn {
+.find-btn {
   width: 370px;
   height: 56px;
   color: #ffffff;
@@ -102,28 +100,22 @@
   cursor: pointer;
 }
 
-.join-btn:hover,
-.join-btn:active {
+.find-btn:hover,
+.find-btn:active {
   background-color: var(--color-button);
   border-color: var(--color-button);
 }
-.join-btn:disabled,
-.join-btn:disabled:hover,
-.join-btn:disabled:active {
+.find-btn:disabled,
+.find-btn:disabled:hover,
+.find-btn:disabled:active {
   background-color: #ccc;
   color: #292929;
   border-color: #ccc;
   cursor: not-allowed;
 }
 
-.invalid input {
-  border: 1px solid #b40e0e;
-  background-color: #fddddd;
-}
-
-.invalid input:focus {
-  border-color: #ff8800;
-  background-color: #fbe8d2;
+.boldText {
+  font-weight: bold;
 }
 
 .error-text {

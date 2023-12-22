@@ -1,6 +1,6 @@
 // 유효성 검사 함수
 export const isNotEmptyName = (value) =>
-  /^[가-힝a-zA-Z]{2,}$/.exec(value) && value.length <= 5;
+  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length <= 5;
 
 export const isEmail = (value) =>
   value

@@ -1,18 +1,20 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import RootLayout from "./pages/Root";
-import ErrorPage from "./pages/Error";
-import HomePage from "./pages/Home/Home";
-import RegistUserPage from "./pages/Registration/RegistUser";
-import LoginPage from "./pages/Login/Login";
+import RootLayout from './pages/Root';
+import ErrorPage from './pages/Error';
+import HomePage from './pages/Home/Home';
+import RegistUserPage from './pages/Registration/RegistUser';
+import LoginPage from './pages/Login/Login';
 
 import RegistFarmerPage from './pages/Registration/RegistFarmer';
 //import { tokenLoader } from './util/auth';
 import { action as logoutAction } from './pages/Logout';
 
-import FindFarmerRootLayout from "./components/Layout/FindFarmerRootLayout";
-import FindFarmerPage from "./pages/FindFarmers/FindFarmer";
-import FarmerDetailPage from "./pages/FindFarmers/FarmerDetail";
+import MatchingListPage from './pages/Matching/MatchingList';
+import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
+import FindFarmerPage from './pages/FindFarmers/FindFarmer';
+import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
+//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
@@ -21,21 +23,27 @@ import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
 
-import MatchingListPage from "./pages/Matching/MatchingList";
+import RequestList from './pages/FarmersPages/RequestList';
+import QuotForm from './pages/FarmersPages/QuotForm';
+import QuotStatus from './pages/FarmersPages/QuotStatus';
+import QuotDetail from './pages/FarmersPages/QuotDetail';
+import OrderList from './pages/FarmersPages/OrderList';
+import OrderDetail from './pages/FarmersPages/OrderDetail';
 
 import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
 import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
 import RequestForm from './pages/Matching/RequestForm';
 import Oauth from './pages/Login/Oauth';
+import FindEmailPage from './pages/Login/FindEmail';
+import FindPwPage from './pages/Login/FindPw';
 import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
 import ProductsForm from './pages/ProductRegistration/ProductsForm';
-import Pay from "./components/FarmersDetail/Pay";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
@@ -46,50 +54,48 @@ const router = createBrowserRouter([
       { path: 'join', element: <RegistUserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'logout', action: logoutAction },
-      { path: "deliveryinfo", element: <DeliveryInfo /> },
-      { path: "pay", element: <Pay /> },
-
+      { path: 'find-email', element: <FindEmailPage /> },
+      { path: 'find-pw', element: <FindPwPage /> },
       {
-        path: "findfarmer",
-        path: "matching",
+        path: 'matching',
         // element: <MatchingPage />,
         children: [
           { index: true, element: <MatchingListPage /> },
-          { path: "requestform", element: <RequestForm /> },
+          { path: 'requestform', element: <RequestForm /> },
         ],
       },
       {
-        path: "findfarmer",
+        path: 'findfarmer',
         element: <FindFarmerRootLayout />,
         children: [
           { index: true, element: <FindFarmerPage /> },
           {
-            path: ":farmerId",
+            path: ':farmerId',
             element: <FarmerDetailPage />,
             // id: 'farmer-detail',
             // loader: farmerDetailLoader,
             // children: [{ index: true, element: <FarmerDetailPage /> }],
           },
           {
-            path: "reg-farmer",
+            path: 'reg-farmer',
             element: <RegistFarmerPage page="reg-farmer" />,
           },
         ],
       },
       {
-        path: "mypage",
+        path: 'mypage',
         element: <MyPageRootLayout />,
         children: [
           { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
-          { path: "modify-user", element: <ModifyUserPage /> },
-          { path: "followlist", element: <FollowFarmerPage /> },
+          { path: 'modify-user', element: <ModifyUserPage /> },
+          { path: 'followlist', element: <FollowFarmerPage /> },
           {
             path: 'buylist',
             element: <BuyListPage />,
             children: [
               {
-                path: ":orderId",
+                path: ':orderId',
                 element: <OrderedProductPage />,
               },
             ],
@@ -97,18 +103,18 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "farmerpage",
+        path: 'farmerpage',
         element: <FarmerPageRootLayout />,
         children: [
           {
             index: true,
           },
           {
-            path: "modify-farm",
+            path: 'modify-farm',
             element: <RegistFarmerPage page="modify-farm" />,
           },
           {
-            path: "requestlist",
+            path: 'requestlist',
             element: <RequestList />,
           },
           {
@@ -116,33 +122,33 @@ const router = createBrowserRouter([
             element: <QuotForm />,
           },
           {
-            path: "quotstatus",
+            path: 'quotstatus',
             element: <QuotStatus />,
           },
           {
-            path: "quotdetail/:quotationId",
+            path: 'quotdetail/:quotationId',
             element: <QuotDetail />,
           },
           {
-            path: "orderlist",
+            path: 'orderlist',
             element: <OrderList />,
           },
           {
-            path: "orderlist/orderdetail/:ordersId/:type",
+            path: 'orderlist/orderdetail/:ordersId/:type',
             element: <OrderDetail />,
           },
           {
-            path: "deliverylist",
+            path: 'deliverylist',
             element: <DeliveryList />,
           },
           {
             path: 'invoice',
-            element: <Invoice />
+            element: <Invoice />,
           },
           {
             path: 'regproduct',
-            element: <ProductsForm/>
-          }
+            element: <ProductsForm />,
+          },
         ],
       },
       // {
@@ -152,6 +158,10 @@ const router = createBrowserRouter([
       // {
       //   path: '/find-pw',
       //   element: <FindPwPage />,
+      // },
+      // {
+      //   path: '/modify-user',
+      //   element: <ModifyUserPage />,
       // },
     ],
   },

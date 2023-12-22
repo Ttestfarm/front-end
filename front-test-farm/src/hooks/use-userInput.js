@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useUserInput = (validateValueFn) => {
+const useUserInput = (validateValueFn, isAlwaysValid = false) => {
   const [enteredValue, setEnteredValue] = useState('');
   const [isTouched, setIsTouched] = useState(false);
   //입력값 유효성 검사

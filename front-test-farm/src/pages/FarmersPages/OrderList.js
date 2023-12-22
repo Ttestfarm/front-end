@@ -33,7 +33,7 @@ const OrderList = () => {
       },
     }).then(res => {
         setOrdList([...res.data.ordersList]);
-        axios.get(`http://localhost:8090/farmer/companylist`, {
+        axios.get(`http://localhost:8090/companylist`, {
           headers: {
             Authorization: `${farmerToken}`
           },

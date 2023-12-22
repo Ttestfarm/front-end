@@ -49,12 +49,18 @@ const ProductsForm = () => {
     e.preventDefault();
 
     const formDataObj = new FormData();
+    formDataObj.append('name', formData.name);
+    formDataObj.append('quantity', formData.quantity);
+    formDataObj.append('price', formData.price);
+    formDataObj.append('stock', formData.stock);
+    formDataObj.append('description', formData.description);
+    // formDataObj.append('name', formData.name);
+    formDataObj.append('shippingFee', formData.shippingFee);
 
     formDataObj.append('titleImage', titleImage);
     images.forEach((image, index) => {
       formDataObj.append(`image${index + 1}`, image);
     });
-    formDataObj.append('name', formData.name);
 
     console.log(formDataObj);
     const farmerToken = getToken();

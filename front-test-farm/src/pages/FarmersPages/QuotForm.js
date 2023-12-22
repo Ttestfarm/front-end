@@ -65,9 +65,9 @@ const QuotForm = () => {
     formDataObj.append('quotationQuantity', formData.quantity);
     formDataObj.append('quotationPrice', formData.price);
     formDataObj.append('quotationComment', formData.comment);
-    // files.forEach((file, index) => {
-    //   formDataObj.append(`quotationPicture${index+1}`, file);
-    // });
+    files.forEach((file, index) => {
+      formDataObj.append(`quotationPicture${index+1}`, file);
+    });
 
     console.log(formDataObj);
     axios.post('http://localhost:8090/farmer/regquot', formDataObj, 

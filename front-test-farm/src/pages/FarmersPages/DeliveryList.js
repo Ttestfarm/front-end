@@ -6,7 +6,7 @@ import axios from 'axios';
 const DeliveryList = () => {
   const [deliveryList, setDeliveryList] = useState([]);
   const [page, setPage] = useState(0);
-  const [state, setState] = useState("1"); // 0:오류, 1:배송중, 2:배송완료
+  const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
   const [token, setToken] = useState(null);
   const getToken = () => {
@@ -53,8 +53,8 @@ const DeliveryList = () => {
   return (
     <div className="delivery-list">
       <div className="delivery-list-btns">
-        <button className="btn1" onClick={() => changeState("1")}>배송중</button>
-        <button className="btn2" onClick={() => changeState("2")}>배송완료</button>
+        <button className="btn1" onClick={() => changeState("SHIPPING")}>배송중</button>
+        <button className="btn2" onClick={() => changeState("COMPLETED")}>배송완료</button>
       </div >
       <div className="quotation-list">
         <table>

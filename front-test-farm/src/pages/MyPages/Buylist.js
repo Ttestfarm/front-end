@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import style from './BuyList.module.css';
 import BuyCard from '../../components/myPages/BuyCard';
+import * as API from '../../api/index';
 
-const BuylistPage = () => {
+const BuyListPage = () => {
   const [buyList, setBuyList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      // const response = await API.get('/user')
+      const response = await API.get('/user/');
     }
   }, [buyList]);
   return (
     <>
-      <nav>
-        <ul>
+      <nav className={style.nav}>
+        <ul className={style.list}>
           <li>
             <button>전체</button>
           </li>
@@ -44,4 +46,4 @@ const BuylistPage = () => {
   );
 };
 
-export default BuylistPage;
+export default BuyListPage;

@@ -47,16 +47,15 @@
 }
 .info {
   font-size: 16px;
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 0px;
-  width: 250px;
+  /* display: flex;
+  justify-content: flex-start; */
+  width: 200px;
   height: 30px;
 }
-.heartinfo {
+/* .heartinfo {
   width: 75px;
   height: 30px;
-}
+} */
 .leftSection {
   float: left;
   margin-left: 64px;

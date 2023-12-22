@@ -1,0 +1,32 @@
+.name {
+  font-weight: bold;
+}
+.container {
+  margin: 2rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+.left {
+  flex: 1;
+}
+.right {
+  font-weight: bold;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.btns button {
+  border: none;
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  color: aliceblue;
+  background-color: var(--color-button2);
+}
+
+.btns a {
+  color: aliceblue;
+}

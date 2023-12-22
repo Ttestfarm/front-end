@@ -3,8 +3,11 @@ import Card from '../UI/Card';
 import style from './QuotCard.module.css';
 import * as API from '../../api/index';
 import QuotCard from '../../components/myPages/QuotCard';
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from '../../recoil/Atoms';
 
 const ReqCard = ({ req }) => {
+  const token = useRecoilValue(tokenAtom);
   //견적서 카드
   const [quotList, setQuotList] = useState([]);
 
@@ -12,7 +15,7 @@ const ReqCard = ({ req }) => {
   const reqQuoteHandler = async () => {
     try {
       console.log('요청아이디:', req.request.requestId);
-      const response = await API.get(`/user/${req.request.requestId}`);
+      const response = await API.get(`/user/${req.request.requestId}`, token);
 
       console.log(response.data);
 
@@ -35,7 +38,12 @@ const ReqCard = ({ req }) => {
       </section>
       <section className={style.right}>
         <p>수락을 기다리는 {req.quotationCount}개의 견적서가 있습니다.</p>
-        <button onClick={reqQuoteHandler}>견적서 보기</button>
+        <button
+          onClick={reqQuoteHandler}
+          disabled={req.quotationCount === 0}
+        >
+          견적서 보기
+        </button>
       </section>
 
       {quotList.length > 0

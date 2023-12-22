@@ -7,11 +7,12 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 const QuotCard = ({ quoteItem }) => {
   //
   const avatarStyle = {
-    width: 24,
-    height: 24,
+    width: 100,
+    height: 100,
     border: 'solid',
   };
-
+  console.log('dlr', quoteItem);
+  
   return (
     <>
       <div className={style.container}>
@@ -25,7 +26,7 @@ const QuotCard = ({ quoteItem }) => {
             name="read-only"
             value={quoteItem.rating}
             readOnly
-          />{' '}
+          />
           {quoteItem.reviewCount}
           <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 30 }} />
           {quoteItem.followCount}
@@ -36,7 +37,7 @@ const QuotCard = ({ quoteItem }) => {
             <span>From. </span>
             {quoteItem.farmName} ({quoteItem.farmAddress})
           </p>
-          <p>견적가 {quoteItem.quote.quotaionPrice}</p>
+          <p>견적가 {quoteItem.quote.quotationPrice} 원</p>
           <p>{quoteItem.quote.quotationComment}</p>
           {/* {quoteItem.quote.quotationPicture && 이미지 여러개면 어떻게 와?} */}
         </section>

@@ -7,7 +7,7 @@ import RegistUserPage from './pages/Registration/RegistUser';
 import LoginPage from './pages/Login/Login';
 
 import RegistFarmerPage from './pages/Registration/RegistFarmer';
-import { tokenLoader } from './util/auth';
+//import { tokenLoader } from './util/auth';
 import { action as logoutAction } from './pages/Logout';
 
 import MatchingListPage from './pages/Matching/MatchingList';
@@ -16,15 +16,11 @@ import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 //import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
-
-
-
-
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
+import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
-import BuylistPage from './pages/MyPages/Buylist';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
 
 import RequestList from './pages/FarmersPages/RequestList';
@@ -41,6 +37,9 @@ import RequestForm from './pages/Matching/RequestForm';
 import Oauth from './pages/Login/Oauth';
 import FindEmailPage from './pages/Login/FindEmail';
 import FindPwPage from './pages/Login/FindPw';
+import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
+import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
+import ProductsForm from './pages/ProductRegistration/ProductsForm';
 
 const router = createBrowserRouter([
   {
@@ -48,7 +47,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
-    loader: tokenLoader,
+    //loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
       { path: '/oauth/redirect/:stoken', element: <Oauth /> },
@@ -93,7 +92,7 @@ const router = createBrowserRouter([
           { path: 'followlist', element: <FollowFarmerPage /> },
           {
             path: 'buylist',
-            element: <BuylistPage />,
+            element: <BuyListPage />,
             children: [
               {
                 path: ':orderId',
@@ -119,7 +118,7 @@ const router = createBrowserRouter([
             element: <RequestList />,
           },
           {
-            path: 'quotform/:requestId/:requestProduct',
+            path: 'quotform/:requestId/:requestProduct/:requestQuantity',
             element: <QuotForm />,
           },
           {
@@ -144,10 +143,26 @@ const router = createBrowserRouter([
           },
           {
             path: 'invoice',
-            element: <Invoice />,
+            element: <Invoice />
           },
+          {
+            path: 'regproduct',
+            element: <ProductsForm/>
+          }
         ],
       },
+      // {
+      //   path: '/find-email',
+      //   element: <FindEmailPage />,
+      // },
+      // {
+      //   path: '/find-pw',
+      //   element: <FindPwPage />,
+      // },
+      // {
+      //   path: '/modify-user',
+      //   element: <ModifyUserPage />,
+      // },
     ],
   },
 ]);

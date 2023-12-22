@@ -9,8 +9,10 @@ import * as API from '../../api/index';
 import * as val from '../../util/validation';
 import RegistSection from './../../components/UI/RegistSection';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+
 import {
+  tokenAtom,
   isErrorModalAtom,
   isSuccessModalAtom,
   isPostcodeModalAtom,
@@ -20,6 +22,8 @@ import {
 } from '../../recoil/Atoms';
 
 const ModifyUserPage = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
+
   //비밀번호 확인 유효성 검사set
   const [, setRepassword] = useState('');
   const [repasswordIsValid, setRepasswordIsValid] = useState(false);
@@ -164,20 +168,22 @@ const ModifyUserPage = () => {
   const RegistHandler = async () => {
     try {
       console.log('보낼데이터', updateData);
-      await API.put(`/user/modify-user`, updateData);
+      const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
       // resetPassword();
       // resetRepassword();
       // resetAddressDetail();
       // resetTel();
 
+      console.log(response.data);
       //성공했다고 메시지
-      setUserInfo({ ...updateData });
-      setIsSucessModal({
-        state: true,
-        message: '회원정보가 수정되었습니다!',
-      });
-
+      setUserInfo({ ...response.data });
+      if (response.status === 200) {
+        setIsSucessModal({
+          state: true,
+          message: '회원정보가 수정되었습니다!',
+        });
+      }
       navigate('/mypage/modify-user');
     } catch (error) {
       setIsErrorModal({

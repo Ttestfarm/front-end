@@ -18,6 +18,7 @@ const RequestList = () => {
   useEffect(() => {
     const farmerToken = getToken();
     setToken(farmerToken);
+    
     axios.get(`http://localhost:8090/farmer/farmInterest`,
      {
       headers: {
@@ -83,7 +84,7 @@ const RequestList = () => {
             <p>배송지 : {req.address}</p>
           </div>
           <div className='request-btn'>
-            <button><Link className='a' to={`/farmerpage/quotform/${req.requestId}/${req.requestProduct}`}>견적 보내기</Link></button>
+            <button><Link className='a' to={`/farmerpage/quotform/${req.requestId}/${req.requestProduct}/${req.requestQuantity}`}>견적 보내기</Link></button>
             <p>요청서 번호 : {req.requestId}</p>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -7,8 +8,12 @@ import style from './MatchingList.module.css';
 import * as API from '../../api/index';
 import axios from 'axios';
 import MatchingCard from '../../components/matching/MatchingCard';
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
+  const token = useRecoilValue(tokenAtom);
+  console.log('hr', token);
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);
   const [info, setInfo] = useState({
@@ -32,6 +37,8 @@ const MatchingListPage = () => {
     try {
       console.log('page', page);
       const response = await API.get(`/matching?page=${page}`);
+      //매칭 리스트 도  토큰 요청 없는 요청으로 바꿔야합니다.
+      //      const response = await axios.get(`/matching?page=${page}`);
       const data = response.data;
 
       console.log('data', data);
@@ -93,12 +100,14 @@ const MatchingListPage = () => {
     <>
       <section className={style.header}>
         <p>예쁘지는 않지만, 맛과 품질은 보장하는</p>
-        <p>못난이 농산물을 구매해 볼까요?</p>
+        <p className={style.context}>못난이 농산물을 구매해 볼까요?</p>
         <p>필요하신 만큼만 주문하세요!</p>
-        <p>공동구매처럼 기다릴 필요도 없습니다.</p>
+        <p className={style.context}>공동구매처럼 기다릴 필요도 없습니다.</p>
         <p> 프리티 파머스가 여러분의 요청서를 확인 후 배송해 드립니다.</p>
 
-        <button>매칭 요청서 작성하기</button>
+        <button>
+          <Link to="/matching/requestform">매칭 요청서 작성하기</Link>
+        </button>
       </section>
       <section className={style.infoBox}>
         <div>
@@ -124,19 +133,23 @@ const MatchingListPage = () => {
             ))
           : '매칭 리스트가 없습니다.'}
       </section>
-      <AnimatePresence>
-        {btnView ? (
-          <ArrowCircleUpIcon
-            initial={{ opacity: 0, y: 50 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{ opacity: 0, y: 50 }}
-            onClick={scrollToTop}
-          ></ArrowCircleUpIcon>
-        ) : null}
-      </AnimatePresence>
+      <div className={style.upIcon}>
+        <AnimatePresence>
+          {btnView ? (
+            <ArrowCircleUpIcon
+              color="success"
+              sx={{ fontSize: { lg: '50px' } }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{ opacity: 0, y: 50 }}
+              onClick={scrollToTop}
+            ></ArrowCircleUpIcon>
+          ) : null}
+        </AnimatePresence>
+      </div>
       <div ref={ref}></div>
     </>
   );

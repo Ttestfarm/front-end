@@ -60,21 +60,21 @@ const DeliveryList = () => {
         <table>
           <tr>
             <th>주문번호</th>
-            <th>택배사</th>
-            <th>송장번호</th>
             <th>품목</th>
-            <th>번호</th>
+            <th>수량</th>
+            <th>가격</th>
+            <th>주소</th>
             <th>상태</th>
           </tr>
           {deliveryList.length > 0 ? deliveryList.map(dlist => (
             <tr key={dlist.deliveryId}>
               <td>{dlist.ordersId}</td>
-              <td>{dlist.tname}</td>
-              <td>{dlist.tinvoice}</td>
-              <td>{dlist.deliveryState}</td>
               <td>{dlist.product}</td>
+              <td>{dlist.quantity}</td>
+              {/* <td>{dlist.tinvoice}</td> */}
               <td>{dlist.price}</td>
               <td>{dlist.address}</td>
+              <td>{dlist.deliveryState}</td>
             </tr>
           ))
             : "배송 리스트가 없습니다."

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./FarmerCard.module.css"; // CSS 모듈을 변수로 가져오기
-import star from "../../assets/star.png";
-import heart from "../../assets/heart.png";
 import { Link } from "react-router-dom";
+import { Rating } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const FarmerCard = ({ farmer }) => {
   return (
@@ -24,13 +25,12 @@ const FarmerCard = ({ farmer }) => {
       </div>
       <div className={styles["info"]}>
         <div className={styles["rating-info"]}>
-          <img src={star} alt="Star" />
-          <span>{farmer.rating}</span> (<span>{farmer.reviewCount}</span>)
-          &nbsp;
+          <Rating name="read-only" value={farmer.rating} readOnly />(
+          <span>{farmer.reviewCount}명</span>) &nbsp;
         </div>
         <div className={styles["heart-info"]}>
-          <img src={heart} alt="Heart" />
-          <span>{farmer.followCount}</span>
+          <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 30 }} />
+          <span>{farmer.followCount}명</span>
         </div>
       </div>
 

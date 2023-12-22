@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect } from "react";
 import { NavLink, Link, Form } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
+import axios from "axios";
 
 import style from "./MainNavigation.module.css";
 import { motion } from "framer-motion";
@@ -13,19 +15,28 @@ const MainNavigation = (props) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('token')) {
+  //     setToken(localStorage.getItem('token'));
+
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
+    if (token) {
+      setToken(token);
     }
   }, []);
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
+        console.log("getUserInfotoken", token);
+        //로컬 로그인을 했을 경우 실행
         if (token && !userInfo) {
-          const response = await API.get("/login/userInfo");
+          const response = await API.get("/user/userInfo", token);
           setUserInfo(response.data);
-          console.log('헤더', response.data);
+          console.log("헤더", response.data);
         }
       } catch (err) {
         console.log(err);
@@ -33,19 +44,24 @@ const MainNavigation = (props) => {
     };
 
     getUserInfo();
-  }, [token, userInfo]);
+  }, [token]);
 
   const logoutHandler = () => {
-    if (token) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("expiration");
-      setUserInfo("");
-      window.location.href = "/";
-    } else {
-      setIsErrorModal({
-        state: true,
-        message: "로그아웃에 실패하였습니다.",
-      });
+    try {
+      if (token) {
+        //localStorage.removeItem('token');
+        localStorage.removeItem("expiration");
+        setUserInfo("");
+        setToken("");
+        window.location.href = "/";
+      } else {
+        setIsErrorModal({
+          state: true,
+          message: "로그아웃에 실패하였습니다.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

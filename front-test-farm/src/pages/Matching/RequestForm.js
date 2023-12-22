@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import style from './RequestForm.module.css';
 import Card from '../../components/UI/Card';
 import Postcode from '../../api/PostCode';
-import { Form, Link } from 'react-router-dom';
-import { Checkbox } from '../../components/UI/Checkbox';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import * as API from '../../api/index';
+import { Form, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import { TextField } from '@mui/material';
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   userInfoAtom,
   isPostcodeModalAtom,
@@ -12,18 +18,23 @@ import {
   zonecodeAtom,
   isErrorModalAtom,
   isSuccessModalAtom,
+  tokenAtom,
 } from '../../recoil/Atoms';
 
 const RequestForm = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-  const [defaultInfo, setDefaultInfo] = useState(false);
-  const [data, setData] = useState({});
-  const [dInfo, setDInfo] = useState({
+  const token = useRecoilValue(tokenAtom);
+  const [userInfo] = useRecoilState(userInfoAtom);
+  const [data, setData] = useState({
+    requestProduct: '',
+    requestQuantity: '',
+    requestDate: '',
+    requestMessage: '',
+    tel: userInfo.userTel,
     address1: userInfo.address1,
     address2: userInfo.address2,
     address3: userInfo.address3,
-    tel: userInfo.userTel,
   });
+
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
   const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
@@ -31,6 +42,8 @@ const RequestForm = () => {
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
+
+  const navigate = useNavigate();
 
   const inputHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -47,54 +60,134 @@ const RequestForm = () => {
     e.preventDefault();
     setIsPostcodeModal((prev) => !prev);
   };
+
+  //datepicker
+  const today = dayjs();
+  const oneMonthLater = today.add(1, 'month');
+  const datePickerFormat = 'YYYY-MM-DD';
+  const datePickerUtils = {
+    format: datePickerFormat,
+    parse: (value) => dayjs(value, datePickerFormat, true).toDate(),
+  };
+  const dateFormatChange = (date) => {
+    const formattedDate = dayjs(date).format(datePickerFormat);
+    setData((prev) => ({
+      ...prev,
+      requestDate: formattedDate,
+    }));
+  };
+  //datepicker 끝
+
+  const resetHandler = () => {
+    setData({
+      requestProduct: '',
+      requestQuantity: '',
+      requestDate: '',
+      requestMessage: '',
+      tel: userInfo.userTel,
+      address1: userInfo.address1,
+      address2: userInfo.address2,
+      address3: userInfo.address3,
+    });
+  };
+
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const enteredData = {
+        ...data,
+      };
+      console.log(enteredData);
+      const response = await API.post(
+        `/matching/requestform`,
+        token,
+        enteredData
+      );
+
+      console.log('response', response.data);
+
+      if (response.status === 200) {
+        setIsSucessModal({
+          state: true,
+          message: '요청서가 등록되었습니다.',
+        });
+      }
+
+      resetHandler();
+    } catch (error) {
+      console.log(error);
+      setIsErrorModal({
+        state: true,
+        message: error.message,
+      });
+    }
+  };
+
   return (
     <Card width="80%">
-      <Form>
+      <Form onSubmit={SubmitHandler}>
         <div className={style.left}>
           <p>필요한 농산물은</p>
           <p>필요한 양은</p>
           <p>개수 혹은 kg 단위로 적어주세요.</p>
           <p>요청 사항</p>
           <p>요청 기간 설정</p>
-
-          <Checkbox
-            checked={defaultInfo}
-            onChange={setDefaultInfo}
-          >
-            <span>기본 정보 불러오기</span>
-          </Checkbox>
           <p>배송 주소는</p>
           <p>배송 전화번호</p>
         </div>
         <div className={style.right}>
-          <input
-            type="text"
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
             name="requestProduct"
-            placeholder="맛좋은 사과"
+            label="요청 농산물"
+            value={data.requestProduct}
+            onChange={inputHandle}
           />
-          <input
-            type="text"
+          <TextField
+            id="outlined-basic"
+            label="필요한 양"
+            variant="outlined"
             name="requestQuantity"
-            placeholder='1.5kg'
+            value={data.requestQuantity}
+            onChange={inputHandle}
           />
-          <input
-            type="text"
+
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            label="요청 메세지"
             name="requestMessage"
-            placeholder='많이 익지 않은 사과로 부탁드립니다.'
+            value={data.requestMessage}
+            onChange={inputHandle}
           />
-          <input
-            type="text"
-            name="requestDate"
-            
-          />
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            dateFormats={datePickerUtils}
+          >
+            <div components={['DatePicker']}>
+              <DatePicker
+                format="YYYY-MM-DD"
+                defaultValue={dayjs()}
+                disablePast
+                showDaysOutsideCurrentMonth
+                maxDate={oneMonthLater}
+                value={data.requestDate}
+                onChange={(newValue) => {
+                  dateFormatChange(newValue);
+                }}
+              />
+            </div>
+          </LocalizationProvider>
           <div>
             <input
               type="text"
-              disabled
               name="address1"
-              value={dInfo.address1}
+              value={data.address1}
               className={style.zipcode}
               placeholder={'우편번호'}
+              disabled
             />
             <button
               className={style['certify-btn']}
@@ -105,14 +198,14 @@ const RequestForm = () => {
             <input
               type="text"
               name="address2"
-              value={dInfo.address2}
+              value={data.address2}
               placeholder={'도로명 주소'}
               disabled
             />
             <input
               type="text"
               name="address3"
-              value={dInfo.address3}
+              value={data.address3}
               onChange={inputHandle}
               placeholder={'상세 주소를 입력해 주세요.'}
             />
@@ -120,7 +213,9 @@ const RequestForm = () => {
           <input
             type="text"
             name="tel"
-            value={dInfo.tel}
+            value={data.tel}
+            onChange={inputHandle}
+            placeholder={'전화번호는 숫자만 입력해 주세요. (예:01056781234)'}
           />
         </div>
         <div className={style.infobox}>
@@ -136,11 +231,9 @@ const RequestForm = () => {
           <p>기간이 만료된 신청은 자동으로 삭제됩니다.</p>
         </div>
         <footer>
-          <button>
-            <Link to="">다시쓰기</Link>
-          </button>
-          <button>매칭 신청</button>
-          <button>돌아가기</button>
+          <button onClick={resetHandler}>다시쓰기</button>
+          <button type="submit">매칭 신청</button>
+          <button onClick={() => navigate('/matching')}>돌아가기</button>
         </footer>
       </Form>
       {isPostcodeModal && <Postcode />}

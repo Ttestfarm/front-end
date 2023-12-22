@@ -28,6 +28,7 @@ const ProductCard = ({ product }) => {
       productId: product.productId,
       farmerId: product.farmerId,
       stock: product.productStock,
+      paymentDelivery: product.shippingCost,
       name,
       tel,
       address,

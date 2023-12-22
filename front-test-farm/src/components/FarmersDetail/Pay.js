@@ -33,15 +33,8 @@ const Pay = () => {
     merchant_uid: `mid_${new Date().getTime()}`,
     buyer_name: state.deliveryInfo.name,
     buyer_tel: state.deliveryInfo.tel,
-    buyer_address: state.deliveryInfo.address,
+    buyer_addr: state.deliveryInfo.address,
   });
-  const preInfo = {
-    receiptId: paymentInfo.merchant_uid,
-    amount: paymentInfo.amount,
-    buyerName: paymentInfo.buyer_name,
-    buyerAddress: paymentInfo.buyer_address,
-    buyerTel: paymentInfo.buyer_tel,
-  };
 
   useEffect(() => {
     const jquery = document.createElement("script");
@@ -78,7 +71,7 @@ const Pay = () => {
               ordersId: rsp.merchant_uid,
               buyerName: rsp.buyer_name,
               buyerTel: rsp.buyer_tel,
-              buyerAddress: rsp.buyer_address,
+              buyerAddress: rsp.buyer_addr,
               paymentMethod: rsp.pay_method,
               pgTid: rsp.pg_tid,
               pgType: rsp.pg_type,
@@ -89,6 +82,7 @@ const Pay = () => {
               count: quantity,
               productId: state.deliveryInfo.productId,
               farmerId: state.deliveryInfo.farmerId,
+              paymentDelivery: state.deliveryInfo.paymentDelivery,
             });
 
             alert(response.data);

@@ -117,10 +117,10 @@ const ModifyUserPage = () => {
     const inputPassword = e.target.value;
     setRepassword(inputPassword);
     if (passwordValue !== inputPassword) {
-      setCheckPwdMsg('비밀번호가 똑같지 않아요!');
+      setCheckPwdMsg('비밀번호가 일치하지 않습니다.');
       setRepasswordIsValid(false);
     } else {
-      setCheckPwdMsg('똑같은 비밀번호를 입력했습니다.');
+      setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
     }
   };
@@ -133,10 +133,8 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(
-      `/user/modify-user/check-sms/${updateData.userTel}`,
-      token
-    ).then((response) => {
+    await API.get(`/modify-user/check-sms/${updateData.userTel}`)
+    .then((response) => {
       setIsSucessModal({
         state: true,
         message: '인증번호를 발송했어요!',
@@ -148,7 +146,7 @@ const ModifyUserPage = () => {
 
   //인증번호 확인
   const checkSMSHandler = () => {
-    if (authNum === checkSMS) {
+    if (authNum.toString() === checkSMS.toString()) {
       setIsSucessModal({
         state: true,
         message: '휴대폰 인증이 정상적으로 완료되었습니다.',
@@ -329,7 +327,7 @@ const ModifyUserPage = () => {
           value={updateData.userTel}
           onChange={inputHandle}
           //onBlur={telBlurHandler}
-          placeholder={'01056781234 (숫자만 입력하셔도 됩니다.)'}
+          placeholder={'숫자만 입력해 주세요.'}
         />
 
         <div className={style.certify}>

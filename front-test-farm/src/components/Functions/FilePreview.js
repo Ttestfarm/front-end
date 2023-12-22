@@ -8,7 +8,7 @@ export const FilePreview = (files, itemsPerRow) => {
           width="110px"
           height="110px"
           alt=""
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
         />
         {(index + 1) % itemsPerRow === 0 ? (
           <>

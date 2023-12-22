@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import style from './ReviewList.module.css';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import React, { useEffect, useState } from "react";
+import style from "./ReviewList.module.css";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
-import ReviewCard from '../../components/FarmersDetail/ReviewCard';
-import * as API from '../../api/index';
+import ReviewCard from "../../components/FarmersDetail/ReviewCard";
+import * as API from "../../api/index";
 
 const ReviewList = ({ farmerId }) => {
   const [reviewList, setReviewList] = useState([]);
@@ -32,12 +32,9 @@ const ReviewList = ({ farmerId }) => {
       <main className={style.productList}>
         {reviewList.length > 0
           ? reviewList.map((review) => (
-              <ReviewCard
-                key={review.reviewId}
-                review={review}
-              />
+              <ReviewCard key={review.reviewId} review={review} />
             ))
-          : '등록된 리뷰가 없습니다.'}
+          : "등록된 리뷰가 없습니다."}
         <Stack spacing={2}>
           <Pagination
             className={style.Pagination}

@@ -122,7 +122,7 @@ const RequestForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="80%">
+      <Card width="60%">
         <Form
           onSubmit={SubmitHandler}
           className={style.main}
@@ -145,7 +145,7 @@ const RequestForm = () => {
               value={data.requestProduct}
               onChange={inputHandle}
               sx={{ width: '16rem', margin: 2 }}
-              required
+              size="small"
             />
             <TextField
               id="outlined-basic"
@@ -154,6 +154,7 @@ const RequestForm = () => {
               name="requestQuantity"
               value={data.requestQuantity}
               onChange={inputHandle}
+              size="small"
               sx={{ width: '16rem', margin: 2 }}
             />
 
@@ -164,6 +165,7 @@ const RequestForm = () => {
               name="requestMessage"
               value={data.requestMessage}
               onChange={inputHandle}
+              size="small"
               sx={{ width: '16rem', margin: 2 }}
             />
             <LocalizationProvider
@@ -178,6 +180,7 @@ const RequestForm = () => {
                   showDaysOutsideCurrentMonth
                   maxDate={oneMonthLater}
                   value={data.requestDate}
+                  size="small"
                   onChange={(newValue) => {
                     dateFormatChange(newValue);
                   }}

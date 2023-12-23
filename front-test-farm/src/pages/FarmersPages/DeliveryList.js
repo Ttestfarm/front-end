@@ -12,15 +12,15 @@ const DeliveryList = () => {
   const [page, setPage] = useState(0);
   const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
-  const testFunction = async() => {
+  const testFunction = async () => {
     try {
       const response = await API.get(`/farmer/deliverylist/${state}/${page}`, token);
       const data = response.data;
       setDeliveryList([...data.deliveryList]);
       setPage(data.pageInfo);
-    } catch(error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
-    }     
+    }
   }
   useEffect(() => {
     testFunction()
@@ -36,8 +36,8 @@ const DeliveryList = () => {
         const data = response.data;
         setDeliveryList([...data.deliveryList]);
         setPage(data.pageInfo);
-      } 
-    } catch(error) {
+      }
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   };

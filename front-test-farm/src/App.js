@@ -29,6 +29,8 @@ import QuotStatus from "./pages/FarmersPages/QuotStatus";
 import QuotDetail from "./pages/FarmersPages/QuotDetail";
 import OrderList from "./pages/FarmersPages/OrderList";
 import OrderDetail from "./pages/FarmersPages/OrderDetail";
+import ProductsForm from "./pages/FarmersPages/ProductsForm";
+import ModifyFarmerPage from "./pages/FarmersPages/ModifyFarmer";
 
 import FarmerPageRootLayout from "./components/Layout/FarmerPageRootLayout";
 import DeliveryList from "./pages/FarmersPages/DeliveryList";
@@ -39,8 +41,7 @@ import FindEmailPage from "./pages/Login/FindEmail";
 import FindPwPage from "./pages/Login/FindPw";
 import ProductRegForm from "./pages/ProductRegistration/ProductRegForm";
 import ProductRegiForm from "./pages/ProductRegistration/ProductRegiForm";
-import ProductsForm from "./pages/ProductRegistration/ProductsForm";
-import ModifyFarmerPage from "./pages/FarmersPages/ModifyFarmer";
+
 import Pay from "./components/FarmersDetail/Pay";
 import QuotePay from "./components/myPages/QuotePay";
 const router = createBrowserRouter([

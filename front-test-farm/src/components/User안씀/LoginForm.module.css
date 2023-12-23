@@ -51,7 +51,6 @@
   height: 56px;
   width: 370px;
   border-radius: 10px;
-  text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +128,7 @@
 }
 
 .find > a {
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 
 .find > a:visited {
@@ -160,7 +159,6 @@
 }
 
 .join > a {
-  /* text-decoration: none; */
   font-weight: 600;
 }
 

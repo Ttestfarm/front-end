@@ -77,7 +77,7 @@ const ProductsForm = () => {
     <div>
       <h2 className={style.title}>못난이마켓 상품 등록</h2>
 
-      <div className={style.container}>
+      <div className={style["product-container"]}>
         <form onSubmit={submitServer}>
           <div className={style.row}>
             <div className={style["col-25"]}>
@@ -177,7 +177,6 @@ const ProductsForm = () => {
             </div>
             <div className={style["col-75"]}>
               <input
-                className={style.input}
                 type="file"
                 name="images"
                 accept="image/*"

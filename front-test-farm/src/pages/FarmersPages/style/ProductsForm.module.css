@@ -1,6 +1,6 @@
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 /* input[type="text"],
 select,
@@ -21,7 +21,7 @@ textarea {
   font-size: 2rem;
 }
 
-textarea {
+.product-container textarea {
   background-color: #fefcf4;
 
   border-radius: 10px;
@@ -29,17 +29,17 @@ textarea {
   height: 70px;
 }
 
-label {
+.product-container label {
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
 
-input[type='text'] {
+.product-container input[type='text'] {
   border-radius: 10px;
   border: 1px solid #ACACA9;
 }
 
-input[type='submit'] {
+.product-container input[type='submit'] {
   background-color: #04aa6d;
   color: white;
   padding: 12px 20px;
@@ -49,7 +49,7 @@ input[type='submit'] {
   float: right;
 }
 
-input[type='submit']:hover {
+.product-container input[type='submit']:hover {
   background-color: #45a049;
 }
 
@@ -61,7 +61,7 @@ input[type='submit']:hover {
 }
 
 /* 컨테이너 스타일 */
-.container {
+.product-container {
   width: 60%;
   margin: 0 auto;
   margin-top: 50px;

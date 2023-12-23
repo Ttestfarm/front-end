@@ -346,9 +346,9 @@ const ModifyUserPage = () => {
             인증번호 확인
           </button>
         </div>
-        {/* {telHasError && (
+        {telHasError && (
           <p className={style['error-text']}>phone 인증번호를 입력하세요.</p>
-        )} */}
+        )}
         <button
           id="join"
           className={style['join-btn']}

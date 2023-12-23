@@ -12,6 +12,7 @@
 }
 .right {
   font-weight: bold;
+  flex: 2;
 }
 
 .btns {

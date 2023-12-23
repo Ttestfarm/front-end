@@ -1,8 +1,8 @@
-import React from "react";
-import style from "./QuotCard.module.css";
-import { Avatar, Rating } from "@mui/material";
-import { pink } from "@mui/material/colors";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import React from 'react';
+import style from './QuotCard.module.css';
+import { Avatar, Rating } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 const QuotCard = ({ quoteItem }) => {
   //
@@ -14,9 +14,10 @@ const QuotCard = ({ quoteItem }) => {
   const avatarStyle = {
     width: 100,
     height: 100,
-    border: "solid",
+    border: 'solid',
   };
-  console.log("dlr", quoteItem);
+  const numericPrice = parseInt(quoteItem.quote.quotationPrice);
+  const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   return (
     <>
@@ -27,19 +28,30 @@ const QuotCard = ({ quoteItem }) => {
             src={quoteItem.farmPix}
             sx={avatarStyle}
           ></Avatar>
-          <Rating name="read-only" value={quoteItem.rating} readOnly />
-          {quoteItem.reviewCount}
-          <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 30 }} />
-          {quoteItem.followCount}
-          {/* <button onClick={handlePayment}>주문하기</button> */}
+          <div className={style.rating}>
+            <Rating
+              name="read-only"
+              value={quoteItem.rating}
+              readOnly
+              size="small"
+            />
+            <span className={style.span}> ({quoteItem.reviewCount}명)</span>
+          </div>
+          <div className={style.follow}>
+            <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 20 }} />
+            <span className={style.span}>({quoteItem.followCount}명)</span>
+            {/* <button onClick={handlePayment}>주문하기</button> */}
+          </div>
           <button>주문하기</button>
         </section>
         <section className={style.right}>
-          <p>
-            <span>From. </span>
+          <p className={style.farmName}>
+            <span className={style.italic}>From. </span>
             {quoteItem.farmName} ({quoteItem.farmAddress})
           </p>
-          <p>견적가 {quoteItem.quote.quotationPrice} 원</p>
+          <p>
+            <span>견적가 {formattedPrice} 원</span>
+          </p>
           <p>{quoteItem.quote.quotationComment}</p>
           {/* {quoteItem.quote.quotationPicture && 이미지 여러개면 어떻게 와?} */}
         </section>

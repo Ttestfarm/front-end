@@ -36,9 +36,10 @@ const MatchingListPage = () => {
   const fetchData = async () => {
     try {
       console.log('page', page);
-      const response = await API.get(`/matching?page=${page}`);
-      //매칭 리스트 도  토큰 요청 없는 요청으로 바꿔야합니다.
-      //      const response = await axios.get(`/matching?page=${page}`);
+
+      const response = await axios.get(
+        `${API.serverUrl}/matching?page=${page}`
+      );
       const data = response.data;
 
       console.log('data', data);

@@ -9,23 +9,24 @@ import * as API from '../../api/index';
 import Postcode from '../../api/PostCode';
 import { Form, Navigate, useNavigate } from 'react-router-dom';
 import HandleRegistrationNumCheck from '../../api/registrationNumCheck';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import * as val from '../../util/validation';
 import {
   isSuccessModalAtom,
   isErrorModalAtom,
   isPostcodeModalAtom,
   postcodeAddressAtom,
+  userInfoAtom,
+  tokenAtom,
 } from '../../recoil/Atoms';
 
 import { bankOption } from '../../util/payment';
-import { userInfoAtom } from './../../recoil/Atoms';
 
 //계좌번호 셀렉트박스 디자인 수정해야합니다!!
 
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-
+  const token = useRecoilValue(tokenAtom);
   const [farmerInfo, setFarmerInfo] = useState({});
   const [file, setFile] = useState('');
   const [myFarmTel, setMyFarmTel] = useState(false);
@@ -253,7 +254,7 @@ const RegistFarmerPage = ({ page }) => {
         for (const [key, value] of formData.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const response = await API.formPost('/findfarmer/reg-farmer', formData);
+        const response = await API.formPost('/findfarmer/reg-farmer', token, formData);
 
         console.log('response', response);
         //기본전화번호 체크시 userInfo 에 업데이트

@@ -29,14 +29,16 @@
 }
 
 .list a {
-  text-decoration: none;
   color: #ffffff;
 }
-.list a:hover,
+.list a:hover {
+  font-size: large;
+  font-weight: bold;
+}
 .list a.active {
   color: var(--color-highlight);
   font-size: large;
-  /* text-decoration: underline; */
+  font-weight: bold;
 }
 
 .button {

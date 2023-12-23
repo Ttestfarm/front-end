@@ -74,7 +74,7 @@
   margin-right: 10px;
 }
 
-.kakao-naver > a:last-of-type {
+/* .kakao-naver > a:last-of-type {
   color: #ffffff;
   background-color: #03c75a;
   border: 1px solid #03c75a;
@@ -88,7 +88,7 @@
   height: 18px;
   width: 18px;
   margin-right: 12px;
-}
+} */
 
 .email-login {
   display: flex;
@@ -160,7 +160,6 @@
 }
 
 .join > a {
-  /* text-decoration: none; */
   font-weight: 600;
 }
 

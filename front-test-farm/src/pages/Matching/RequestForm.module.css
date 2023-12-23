@@ -1,0 +1,138 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 3rem;
+}
+.container h1 {
+  text-align: center;
+  margin: 2rem;
+  color: var(--color-main);
+}
+.main {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.left img {
+  width: 90%;
+  height: 80%;
+  margin: auto;
+  border-radius: 25px;
+  object-fit: cover;
+  position: absolute;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.address {
+  display: flex;
+  width: 92.5%;
+}
+.address input {
+  flex: 9;
+  width: 17rem;
+  height: 2.8rem;
+  border-radius: 4px;
+  margin: 0.5rem;
+}
+.address button {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.certify-btn:hover {
+  transform: scale(1.1);
+  background-color: #e2e4d4;
+}
+
+.infobox {
+  border-radius: 4px;
+  width: 80%;
+  margin: 1rem auto;
+  background-color: #e2e4d4;
+  padding: 1rem 1.5rem;
+}
+.infobox p {
+  margin-bottom: 0.3rem;
+}
+.title {
+  border: 1px solid #525050;
+  width: 6.5rem;
+  padding: 0.3rem;
+  border-radius: 4px;
+  color: var(--color-main);
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.padding1 {
+  margin-bottom: 0;
+}
+.padding {
+  padding-left: 0.8rem;
+  padding-top: 0.1rem;
+  margin-top: 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.footer button {
+  cursor: pointer;
+  width: 7rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+.footer button:hover {
+  transform: scale(1.1);
+}
+
+.btn {
+  background-color: var(--color-button2);
+  color: #fff;
+}
+.btn1 {
+  background-color: #e2e4d4;
+  color: var(--color-main);
+}
+/* 
+/* Add media query to adjust layout for smaller screens */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+
+    .right {
+      order: 1; /* Set the order to 1 so that .right comes after .left */
+      width: 100%;
+    }
+  }
+}

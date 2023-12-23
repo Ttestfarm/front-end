@@ -13,7 +13,7 @@ textarea {
 }
 
 input[type="text"] {
-  height: 35px;
+  height: 10%;
 }
 textarea {
   height: 70px;
@@ -23,19 +23,6 @@ label {
   display: inline-block;
 }
 
-input[type="submit"] {
-  background-color: #04aa6d;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-}
-
-input[type="submit"]:hover {
-  background-color: #45a049;
-}
 .rewrite,
 .back {
   color: rgba(25, 25, 25, 0.87);

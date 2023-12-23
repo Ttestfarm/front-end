@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useRouteLoaderData } from 'react-router-dom';
-import style from './MyNavigation.module.css';
+import style from './Navigation.module.css';
 //로그인을 한 유저만 마이페이지가 보임
 const MyNavigation = () => {
   return (

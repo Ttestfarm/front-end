@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import style from './RequestForm.module.css';
 import Card from '../../components/UI/Card';
+import uglyfarm from '../../assets/uglyfarm.jpg';
 import Postcode from '../../api/PostCode';
 import * as API from '../../api/index';
 import { Form, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -45,6 +47,7 @@ const RequestForm = () => {
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
   const navigate = useNavigate();
+  const inputStyle = { width: '90%', margin: 1 };
 
   const inputHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -123,29 +126,35 @@ const RequestForm = () => {
   return (
     <div className={style.container}>
       <Card width="60%">
+        <h1>못난이 농산물을 요청합니다!</h1>
         <Form
           onSubmit={SubmitHandler}
           className={style.main}
         >
           <div className={style.left}>
-            <p>필요한 농산물은</p>
+            <img
+              src={uglyfarm}
+              alt="agly"
+            />
+            {/* <p>필요한 농산물은</p>
             <p>필요한 양은</p>
             <p>개수 혹은 kg 단위로 적어주세요.</p>
             <p>요청 사항</p>
             <p>요청 기간 설정</p>
             <p>배송 주소는</p>
-            <p>배송 전화번호</p>
+            <p>배송 전화번호</p> */}
           </div>
           <div className={style.right}>
             <TextField
-              id="outlined-basic margin-dense"
+              id="outlined-basic "
               variant="outlined"
               name="requestProduct"
               label="요청 농산물"
               value={data.requestProduct}
               onChange={inputHandle}
-              sx={{ width: '16rem', margin: 2 }}
+              sx={inputStyle}
               size="small"
+              helperText=""
             />
             <TextField
               id="outlined-basic"
@@ -155,18 +164,22 @@ const RequestForm = () => {
               value={data.requestQuantity}
               onChange={inputHandle}
               size="small"
-              sx={{ width: '16rem', margin: 2 }}
+              helperText="kg/박스 또는 개수"
+              sx={inputStyle}
             />
 
             <TextField
-              id="outlined-basic"
               variant="outlined"
               label="요청 메세지"
+              id="outlined-multiline-flexible"
+              multiline
+              rows={3}
+              maxRows={3}
               name="requestMessage"
               value={data.requestMessage}
               onChange={inputHandle}
               size="small"
-              sx={{ width: '16rem', margin: 2 }}
+              sx={inputStyle}
             />
             <LocalizationProvider
               dateAdapter={AdapterDayjs}
@@ -177,14 +190,15 @@ const RequestForm = () => {
                   format="YYYY-MM-DD"
                   defaultValue={dayjs()}
                   disablePast
+                  label="요청서 유효기간"
                   showDaysOutsideCurrentMonth
                   maxDate={oneMonthLater}
                   value={data.requestDate}
-                  size="small"
+                  slotProps={{ textField: { size: 'small' } }}
                   onChange={(newValue) => {
                     dateFormatChange(newValue);
                   }}
-                  sx={{ margin: 2 }}
+                  sx={inputStyle}
                 />
               </div>
             </LocalizationProvider>
@@ -193,37 +207,43 @@ const RequestForm = () => {
                 type="text"
                 name="address1"
                 value={data.address1}
-                className={style.zipcode}
-                placeholder={'우편번호'}
-                disabled
+                hidden
               />
-              <button
-                className={style['certify-btn']}
-                onClick={onClicktoggleAddressModal}
-              >
-                주소 찾기
-              </button>
               <input
                 type="text"
                 name="address2"
                 value={data.address2}
                 placeholder={'도로명 주소'}
                 disabled
+                sx={inputStyle}
               />
-              <input
-                type="text"
-                name="address3"
-                value={data.address3}
-                onChange={inputHandle}
-                placeholder={'상세 주소를 입력해 주세요.'}
-              />
+              <button
+                className={style['certify-btn']}
+                onClick={onClicktoggleAddressModal}
+              >
+                <TravelExploreIcon />
+              </button>
             </div>
-            <input
-              type="text"
+            <TextField
+              id="outlined-basic"
+              variant="outlined"
+              label="상세주소"
+              name="address3"
+              value={data.address3}
+              onChange={inputHandle}
+              size="small"
+              sx={inputStyle}
+            />
+            <TextField
+              id="outlined-basic"
+              label="받는 분 연락처"
+              variant="outlined"
               name="tel"
               value={data.tel}
               onChange={inputHandle}
-              placeholder={'전화번호는 숫자만 입력해 주세요. (예:01056781234)'}
+              size="small"
+              helperText="숫자만 입력(01056781004)"
+              sx={inputStyle}
             />
           </div>
         </Form>
@@ -232,15 +252,14 @@ const RequestForm = () => {
             <ErrorOutlineIcon
               fontSize="small"
               color="success"
-              margin="dense"
             />
             유의 사항
           </div>
           <p>
             • 언프리티팜은 못난이 농산물의 특성상 개성있는 농산물이 배송됩니다.
           </p>
-          <p>• 환불이 불가능합니다. 신중하게 요청해 주세요!</p>
-          <p>• 배송 주소는 매칭 완료시 파머님께만 보여집니다.</p>
+          <p>• 아쉽지만 환불이 불가능해요. 신중하게 요청해 주세요!</p>
+          <p>• 배송 주소와 연락처는 매칭 완료시 파머님에게만 보여집니다.</p>
           <p className={style.padding1}>
             • 매칭 신청 내용은 수정이 되지 않습니다!
           </p>
@@ -248,7 +267,7 @@ const RequestForm = () => {
             수정을 원하시면 삭제 후 재작성 부탁드립니다.
           </p>
           <p className={style.padding1}>
-            • 매칭 유효기간은 기본 3일이며, 최대 1개월까지 설정 가능합니다.
+            • 매칭 유효기간은 오늘로부터 최대 1개월까지 설정 가능합니다.
           </p>
           <p className={style.padding}>
             기간이 만료된 신청은 자동으로 삭제됩니다.

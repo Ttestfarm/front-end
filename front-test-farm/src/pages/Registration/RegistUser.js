@@ -217,11 +217,11 @@ const RegistUserPage = () => {
           value={passwordValue}
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
-          placeholder={'문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)'}
+          placeholder={'영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)'}
         />
         {passwordHasError && (
           <p className={style['error-text']}>
-            문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)
+            영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)
           </p>
         )}
         <input

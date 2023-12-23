@@ -10,10 +10,10 @@ import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   userInfoAtom,
   isPostcodeModalAtom,
@@ -21,16 +21,16 @@ import {
   zonecodeAtom,
   isSuccessModalAtom,
   tokenAtom,
-} from '../../recoil/Atoms';
+} from "../../recoil/Atoms";
 
 const RequestForm = () => {
   const token = useRecoilValue(tokenAtom);
-  const [userInfo] = useRecoilState(userInfoAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
   const [data, setData] = useState({
-    requestProduct: '',
-    requestQuantity: '',
-    requestDate: '',
-    requestMessage: '',
+    requestProduct: "",
+    requestQuantity: "",
+    requestDate: "",
+    requestMessage: "",
     tel: userInfo.userTel,
     address1: userInfo.address1,
     address2: userInfo.address2,
@@ -85,8 +85,8 @@ const RequestForm = () => {
 
   //datepicker
   const today = dayjs();
-  const oneMonthLater = today.add(1, 'month');
-  const datePickerFormat = 'YYYY-MM-DD';
+  const oneMonthLater = today.add(1, "month");
+  const datePickerFormat = "YYYY-MM-DD";
   const datePickerUtils = {
     format: datePickerFormat,
     parse: (value) => dayjs(value, datePickerFormat, true).toDate(),

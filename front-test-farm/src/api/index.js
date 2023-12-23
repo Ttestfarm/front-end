@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 //  http://localhost:8090
 const backendPort = '8090';
@@ -20,18 +20,18 @@ async function post(endpoint, authToken, data) {
 
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `${authToken}`,
     },
     body: JSON.stringify(bodyData),
   });
 }
 
-async function post2(endpoint, data) {
+async function post2(endpoint, authToken, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `${localStorage.getItem('token')}`,
+      "Content-Type": "application/json",
+      Authorization: `${authToken}`,
     },
   });
 }
@@ -39,7 +39,7 @@ async function post2(endpoint, data) {
 async function formPost(endpoint, authToken, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
       Authorization: `${authToken}`,
     },
   });
@@ -50,7 +50,7 @@ async function put(endpoint, authToken, data) {
 
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `${authToken}`,
     },
   });

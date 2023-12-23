@@ -41,7 +41,8 @@ import ProductRegForm from "./pages/ProductRegistration/ProductRegForm";
 import ProductRegiForm from "./pages/ProductRegistration/ProductRegiForm";
 import ProductsForm from "./pages/ProductRegistration/ProductsForm";
 import ModifyFarmerPage from "./pages/FarmersPages/ModifyFarmer";
-
+import Pay from "./components/FarmersDetail/Pay";
+import QuotePay from "./components/myPages/QuotePay";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,6 +58,8 @@ const router = createBrowserRouter([
       { path: "logout", action: logoutAction },
       { path: "find-email", element: <FindEmailPage /> },
       { path: "find-pw", element: <FindPwPage /> },
+      { path: "pay", element: <Pay /> },
+      { path: "quotepay", element: <QuotePay /> },
       {
         path: "matching",
         // element: <MatchingPage />,
@@ -71,8 +74,9 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <FindFarmerPage /> },
           { path: ':farmerId', element: <FarmerDetailPage /> },
+          { path: ":farmerId", element: <FarmerDetailPage /> },
           {
-            path: "reg-farmer",
+            path: 'reg-farmer',
             element: <RegistFarmerPage page="reg-farmer" />,
           },
         ],
@@ -98,6 +102,7 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "farmerpage",
         path: "farmerpage",
         element: <FarmerPageRootLayout />,
         children: [

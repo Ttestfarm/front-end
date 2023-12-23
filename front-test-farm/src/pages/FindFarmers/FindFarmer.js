@@ -4,14 +4,10 @@ import { useInView } from 'react-intersection-observer';
 import FarmerCard from '../../components/Farmers/FarmerCard';
 import style from './FindFarmer.module.css';
 import * as API from '../../api/index';
-//import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
-import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 const FindFarmerPage = () => {
-  //const token = useRecoilValue(tokenAtom);
   const [keyword, setKeyword] = useState('all');
   const [sortType, setSortType] = useState('latest');
   const [page, setPage] = useState(1);
@@ -103,13 +99,13 @@ const FindFarmerPage = () => {
             placeholder="품목명을 입력하세요"
           />
           <button
-            className={style['button']}
+            className={`${style['button']} ${style['searchButton']}`}
             onClick={() => listHandler(keyword, sortType, 1)}
           >
             검색
           </button>
           <button
-            className={style['button']}
+            className={`${style['button']} ${style['resetButton']}`}
             // onClick={() => listHandler('all', 'latest', 1)}
             onClick={handleRefresh}
           >
@@ -148,19 +144,23 @@ const FindFarmerPage = () => {
           : '파머 목록이 없습니다.'}
       </div>
 
-      <AnimatePresence>
-        {btnView ? (
-          <ArrowCircleUpIcon
-            initial={{ opacity: 0, y: 50 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{ opacity: 0, y: 50 }}
-            onClick={scrollToTop}
-          ></ArrowCircleUpIcon>
-        ) : null}
-      </AnimatePresence>
+      <div className={style.upIcon}>
+        <AnimatePresence>
+          {btnView ? (
+            <ArrowCircleUpIcon
+              color="success"
+              sx={{ fontSize: { lg: '50px' } }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{ opacity: 0, y: 50 }}
+              onClick={scrollToTop}
+            ></ArrowCircleUpIcon>
+          ) : null}
+        </AnimatePresence>
+      </div>
       <div ref={ref}></div>
     </Fragment>
   );

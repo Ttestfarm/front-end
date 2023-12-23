@@ -8,10 +8,10 @@ const DeliveryList = () => {
   const [page, setPage] = useState(0);
   const [state, setState] = useState("1"); // 0:오류, 1:배송중, 2:배송완료
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
+  // const [token, setToken] = useState(null);
+  // const getToken = () => {
+  //   return localStorage.getItem("token");
+  // };
 
   useEffect(() => {
     const farmerToken = getToken();

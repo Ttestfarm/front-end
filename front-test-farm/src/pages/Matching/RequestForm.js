@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import style from './RequestForm.module.css';
-import Card from '../../components/UI/Card';
-import Postcode from '../../api/PostCode';
-import * as API from '../../api/index';
-import { Form, useNavigate } from 'react-router-dom';
-import dayjs from 'dayjs';
-import { TextField } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import style from "./RequestForm.module.css";
+import Card from "../../components/UI/Card";
+import Postcode from "../../api/PostCode";
+import * as API from "../../api/index";
+import { Form, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { TextField } from "@mui/material";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   userInfoAtom,
   isPostcodeModalAtom,
@@ -19,16 +19,16 @@ import {
   isErrorModalAtom,
   isSuccessModalAtom,
   tokenAtom,
-} from '../../recoil/Atoms';
+} from "../../recoil/Atoms";
 
 const RequestForm = () => {
   const token = useRecoilValue(tokenAtom);
-  const [userInfo] = useRecoilState(userInfoAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
   const [data, setData] = useState({
-    requestProduct: '',
-    requestQuantity: '',
-    requestDate: '',
-    requestMessage: '',
+    requestProduct: "",
+    requestQuantity: "",
+    requestDate: "",
+    requestMessage: "",
     tel: userInfo.userTel,
     address1: userInfo.address1,
     address2: userInfo.address2,
@@ -63,8 +63,8 @@ const RequestForm = () => {
 
   //datepicker
   const today = dayjs();
-  const oneMonthLater = today.add(1, 'month');
-  const datePickerFormat = 'YYYY-MM-DD';
+  const oneMonthLater = today.add(1, "month");
+  const datePickerFormat = "YYYY-MM-DD";
   const datePickerUtils = {
     format: datePickerFormat,
     parse: (value) => dayjs(value, datePickerFormat, true).toDate(),
@@ -77,17 +77,17 @@ const RequestForm = () => {
     }));
   };
   //datepicker 끝
-
-  const resetHandler = () => {
+  const resetHandler = (e) => {
+    e.preventDefault();
     setData({
-      requestProduct: '',
-      requestQuantity: '',
-      requestDate: '',
-      requestMessage: '',
+      requestProduct: "",
+      requestQuantity: "",
+      requestDate: "",
+      requestMessage: "",
       tel: userInfo.userTel,
-      address1: userInfo.address1,
-      address2: userInfo.address2,
-      address3: userInfo.address3,
+      address1: userInfo.address1 != null ? userInfo.address1 : "",
+      address2: userInfo.address2 != null ? userInfo.address2 : "",
+      address3: userInfo.address3 != null ? userInfo.address3 : "",
     });
   };
 
@@ -99,18 +99,14 @@ const RequestForm = () => {
         ...data,
       };
       console.log(enteredData);
-      const response = await API.post(
-        `/matching/requestform`,
-        token,
-        enteredData
-      );
+      const response = await API.post(`/matching/request`, token, enteredData);
 
-      console.log('response', response.data);
+      console.log("response", response.data);
 
       if (response.status === 200) {
         setIsSucessModal({
           state: true,
-          message: '요청서가 등록되었습니다.',
+          message: "요청서가 등록되었습니다.",
         });
       }
 
@@ -166,7 +162,7 @@ const RequestForm = () => {
             dateAdapter={AdapterDayjs}
             dateFormats={datePickerUtils}
           >
-            <div components={['DatePicker']}>
+            <div components={["DatePicker"]}>
               <DatePicker
                 format="YYYY-MM-DD"
                 defaultValue={dayjs()}
@@ -186,11 +182,11 @@ const RequestForm = () => {
               name="address1"
               value={data.address1}
               className={style.zipcode}
-              placeholder={'우편번호'}
+              placeholder={"우편번호"}
               disabled
             />
             <button
-              className={style['certify-btn']}
+              className={style["certify-btn"]}
               onClick={onClicktoggleAddressModal}
             >
               주소 찾기
@@ -199,7 +195,7 @@ const RequestForm = () => {
               type="text"
               name="address2"
               value={data.address2}
-              placeholder={'도로명 주소'}
+              placeholder={"도로명 주소"}
               disabled
             />
             <input
@@ -207,7 +203,7 @@ const RequestForm = () => {
               name="address3"
               value={data.address3}
               onChange={inputHandle}
-              placeholder={'상세 주소를 입력해 주세요.'}
+              placeholder={"상세 주소를 입력해 주세요."}
             />
           </div>
           <input
@@ -215,7 +211,7 @@ const RequestForm = () => {
             name="tel"
             value={data.tel}
             onChange={inputHandle}
-            placeholder={'전화번호는 숫자만 입력해 주세요. (예:01056781234)'}
+            placeholder={"전화번호는 숫자만 입력해 주세요. (예:01056781234)"}
           />
         </div>
         <div className={style.infobox}>
@@ -233,7 +229,7 @@ const RequestForm = () => {
         <footer>
           <button onClick={resetHandler}>다시쓰기</button>
           <button type="submit">매칭 신청</button>
-          <button onClick={() => navigate('/matching')}>돌아가기</button>
+          <button onClick={() => navigate("/matching")}>돌아가기</button>
         </footer>
       </Form>
       {isPostcodeModal && <Postcode />}

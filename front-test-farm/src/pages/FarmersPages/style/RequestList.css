@@ -1,8 +1,6 @@
 .container {
-  width: 90%;
-  margin-top: 150px;
-  margin: 150px auto 0px auto;
-
+  width: 50%;
+  margin-left: 200px;
   color: #000;
   font-family: Inter;
   font-size: 20px;
@@ -17,6 +15,11 @@
   width: 90%;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+.noneList {
+  margin: 0 auto;
+  text-align: center;
 }
 
 .request-box {

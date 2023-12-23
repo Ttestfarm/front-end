@@ -144,6 +144,10 @@ const router = createBrowserRouter([
             path: "regproduct",
             element: <ProductsForm />,
           },
+          // { // 파머 정보 수정
+          //   path: 'modify-farmer',
+          //   element: <
+          // }
         ],
       },
     ],

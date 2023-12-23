@@ -1,54 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import './style/RequestList.css';
 import { Link } from 'react-router-dom';
-import axios from "axios";
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 const RequestList = () => {
-  const [reqList, setReqList] = useState([]);
+  const token = useRecoilValue(tokenAtom); //리코일
   const [test, setTest] = useState({});
   // const [intProduct, setIntProduct] = useState(); // farmer InterestProduct1 값이 기본값으로 저장
   const [interestList, setInterestList] = useState([]);
+  const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
-  const [token, setToken] = useState(null);
-
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
-
+  
+  const effectFunc = async () => {
+    try {
+      const response = await API.get(`/farmer/farmInterest`, token);
+      const data = response.data;
+      console.log(data);
+      setReqList([...data.reqList]);
+      setInterestList([...data.interestList]);
+      setSelInt(...data.interestList[0]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
-    
-    axios.get(`http://localhost:8090/farmer/farmInterest`,
-     {
-      headers: {
-        Authorization: `${farmerToken}`
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        setReqList([...res.data.reqList]);
-        setInterestList([...res.data.interestList]);
-        setSelInt(res.data.interestList[0]);
+    effectFunc();
+    }, []);
 
-      }).catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const changeInterest = (interestOne) => {
-    axios.get(`http://localhost:8090/farmer/requestlist?farmInterest=${interestOne}`, 
-      {
-        headers: {
-          Authorization: `${token}`
-        }
-      })
-      .then((res) => {
-        setReqList([...res.data]);
-        setSelInt(interestOne);
-      }).catch((err) => {
-        console.log(err);
-      });
+  const changeInterest = async (interestOne) => {
+    try {
+      const response = await API.get(`/farmer/requestlist?farmInterest=${interestOne}`, token);
+      const data = response.data;
+      setReqList([...data]);
+      setSelInt(interestOne);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }
   return (
     <div className='container'>
@@ -89,8 +78,8 @@ const RequestList = () => {
           </div>
         </div>
       ) :
-        <div>
-          <p>{selInt}의 요청서가 없습니다.</p>
+        <div >
+          <p className='noneList'>{selInt}의 요청서가 없습니다.</p>
         </div>
       }
     </div >

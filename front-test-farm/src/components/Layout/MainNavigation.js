@@ -116,7 +116,7 @@ const MainNavigation = (props) => {
               </li>
             )}
             {/* token && userInfo && userInfo.farmerId!==null */}
-            {token && (
+            {token && userInfo?.farmerId && (
               <li>
                 <NavLink
                   to="/farmerpage/requestlist"

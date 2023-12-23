@@ -1,60 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import './style/DeliveryList.css';
 import Pagination from './Pagination';
-import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 const DeliveryList = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
+
   const [deliveryList, setDeliveryList] = useState([]);
   const [page, setPage] = useState(0);
-  const [state, setState] = useState("1"); // 0:오류, 1:배송중, 2:배송완료
+  const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
-
+  const testFunction = async() => {
+    try {
+      const response = await API.get(`/farmer/deliverylist/${state}/${page}`, token);
+      const data = response.data;
+      setDeliveryList([...data.deliveryList]);
+      setPage(data.pageInfo);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }     
+  }
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
-    axios.get(`http://localhost:8090/farmer/deliverylist/${state}/${page}`, {
-      headers: {
-        Authorization: `${farmerToken}`
-      },
-    })
-      .then(res => {
-        setDeliveryList([...res.data.deliveryList]);
-        setPage(res.data.pageInfo);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    testFunction()
   }, []);
 
-  const changeState = (select) => {
-    if (state === select) {
-      alert("이미 선택 하셨습니다.");
-    } else {
-      axios.get(`http://localhost:8090/farmer/deliverylist/${select}/${page.curPage}`, {
-        headers: {
-          Authorization: `${token}`
-        },
-      })
-        .then(res => {
-          setDeliveryList([...res.data.deliveryList]);
-          setPage(res.data.pageInfo);
-        })
-        .catch(err => {
-          console.log(err);
-        })
+  const changeState = async (select) => {
+    try {
       setState(select);
+      if (state === select) {
+        alert("이미 선택 하셨습니다.");
+      } else {
+        const response = await API.get(`/farmer/deliverylist/${select}/${page.curPage}`, token);
+        const data = response.data;
+        setDeliveryList([...data.deliveryList]);
+        setPage(data.pageInfo);
+      } 
+    } catch(error) {
+      console.error('Error fetching data:', error);
     }
-  }
+  };
 
   return (
     <div className="delivery-list">
       <div className="delivery-list-btns">
-        <button className="btn1" onClick={() => changeState("1")}>배송중</button>
-        <button className="btn2" onClick={() => changeState("2")}>배송완료</button>
+        <button className="btn1" onClick={() => changeState("SHIPPING")}>배송중</button>
+        <button className="btn2" onClick={() => changeState("COMPLETED")}>배송완료</button>
       </div >
       <div className="quotation-list">
         <table>

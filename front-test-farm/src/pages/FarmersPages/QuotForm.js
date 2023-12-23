@@ -2,16 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import './style/QuotForm.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
-import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 
 const QuotForm = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const request = useParams();
   const navigate = useNavigate();
-  const [formDatas, setformDatas] = useState({
+  const [formData, setformData] = useState({
     'requestId': `${request.requestId}`,
     'product': `${request.requestProduct}`,
-    'quantity': '',
+    'quantity': `${request.requestQuantity}`,
     'price': '',
     'comment': '',
     'picture': '',
@@ -21,21 +24,18 @@ const QuotForm = () => {
   const [files, setFiles] = useState([
     image, image, image, image, image
   ]);
-  
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
-    for (let i = 0; i < filearr.length; i++) {
-      files.splice(i, 1, './upload/' + filearr[i].name)
-      console.log('./upload/' + filearr[i].name);
+    // console.log(filearr);
+    setFiles([...filearr]);
+      // files.splice(i, 1, './upload/' + filearr[i].name)
+      // console.log('./upload/' + filearr[i].name);
       // console.log(filearr[i].name);
     }
-    let id = e.target.id;
-    setFiles([...files]);
-  }
+    // let id = e.target.id;
+    // setFiles([...files]);
+  
 
   const deleteClick = (idx) => {
     files.splice(idx, 1, image)
@@ -49,39 +49,34 @@ const QuotForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setformDatas((prevData) => ({
+    setformData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   }
 
   const SendHandler = async (e) => {
-    e.preventDefault();
-
-    const data = new FormData();
-
-    data.append('requestId', formDatas.requestId);
-    data.append('quotationProduct', formDatas.product);
-    data.append('quotationQuantity', formDatas.quantity);
-    data.append('quotationPrice', formDatas.price);
-    data.append('quotationComment', formDatas.comment);
-    data.append('quotationPicture', null);
-   
-    axios.post('http://localhost:8090/farmer/regquot', data, 
-    {headers: 
-      { 
-        "Content-Type": `application/json`,
-        Authorization: `${getToken()}`
-      }
-    })
-      .then(res => {
-        console.log(res);
-        alert(res.data);
-        navigate('/requestlist');
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    try {
+      e.preventDefault();
+      const formDataObj = new FormData();
+  
+      formDataObj.append('requestId', formData.requestId);
+      formDataObj.append('quotationProduct', formData.product);
+      formDataObj.append('quotationQuantity', formData.quantity);
+      formDataObj.append('quotationPrice', formData.price);
+      formDataObj.append('quotationComment', formData.comment);
+      files.forEach((file, index) => {
+        formDataObj.append(`quotationPicture${index+1}`, file);
+      });
+  
+      const response = await API.formPost(`/farmer/regquot'`, token, formDataObj);
+      const data = response.data;
+          
+      alert(data);
+      navigate('/farmerpage/requestlist');
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   }
 
   return (
@@ -96,7 +91,7 @@ const QuotForm = () => {
             </div>
             <div>
               <label htmlFor='quantity'>수량 혹은 kg</label>
-              <input type='text' name='quantity' onChange={handleInputChange}/>
+              <input type='text' name='quantity' value={request.requestQuantity+"kg"} disabled />
             </div>
             <div>
               <label htmlFor='price'>금액</label>

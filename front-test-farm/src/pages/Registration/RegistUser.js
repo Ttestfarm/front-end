@@ -4,28 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import style from './RegistUser.module.css';
 import useUserInput from './../../hooks/use-userInput';
 import * as API from '../../api/index';
+import * as val from '../../util/validation';
 import axios from 'axios';
 import RegistSection from './../../components/UI/RegistSection';
 import { useSetRecoilState } from 'recoil';
 import { isErrorModalAtom, isSuccessModalAtom } from '../../recoil/Atoms';
-
-// 유효성 검사 함수
-const isNotEmpty = (value) =>
-  /^[가-힝a-zA-Z0-9]{2,}$/.exec(value) && value.length <= 5;
-
-const isEmail = (value) =>
-  value
-    .toLowerCase()
-    .match(
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-    );
-
-const isPassword = (value) =>
-  value.trim().length >= 8 &&
-  /[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.exec(value) &&
-  /[0-9]/.exec(value) &&
-  /[!@#]/.exec(value);
-// 유효성 검사 로직 끝
 
 const RegistUserPage = () => {
   //비밀번호 확인 유효성 검사set
@@ -53,7 +36,8 @@ const RegistUserPage = () => {
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
     reset: resetName,
-  } = useUserInput(isNotEmpty);
+  } = useUserInput(val.isNotEmptyName);
+
   const {
     value: emailValue,
     isValid: emailIsValid,
@@ -61,7 +45,7 @@ const RegistUserPage = () => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmail,
-  } = useUserInput(isEmail);
+  } = useUserInput(val.isEmail);
 
   const {
     value: passwordValue,
@@ -70,40 +54,53 @@ const RegistUserPage = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPassword,
-  } = useUserInput(isPassword);
+  } = useUserInput(val.isPassword);
 
   const {
     value: repasswordValue,
     valueChangeHandler: repasswordChangeHandler,
     inputBlurHandler: repasswordBlurHandler,
     reset: resetRepassword,
-  } = useUserInput(isPassword);
+  } = useUserInput(val.isPassword);
 
   const emailDuplicateCheackHandler = async () => {
     if (emailIsValid) {
-      try {
-        await axios
-          .post(`${API.serverUrl}/join/check-email`, {
-            userEmail: emailValue,
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.status === 409) {
-              //이미 가입된 이메일인 경우
-              console.log(response.data);
-              setIsErrorModal({ state: true, message: response.data });
-            } else if (response.status === 200) {
-              //회원가입 성공
-              setEmailChecked(true);
-              setIsSucessModal({
-                state: true,
-                message: response.data,
-              });
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      // try {
+      //   const response = await axios.post(`${API.serverUrl}/join/check-email`, {
+      //     userEmail: emailValue,
+      //   });
+
+      //   if (response.status !== 200) {
+      //     console.log('4', response.data);
+      //     setIsErrorModal({ state: true, message: response.data });
+      //   } else {
+      //     setEmailChecked(true);
+      //     setIsSucessModal({ state: true, message: response.data });
+      //   }
+
+      await axios
+        .post(`${API.serverUrl}/join/check-email`, {
+          userEmail: emailValue,
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 409) {
+            //이미 가입된 이메일인 경우
+            console.log(response.data);
+            setIsErrorModal({ state: true, message: response.data });
+          } else if (response.status === 200) {
+            //회원가입 성공
+            setEmailChecked(true);
+            setIsSucessModal({
+              state: true,
+              message: response.data,
+            });
+          }
+        })
+        .catch((e) => {// 이 부분 수정 지워야함 
+          console.log(e);
+          setIsErrorModal({ state: true, message: e.response.data });
+        });
     }
   };
 
@@ -111,10 +108,10 @@ const RegistUserPage = () => {
     const inputPassword = e.target.value;
     setRepassword(inputPassword);
     if (passwordValue !== inputPassword) {
-      setCheckPwdMsg('비밀번호가 똑같지 않아요!');
+      setCheckPwdMsg('비밀번호가 일치하지 않습니다.');
       setRepasswordIsValid(false);
     } else {
-      setCheckPwdMsg('똑같은 비밀번호를 입력했습니다.');
+      setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
     }
   };
@@ -143,7 +140,7 @@ const RegistUserPage = () => {
 
       setIsSucessModal({
         state: true,
-        message: '언프리티팜의 회원 가입을 환영합니다!',
+        message: '언프리티팜 회원 가입을 환영합니다!',
       });
 
       navigate('/login');
@@ -177,11 +174,11 @@ const RegistUserPage = () => {
           value={nameValue}
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
-          placeholder={'이름을 입력하세요.(최대 5글자)'}
+          placeholder={'이름을 입력하세요.(2~5글자)'}
         />
         {nameHasError && (
           <p className={style['error-text']}>
-            이름은 최소 2글자 이상 입력하세요 (최대 5글자)
+            이름은 최소 2글자에서 최대 5글자까지 입력하세요
           </p>
         )}
       </div>

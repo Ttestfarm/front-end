@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './style/QuotDetail.css';
 import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
-import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 const QuotDetail = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const quotation = useParams();
-  const [farmerId, SetFarmerId] = useState(1);
   const [files, setFiles] = useState([image, image, image, image, image]);
   const [quot, setQuot] = useState({
     quotationProduct: null,
@@ -16,16 +18,17 @@ const QuotDetail = () => {
     quotationPicture: null
   });
 
-  useEffect(() => {
+  const testFunction = async() => {
     try {
-        axios.get(`http://localhost:8090/farmer/quotdetail/${farmerId}/${quotation.quotationId}`)
-        .then(res => {
-          setQuot(res.data);
-        });
-
-    } catch(err) {
-      console.log(err);
+      const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
+      const data = response.data;
+      setQuot(data)
+    } catch(error) {
+      console.error('Error fetching data:', error);
     }
+  }
+  useEffect(() => {
+    testFunction()
   }, []);
 
   const fileChange = (e) => {
@@ -89,17 +92,6 @@ const QuotDetail = () => {
       </div>
       <div className="quto-detail-form-picture">
         <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
-        <div className="custom-file-input">
-          <label htmlFor="file">사진 첨부</label>
-          <input
-            name="file"
-            type="file"
-            id="file"
-            multiple="multiple"
-            accept="image/*"
-            onChange={fileChange}
-          />
-        </div>
       </div>
       <div className="images">
         {files.map((file, index) => (

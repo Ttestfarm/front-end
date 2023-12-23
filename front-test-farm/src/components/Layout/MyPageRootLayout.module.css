@@ -1,0 +1,13 @@
+.myPageRoot {
+  display: flex;
+}
+
+.myNavigation {
+  width: 235px;
+  background-color: #f0f0f0;
+}
+
+.myContent {
+  flex: 1;
+  padding: 20px;
+}

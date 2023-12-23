@@ -1,6 +1,7 @@
 .quotation-status {
   width: 90%;
   margin: 150px auto;
+  margin-left: 200px;
   padding: 10px;
 
   border-radius: 24px;
@@ -71,11 +72,11 @@ input[type='checkbox'] {
   height: 25px;
 }
 
-a {
+/* a {
   color: #000;
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-}
+} */

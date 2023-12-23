@@ -9,8 +9,10 @@ import * as API from '../../api/index';
 import * as val from '../../util/validation';
 import RegistSection from './../../components/UI/RegistSection';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+
 import {
+  tokenAtom,
   isErrorModalAtom,
   isSuccessModalAtom,
   isPostcodeModalAtom,
@@ -20,6 +22,8 @@ import {
 } from '../../recoil/Atoms';
 
 const ModifyUserPage = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
+
   //비밀번호 확인 유효성 검사set
   const [, setRepassword] = useState('');
   const [repasswordIsValid, setRepasswordIsValid] = useState(false);
@@ -46,9 +50,7 @@ const ModifyUserPage = () => {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   };
 
-  console.log('32', updateData);
   useEffect(() => {
-    console.log('>?', address1);
     if (address1 && address2) {
       setUpdateData({ ...updateData, address1, address2 });
     }
@@ -115,10 +117,10 @@ const ModifyUserPage = () => {
     const inputPassword = e.target.value;
     setRepassword(inputPassword);
     if (passwordValue !== inputPassword) {
-      setCheckPwdMsg('비밀번호가 똑같지 않아요!');
+      setCheckPwdMsg('비밀번호가 일치하지 않습니다.');
       setRepasswordIsValid(false);
     } else {
-      setCheckPwdMsg('똑같은 비밀번호를 입력했습니다.');
+      setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
     }
   };
@@ -131,21 +133,20 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(`/modify-user/sendSMS?userTel=${updateData.userTel}`).then(
-      (response) => {
-        setIsSucessModal({
-          state: true,
-          message: '인증번호를 발송했어요!',
-        });
-        console.log(response.data);
-        setAuthNum(response.data);
-      }
-    );
+    await API.get(`/modify-user/check-sms/${updateData.userTel}`)
+    .then((response) => {
+      setIsSucessModal({
+        state: true,
+        message: '인증번호를 발송했어요!',
+      });
+      console.log(response.data);
+      setAuthNum(response.data);
+    });
   };
 
   //인증번호 확인
   const checkSMSHandler = () => {
-    if (authNum === checkSMS) {
+    if (authNum.toString() === checkSMS.toString()) {
       setIsSucessModal({
         state: true,
         message: '휴대폰 인증이 정상적으로 완료되었습니다.',
@@ -163,22 +164,27 @@ const ModifyUserPage = () => {
   if (passwordIsValid && repasswordIsValid) {
     formIsValid = true;
   }
+
   const RegistHandler = async () => {
     try {
       console.log('보낼데이터', updateData);
-      await axios.put(`${API.serverUrl}/modify-user`, updateData);
+      const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
       // resetPassword();
       // resetRepassword();
       // resetAddressDetail();
       // resetTel();
 
-      setIsSucessModal({
-        state: true,
-        message: '회원정보가 수정되었습니다!',
-      });
-
-      navigate('/');
+      console.log(response.data);
+      //성공했다고 메시지
+      setUserInfo({ ...response.data });
+      if (response.status === 200) {
+        setIsSucessModal({
+          state: true,
+          message: '회원정보가 수정되었습니다!',
+        });
+      }
+      navigate('/mypage/modify-user');
     } catch (error) {
       setIsErrorModal({
         state: true,
@@ -186,6 +192,7 @@ const ModifyUserPage = () => {
       });
     }
   };
+
   // const nameStyles = nameHasError
   //   ? `${style['form-control']} ${style.invalid}`
   //   : style['form-control'];
@@ -320,7 +327,7 @@ const ModifyUserPage = () => {
           value={updateData.userTel}
           onChange={inputHandle}
           //onBlur={telBlurHandler}
-          placeholder={'01056781234 (숫자만 입력하셔도 됩니다.)'}
+          placeholder={'숫자만 입력해 주세요.'}
         />
 
         <div className={style.certify}>

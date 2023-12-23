@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './style/OrderDeatil.css';
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,61 +10,52 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogContent } from '@mui/material';
+import * as API from '../../api/index';
 
 const OrderDetail = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const [ord, setOrd] = useState({});
-  const [farmerId, setFarmerId] = useState(1);
-  const { ordersId, type } = useParams();
+  const { receiptId, type } = useParams();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
 
-  const [token, setToken] = useState(null);
-  const getToken = () => {
-    return localStorage.getItem("token");
-  };
-
+  const testFunction = async() => {
+    try {
+      const response = await API.get(`/farmer/orderdetail/${receiptId}/${type}`, token);
+      const data = response.data;
+      setOrd(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   useEffect(() => {
-    const farmerToken = getToken();
-    setToken(farmerToken);
-    axios.get(`http://localhost:8090/farmer/orderdetail/${ordersId}/${type}`, {
-      headers: {
-        Authorization: `${farmerToken}`
-      },
-    })
-      .then(res => {
-        setOrd(res.data);
-      }).catch((err) => {
-        console.log(err);
-      })
+    testFunction()
   }, []);
 
   const changeCancelText = (e) => {
     setCancelText(e.target.value);
   }
 
-  const sendCancelText = () => {
+  const sendCancelText = async () => {
     // console.log(cancelText);
-    if (cancelText !== null) {
-      axios.post(`http://localhost:8090/farmer/ordercancel`, { "ordersId": ordersId, "cancelText": cancelText },
-        {
-          headers: {
-            "Content-Type": `application/json`,
-            Authorization: `${token}`
-          }
-        })
-        .then(res => {
-          alert(res.data);
-          console.log(res.data);
-          setOpen(false);
-          // 결제 완료 페이지로 이동
-        })
-        .catch(err => {
-          alert(err.data);
-          console.log(err.data);
-        })
-    } else {
-      alert("사유를 적어주세요.")
+    try {
+      if (cancelText !== null) {
+        const response = await API.post(`/farmer/ordercancel`, token, { "receiptId": receiptId, "cancelText": cancelText });
+        const data = response.data; 
+        alert(data);
+        console.log(data);
+        setOpen(false);
+        // 결제 완료 페이지로 이동
+        navigate('/farmerpage/orderList');
+      } else {
+        alert("판매 취소 사유를 적어주세요.")
+      }
+    } catch(error) {
+      alert(error.data);
+      console.error('Error fetching data:', error);
     }
+    
   }
 
   const handleClickOpen = () => {
@@ -77,7 +69,7 @@ const OrderDetail = () => {
   return (
     <div className="compleate-detail-form">
       <div className="compleate-detail-form-header">
-        <h2>주문번호 {ord.ordersId}</h2>
+        <h2>주문번호 {ord.receiptId}</h2>
         <span>
           {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.date}
         </span>

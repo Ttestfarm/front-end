@@ -22,7 +22,6 @@ const Oauth = () => {
         },
       })
       .then((res) => {
-        console.log('res123123', res);
         setUserInfo(res.data);
         navigate('/');
       });

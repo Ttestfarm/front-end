@@ -85,7 +85,7 @@ const LoginPage = () => {
             />
             <span>카카오로 계속하기</span>
           </Link>
-          <Link
+          {/* <Link
             id="naver-login"
             to="http://localhost:8090/oauth2/authorization/naver"
           >
@@ -94,7 +94,7 @@ const LoginPage = () => {
               alt="naver-logo"
             />
             <span>네이버로 계속하기</span>
-          </Link>
+          </Link> */}
         </Form>
 
         <Form

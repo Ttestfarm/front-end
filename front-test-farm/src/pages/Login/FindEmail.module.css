@@ -42,7 +42,6 @@
   margin-bottom: 30px;
 }
 
-
 .input > input {
   height: 56px;
   padding: 0 10px;
@@ -73,6 +72,15 @@
   justify-content: space-between;
   align-items: center;
   width: 370px;
+}
+
+.certify > input {
+  width: 222px;
+}
+
+.certify > input::placeholder {
+  font-size: 13px;
+  color: #acaca9;
 }
 
 .certify-btn {

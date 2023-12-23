@@ -177,6 +177,9 @@ const FindEmailPage = () => {
             인증번호 확인
           </button>
         </div>
+        {telHasError && (
+          <p className={style["error-text"]}>인증번호를 입력해 주세요.</p>
+        )}
 
         <button
           id="find-email"

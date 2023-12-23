@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 //  http://localhost:8090
 const backendPort = "8090";
@@ -8,7 +8,7 @@ const imgUrl =
   "http://" + window.location.hostname + ":" + backendPort + "/uploads/";
 
 async function get(endpoint, authToken) {
-  // console.log('authToken', authToken);
+  console.log("authToken", authToken);
   return axios.get(serverUrl + endpoint, {
     headers: {
       // Authorization: `${localStorage.getItem('token')}`,
@@ -22,27 +22,26 @@ async function post(endpoint, authToken, data) {
 
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `${authToken}`,
     },
     body: JSON.stringify(bodyData),
   });
 }
 
-async function post2(endpoint, data) {
+async function post2(endpoint, authToken, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("token")}`,
+      Authorization: `${authToken}`,
     },
   });
 }
 
-
 async function formPost(endpoint, authToken, data) {
   return axios.post(serverUrl + endpoint, data, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
       Authorization: `${authToken}`,
     },
   });
@@ -53,7 +52,7 @@ async function put(endpoint, authToken, data) {
 
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `${authToken}`,
     },
   });

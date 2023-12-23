@@ -56,6 +56,9 @@
   height: 100%;
   border-right: 1px solid #ccc;
 }
+.infoContent {
+  padding: 0.6rem;
+}
 .ListBox {
   width: 80%;
   display: flex;

@@ -112,15 +112,15 @@ const MatchingListPage = () => {
       </section>
       <section className={style.infoBox}>
         <div>
-          <p>별점 평균</p>
+          <p className={style.infoContent}>별점 평균</p>
           <p>{info.average}</p>
         </div>
         <div>
-          <p>매칭 중</p>
+          <p className={style.infoContent}>매칭 중</p>
           <p>{info.matchingProgress}</p>
         </div>
         <div>
-          <p>매칭 완료</p>
+          <p className={style.infoContent}>매칭 완료</p>
           <p>{info.foundMatching}</p>
         </div>
       </section>

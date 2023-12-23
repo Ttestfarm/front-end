@@ -1,7 +1,4 @@
-.container {
-  margin-left: 250px;
-  margin-right: 15px;
-}
+.container {}
 
 .content-header {
   display: flex;
@@ -137,8 +134,7 @@
 
 /* Dropdown Button */
 .dropbtn {
-  /* width: 100px; */
-  margin: 15px;
+  margin: 15px 15px 0 0;
   padding: 15px;
 
   color: white;

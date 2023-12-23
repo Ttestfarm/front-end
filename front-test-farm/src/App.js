@@ -33,6 +33,7 @@ import OrderDetail from './pages/FarmersPages/OrderDetail';
 import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
 import DeliveryList from './pages/FarmersPages/DeliveryList';
 import Invoice from './pages/FarmersPages/Invoice';
+import ProductsForm from './pages/ProductRegistration/ProductsForm';
 
 const router = createBrowserRouter([
   {
@@ -127,6 +128,10 @@ const router = createBrowserRouter([
             path: 'invoice',
             element: <Invoice />,
           },
+          {
+            path: 'regproduct',
+            element: <ProductsForm />
+          }
         ],
       },
       // {

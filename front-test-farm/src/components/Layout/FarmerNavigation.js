@@ -18,7 +18,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/buylist"
+            to="/farmerpage/regproduct"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             못난이마켓 상품 등록

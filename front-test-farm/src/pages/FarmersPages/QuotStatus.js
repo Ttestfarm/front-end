@@ -88,15 +88,15 @@ const QuotStatus = () => {
         >
           견적서 취소
         </button>
-        <div className="dropdown">
-          <button className="dropbtn">
+        <div className="state-dropdown">
+          <button className="state-dropbtn">
             {state == 'READY'
               ? '대기중'
               : state == 'EXPIRED'
                 ? '요청만료'
                 : '취소'}
           </button>
-          <div className="dropdown-content">
+          <div className="state-dropdown-content">
             <a
               href="#"
               key="0"

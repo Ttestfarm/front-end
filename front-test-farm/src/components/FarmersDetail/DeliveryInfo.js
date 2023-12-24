@@ -25,8 +25,8 @@ const DeliveryInfo = ({
   return (
     <>
       {isOpen && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className={style.modal}>
+          <div className={style.modalcontent}>
             <span className="close" onClick={closeModal}>
               &times;
             </span>
@@ -42,21 +42,27 @@ const DeliveryInfo = ({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
+                    className={style.name}
                   />
                 </div>
               </div>
+
               <div className={style["row"]}>
                 <div className={style["col-25"]}>
                   <label htmlFor="tel">수령인 전화번호</label>
                 </div>
-                <input
-                  type="tel"
-                  id="tel"
-                  value={tel}
-                  onChange={(e) => setTel(e.target.value)}
-                  required
-                />
+                <div className={style["col-75"]}>
+                  <input
+                    type="tel"
+                    id="tel"
+                    value={tel}
+                    onChange={(e) => setTel(e.target.value)}
+                    required
+                    className={style.name}
+                  />
+                </div>
               </div>
+
               <div className={style["row"]}>
                 <div className={style["col-25"]}>
                   <label htmlFor="address">배송지</label>
@@ -64,10 +70,10 @@ const DeliveryInfo = ({
                 <div className={style["col-75"]}>
                   <input
                     id="address"
-                    style={{ height: "100px" }}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
+                    className={style.name}
                   ></input>
                 </div>
               </div>
@@ -79,15 +85,17 @@ const DeliveryInfo = ({
                   <input
                     type="number"
                     id="quantity"
-                    style={{ height: "100px" }}
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     required
+                    className={style.name}
                   ></input>
                 </div>
               </div>
 
-              <button type="submit">결제하기</button>
+              <button type="submit" className={style.submit}>
+                결제하기
+              </button>
             </form>
           </div>
         </div>

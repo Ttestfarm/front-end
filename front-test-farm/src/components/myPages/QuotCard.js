@@ -1,24 +1,20 @@
-import React from 'react';
-import style from './QuotCard.module.css';
-import { Link } from 'react-router-dom';
-import { Avatar, Rating } from '@mui/material';
-import { pink } from '@mui/material/colors';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import React from "react";
+import style from "./QuotCard.module.css";
+import { Avatar, Rating } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import { Form, Navigate, useNavigate, Link } from "react-router-dom";
 
 const QuotCard = ({ quoteItem }) => {
-  //
-
-  // const handlePayment = () => {
-  //   onClickPayment(initIMP, requestPayment, data, callback);
-  // };
+  const navigate = useNavigate();
 
   const avatarStyle = {
     width: 100,
     height: 100,
-    border: 'solid',
+    border: "solid",
   };
   const numericPrice = parseInt(quoteItem.quote.quotationPrice);
-  const formattedPrice = numericPrice.toLocaleString('ko-KR');
+  const formattedPrice = numericPrice.toLocaleString("ko-KR");
 
   return (
     <>
@@ -44,7 +40,7 @@ const QuotCard = ({ quoteItem }) => {
             {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
           <button>
-            <Link to={`/pay/${quoteItem.quotationId}`}>주문하기</Link>
+            <Link to={`${quoteItem.quotationId}`}> 주문하기</Link>
           </button>
         </section>
         <section className={style.right}>

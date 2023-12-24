@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userInfoAtom } from "./../../recoil/Atoms";
 import { importIamport, userCode } from "../../api/iamport";
+import * as API from "../../api/index";
+import { useParams, useNavigate } from "react-router-dom";
 
 const QuotePay = ({ quoteItem }) => {
+  const navigate = useNavigate();
+  const quotationId = useParams.quotationId;
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [paymentInfo, setPaymentInfo] = useState({
     pg: "html5_inicis",
@@ -16,8 +20,33 @@ const QuotePay = ({ quoteItem }) => {
     buyer_tel: userInfo.phone, // 구매자 전화번호
     buyer_email: userInfo.email, // 구매자 이메일
     buyer_addr: userInfo.address, // 구매자 주소
-
-    // 기타 필요한 결제 정보들
   });
+  const [quoteData, setQuoteData] = useState(null);
+  useEffect(() => {
+    const getQuote = async () => {
+      try {
+        const response = await API.get(`/user/request/${quotationId}`);
+        console.log(response.data);
+        setQuoteData({ ...response.data });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getQuote();
+  }, []);
+
+  return (
+    <div>
+      <h2>Quote Detail</h2>
+      {quoteData ? (
+        <div>
+          <p>Quotation ID: {quoteData.quote.id}</p>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
 };
 export default QuotePay;

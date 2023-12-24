@@ -43,47 +43,49 @@ const ProductCard = ({ product }) => {
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   return (
-    <Card width="300px">
-      <div className={style.container}>
-        <div className={style.imageWrapper}>
-          <img
-            src={product.thumbNail}
-            alt="product thumbnail"
+    <div className={style.card}>
+      <Card width="300px">
+        <div className={style.container}>
+          <div className={style.imageWrapper}>
+            <img
+              src={product.thumbNail}
+              alt="product thumbnail"
+            />
+          </div>
+          <h3>🌱{product.productName}</h3>
+          <div className={style.product}>
+            <span>{formattedPrice}원 </span>
+            {'  |  '}
+            <span>{product.productQuantity}</span>
+            {'  |  '}
+            <span className={style.stock}>{product.productStock}개 남음</span>
+          </div>
+          <div className={style.btns}>
+            <button className={style.detailBtn}>상세보기</button>
+            <button
+              className={style.orderBtn}
+              onClick={openModal}
+            >
+              바로 주문
+            </button>
+          </div>
+
+          <DeliveryInfo
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            onSubmit={handleSubmit}
+            name={name}
+            tel={tel}
+            address={address}
+            quantity={quantity}
+            setName={setName}
+            setTel={setTel}
+            setAddress={setAddress}
+            setQuantity={setQuantity}
           />
         </div>
-        <h3>🌱{product.productName}</h3>
-        <div className={style.product}>
-          <span>{formattedPrice}원 </span>
-          {'  |  '}
-          <span>{product.productQuantity}</span>
-          {'  |  '}
-          <span className={style.stock}>{product.productStock}개 남음</span>
-        </div>
-        <div className={style.btns}>
-          <button className={style.detailBtn}>상세보기</button>
-          <button
-            className={style.orderBtn}
-            onClick={openModal}
-          >
-            바로 주문
-          </button>
-        </div>
-
-        <DeliveryInfo
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          onSubmit={handleSubmit}
-          name={name}
-          tel={tel}
-          address={address}
-          quantity={quantity}
-          setName={setName}
-          setTel={setTel}
-          setAddress={setAddress}
-          setQuantity={setQuantity}
-        />
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

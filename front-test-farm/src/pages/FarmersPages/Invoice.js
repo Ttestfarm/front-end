@@ -100,7 +100,7 @@ const Invoice = () => {
           </div>
           <div className="cal-search-state">
             <h3>정산구분</h3>
-            <select name="state" onChange={handelState}>
+            <select className="select" name="state" onChange={handelState}>
               <option value="선택" selected>선택</option>
               <option value="미정산">미정산</option>
               <option value="정산완료">정산완료</option>

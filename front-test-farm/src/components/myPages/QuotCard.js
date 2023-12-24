@@ -1,9 +1,9 @@
-import React from "react";
-import style from "./QuotCard.module.css";
-import { Avatar, Rating } from "@mui/material";
-import { pink } from "@mui/material/colors";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import { Form, Navigate, useNavigate, Link } from "react-router-dom";
+import React from 'react';
+import style from './QuotCard.module.css';
+import { Avatar, Rating } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { Form, Navigate, useNavigate, Link } from 'react-router-dom';
 
 const QuotCard = ({ quoteItem }) => {
   const navigate = useNavigate();
@@ -11,11 +11,13 @@ const QuotCard = ({ quoteItem }) => {
   const avatarStyle = {
     width: 100,
     height: 100,
-    border: "solid",
+    border: 'solid',
   };
   const numericPrice = parseInt(quoteItem.quote.quotationPrice);
-  const formattedPrice = numericPrice.toLocaleString("ko-KR");
+  const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
+  console.log(quoteItem);
+  console.log('아이디', quoteItem.quote.quotationId);
   return (
     <>
       <div className={style.container}>

@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       { path: 'find-email', element: <FindEmailPage /> },
       { path: 'find-pw', element: <FindPwPage /> },
       { path: 'pay', element: <Pay /> },
-      { path: 'quotepay', element: <QuotePay /> },
+
       {
         path: 'matching',
         // element: <MatchingPage />,
@@ -87,6 +87,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
+          { path: 'quotepay', element: <QuotePay /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
           {

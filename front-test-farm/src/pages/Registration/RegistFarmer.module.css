@@ -54,7 +54,7 @@
   color: #191919;
 }
 
-#bank-select select option[disabled] {
+.form-control option[disabled] {
   color: #acaca9;
 }
 

@@ -22,8 +22,6 @@ import {
 
 import { bankOption } from '../../util/payment';
 
-//계좌번호 셀렉트박스 디자인 수정해야합니다!!
-
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const token = useRecoilValue(tokenAtom);
@@ -161,7 +159,6 @@ const RegistFarmerPage = ({ page }) => {
   const {
     value: farmInterestValue,
     isValid: farmInterestIsValid,
-
     valueChangeHandler: farmInterestChangeHandler,
     inputBlurHandler: farmInterestBlurHandler,
     reset: resetfarmInterest,
@@ -260,19 +257,11 @@ const RegistFarmerPage = ({ page }) => {
         );
 
         console.log('response', response);
-        //기본전화번호 체크시 userInfo 에 업데이트
-        if (response.data) {
-          setUserInfo((prevUserInfo) => ({
-            ...prevUserInfo,
-            userTel: farmTelValue,
-          }));
-          // setUserInfo({ userTel: farmTelValue });
-        }
-        // setIsSucessModal({
-        //   state: true,
-        //   message: '파머 등록 성공!',
-        // });
-        // navigate('/farmers');
+        setIsSucessModal({
+          state: true,
+          message: '파머 등록 성공!',
+        });
+        //navigate('/farmers');
       } else {
         await API.put(
           `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
@@ -286,10 +275,10 @@ const RegistFarmerPage = ({ page }) => {
       }
     } catch (error) {
       console.log(error);
-      // setIsErrorModal({
-      //   state: true,
-      //   message: error.response,
-      // });
+      setIsErrorModal({
+        state: true,
+        message: error.response,
+      });
     }
   };
 

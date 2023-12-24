@@ -19,7 +19,7 @@ const Invoice = () => {
 
   const [sDate, setSDate] = useState(null);
   const [eDate, setEDate] = useState(dateString);
-  
+
   const [state, setState] = useState("선택");
 
   // const searchInvoice = () => {
@@ -34,14 +34,14 @@ const Invoice = () => {
   const handelSDate = (e) => {
     setSDate(e.target.value);
   }
-  
+
   const handelEDate = (e) => {
     setEDate(e.target.value);
   }
 
   const handelState = (e) => {
     let tempState = e.target.value; // 상태 임시 저장 변수
-    if(tempState === "선택") {
+    if (tempState === "선택") {
       alert("정산 구분을 선택해주세요.");
     } else {
       setState(e.target.value);
@@ -50,22 +50,22 @@ const Invoice = () => {
 
   const search = async () => {
     try {
-      if(sDate === null) {
+      if (sDate === null) {
         return alert("기간을 선택해주세요.");
       }
-      if(state === "선택") {
+      if (state === "선택") {
         return alert("정산 구분을 선택해주세요.");
       }
-  
+
       const date = sDate + "~" + eDate; // 기간 임시 저장
       setDate(date); // 기간 저장
-  
+
       const response = await API.get(`/farmer/invoice/${date}/${page}`, token);
       const data = response.data;
       console.log(data);
       setPage(data.pageInfo);
       setCalList(data.calList);
-    } catch(error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   }

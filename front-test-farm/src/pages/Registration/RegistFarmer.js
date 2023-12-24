@@ -440,15 +440,14 @@ const RegistFarmerPage = ({ page }) => {
           <select
             id="bank-select"
             name="farmBank"
-            className={style.bankSelect}
             onChange={selectHandler}
             value={selected}
           >
+            <option value="" disabled>
+              은행 선택
+            </option>
             {bankOption.map((item) => (
-              <option
-                value={item}
-                key={item}
-              >
+              <option value={item} key={item}>
                 {item}
               </option>
             ))}

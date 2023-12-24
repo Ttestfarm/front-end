@@ -1,6 +1,7 @@
 .form-control {
   margin-bottom: 1.5rem;
 }
+
 .form-control label {
   color: #b40e0e;
   display: flex;
@@ -16,7 +17,7 @@
   margin-bottom: 0.15rem;
 }
 
-.form-control input, .form-control select {
+.form-control input {
   padding: 0 10px;
   font-size: 1rem;
   width: 370px;
@@ -26,13 +27,37 @@
   background-color: transparent;
   color: #191919;
   outline: none;
-  margin-bottom: 5px;
+  margin-bottom: 5px; 
+}
+
+.form-control select {
+  padding: 0 10px;
+  font-size: 13px;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #acaca9;
+  background-color: transparent;
+  color: #acaca9;
+  outline: none;
+  margin-bottom: 5px; 
 }
 
 .form-control > input::placeholder {
   font-size: 13px;
   color: #acaca9;
 }
+
+.form-control option {
+  font-size: 1rem;
+  background-color: #fefcf4;
+  color: #191919;
+}
+
+#bank-select select option[disabled] {
+  color: #acaca9;
+}
+
 .certify {
   display: flex;
   justify-content: space-between;
@@ -139,16 +164,3 @@
   align-items: flex-start;
   font-size: 13px;
 }
-
-/* .bankSelect {
-  padding: 0 10px;
-  font-size: 1rem;
-  width: 370px;
-  height: 35px;
-  border-radius: 10px;
-  border: 1px solid #ACACA9;
-  background-color: transparent;
-  color: #191919;
-  outline: none;
-  margin-bottom: 5px;
-} */

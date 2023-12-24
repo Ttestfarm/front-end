@@ -7,7 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import { useRecoilValue } from 'recoil';
-import { tokenAtom } from './../../recoil/Atoms';
+import { tokenAtom } from '../../recoil/Atoms';
 
 const BuyListPage = () => {
   const token = useRecoilValue(tokenAtom);

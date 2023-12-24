@@ -1,9 +1,11 @@
 .cal-form {
   width: 90%;
   margin: 0 auto;
+  margin-left: 200px;
 }
 
-.cal-search {}
+.cal-search {
+}
 
 .cal-search-date {
   display: flex;
@@ -41,7 +43,7 @@ select {
   border: 1px solid #c9c9c9;
   font-family: inherit;
   border-radius: 0px;
-  background: url('../arrow.jpg') no-repeat 95% 50%;
+  background: url('../arrow.jpg') no-repeat 98% 50%;
   background-color: #fff;
   -webkit-appearance: none;
   -moz-appearance: none;

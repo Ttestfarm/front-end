@@ -126,7 +126,7 @@ label {
   margin-bottom: 25px;
 }
 
-select {
+/* select {
   padding: 0 20px;
   font-size: 1rem;
   width: 370px;
@@ -137,7 +137,7 @@ select {
   color: #191919;
   outline: none;
   margin-bottom: 5px;
-}
+} */
 
 .farm-interest {
   display: flex;

@@ -329,7 +329,7 @@ const RegistFarmerPage = ({ page }) => {
           />
           {farmNameHasError && (
             <p className={style['error-text']}>
-              이름은 최소 2글자 이상 입력하세요 (최대 9글자)
+              이름은 2자 ~ 9자까지 입력가능합니다.
             </p>
           )}
         </div>
@@ -363,7 +363,7 @@ const RegistFarmerPage = ({ page }) => {
             value={myFarmTel ? userTel : farmTelValue}
             onChange={farmTelChangeHandler}
             onBlur={farmTelBlurHandler}
-            placeholder={'01056781234 (숫자만 입력해주세요.)'}
+            placeholder={'숫자만 입력해 주세요.'}
           />
           {farmTelHasError && (
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
@@ -430,6 +430,7 @@ const RegistFarmerPage = ({ page }) => {
           <select
             id="bank-select"
             name="farmBank"
+            className={style.bankSelect}
             onChange={selectHandler}
             value={selected}
           >
@@ -452,7 +453,7 @@ const RegistFarmerPage = ({ page }) => {
           />
           {farmAccountNumHasError && (
             <p className={style['error-text']}>
-              정산을 위해 계좌입력은 필수사항입니다.
+              정산을 위해 계좌번호를 입력해주세요.
             </p>
           )}
         </div>

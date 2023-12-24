@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-input[type="text"],
+/* input[type="text"],
 select,
 textarea {
   width: 100%;
@@ -14,7 +14,7 @@ textarea {
 
 input[type="text"] {
   height: 10%;
-}
+} */
 textarea {
   height: 70px;
 }

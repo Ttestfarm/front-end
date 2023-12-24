@@ -16,7 +16,7 @@
   margin-bottom: 0.15rem;
 }
 
-.form-control input {
+.form-control input, .form-control select {
   padding: 0 10px;
   font-size: 1rem;
   width: 370px;
@@ -78,6 +78,7 @@
   margin: 0;
   font-size: 14px;
 }
+
 .address-default > input {
   width: 16px;
   height: 16px;
@@ -86,6 +87,7 @@
   background-color: transparent;
   border-radius: 3px;
 }
+
 .join-btn {
   width: 370px;
   height: 56px;
@@ -137,3 +139,16 @@
   align-items: flex-start;
   font-size: 13px;
 }
+
+/* .bankSelect {
+  padding: 0 10px;
+  font-size: 1rem;
+  width: 370px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  background-color: transparent;
+  color: #191919;
+  outline: none;
+  margin-bottom: 5px;
+} */

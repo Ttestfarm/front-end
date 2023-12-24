@@ -22,8 +22,6 @@ import {
 
 import { bankOption } from '../../util/payment';
 
-//계좌번호 셀렉트박스 디자인 수정해야합니다!!
-
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const token = useRecoilValue(tokenAtom);
@@ -161,7 +159,6 @@ const RegistFarmerPage = ({ page }) => {
   const {
     value: farmInterestValue,
     isValid: farmInterestIsValid,
-
     valueChangeHandler: farmInterestChangeHandler,
     inputBlurHandler: farmInterestBlurHandler,
     reset: resetfarmInterest,
@@ -260,19 +257,11 @@ const RegistFarmerPage = ({ page }) => {
         );
 
         console.log('response', response);
-        //기본전화번호 체크시 userInfo 에 업데이트
-        if (response.data) {
-          setUserInfo((prevUserInfo) => ({
-            ...prevUserInfo,
-            userTel: farmTelValue,
-          }));
-          // setUserInfo({ userTel: farmTelValue });
-        }
-        // setIsSucessModal({
-        //   state: true,
-        //   message: '파머 등록 성공!',
-        // });
-        // navigate('/farmers');
+        setIsSucessModal({
+          state: true,
+          message: '파머 등록 성공!',
+        });
+        //navigate('/farmers');
       } else {
         await API.put(
           `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
@@ -286,10 +275,10 @@ const RegistFarmerPage = ({ page }) => {
       }
     } catch (error) {
       console.log(error);
-      // setIsErrorModal({
-      //   state: true,
-      //   message: error.response,
-      // });
+      setIsErrorModal({
+        state: true,
+        message: error.response,
+      });
     }
   };
 
@@ -335,7 +324,7 @@ const RegistFarmerPage = ({ page }) => {
           />
           {farmNameHasError && (
             <p className={style['error-text']}>
-              이름은 최소 2글자 이상 입력하세요 (최대 9글자)
+              이름은 2자 ~ 9자까지 입력가능합니다.
             </p>
           )}
         </div>
@@ -369,7 +358,7 @@ const RegistFarmerPage = ({ page }) => {
             value={myFarmTel ? userTel : farmTelValue}
             onChange={farmTelChangeHandler}
             onBlur={farmTelBlurHandler}
-            placeholder={'01056781234 (숫자만 입력해주세요.)'}
+            placeholder={'숫자만 입력해 주세요.'}
           />
           {farmTelHasError && (
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
@@ -442,11 +431,11 @@ const RegistFarmerPage = ({ page }) => {
             onChange={selectHandler}
             value={selected}
           >
+            <option value="" disabled>
+              은행 선택
+            </option>
             {bankOption.map((item) => (
-              <option
-                value={item}
-                key={item}
-              >
+              <option value={item} key={item}>
                 {item}
               </option>
             ))}
@@ -461,7 +450,7 @@ const RegistFarmerPage = ({ page }) => {
           />
           {farmAccountNumHasError && (
             <p className={style['error-text']}>
-              정산을 위해 계좌입력은 필수사항입니다.
+              정산을 위해 계좌번호를 입력해주세요.
             </p>
           )}
         </div>

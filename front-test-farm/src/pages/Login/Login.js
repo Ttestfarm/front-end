@@ -51,7 +51,7 @@ const LoginPage = () => {
       const token = response.headers['authorization'];
 
       const res = await API.get('/user/userInfo', token);
-      console.log('here', res.data);
+      //console.log('here', res.data);
       setUserInfo(res.data);
 
       setTokenDuration();

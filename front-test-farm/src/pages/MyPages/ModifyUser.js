@@ -168,7 +168,6 @@ const ModifyUserPage = () => {
 
   const RegistHandler = async () => {
     try {
-      console.log('보낼데이터', updateData);
       const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
       // resetPassword();

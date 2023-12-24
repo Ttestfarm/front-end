@@ -7,8 +7,8 @@ import BuyReviewCard from './BuyReviewCard';
 const BuyCard = ({ buyItem }) => {
   const reviewHandler = () => {
     //모달 화면 오픈
-    
   };
+  console.log('buyItem', buyItem);
   return (
     <Card>
       <div className={style.img}>

@@ -11,7 +11,7 @@ import Card from '../../components/UI/Card';
 const QuotePayPage = () => {
   const token = useRecoilValue(tokenAtom);
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const quotationId = useParams().quotationId;
   //const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -176,7 +176,12 @@ const QuotePayPage = () => {
               <span>못난이 농산물을 아껴주셔서 대단히 감사합니다.</span>
             </div>
             <div className={style.btns}>
-              <button className={style.cancel}>취소</button>
+              <button
+                className={style.cancel}
+                onClick={() => navigate(-1)}
+              >
+                취소
+              </button>
               <button
                 className={style.pay}
                 onClick={requestPay}

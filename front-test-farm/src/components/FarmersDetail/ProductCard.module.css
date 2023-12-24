@@ -1,15 +1,17 @@
 .container {
-  width: 400px;
-  height: 400px;
-  border-radius: 10px;
-  border: 5px solid #75786c;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 2rem auto;
 }
-
 .imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-self: center;
   width: 150px;
   height: 150px;
   overflow: hidden;
-  border-bottom: 0.6px solid #75786c;
+  border: 0.6px solid #75786c;
 }
 
 .imageWrapper img {
@@ -18,10 +20,45 @@
   object-fit: cover;
 }
 .container h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: bolder;
+  margin-bottom: 0;
+}
+.product {
+  margin: 1rem;
+  font-weight: 600;
 }
 .stock {
   font-weight: 700;
   color: #ffb000;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.btns button {
+  border: none;
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.btns button:hover {
+  transform: scale(1.1);
+}
+
+.detailBtn {
+  background-color: #e2e4d4;
+  color: var(--color-button2);
+}
+.orderBtn {
+  background-color: var(--color-button2);
+  color: #e2e4d4;
+}
+.btns a {
+  color: #fff;
 }

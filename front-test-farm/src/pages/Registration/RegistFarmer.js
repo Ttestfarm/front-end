@@ -9,23 +9,24 @@ import * as API from '../../api/index';
 import Postcode from '../../api/PostCode';
 import { Form, Navigate, useNavigate } from 'react-router-dom';
 import HandleRegistrationNumCheck from '../../api/registrationNumCheck';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import * as val from '../../util/validation';
 import {
   isSuccessModalAtom,
   isErrorModalAtom,
   isPostcodeModalAtom,
   postcodeAddressAtom,
+  userInfoAtom,
+  tokenAtom,
 } from '../../recoil/Atoms';
 
 import { bankOption } from '../../util/payment';
-import { userInfoAtom } from './../../recoil/Atoms';
 
 //계좌번호 셀렉트박스 디자인 수정해야합니다!!
 
 const RegistFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-
+  const token = useRecoilValue(tokenAtom);
   const [farmerInfo, setFarmerInfo] = useState({});
   const [file, setFile] = useState('');
   const [myFarmTel, setMyFarmTel] = useState(false);
@@ -71,7 +72,7 @@ const RegistFarmerPage = ({ page }) => {
 
   useEffect(() => {
     if (page === 'reg-farmer' && userInfo && userInfo.farmerId !== null) {
-      navigate('/farmers');
+      navigate('/farmerpage/requestlist');
     }
   }, [userInfo.farmerId]);
 
@@ -253,13 +254,20 @@ const RegistFarmerPage = ({ page }) => {
         for (const [key, value] of formData.entries()) {
           console.log(`${key}: ${value}`);
         }
-        const response = await API.formPost('/findfarmer/reg-farmer', formData);
+        const response = await API.formPost(
+          '/findfarmer/reg-farmer',
+          token,
+          formData
+        );
 
         console.log('response', response);
         //기본전화번호 체크시 userInfo 에 업데이트
         if (response.data) {
-          setUserInfo(prevUserInfo => ({ ...prevUserInfo, userTel: farmTelValue }));
-         // setUserInfo({ userTel: farmTelValue });
+          setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            userTel: farmTelValue,
+          }));
+          // setUserInfo({ userTel: farmTelValue });
         }
         // setIsSucessModal({
         //   state: true,
@@ -368,7 +376,10 @@ const RegistFarmerPage = ({ page }) => {
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
 
-          <Checkbox checked={myFarmTel} onChange={setMyFarmTel}>
+          <Checkbox
+            checked={myFarmTel}
+            onChange={setMyFarmTel}
+          >
             <span>내 핸드폰 번호 사용하기</span>
           </Checkbox>
         </div>
@@ -468,7 +479,9 @@ const RegistFarmerPage = ({ page }) => {
           />
 
           <div className={style.notice}>
-            <span>- 관심 품목으로 설정하면 해당 품목 매칭 요청서에 견적을 보낼</span>
+            <span>
+              - 관심 품목으로 설정하면 해당 품목 매칭 요청서에 견적을 보낼
+            </span>
             <span>&nbsp;&nbsp; 수 있습니다.</span>
             <span>- 판매 가능하신 품목 위주로 설정해주세요.</span>
             <span>- #품목 키워드 형식으로 작성해주세요.</span>

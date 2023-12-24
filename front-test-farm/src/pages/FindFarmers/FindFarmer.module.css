@@ -11,12 +11,23 @@
   padding: 3rem 0;
   margin: auto;
 }
+.wrapper button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.wrapper button:hover {
+  transform: scale(1.02);
+}
 .sorts button {
   background: none;
-  cursor: pointer;
+
   border: none;
   font-size: 1.1rem;
   font-weight: bold;
+  transition: all 0.3s ease;
+}
+.sorts button:hover {
+  transform: scale(1.02);
 }
 .search {
   display: flex;
@@ -24,16 +35,45 @@
 .search input {
   display: flex;
   justify-content: center;
-  width: 14rem;
+  width: 12rem;
   height: 2rem;
   border-radius: 5px;
   border: 0.5px solid #7d7b7b;
   background: #e2e4d4;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   font-size: 1rem;
+  margin-right: 1rem;
 }
 
-.search button,
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  height: 2rem;
+  width: 5rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-weight: 600;
+}
+.searchButton {
+  background-color: var(--color-button2);
+  color: #e2e4d4;
+}
+.resetButton {
+  background-color: #e2e4d4;
+  color: var(--color-button2);
+  border: 0.1px solid var(--color-button2);
+}
+.button1 {
+  background-color: #e2e4d4;
+}
+
+.regBtn a {
+  color: #e2e4d4;
+  font-weight: 600;
+}
 .regBtn {
   display: flex;
   justify-content: center;
@@ -42,19 +82,9 @@
   height: 2rem;
   width: 6rem;
   border-radius: 10px;
-  background: #e2e4d4;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: none;
   background-color: var(--color-button2);
-  color: #e2e4d4;
-  font-weight: 600;
-  margin: 0 1rem;
-}
-.button {
-  background: #e2e4d4;
-}
-.button a {
-  color: #e2e4d4;
 }
 
 .farmercardlist {
@@ -63,4 +93,9 @@
   flex-wrap: wrap;
   width: 80%;
   margin: 0 auto;
+}
+.upIcon {
+  display: flex;
+  justify-content: end;
+  padding: 3rem;
 }

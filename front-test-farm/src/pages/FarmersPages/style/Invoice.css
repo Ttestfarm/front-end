@@ -1,11 +1,9 @@
 .cal-form {
   width: 90%;
   margin: 0 auto;
-  margin-top: 150px;
 }
 
-.cal-search {
-}
+.cal-search {}
 
 .cal-search-date {
   display: flex;

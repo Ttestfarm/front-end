@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import style from "./ProductsList.module.css";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import { useState, useEffect } from 'react';
+import style from './ProductsList.module.css';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
-import ProductCard from "../../components/FarmersDetail/ProductCard";
-import * as API from "../../api/index";
+import ProductCard from '../../components/FarmersDetail/ProductCard';
+import * as API from '../../api/index';
 
 const ProductsList = ({ farmerId }) => {
   const [productList, setProductList] = useState([]);
@@ -29,22 +29,29 @@ const ProductsList = ({ farmerId }) => {
 
   return (
     <>
-      <main className={style.productList}>
-        {productList.length > 0
-          ? productList.map((product) => (
-              <ProductCard key={product.productId} product={product} />
-            ))
-          : "현재 판매중인 상품이 없습니다."}
-        <Stack spacing={2}>
-          <Pagination
-            className={style.pagination}
-            // count={productList?.pageInfo.allPage}
-            page={page}
-            onChange={onChangePage}
-            size="small"
-          />
-        </Stack>
+      <main className={style.list}>
+        <div className={style.productList}>
+          {productList.length > 0
+            ? productList.map((product) => (
+                <ProductCard
+                  key={product.productId}
+                  product={product}
+                />
+              ))
+            : '현재 판매중인 상품이 없습니다.'}
+        </div>
+        <div className={style.pagination}>
+          <Stack spacing={2}>
+            <Pagination
+              // count={productList?.pageInfo.allPage}
+              page={page}
+              onChange={onChangePage}
+              size="small"
+            />
+          </Stack>
+        </div>
       </main>
+      <hr />
     </>
   );
 };

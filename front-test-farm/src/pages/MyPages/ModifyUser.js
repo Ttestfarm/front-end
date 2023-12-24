@@ -63,14 +63,14 @@ const ModifyUserPage = () => {
     };
   }, [setAddress1, setAddress2]);
 
-  // const {
-  //   value: userName,
-  //   isValid: nameIsValid,
-  //   hasError: nameHasError,
-  //   valueChangeHandler: nameChangeHandler,
-  //   inputBlurHandler: nameBlurHandler,
-  //   reset: resetName,
-  // } = useUserInput(val.isNotEmptyName);
+  const {
+    value: userName,
+    isValid: nameIsValid,
+    hasError: nameHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: resetName,
+  } = useUserInput(val.isNotEmptyName);
 
   // // const {
   // //   value: emailValue,
@@ -96,13 +96,13 @@ const ModifyUserPage = () => {
     reset: resetRepassword,
   } = useUserInput(val.isPassword);
 
-  // const {
-  //   isValid: address3,
-  //   hasError: addressHasError,
-  //   valueChangeHandler: addressDetailChangeHandler,
-  //   inputBlurHandler: addressDetailBlurHandler,
-  //   reset: resetAddressDetail,
-  // } = useUserInput(val.isNotEmptyValue);
+  const {
+    isValid: address3,
+    hasError: addressHasError,
+    valueChangeHandler: addressDetailChangeHandler,
+    inputBlurHandler: addressDetailBlurHandler,
+    reset: resetAddressDetail,
+  } = useUserInput(val.isNotEmptyValue);
 
   const {
     value: userTel,
@@ -133,15 +133,16 @@ const ModifyUserPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    await API.get(`/modify-user/check-sms/${updateData.userTel}`)
-    .then((response) => {
-      setIsSucessModal({
-        state: true,
-        message: '인증번호를 발송했어요!',
-      });
-      console.log(response.data);
-      setAuthNum(response.data);
-    });
+    await API.get(`/modify-user/check-sms/${updateData.userTel}`).then(
+      (response) => {
+        setIsSucessModal({
+          state: true,
+          message: '인증번호를 발송했어요!',
+        });
+        console.log(response.data);
+        setAuthNum(response.data);
+      }
+    );
   };
 
   //인증번호 확인
@@ -193,24 +194,27 @@ const ModifyUserPage = () => {
     }
   };
 
-  // const nameStyles = nameHasError
-  //   ? `${style['form-control']} ${style.invalid}`
-  //   : style['form-control'];
+  const nameStyles = nameHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
   const passwordStyles = passwordHasError
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
-  // const addressStyles = addressHasError
-  //   ? `${style['form-control']} ${style.invalid}`
-  //   : style['form-control'];
+  const addressStyles = addressHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
-  // const telStyles = telHasError
-  //   ? `${style['form-control']} ${style.invalid}`
-  //   : style['form-control'];
+  const telStyles = telHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
   return (
-    <RegistSection title={'내 정보 관리'}>
+    <RegistSection
+      title={'내 정보 관리'}
+      style={{ padding: 0 }}
+    >
       <div className={style['form-control']}>
         <label htmlFor="name">이름</label>
         <input
@@ -218,7 +222,7 @@ const ModifyUserPage = () => {
           name="userName"
           value={updateData.userName}
           onChange={inputHandle}
-          //onBlur={nameBlurHandler}
+          onBlur={nameBlurHandler}
           placeholder={'이름을 입력하세요.(최대 5글자)'}
         />
         {/* {nameHasError && (
@@ -228,16 +232,14 @@ const ModifyUserPage = () => {
         )} */}
       </div>
 
-      <div>
-        <div className={style['form-control']}>
-          <label htmlFor="email">이메일</label>
-          <input
-            type="text"
-            name="userEmail"
-            value={updateData.userEmail}
-            disabled
-          />
-        </div>
+      <div className={style['form-control']}>
+        <label htmlFor="email">이메일</label>
+        <input
+          type="text"
+          name="userEmail"
+          value={updateData.userEmail}
+          disabled
+        />
       </div>
 
       <div className={passwordStyles}>
@@ -247,12 +249,14 @@ const ModifyUserPage = () => {
           id="password"
           value={passwordValue}
           onChange={passwordChangeHandler}
-          //onBlur={passwordBlurHandler}
-          placeholder={'문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)'}
+          onBlur={passwordBlurHandler}
+          placeholder={
+            '영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)'
+          }
         />
         {passwordHasError && (
           <p className={style['error-text']}>
-            문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)
+            영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)
           </p>
         )}
         <input
@@ -264,22 +268,22 @@ const ModifyUserPage = () => {
             repasswordChangeHandler(e);
             pwCheckHandler(e);
           }}
-          //onBlur={repasswordBlurHandler}
+          onBlur={repasswordBlurHandler}
           placeholder={'비밀번호를 한 번 더 입력해 주세요.'}
         />
         <p className={style['error-text']}>{checkPwdMsg}</p>
       </div>
 
       <div className={style['form-control']}>
+        <label htmlFor="farmAddress">주소</label>
         <div className={style.certify}>
-          <label htmlFor="farmAddress">주소</label>
           <input
             type="text"
-            disabled
             name="address1"
             value={updateData.address1}
-            className={style.zipcode}
+            // className={style.zipcode}
             placeholder={'우편번호'}
+            disabled
           />
           <button
             className={style['certify-btn']}
@@ -326,7 +330,7 @@ const ModifyUserPage = () => {
           name="userTel"
           value={updateData.userTel}
           onChange={inputHandle}
-          //onBlur={telBlurHandler}
+          onBlur={telBlurHandler}
           placeholder={'숫자만 입력해 주세요.'}
         />
 
@@ -346,9 +350,9 @@ const ModifyUserPage = () => {
             인증번호 확인
           </button>
         </div>
-        {/* {telHasError && (
-          <p className={style['error-text']}>phone 인증번호를 입력하세요.</p>
-        )} */}
+        {telHasError && (
+          <p className={style['error-text']}>인증번호를 입력해 주세요.</p>
+        )}
         <button
           id="join"
           className={style['join-btn']}

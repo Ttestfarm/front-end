@@ -21,7 +21,7 @@
   font-size: 1rem;
   width: 370px;
   height: 35px;
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid #acaca9;
   background-color: transparent;
   color: #191919;
@@ -33,11 +33,21 @@
   font-size: 13px;
   color: #acaca9;
 }
+
 .certify {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 370px;
+}
+
+.certify > input {
+  width: 222px;
+}
+
+.certify > input::placeholder {
+  font-size: 13px;
+  color: #acaca9;
 }
 
 .certify-btn {
@@ -53,7 +63,7 @@
   margin-bottom: 5px;
 }
 
-.address-code {
+/* .address-code {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,10 +71,10 @@
 }
 
 .address-code > input {
-  width: 222px;
-}
+  width: 200px;
+} */
 
-.address-default {
+/* .address-default {
   display: flex;
   align-items: flex-start;
   font-size: 1rem;
@@ -77,15 +87,17 @@
   display: block;
   margin: 0;
   font-size: 14px;
-}
-.address-default > input {
+} */
+
+/* .address-default > input {
   width: 16px;
   height: 16px;
   margin-right: 5px;
   border: 1px solid #acaca9;
   background-color: transparent;
   border-radius: 3px;
-}
+} */
+
 .join-btn {
   width: 370px;
   height: 56px;
@@ -138,6 +150,6 @@
   font-size: 13px;
 }
 
-.zipcode {
-  width: 222px;
-}
+/* .zipcode {
+  width: 200px;
+} */

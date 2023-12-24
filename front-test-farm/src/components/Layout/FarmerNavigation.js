@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import style from './FarmerNavigation.module.css';
+import style from './Navigation.module.css';
 
 //로그인을 한 유저만 마이페이지가 보임
 const FarmerNavigation = () => {
@@ -58,7 +58,7 @@ const FarmerNavigation = () => {
         </li>
         <li>
           <NavLink
-            to="/farmerpage/modify-user"
+            to="/farmerpage/modify-farmer"
             className={({ isActive }) => (isActive ? style.active : undefined)}
           >
             팜 정보 관리

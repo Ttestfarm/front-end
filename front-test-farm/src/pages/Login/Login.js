@@ -23,13 +23,6 @@ const LoginPage = () => {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     console.log(userInfo);
-  //     console.log(tokenAtom);
-  //   }
-  // }, [userInfo]);
-
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -56,7 +49,10 @@ const LoginPage = () => {
       console.log('reponse', response);
 
       const token = response.headers['authorization'];
-      console.log(token);
+
+      const res = await API.get('/user/userInfo', token);
+      console.log('here', res.data);
+      setUserInfo(res.data);
 
       setTokenDuration();
       setToken(token);
@@ -89,7 +85,7 @@ const LoginPage = () => {
             />
             <span>카카오로 계속하기</span>
           </Link>
-          <Link
+          {/* <Link
             id="naver-login"
             to="http://localhost:8090/oauth2/authorization/naver"
           >
@@ -98,7 +94,7 @@ const LoginPage = () => {
               alt="naver-logo"
             />
             <span>네이버로 계속하기</span>
-          </Link>
+          </Link> */}
         </Form>
 
         <Form

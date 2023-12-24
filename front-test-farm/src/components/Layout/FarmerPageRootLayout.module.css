@@ -1,12 +1,12 @@
-.myPageRoot {
+.fRoot {
   display: flex;
 }
 
-.myNavigation {
+.fNavigation {
   width: 238px;
 }
 
-.myContent {
+.fContent {
   flex: 1;
   padding: 20px;
 }

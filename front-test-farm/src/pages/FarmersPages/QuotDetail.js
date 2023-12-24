@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './style/QuotDetail.css';
 import { Link, useParams } from 'react-router-dom';
 import image from '../../assets/blankimage.png';
-import axios from 'axios';
+import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { useRecoilValue } from 'recoil'; // 리코일
+import * as API from '../../api/index';
 
 const QuotDetail = () => {
+  const token = useRecoilValue(tokenAtom); //리코일
   const quotation = useParams();
   const [files, setFiles] = useState([image, image, image, image, image]);
   const [quot, setQuot] = useState({
@@ -15,24 +18,17 @@ const QuotDetail = () => {
     quotationPicture: null
   });
 
-  const getToken = () => {
-    return localStorage.getItem("token"); // 여기서 'your_token_key'는 실제로 사용하는 토큰의 키여야 합니다.
-  };
-
+  const testFunction = async() => {
+    try {
+      const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
+      const data = response.data;
+      setQuot(data)
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   useEffect(() => {
-      const farmerToken = getToken();
-        axios.get(`http://localhost:8090/farmer/quotdetail/${quotation.quotationId}`,
-        {
-         headers: {
-           Authorization: `${farmerToken}`
-         },
-       })
-        .then(res => {
-          setQuot(res.data);
-        })
-        .catch(err => {
-          console.log("error");
-        })
+    testFunction()
   }, []);
 
   const fileChange = (e) => {

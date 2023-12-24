@@ -19,7 +19,7 @@ const ReviewCard = ({ review }) => {
     <div className={style.reviewCard}>
       <div className={style.reviewContents}>
         <div className={style.nickname}>{review.userName}님</div>
-        <Rating name="read-only" value={value} readOnly />
+        <Rating name="read-only" value={review.rating} readOnly />
         <div className={style.details}>
           <span className={style.date}>{formattedDate}</span>
           <span className={style.farmName}>{review.farmName}</span>

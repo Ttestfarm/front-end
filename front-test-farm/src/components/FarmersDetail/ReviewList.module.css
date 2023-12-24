@@ -1,27 +1,16 @@
+.list {
+  margin: 1rem 0;
+}
+
 .reviewList {
   display: flex;
-  /* flex-direction: row; */
-  align-items: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
 }
-.reviewTitle {
-  /* text-align: left; */
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-bottom: 0;
-}
-.all {
+
+.pagination {
   display: flex;
   justify-content: center;
-  margin: 20px;
-}
-.all > * {
-  margin: 15px;
-}
-.reviewlistcard {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }

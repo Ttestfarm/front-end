@@ -39,7 +39,6 @@ const QuotCard = ({ quoteItem }) => {
           <div className={style.follow}>
             <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 20 }} />
             <span className={style.span}>({quoteItem.followCount}명)</span>
-            {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
           <Link to={`/mypage/quotepay/${quoteItem.quote.quotationId}`}>
             <button>주문하기</button>

@@ -7,7 +7,7 @@
 
 import React, { Fragment } from "react";
 
-import style from './ModifyFarmer.module.css';
+import style from './style/ModifyFarmer.module.css';
 import picDefault from "../../assets/pic-default.png";
 import picExam from "../../assets/pic-exam.png";
 
@@ -22,12 +22,12 @@ const ModifyFarmerPage = () => {
           </div>
 
           <div className={style["farm-name"]}>
-            <label for="farm-name">팜 이름</label> 
+            <label for="farm-name">팜 이름</label>
             <input id="farm-name" placeholder={"팜 이름을 입력해 주세요."} value={"명수팜"} />
           </div>
 
           <div className={style["farmer-name"]}>
-            <label for="farmer-name">파머 이름</label> 
+            <label for="farmer-name">파머 이름</label>
             <input id="farmer-name" placeholder={"파머 이름을 입력해 주세요."} value={"박명수"} />
           </div>
 
@@ -42,7 +42,7 @@ const ModifyFarmerPage = () => {
           </div>
 
           <div className={style["farm-tel"]}>
-            <label for="farm-tel">팜 전화번호</label> 
+            <label for="farm-tel">팜 전화번호</label>
             <input id="farm-tel" placeholder={"팜 전화번호를 입력해 주세요."} value={"031-123-4567"} />
           </div>
 
@@ -52,8 +52,8 @@ const ModifyFarmerPage = () => {
               <input type="text" id="farm-address-code" placeholder={"우편번호"} value={"12345"} />
               <button id="find-address-code" className={style["certify-btn"]}>우편번호 찾기</button>
             </div>
-            <input type="text" id="farm-address-road" placeholder={"도로명 주소"} value={"경기도 이천시 명수로"}/>
-            <input type="text" id="farm-address-detail" placeholder={"상세 주소를 입력해 주세요."} value={"123길 45"}/>
+            <input type="text" id="farm-address-road" placeholder={"도로명 주소"} value={"경기도 이천시 명수로"} />
+            <input type="text" id="farm-address-detail" placeholder={"상세 주소를 입력해 주세요."} value={"123길 45"} />
           </div>
 
           <div className={style["registration-num"]}>
@@ -66,13 +66,13 @@ const ModifyFarmerPage = () => {
           </div>
 
           <div className={style["farm-accountno"]}>
-            <label for="farm-accountno">계좌번호</label> 
+            <label for="farm-accountno">계좌번호</label>
             <select id="bank-select" value={"은행을 선택하세요."} />
             <input type="text" id="farm-accountno" placeholder={"계좌번호를 입력해 주세요."} value={"111-222-333333"} />
           </div>
 
           <div className={style["farm-interest"]}>
-            <label for="farm-interest">관심 품목 설정</label> 
+            <label for="farm-interest">관심 품목 설정</label>
             <input type="text" id="farm-interest" placeholder={"예) #토마토 #바나나 #사과"} value={"#토마토 #바나나 #사과"} />
             <div className={style.notice}>
               <span>- 관심 품목으로 설정하면 해당 품목 매칭 요청서에 견적을 보낼</span>

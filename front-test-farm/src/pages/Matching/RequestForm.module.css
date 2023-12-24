@@ -99,6 +99,7 @@
   display: flex;
   justify-content: center;
   gap: 2rem;
+  margin: 1rem;
 }
 .footer button {
   cursor: pointer;
@@ -124,16 +125,15 @@
   background-color: #e2e4d4;
   color: var(--color-main);
 }
-
+/* 
 /* Add media query to adjust layout for smaller screens */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column; /* Stack elements vertically on smaller screens */
-  }
+    flex-direction: column;
 
-  .left,
-  .right {
-    flex: none; /* Reset flex to none for stacking */
-    width: 100%; /* Take up full width on smaller screens */
+    .right {
+      order: 1; /* Set the order to 1 so that .right comes after .left */
+      width: 100%;
+    }
   }
 }

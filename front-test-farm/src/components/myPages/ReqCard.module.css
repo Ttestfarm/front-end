@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container span {
+  font-weight: bold;
+}
+.header {
+  color: darkgray;
+}
+.wrapper {
+  display: flex;
+  max-width: 100%;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem 1rem 3rem;
+  flex: 2;
+}
+.left p {
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.name {
+  font-size: 1.2rem;
+}
+.reqMsg {
+  margin: 1rem 0;
+}
+.paragraph {
+  white-space: pre-wrap;
+}
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.right p {
+  padding: 1rem;
+}
+.right button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: var(--color-button2);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.right button:hover {
+  transform: scale(1.1);
+}
+.right button:disabled {
+  background-color: rgb(237, 234, 234);
+}

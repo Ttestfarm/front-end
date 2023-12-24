@@ -19,6 +19,7 @@
   --color-button2: #49680d;
   --color-highlight: #c9f087;
 }
+
 body {
   margin: 0;
 }
@@ -28,6 +29,12 @@ ul {
   margin: 0;
   padding: 0;
 }
+
 a {
   text-decoration: none;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }

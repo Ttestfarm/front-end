@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import style from "./ModifyUser.module.css";
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import style from './ModifyUser.module.css';
 
-import Postcode from "../../api/PostCode";
-import useUserInput from "./../../hooks/use-userInput";
-import * as API from "../../api/index";
-import * as val from "../../util/validation";
-import RegistSection from "./../../components/UI/RegistSection";
+import Postcode from '../../api/PostCode';
+import useUserInput from './../../hooks/use-userInput';
+import * as API from '../../api/index';
+import * as val from '../../util/validation';
+import RegistSection from './../../components/UI/RegistSection';
 
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 
 import {
   tokenAtom,
@@ -19,19 +19,19 @@ import {
   postcodeAddressAtom,
   userInfoAtom,
   zonecodeAtom,
-} from "../../recoil/Atoms";
+} from '../../recoil/Atoms';
 
 const ModifyUserPage = () => {
   const token = useRecoilValue(tokenAtom); //리코일
 
   //비밀번호 확인 유효성 검사set
-  const [, setRepassword] = useState("");
+  const [, setRepassword] = useState('');
   const [repasswordIsValid, setRepasswordIsValid] = useState(false);
-  const [checkPwdMsg, setCheckPwdMsg] = useState("");
+  const [checkPwdMsg, setCheckPwdMsg] = useState('');
 
   //휴대폰 인증과정
-  const [authNum, setAuthNum] = useState("");
-  const [checkSMS, setCheckSMS] = useState("");
+  const [authNum, setAuthNum] = useState('');
+  const [checkSMS, setCheckSMS] = useState('');
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [updateData, setUpdateData] = useState({ ...userInfo });
@@ -59,7 +59,7 @@ const ModifyUserPage = () => {
   //주소창 닫으면 값 리셋
   useEffect(() => {
     return () => {
-      setAddress2("");
+      setAddress2('');
     };
   }, [setAddress1, setAddress2]);
 
@@ -117,10 +117,10 @@ const ModifyUserPage = () => {
     const inputPassword = e.target.value;
     setRepassword(inputPassword);
     if (passwordValue !== inputPassword) {
-      setCheckPwdMsg("비밀번호가 일치하지 않습니다.");
+      setCheckPwdMsg('비밀번호가 일치하지 않습니다.');
       setRepasswordIsValid(false);
     } else {
-      setCheckPwdMsg("비밀번호가 일치합니다.");
+      setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
     }
   };
@@ -137,7 +137,7 @@ const ModifyUserPage = () => {
       (response) => {
         setIsSucessModal({
           state: true,
-          message: "인증번호를 발송했어요!",
+          message: '인증번호를 발송했어요!',
         });
         console.log(response.data);
         setAuthNum(response.data);
@@ -150,12 +150,12 @@ const ModifyUserPage = () => {
     if (authNum.toString() === checkSMS.toString()) {
       setIsSucessModal({
         state: true,
-        message: "휴대폰 인증이 정상적으로 완료되었습니다.",
+        message: '휴대폰 인증이 정상적으로 완료되었습니다.',
       });
     } else {
       setIsErrorModal({
         state: true,
-        message: "인증번호가 올바르지 않습니다.",
+        message: '인증번호가 올바르지 않습니다.',
       });
     }
   };
@@ -168,7 +168,7 @@ const ModifyUserPage = () => {
 
   const RegistHandler = async () => {
     try {
-      console.log("보낼데이터", updateData);
+      console.log('보낼데이터', updateData);
       const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
       // resetPassword();
@@ -182,10 +182,10 @@ const ModifyUserPage = () => {
       if (response.status === 200) {
         setIsSucessModal({
           state: true,
-          message: "회원정보가 수정되었습니다!",
+          message: '회원정보가 수정되었습니다!',
         });
       }
-      navigate("/mypage/modify-user");
+      navigate('/mypage/modify-user');
     } catch (error) {
       setIsErrorModal({
         state: true,
@@ -199,8 +199,8 @@ const ModifyUserPage = () => {
     : style['form-control'];
 
   const passwordStyles = passwordHasError
-    ? `${style["form-control"]} ${style.invalid}`
-    : style["form-control"];
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
   const addressStyles = addressHasError
     ? `${style['form-control']} ${style.invalid}`
@@ -211,8 +211,11 @@ const ModifyUserPage = () => {
     : style['form-control'];
 
   return (
-    <RegistSection title={"내 정보 관리"}>
-      <div className={style["form-control"]}>
+    <RegistSection
+      title={'내 정보 관리'}
+      style={{ padding: 0 }}
+    >
+      <div className={style['form-control']}>
         <label htmlFor="name">이름</label>
         <input
           type="text"
@@ -220,7 +223,7 @@ const ModifyUserPage = () => {
           value={updateData.userName}
           onChange={inputHandle}
           onBlur={nameBlurHandler}
-          placeholder={"이름을 입력하세요.(최대 5글자)"}
+          placeholder={'이름을 입력하세요.(최대 5글자)'}
         />
         {/* {nameHasError && (
           <p className={style['error-text']}>
@@ -229,7 +232,7 @@ const ModifyUserPage = () => {
         )} */}
       </div>
 
-      <div className={style["form-control"]}>
+      <div className={style['form-control']}>
         <label htmlFor="email">이메일</label>
         <input
           type="text"
@@ -248,11 +251,11 @@ const ModifyUserPage = () => {
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
           placeholder={
-            "영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)"
+            '영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)'
           }
         />
         {passwordHasError && (
-          <p className={style["error-text"]}>
+          <p className={style['error-text']}>
             영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)
           </p>
         )}
@@ -266,12 +269,12 @@ const ModifyUserPage = () => {
             pwCheckHandler(e);
           }}
           onBlur={repasswordBlurHandler}
-          placeholder={"비밀번호를 한 번 더 입력해 주세요."}
+          placeholder={'비밀번호를 한 번 더 입력해 주세요.'}
         />
-        <p className={style["error-text"]}>{checkPwdMsg}</p>
+        <p className={style['error-text']}>{checkPwdMsg}</p>
       </div>
 
-      <div className={style["form-control"]}>
+      <div className={style['form-control']}>
         <label htmlFor="farmAddress">주소</label>
         <div className={style.certify}>
           <input
@@ -279,11 +282,11 @@ const ModifyUserPage = () => {
             name="address1"
             value={updateData.address1}
             // className={style.zipcode}
-            placeholder={"우편번호"}  
+            placeholder={'우편번호'}
             disabled
           />
           <button
-            className={style["certify-btn"]}
+            className={style['certify-btn']}
             onClick={onClicktoggleAddressModal}
           >
             주소 찾기
@@ -296,7 +299,7 @@ const ModifyUserPage = () => {
           value={updateData.address2}
           // onChange={farmAddressChangeHandler}
           // onBlur={farmAddressBlurHandler}
-          placeholder={"도로명 주소"}
+          placeholder={'도로명 주소'}
           disabled
         />
         <input
@@ -305,11 +308,11 @@ const ModifyUserPage = () => {
           value={updateData.address3}
           onChange={inputHandle}
           //onBlur={addressDetailBlurHandler}
-          placeholder={"상세 주소를 입력해 주세요."}
+          placeholder={'상세 주소를 입력해 주세요.'}
         />
       </div>
 
-      <div className={style["form-control"]}>
+      <div className={style['form-control']}>
         <div className={style.certify}>
           <label htmlFor="tel">핸드폰 번호</label>
           <button
@@ -317,7 +320,7 @@ const ModifyUserPage = () => {
             onClick={() => {
               sendSMS();
             }}
-            className={style["certify-btn"]}
+            className={style['certify-btn']}
           >
             인증번호 요청
           </button>
@@ -328,7 +331,7 @@ const ModifyUserPage = () => {
           value={updateData.userTel}
           onChange={inputHandle}
           onBlur={telBlurHandler}
-          placeholder={"숫자만 입력해 주세요."}
+          placeholder={'숫자만 입력해 주세요.'}
         />
 
         <div className={style.certify}>
@@ -337,22 +340,22 @@ const ModifyUserPage = () => {
             name="checkSMS"
             value={checkSMS}
             onChange={(e) => setCheckSMS(e.target.value)}
-            placeholder={"인증번호를 입력해 주세요."}
+            placeholder={'인증번호를 입력해 주세요.'}
           />
           <button
             id="tel-certify-req"
             onClick={checkSMSHandler}
-            className={style["certify-btn"]}
+            className={style['certify-btn']}
           >
             인증번호 확인
           </button>
         </div>
         {telHasError && (
-          <p className={style["error-text"]}>인증번호를 입력해 주세요.</p>
+          <p className={style['error-text']}>인증번호를 입력해 주세요.</p>
         )}
         <button
           id="join"
-          className={style["join-btn"]}
+          className={style['join-btn']}
           disabled={!formIsValid}
           onClick={RegistHandler}
         >

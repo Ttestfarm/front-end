@@ -19,7 +19,6 @@ import {
   isPostcodeModalAtom,
   postcodeAddressAtom,
   zonecodeAtom,
-  isErrorModalAtom,
   isSuccessModalAtom,
   tokenAtom,
 } from "../../recoil/Atoms";
@@ -38,16 +37,35 @@ const RequestForm = () => {
     address3: userInfo.address3,
   });
 
+  //
+  const handleSetValue = (e) => {
+    setData({ ...data, requestMessage: e.target.value });
+  };
+
+  const handleSetTab = (e) => {
+    console.log(e.keyCode);
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      let val = e.target.value;
+      let start = e.target.selectionStart;
+      let end = e.target.selectionEnd;
+      e.target.value = val.substring(0, start) + '\t' + val.substring(end);
+      e.target.selectionStart = e.target.selectionEnd = start + 1;
+      handleSetValue(e);
+      return false; //  prevent focus
+    }
+  };
+  //
+
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
   const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
   const [address1, setAddress1] = useRecoilState(zonecodeAtom);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
-  const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
 
   const navigate = useNavigate();
-  const inputStyle = { width: '90%', margin: 1 };
+  const inputStyle = { width: '90%', margin: 1, color: 'success' };
 
   const inputHandle = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -127,26 +145,17 @@ const RequestForm = () => {
     <div className={style.container}>
       <Card width="60%">
         <h1>못난이 농산물을 요청합니다!</h1>
-        <Form
-          onSubmit={SubmitHandler}
-          className={style.main}
-        >
+        <Form onSubmit={SubmitHandler}>
+          <div className={style.main}>
           <div className={style.left}>
             <img
               src={uglyfarm}
               alt="agly"
             />
-            {/* <p>필요한 농산물은</p>
-            <p>필요한 양은</p>
-            <p>개수 혹은 kg 단위로 적어주세요.</p>
-            <p>요청 사항</p>
-            <p>요청 기간 설정</p>
-            <p>배송 주소는</p>
-            <p>배송 전화번호</p> */}
           </div>
           <div className={style.right}>
             <TextField
-              id="outlined-basic "
+              id="outlined-basic"
               variant="outlined"
               name="requestProduct"
               label="요청 농산물"
@@ -154,7 +163,7 @@ const RequestForm = () => {
               onChange={inputHandle}
               sx={inputStyle}
               size="small"
-              helperText=""
+              color="success"
             />
             <TextField
               id="outlined-basic"
@@ -166,6 +175,7 @@ const RequestForm = () => {
               size="small"
               helperText="kg/박스 또는 개수"
               sx={inputStyle}
+              color="success"
             />
 
             <TextField
@@ -174,12 +184,14 @@ const RequestForm = () => {
               id="outlined-multiline-flexible"
               multiline
               rows={3}
-              maxRows={3}
               name="requestMessage"
               value={data.requestMessage}
-              onChange={inputHandle}
+              //onChange={inputHandle}
+              onChange={(e) => handleSetValue(e)}
+              onKeyDown={(e) => handleSetTab(e)}
               size="small"
               sx={inputStyle}
+              color="success"
             />
             <LocalizationProvider
               dateAdapter={AdapterDayjs}
@@ -199,6 +211,7 @@ const RequestForm = () => {
                     dateFormatChange(newValue);
                   }}
                   sx={inputStyle}
+                  color="success"
                 />
               </div>
             </LocalizationProvider>
@@ -233,6 +246,7 @@ const RequestForm = () => {
               onChange={inputHandle}
               size="small"
               sx={inputStyle}
+              color="success"
             />
             <TextField
               id="outlined-basic"
@@ -244,9 +258,10 @@ const RequestForm = () => {
               size="small"
               helperText="숫자만 입력(01056781004)"
               sx={inputStyle}
+              color="success"
             />
           </div>
-        </Form>
+        </div>
         <div className={style.infobox}>
           <div className={style.title}>
             <ErrorOutlineIcon
@@ -293,7 +308,7 @@ const RequestForm = () => {
             돌아가기
           </button>
         </footer>
-
+        </Form>
         {isPostcodeModal && <Postcode />}
       </Card>
     </div>

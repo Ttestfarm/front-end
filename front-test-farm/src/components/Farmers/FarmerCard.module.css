@@ -6,7 +6,6 @@
   height: 430px;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   display: flex;
   position: relative;
   flex-shrink: 0;
@@ -21,41 +20,42 @@
 }
 
 .image-container {
-  margin-top: 16px;
-  margin-bottom: 0px;
+  margin-top: 0.7rem;
+  margin-bottom: 0.4rem;
   flex-shrink: 0;
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   border: 3px solid #75786c;
   object-fit: fill;
   overflow: hidden;
 }
+.info-c {
+  display: flex;
+  align-items: center;
+}
 
 .info {
-  font-size: 16px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 0px;
 }
 
-.farmname,
-.farmaddress,
-.category {
-  /* font-size: 20px; */
-  font-size: 1.1rem;
-  /* font-weight: 500; */
+.farmname {
+  text-align: center;
+  font-weight: bold;
 }
 .card-details {
+  font-size: 1.1rem;
   margin-top: 1rem;
-  width: 225px;
+  padding: 0 1.5rem 1rem 2rem;
 }
 .farmaddress {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 .category {
-  /* margin-bottom: 42px; */
   word-wrap: break-word;
 }
 .detail {

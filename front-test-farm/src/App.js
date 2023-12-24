@@ -14,7 +14,6 @@ import MatchingListPage from './pages/Matching/MatchingList';
 import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
 import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
-//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';

@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './QuotCard.module.css';
+import { Link } from 'react-router-dom';
 import { Avatar, Rating } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -42,7 +43,9 @@ const QuotCard = ({ quoteItem }) => {
             <span className={style.span}>({quoteItem.followCount}명)</span>
             {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
-          <button>주문하기</button>
+          <button>
+            <Link to={`/pay/${quoteItem.quotationId}`}>주문하기</Link>
+          </button>
         </section>
         <section className={style.right}>
           <p className={style.farmName}>

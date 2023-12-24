@@ -1,0 +1,71 @@
+.content {
+  display: flex;
+  padding-left: 5rem;
+  /* justify-content: center; */
+  align-items: center;
+}
+.header {
+  text-align: center;
+  padding: 0.5rem;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0.7rem;
+}
+.container main {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+.value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-weight: 600;
+}
+.title span {
+  margin: 0.7rem;
+  color: var(--color-main);
+}
+
+.btns {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 1rem;
+}
+.btns button {
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.btns button:hover {
+  transform: scale(1.1);
+}
+
+.cancel {
+  background-color: #e2e4d4;
+  color: var(--color-button2);
+}
+.pay {
+  background-color: var(--color-button2);
+  color: #e2e4d4;
+}
+
+.p1 {
+  padding-bottom: 0.5rem;
+}
+.blueFont {
+  color: blue;
+}

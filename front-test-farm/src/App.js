@@ -21,6 +21,7 @@ import ModifyUserPage from './pages/MyPages/ModifyUser';
 import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
+import QuotePayPage from './pages/MyPages/QuotePay';
 
 import RequestList from './pages/FarmersPages/RequestList';
 import QuotForm from './pages/FarmersPages/QuotForm';
@@ -42,7 +43,6 @@ import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
 
 import Pay from './components/FarmersDetail/Pay';
-import QuotePay from './components/myPages/QuotePay';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       { path: 'find-email', element: <FindEmailPage /> },
       { path: 'find-pw', element: <FindPwPage /> },
       { path: 'pay', element: <Pay /> },
-      { path: 'quotepay', element: <QuotePay /> },
+
       {
         path: 'matching',
         // element: <MatchingPage />,
@@ -87,6 +87,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
+          { path: 'quotepay/:quotationId', element: <QuotePayPage /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
           {

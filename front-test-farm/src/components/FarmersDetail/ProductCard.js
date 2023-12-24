@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   return (
-    <Card width="400px">
+    <Card width="300px">
       <div className={style.container}>
         <div className={style.imageWrapper}>
           <img

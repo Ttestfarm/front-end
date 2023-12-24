@@ -41,8 +41,6 @@ const QuotePay = ({ quoteItem }) => {
       <h2>Quote Detail</h2>
       {quoteData ? (
         <div>
-          {/* 여기에서 가져온 데이터를 표시하거나 처리합니다. */}
-          {/* quoteData를 이용하여 원하는 정보를 화면에 출력 */}
           <p>Quotation ID: {quoteData.quote.id}</p>
         </div>
       ) : (

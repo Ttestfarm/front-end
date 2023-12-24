@@ -40,7 +40,7 @@ const QuotCard = ({ quoteItem }) => {
             {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
           <button>
-            <Link to={`${quoteItem.quote.quotationCommentId}`}> 주문하기</Link>
+            <Link to={`${quoteItem.quotationId}`}> 주문하기</Link>
           </button>
         </section>
         <section className={style.right}>

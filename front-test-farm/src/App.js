@@ -18,7 +18,7 @@ import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
-import BuyListPage from './pages/MyPages/BuyList';
+import BuyListPage from './pages/MyPages/Buylist1';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
 

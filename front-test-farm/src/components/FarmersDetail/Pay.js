@@ -65,12 +65,25 @@ const Pay = () => {
       const { IMP } = window;
       IMP.init(userCode);
 
-      IMP.request_pay(paymentInfo, async (rsp) => {
-        console.log(rsp);
+      const rsp = await new Promise((resolve, reject) => {
+        IMP.request_pay(paymentInfo, (response) => {
+          resolve(response);
+        });
+      });
 
-        if (rsp.success) {
+      console.log(rsp);
+
+      if (rsp.success) {
+        const res = await API.post2(`/payment/validation/${rsp.imp_uid}`);
+
+        if (
+          parseInt(
+            state.deliveryInfo.productPrice * state.deliveryInfo.quantity +
+              state.deliveryInfo.paymentDelivery
+          ) === res.data.response.amount
+        ) {
           try {
-            const response = await API.post2(`/processPayment`, token, {
+            const response = await API.post2(`/payment`, token, {
               receiptId: rsp.imp_uid,
               amount: rsp.paid_amount,
               ordersId: rsp.merchant_uid,
@@ -96,9 +109,11 @@ const Pay = () => {
             alert("Payment processing failed");
           }
         } else {
-          alert("Payment failed");
+          alert("Payment failed1");
         }
-      });
+      } else {
+        alert("Payment failed2");
+      }
     } catch (error) {
       console.error("Error occurred during payment:", error);
       alert("Error occurred during payment");

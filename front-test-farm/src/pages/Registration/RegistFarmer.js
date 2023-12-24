@@ -7,7 +7,7 @@ import picDefault from '../../assets/pic-default.png';
 import { Checkbox } from '../../components/UI/Checkbox';
 import * as API from '../../api/index';
 import Postcode from '../../api/PostCode';
-import { Form, Navigate, useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import HandleRegistrationNumCheck from '../../api/registrationNumCheck';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import * as val from '../../util/validation';
@@ -77,7 +77,7 @@ const RegistFarmerPage = ({ page }) => {
   }, [userInfo.farmerId]);
 
   useEffect(() => {
-    if (page === 'modify-farm' && !localStorage.getItem('token')) {
+    if (page === 'modify-farm' && !token) {
       navigate('/login');
     }
   }, [userInfo]);
@@ -169,7 +169,6 @@ const RegistFarmerPage = ({ page }) => {
 
   //이미지
   const onFileChange = (e) => {
-    // setFile(e.target.files[0]);
     //이미지 바꾸면 화면에 출력하기
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;

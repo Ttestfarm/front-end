@@ -99,7 +99,7 @@ const QuotForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="70%">
+      <Card width="100%">
         <h1>견적서 작성하기!</h1>
         <Form onSubmit={SendHandler}>
           <div className={style.main}>
@@ -141,6 +141,18 @@ const QuotForm = () => {
                 size="small"
                 color="success"
                 placeholder="금액을 입력해주세요"
+                onChange={handleInputChange}
+              />
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                name="delivery"
+                label="배송비"
+                value={request.delivery}
+                sx={inputStyle}
+                size="small"
+                color="success"
+                placeholder="배송비를 입력해주세요"
                 onChange={handleInputChange}
               />
               <TextField

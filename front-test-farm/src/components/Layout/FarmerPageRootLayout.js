@@ -1,15 +1,15 @@
 import React from 'react';
-import style from './FarmerPageRootLayout.module.css';
+import style from './PageRootLayout.module.css';
 import { Outlet } from 'react-router-dom';
 import FarmerNavigation from './FarmerNavigation';
 
 const FarmerPageRootLayout = () => {
   return (
-    <div className={style.fRoot}>
-      <div className={style.fNavigation}>
+    <div className={style.PageRoot}>
+      <div className={style.Navigation}>
         <FarmerNavigation />
       </div>
-      <div className={style.fContent}>
+      <div className={style.Content}>
         <Outlet />
       </div>
     </div>

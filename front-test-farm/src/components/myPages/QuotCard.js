@@ -1,9 +1,9 @@
-import React from "react";
-import style from "./QuotCard.module.css";
-import { Avatar, Rating } from "@mui/material";
-import { pink } from "@mui/material/colors";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import { Form, Navigate, useNavigate, Link } from "react-router-dom";
+import React from 'react';
+import style from './QuotCard.module.css';
+import { Avatar, Rating } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { Form, Navigate, useNavigate, Link } from 'react-router-dom';
 
 const QuotCard = ({ quoteItem }) => {
   const navigate = useNavigate();
@@ -11,11 +11,13 @@ const QuotCard = ({ quoteItem }) => {
   const avatarStyle = {
     width: 100,
     height: 100,
-    border: "solid",
+    border: 'solid',
   };
   const numericPrice = parseInt(quoteItem.quote.quotationPrice);
-  const formattedPrice = numericPrice.toLocaleString("ko-KR");
+  const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
+  console.log(quoteItem);
+  console.log('아이디', quoteItem.quote.quotationId);
   return (
     <>
       <div className={style.container}>
@@ -37,11 +39,10 @@ const QuotCard = ({ quoteItem }) => {
           <div className={style.follow}>
             <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 20 }} />
             <span className={style.span}>({quoteItem.followCount}명)</span>
-            {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
-          <button>
-            <Link to={`${quoteItem.quotationId}`}> 주문하기</Link>
-          </button>
+          <Link to={`/mypage/quotepay/${quoteItem.quote.quotationId}`}>
+            <button>주문하기</button>
+          </Link>
         </section>
         <section className={style.right}>
           <p className={style.farmName}>

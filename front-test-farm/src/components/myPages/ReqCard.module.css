@@ -12,12 +12,15 @@
 .wrapper {
   display: flex;
   max-width: 100%;
+  flex-wrap: wrap;
 }
 .left {
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem 1rem 3rem;
   flex: 2;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .left p {
   max-width: 90%;
@@ -40,6 +43,8 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .right p {
   padding: 1rem;
@@ -59,4 +64,20 @@
 }
 .right button:disabled {
   background-color: rgb(237, 234, 234);
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .left {
+    flex-basis: auto;
+    padding: 1rem;
+  }
+
+  .right {
+    flex-basis: auto;
+    margin-top: 1rem;
+  }
 }

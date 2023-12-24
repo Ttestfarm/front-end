@@ -1,0 +1,13 @@
+.PageRoot {
+  display: flex;
+  gap: 3rem;
+  padding: 2rem 10rem 3rem 10rem;
+}
+
+.Navigation {
+  width: 238px;
+}
+
+.Content {
+  flex: 1;
+}

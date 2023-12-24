@@ -46,8 +46,7 @@ const ReqCard = ({ req }) => {
           </section>
           <section className={style.right}>
             <p>
-              📨수락을 기다리는
-              <span> {req.quotationCount}</span>개의 견적서 도착
+              📨<span> {req.quotationCount}</span>개의 견적서 도착
             </p>
             <button
               onClick={reqQuoteHandler}

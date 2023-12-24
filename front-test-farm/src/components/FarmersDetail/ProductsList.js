@@ -15,8 +15,6 @@ const ProductsList = ({ farmerId }) => {
   useEffect(() => {
     const getLists = async () => {
       const response = await API.get(`/findfarmer/${farmerId}/product/${page}`);
-      console.log(response.data.pageInfo.allPage);
-      console.log(response.data);
       setProductList(response.data.productList);
       setPageInfo(response.data.pageInfo);
     };
@@ -43,7 +41,7 @@ const ProductsList = ({ farmerId }) => {
         <div className={style.pagination}>
           <Stack spacing={2}>
             <Pagination
-              // count={productList?.pageInfo.allPage}
+              count={pageInfo?.allPage}
               page={page}
               onChange={onChangePage}
               size="small"

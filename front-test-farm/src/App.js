@@ -87,7 +87,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
-          { path: 'quotepay', element: <QuotePay /> },
+          { path: 'quotepay/:quotationId', element: <QuotePay /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
           {

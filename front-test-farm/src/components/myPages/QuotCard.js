@@ -41,9 +41,9 @@ const QuotCard = ({ quoteItem }) => {
             <span className={style.span}>({quoteItem.followCount}명)</span>
             {/* <button onClick={handlePayment}>주문하기</button> */}
           </div>
-          <button>
-            <Link to={`${quoteItem.quotationId}`}> 주문하기</Link>
-          </button>
+          <Link to={`/mypage/quotepay/${quoteItem.quote.quotationId}`}>
+            <button>주문하기</button>
+          </Link>
         </section>
         <section className={style.right}>
           <p className={style.farmName}>

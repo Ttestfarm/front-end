@@ -3,13 +3,10 @@ import style from "./QuotCard.module.css";
 import { Avatar, Rating } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import { Form, Navigate, useNavigate, Link } from "react-router-dom";
 
 const QuotCard = ({ quoteItem }) => {
-  //
-
-  // const handlePayment = () => {
-  //   onClickPayment(initIMP, requestPayment, data, callback);
-  // };
+  const navigate = useNavigate();
 
   const avatarStyle = {
     width: 100,
@@ -32,7 +29,9 @@ const QuotCard = ({ quoteItem }) => {
           <PersonAddAlt1Icon sx={{ color: pink[500], fontSize: 30 }} />
           {quoteItem.followCount}
           {/* <button onClick={handlePayment}>주문하기</button> */}
-          <button>주문하기</button>
+          <button>
+            <Link to={`${quoteItem.quote.quotationCommentId}`}> 주문하기</Link>
+          </button>
         </section>
         <section className={style.right}>
           <p>

@@ -9,7 +9,6 @@ export const paymentMethod = [
 
 // 은행 option 배열
 export const bankOption = [
-  "선택하세요",
   "국민은행",
   "카카오뱅크",
   "농협은행",

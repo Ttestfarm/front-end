@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import RegistSection from './../../components/UI/RegistSection';
-import style from './RegistFarmer.module.css';
+import style from './style/ModifyFarmer.module.css';
 
 import useUserInput from '../../hooks/use-userInput';
 import picDefault from '../../assets/pic-default.png';
@@ -22,10 +22,11 @@ import {
 
 import { bankOption } from '../../util/payment';
 
-const RegistFarmerPage = ({ page }) => {
+const ModifyFarmerPage = ({ page }) => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const token = useRecoilValue(tokenAtom);
   const [farmerInfo, setFarmerInfo] = useState({});
+  const [updateData, setUpdateData] = useState({ ...farmerInfo });
   const [file, setFile] = useState('');
   const [myFarmTel, setMyFarmTel] = useState(false);
   const [registrationNum, setRegistrationNum] = useState(false);
@@ -37,36 +38,64 @@ const RegistFarmerPage = ({ page }) => {
     useRecoilState(isPostcodeModalAtom);
   const [address2, setAddress2] = useRecoilState(postcodeAddressAtom);
 
-  const [formDatas, setFormDatas] = useState({
-    farmName: '',
-    farmTel: '',
-    myFarmTel: '',
-    farmAddress: '',
-    farmAddressDetail: '',
-    registrationNum: '',
-    farmBank: '',
-    farmAccountNum: '',
-    farmInterest: '',
-    farmPixurl: '',
-  });
+  useEffect(() => {
+    const getFarmerInfo = async () => {
+      try {
+        const response = await API.get(`/farmer/farmerInfo/${userInfo.farmerId}`, token);
+        setFarmerInfo(response.data);
+        console.log(response.data);
+      } catch (error) {
+        // 오류 처리
+        console.error(error);
+      }
+    };
+
+    if (userInfo.farmerId) {
+      getFarmerInfo();
+    }
+  }, [userInfo, token]);
 
   useEffect(() => {
     if (farmerInfo) {
-      setFormDatas({
-        farmName: farmerInfo?.farmer?.farmName,
-        farmTel: farmerInfo?.farmer?.farmTel,
-        farmAddress: farmerInfo?.farmer?.farmAddress,
-        farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
-        registrationNum: farmerInfo?.farmer?.registrationNum,
-        farmBank: farmerInfo?.farmer?.farmBank,
-        farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
-        farmInterest: farmerInfo?.farmer?.farmInterest,
-        farmPixurl: farmerInfo?.farmer?.farmPixurl,
+      setUpdateData({
+        farmName: farmerInfo?.farmName || '',
+        farmTel: farmerInfo?.farmTel || '',  
+        farmAddress: farmerInfo?.farmAddress || '',
+        farmAddressDetail: farmerInfo?.farmAddressDetail || '',
+        registrationNum: farmerInfo?.registrationNum || '',
+        farmBank: farmerInfo?.farmBank || '',
+        farmAccountNum: farmerInfo?.farmAccountNum || '',
+        farmInterest: farmerInfo?.farmInterest || '',
+        farmPixurl: farmerInfo?.farmPixurl || '',
       });
     }
   }, [farmerInfo]);
 
+  useEffect(() => {
+    if (farmerInfo) {
+      setUpdateData((prevData) => ({
+        ...prevData,
+        farmInterest: formattedFarmInterest(farmerInfo.farmInterest),
+      }));
+    }
+  }, [farmerInfo]);
+  
+  const formattedFarmInterest = (farmInterest) => {
+    if (!farmInterest) {
+      return '';
+    }
+  
+    return farmInterest
+      .split(', ') // 주어진 데이터 형태에 따라 ', '로 분리
+      .map((item) => item.trim().replace(/^#/, '')) // 각 단어 앞의 '#' 제거
+      .join(' ');
+  };
+
   const navigate = useNavigate();
+
+  const inputHandle = (e) => {
+    setUpdateData({ ...updateData, [e.target.name]: e.target.value });
+  };
 
   useEffect(() => {
     if (page === 'reg-farmer' && userInfo && userInfo.farmerId !== null) {
@@ -120,7 +149,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmTelChangeHandler,
     inputBlurHandler: farmTelBlurHandler,
     reset: resetfarmTel,
-  } = useUserInput(val.isTel, myFarmTel);
+  } = useUserInput(val.isTel, myFarmTel, updateData.farmTel, setUpdateData);
 
   // const {
   //   value: { postcodeAddress },
@@ -138,14 +167,14 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmAddressDetailChangeHandler,
     inputBlurHandler: farmAddressDetailBlurHandler,
     reset: resetfarmAddressDetail,
-  } = useUserInput(val.isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue, false, updateData.farmAddressDetail, setUpdateData);
 
   const {
     value: registrationNumValue,
     valueChangeHandler: registrationNumChangeHandler,
     inputBlurHandler: registrationNumBlurHandler,
     reset: resetRegistrationNum,
-  } = useUserInput(val.isNotEmptyValue);
+  } = useUserInput(val.isNotEmptyValue, false, updateData.registrationNum, setUpdateData);
 
   const {
     value: farmAccountNumValue,
@@ -155,7 +184,7 @@ const RegistFarmerPage = ({ page }) => {
     inputBlurHandler: farmAccountNumBlurHandler,
     reset: resetfarmAccountNum,
   } = useUserInput(val.isNotEmptyValue);
-
+  
   const {
     value: farmInterestValue,
     isValid: farmInterestIsValid,
@@ -308,7 +337,7 @@ const RegistFarmerPage = ({ page }) => {
     : style['form-control'];
 
   return (
-    <RegistSection title={'파머 신청'}>
+    <RegistSection title={'팜 정보 관리'}>
       <Form>
         <div className={farmNameStyles}>
           <label htmlFor="farmName">팜 이름</label>
@@ -317,8 +346,8 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farmName"
             name="farmName"
-            value={farmNameValue}
-            onChange={farmNameChangeHandler}
+            value={updateData.farmName}
+            onChange={inputHandle}
             onBlur={farmNameBlurHandler}
             placeholder={'농장 이름을 입력하세요.'}
           />
@@ -337,6 +366,7 @@ const RegistFarmerPage = ({ page }) => {
             height="150px"
             alt="picDefault"
             ref={imgBoxRef}
+            value={updateData.farmPixurl}
             onClick={() => document.getElementById('file').click()}
           />
           <input
@@ -344,7 +374,7 @@ const RegistFarmerPage = ({ page }) => {
             id="file"
             name="file"
             accept="image/*"
-            onChange={onFileChange}
+            onChange={inputHandle}
             hidden
           />
         </div>
@@ -355,8 +385,9 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farmTel"
             name="farmTel"
-            value={myFarmTel ? userTel : farmTelValue}
-            onChange={farmTelChangeHandler}
+            //value={myFarmTel ? userTel : farmTelValue}
+            value={updateData.farmTel}
+            onChange={inputHandle}
             onBlur={farmTelBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}
           />
@@ -386,7 +417,8 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddress"
-            value={address2}
+            //value={address2}
+            value={updateData.farmAddress}
             // onChange={farmAddressChangeHandler}
             // onBlur={farmAddressBlurHandler}
             placeholder={'도로명 주소'}
@@ -395,8 +427,8 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddressDetail"
-            value={farmAddressDetailValue}
-            onChange={farmAddressDetailChangeHandler}
+            value={updateData.farmAddressDetail}
+            onChange={inputHandle}
             onBlur={farmAddressDetailBlurHandler}
             placeholder={'상세 주소를 입력해 주세요.'}
           />
@@ -415,8 +447,8 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="registrationNum"
-            value={registrationNumValue}
-            onChange={registrationNumChangeHandler}
+            value={updateData.registrationNum}
+            onChange={inputHandle}
             onBlur={registrationNumBlurHandler}
             placeholder={'사업자 등록번호를 입력해 주세요.'}
           />
@@ -428,8 +460,9 @@ const RegistFarmerPage = ({ page }) => {
           <select
             id="bank-select"
             name="farmBank"
-            onChange={selectHandler}
-            value={selected}
+            value={updateData.farmBank}
+            onChange={inputHandle}
+            //value={selected}
           >
             <option value="" disabled>
               은행 선택
@@ -443,8 +476,8 @@ const RegistFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAccountNum"
-            value={farmAccountNumValue}
-            onChange={farmAccountNumChangeHandler}
+            value={updateData.farmAccountNum}
+            onChange={inputHandle}
             onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
@@ -461,8 +494,8 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farm-interest"
             name="farmInterest"
-            value={farmInterestValue}
-            onChange={farmInterestChangeHandler}
+            value={formattedFarmInterest(updateData.farmInterest)}
+            onChange={inputHandle}
             placeholder={'예) #토마토 #바나나 #사과'}
           />
 
@@ -489,4 +522,4 @@ const RegistFarmerPage = ({ page }) => {
   );
 };
 
-export default RegistFarmerPage;
+export default ModifyFarmerPage;

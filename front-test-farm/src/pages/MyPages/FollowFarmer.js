@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useInView } from 'react-intersection-observer';
-import FarmerCard from '../../components/Farmers/FarmerCard';
-import style from './FollowFarmer.module.css';
-import * as API from '../../api/index';
-import { AnimatePresence } from 'framer-motion';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import React, { useState, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
+import FarmerCard from "../../components/Farmers/FarmerCard";
+import style from "./FollowFarmer.module.css";
+import * as API from "../../api/index";
+import { AnimatePresence } from "framer-motion";
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 
-import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
+import { useRecoilValue } from "recoil";
+import { tokenAtom } from "../../recoil/Atoms";
 
 const FollowFarmerPage = () => {
   const token = useRecoilValue(tokenAtom);
@@ -26,7 +26,7 @@ const FollowFarmerPage = () => {
     try {
       const response = await API.get(`/user/followlist?page=${ppage}`, token);
 
-      console.log('파머팔로우', response.data);
+      console.log("파머팔로우", response.data);
       setPageInfo(response.data.pageInfo);
       setFarmerList([...farmerList, ...response.data.followingFarmers]);
 
@@ -45,11 +45,11 @@ const FollowFarmerPage = () => {
   //scroll to top
   useEffect(() => {
     const timer = setInterval(() => {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     }, 100);
     return () => {
       clearInterval(timer);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -65,22 +65,19 @@ const FollowFarmerPage = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
   //scroll to top 끝
 
   return (
     <>
-      <div className={style['farmercardlist']}>
+      <div className={style["farmercardlist"]}>
         {farmerList?.length > 0
           ? farmerList.map((farmer) => (
-              <FarmerCard
-                key={farmer.farmerId}
-                farmer={farmer}
-              />
+              <FarmerCard key={farmer.farmerId} farmer={farmer} />
             ))
-          : '파머 목록이 없습니다.'}
+          : "파머 목록이 없습니다."}
       </div>
 
       <AnimatePresence>

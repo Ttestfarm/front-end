@@ -43,32 +43,45 @@
   justify-content: space-between;
 }
 
-.address {
+.picture {
+  margin-top: 30px;
+
   display: flex;
-  width: 92.5%;
+  justify-content: space-around;
 }
 
-.address input {
-  flex: 9;
-  width: 17rem;
-  height: 2.8rem;
-  border-radius: 4px;
-  margin: 0.5rem;
-}
-
-.address button {
-  flex: 1;
-  border: none;
-  background-color: transparent;
-  border-radius: 50%;
-  width: 2rem;
+.picture label {
+  width: 150px;
+  height: 30px;
+  background: #49680d;
+  color: white;
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: red;
+    color: #fff;
+  }
 }
 
-.certify-btn:hover {
-  transform: scale(1.1);
-  background-color: #e2e4d4;
+.picture input {
+  display: none;
+}
+
+.images {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.images img {
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
 }
 
 .infobox {
@@ -126,6 +139,7 @@
   transition: all 0.3s ease;
 }
 
+
 .footer button:hover {
   transform: scale(1.1);
 }
@@ -140,7 +154,6 @@
   color: var(--color-main);
 }
 
-/* 
 /* Add media query to adjust layout for smaller screens */
 @media (max-width: 768px) {
   .container {

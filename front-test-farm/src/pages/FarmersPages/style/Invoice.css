@@ -1,11 +1,10 @@
 .cal-form {
   width: 90%;
   margin: 0 auto;
-  margin-top: 150px;
+  margin-left: 200px;
 }
 
-.cal-search {
-}
+.cal-search {}
 
 .cal-search-date {
   display: flex;
@@ -37,18 +36,18 @@
   font-size: 16px;
 }
 
-select {
+.select select {
   width: 200px;
   padding: 0.8em 0.5em;
   border: 1px solid #c9c9c9;
   font-family: inherit;
   border-radius: 0px;
-  background: url('../arrow.jpg') no-repeat 95% 50%;
+  background: url('../arrow.jpg') no-repeat 98% 50%;
   background-color: #fff;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .cal-search-btns {

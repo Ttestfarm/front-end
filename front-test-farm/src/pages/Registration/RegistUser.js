@@ -174,11 +174,11 @@ const RegistUserPage = () => {
           value={nameValue}
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
-          placeholder={'이름을 입력하세요.(2~5글자)'}
+          placeholder={'이름을 입력하세요.(2~5자)'}
         />
         {nameHasError && (
           <p className={style['error-text']}>
-            이름은 최소 2글자에서 최대 5글자까지 입력하세요
+            이름을 입력하세요.(2~5자)
           </p>
         )}
       </div>
@@ -217,11 +217,11 @@ const RegistUserPage = () => {
           value={passwordValue}
           onChange={passwordChangeHandler}
           onBlur={passwordBlurHandler}
-          placeholder={'문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)'}
+          placeholder={'영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8글자 이상)'}
         />
         {passwordHasError && (
           <p className={style['error-text']}>
-            문자+숫자+(! @ #)중 하나를 포함 (8글자 이상)
+            영문, 숫자, 특수기호(! @ #) 를 조합하여 작성 (8자 이상)
           </p>
         )}
         <input

@@ -1,20 +1,18 @@
 import React from 'react';
-import style from './MyPageRootLayout.module.css';
+import style from './PageRootLayout.module.css';
 import { Outlet } from 'react-router-dom';
 import MyNavigation from './MyNavigation';
 
 const MyPageRootLayout = () => {
   return (
-    <>
-      <div className={style.myPageRoot}>
-        <div className={style.myNavigation}>
-          <MyNavigation />
-        </div>
-        <div className={style.myContent}>
-          <Outlet />
-        </div>
+    <div className={style.PageRoot}>
+      <div className={style.Navigation}>
+        <MyNavigation />
       </div>
-    </>
+      <div className={style.Content}>
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

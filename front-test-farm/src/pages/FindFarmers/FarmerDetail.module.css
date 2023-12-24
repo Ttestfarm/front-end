@@ -1,5 +1,5 @@
 .container {
-  width: 80%;
+  width: 70%;
   border-radius: 10px;
   border: 5px solid #75786c;
   margin: 8rem auto;
@@ -11,29 +11,27 @@
   flex-direction: column;
   gap: 2rem;
 }
-/* .main {
-  /* display: block; */
 
 .header {
   display: flex;
-
-  font-size: 30px;
-  font-style: normal;
+  justify-content: center;
+  font-size: 1.8rem;
   font-weight: 700;
+  margin-bottom: 1rem;
 }
 .farmerInfoCard {
   width: 90%;
-  height: 316px;
   flex-shrink: 0;
   background: #e2e4d4;
   justify-content: center;
+  border-radius: 10px;
 }
 .backBtn {
   margin-right: 15px;
   margin-top: 21px;
   float: right;
-  border: 0;
-  background-color: #e2e4d4;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
 }
 .farmEdit {
@@ -50,20 +48,21 @@
   line-height: normal;
 }
 .info {
-  font-size: 16px;
-  /* display: flex;
-  justify-content: flex-start; */
-  width: 200px;
-  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/* .heartinfo {
-  width: 75px;
-  height: 30px;
-} */
+.flexbox {
+  display: flex;
+  flex-direction: row;
+  padding: 3rem 4rem;
+  gap: 5rem;
+}
 .leftSection {
-  float: left;
-  margin-left: 64px;
-  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .imageContainer {
   margin-bottom: 1rem;
@@ -81,37 +80,22 @@
 .farmDetails {
   display: flex;
   flex-direction: column;
-  float: left;
-  color: #000000;
-  margin-left: 5px;
-  margin-top: 62px;
-  line-height: normal;
+  color: #2c2a2a;
+  padding: 3rem 0 2rem;
 }
 
 .farmName,
 .farmerName,
 .farmAddress {
-  /* margin: 10px; */
   height: 36px;
-  font-size: 30px;
-  font-style: normal;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-right: 55px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin: 2rem;
 }
 
 .farmNameData,
 .farmerNameData,
 .farmAddressData {
-  margin-top: 11px;
-  margin-bottom: 11px;
-  height: 34px;
-  font-size: 28px;
+  font-size: 1.8rem;
   font-weight: 500;
-}
-
-.flexContainer {
-  height: 150px;
-  display: flex;
 }

@@ -1,0 +1,130 @@
+/* * {
+  box-sizing: border-box;
+} */
+
+/* input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+} 
+
+ input[type="text"] {
+  height: 35px;
+} */
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.product-container textarea {
+  background-color: #fefcf4;
+
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+  height: 70px;
+}
+
+.product-container label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+.product-container input[type='text'] {
+  border-radius: 10px;
+  border: 1px solid #ACACA9;
+}
+
+.product-container input[type='submit'] {
+  background-color: #04aa6d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+.product-container input[type='submit']:hover {
+  background-color: #45a049;
+}
+
+.rewrite,
+.back {
+  color: rgba(25, 25, 25, 0.87);
+  border: 1px solid #000;
+  background: #faf9ed;
+}
+
+/* 컨테이너 스타일 */
+.product-container {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 50px;
+  border-radius: 5px;
+  background: rgba(254, 252, 244, 0.8);
+  border-radius: 24px;
+  border: 5px solid #75786c;
+  padding: 20px;
+  /* padding-left: ; */
+}
+
+.col-25 {
+  float: left;
+  width: 28.5%;
+  margin-top: 6px;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  /* padding-right: 85px; */
+}
+
+.col-75 {
+  float: left;
+  width: 71.5%;
+  margin-top: 6px;
+}
+
+.title-img {
+  display: flex;
+}
+
+.row::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.btns {
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn1 {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #fefcf4;
+  padding: 10px 20px 10px 20px;
+
+  border: 1px solid #000;
+  border-radius: 20px;
+}
+
+.btn2 {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #49680D;
+  color: white;
+  padding: 10px 20px 10px 20px;
+
+  border: 1px solid #000;
+  border-radius: 20px;
+}

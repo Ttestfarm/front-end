@@ -36,9 +36,10 @@ const MatchingListPage = () => {
   const fetchData = async () => {
     try {
       console.log('page', page);
-      const response = await API.get(`/matching?page=${page}`);
-      //매칭 리스트 도  토큰 요청 없는 요청으로 바꿔야합니다.
-      //      const response = await axios.get(`/matching?page=${page}`);
+
+      const response = await axios.get(
+        `${API.serverUrl}/matching?page=${page}`
+      );
       const data = response.data;
 
       console.log('data', data);
@@ -111,15 +112,15 @@ const MatchingListPage = () => {
       </section>
       <section className={style.infoBox}>
         <div>
-          <p>별점 평균</p>
+          <p className={style.infoContent}>별점 평균</p>
           <p>{info.average}</p>
         </div>
         <div>
-          <p>매칭 중</p>
+          <p className={style.infoContent}>매칭 중</p>
           <p>{info.matchingProgress}</p>
         </div>
         <div>
-          <p>매칭 완료</p>
+          <p className={style.infoContent}>매칭 완료</p>
           <p>{info.foundMatching}</p>
         </div>
       </section>

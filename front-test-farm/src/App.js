@@ -14,7 +14,6 @@ import MatchingListPage from './pages/Matching/MatchingList';
 import FindFarmerRootLayout from './components/Layout/FindFarmerRootLayout';
 import FindFarmerPage from './pages/FindFarmers/FindFarmer';
 import FarmerDetailPage from './pages/FindFarmers/FarmerDetail';
-//import { loader as farmerDetailLoader } from './pages/FindFarmers/FarmerDetail';
 
 import MyPageRootLayout from './components/Layout/MyPageRootLayout';
 import ReqListPage from './pages/MyPages/ReqList';
@@ -22,6 +21,7 @@ import ModifyUserPage from './pages/MyPages/ModifyUser';
 import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
 import OrderedProductPage from './pages/MyPages/OrderedProduct';
+import QuotePayPage from './pages/MyPages/QuotePay';
 
 import RequestList from './pages/FarmersPages/RequestList';
 import QuotForm from './pages/FarmersPages/QuotForm';
@@ -29,6 +29,8 @@ import QuotStatus from './pages/FarmersPages/QuotStatus';
 import QuotDetail from './pages/FarmersPages/QuotDetail';
 import OrderList from './pages/FarmersPages/OrderList';
 import OrderDetail from './pages/FarmersPages/OrderDetail';
+import ProductsForm from './pages/FarmersPages/ProductsForm';
+import ModifyFarmerPage from './pages/FarmersPages/ModifyFarmer';
 
 import FarmerPageRootLayout from './components/Layout/FarmerPageRootLayout';
 import DeliveryList from './pages/FarmersPages/DeliveryList';
@@ -39,8 +41,8 @@ import FindEmailPage from './pages/Login/FindEmail';
 import FindPwPage from './pages/Login/FindPw';
 import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
-import ProductsForm from './pages/ProductRegistration/ProductsForm';
 
+import Pay from './components/FarmersDetail/Pay';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -56,6 +58,8 @@ const router = createBrowserRouter([
       { path: 'logout', action: logoutAction },
       { path: 'find-email', element: <FindEmailPage /> },
       { path: 'find-pw', element: <FindPwPage /> },
+      { path: 'pay', element: <Pay /> },
+
       {
         path: 'matching',
         // element: <MatchingPage />,
@@ -69,13 +73,8 @@ const router = createBrowserRouter([
         element: <FindFarmerRootLayout />,
         children: [
           { index: true, element: <FindFarmerPage /> },
-          {
-            path: ':farmerId',
-            element: <FarmerDetailPage />,
-            // id: 'farmer-detail',
-            // loader: farmerDetailLoader,
-            // children: [{ index: true, element: <FarmerDetailPage /> }],
-          },
+          { path: ':farmerId', element: <FarmerDetailPage /> },
+          { path: ':farmerId', element: <FarmerDetailPage /> },
           {
             path: 'reg-farmer',
             element: <RegistFarmerPage page="reg-farmer" />,
@@ -88,6 +87,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <ReqListPage /> },
           //{ path: ':reqId', element: <QuotDetailPage /> },
+          { path: 'quotepay/:quotationId', element: <QuotePayPage /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
           {
@@ -110,8 +110,8 @@ const router = createBrowserRouter([
             index: true,
           },
           {
-            path: 'modify-farm',
-            element: <RegistFarmerPage page="modify-farm" />,
+            path: 'modify-farmer',
+            element: <ModifyFarmerPage />,
           },
           {
             path: 'requestlist',
@@ -149,20 +149,12 @@ const router = createBrowserRouter([
             path: 'regproduct',
             element: <ProductsForm />,
           },
+          // { // 파머 정보 수정
+          //   path: 'modify-farmer',
+          //   element: <
+          // }
         ],
       },
-      // {
-      //   path: '/find-email',
-      //   element: <FindEmailPage />,
-      // },
-      // {
-      //   path: '/find-pw',
-      //   element: <FindPwPage />,
-      // },
-      // {
-      //   path: '/modify-user',
-      //   element: <ModifyUserPage />,
-      // },
     ],
   },
 ]);

@@ -9,11 +9,11 @@ export const tokenAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-// export const isLoginAtom = atom({
-//   key: 'isLogin',
-//   default: false,
-//   effects_UNSTABLE: [persistAtom],
-// });
+export const isLoginAtom = atom({
+  key: 'isLogin',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const userInfoAtom = atom({
   key: 'userInfo',

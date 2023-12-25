@@ -96,11 +96,7 @@ const QuotePayPage = () => {
               paidAt: rsp.paid_at,
               productName: rsp.name,
               quotationId: quoteData.quote.quotation.quotationId,
-              // productPrice: productPrice,
-              // count: quantity,
-              // productId: state.deliveryInfo.productId,
-              // farmerId: state.deliveryInfo.farmerId,
-              // paymentDelivery: state.deliveryInfo.paymentDelivery,
+              count: quoteData.quote.quotation.quotationQuantity,
             });
 
             alert(response.data);

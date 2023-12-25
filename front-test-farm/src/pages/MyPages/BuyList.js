@@ -112,7 +112,7 @@ const BuyListPage = () => {
         {buyList.length > 0
           ? buyList.map((buyItem) => (
               <BuyCard
-                key={buyItem.ordersId}
+                key={buyItem.payInfo.receiptId}
                 buyItem={buyItem}
               />
             ))

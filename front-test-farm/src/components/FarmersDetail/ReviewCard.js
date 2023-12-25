@@ -18,8 +18,8 @@ const ReviewCard = ({ review }) => {
         <div className={style.details}>
           <span className={style.date}>{formattedDate}</span>
           <span className={style.farmName}>{review.farmName}</span>
-          <span className={style.itemName}>{review.itemName}</span>
-          <span className={style.quantity}>{review.quantity}</span>
+          <span className={style.itemName}>{review.productName}</span>
+          <span className={style.quantity}>{review.count}</span>
         </div>
         <div className={style.content}>{review.content}</div>
       </div>

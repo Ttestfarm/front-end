@@ -135,11 +135,6 @@
   color: #fff;
 }
 
-/* .btn2 {
-  background-color: #e2e4d4;
-  color: var(--color-main);
-} */
-
 /* 
 /* Add media query to adjust layout for smaller screens */
 @media (max-width: 768px) {

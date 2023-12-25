@@ -25,6 +25,9 @@
   color: green;
   font-weight: 700;
 }
+.date {
+  color: darkgray;
+}
 
 .right {
   display: flex;

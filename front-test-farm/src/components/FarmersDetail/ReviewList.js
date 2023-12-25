@@ -9,15 +9,20 @@ import * as API from '../../api/index';
 const ReviewList = ({ farmerId }) => {
   const [reviewList, setReviewList] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageInfo, setPageInfo] = useState({});
+  const [pageInfo, setPageInfo] = useState({
+    allPage: 1,
+    curPage: 1,
+    startPage: 1,
+    endPage: 0,
+  });
 
   useEffect(() => {
     const getLists = async () => {
       const response = await API.get(`/findfarmer/${farmerId}/review/${page}`);
-      console.log(response.data.pageInfo);
       console.log(response.data.reviewList);
       setReviewList(response.data.reviewList);
       setPageInfo(response.data.pageInfo);
+      console.log('리뷰페이지', pageInfo);
     };
 
     getLists();
@@ -44,7 +49,7 @@ const ReviewList = ({ farmerId }) => {
           <Pagination
             className={style.Pagination}
             count={pageInfo?.allPage}
-            page={page}
+            page={pageInfo?.curPage}
             onChange={onChangePage}
             size="small"
           />

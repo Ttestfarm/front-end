@@ -26,9 +26,18 @@ const BuyCard = ({ buyItem }) => {
             <Link> 주문상세 &gt;</Link>
           </section>
           <section className={style.right}>
-            <button>{buyItem.payInfo.state}</button>
+            <button
+              className={`${style.state} ${style[buyItem.payInfo.state]}`}
+            >
+              {buyItem.payInfo.state}
+            </button>
             {buyItem.review === null ? (
-              <button onClick={reviewHandler}>후기쓰기</button>
+              <button
+                className={style.reviewBtn}
+                onClick={reviewHandler}
+              >
+                후기쓰기
+              </button>
             ) : (
               ""
             )}

@@ -43,6 +43,7 @@ import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
 
 import Pay from './components/FarmersDetail/Pay';
+
 const router = createBrowserRouter([
   {
     path: '/',

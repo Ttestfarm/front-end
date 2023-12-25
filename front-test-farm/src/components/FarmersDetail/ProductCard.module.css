@@ -1,3 +1,6 @@
+.card {
+  margin: 1rem;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -23,6 +26,7 @@
   font-size: 1.3rem;
   font-weight: bolder;
   margin-bottom: 0;
+  padding-left: 0.3rem;
 }
 .product {
   margin: 1rem;
@@ -35,7 +39,7 @@
 .btns {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .btns button {

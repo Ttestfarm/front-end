@@ -13,16 +13,11 @@ const BuyListPage = () => {
   const token = useRecoilValue(tokenAtom);
   const [buyList, setBuyList] = useState([]);
   const [page, setPage] = useState(1);
-  const [info, setInfo] = useState({
-    average: 0,
-    matchingProgress: 0,
-    foundMatching: 0,
-    pageInfo: {
-      allPage: 0,
-      curPage: 0,
-      startPage: null,
-      endPage: null,
-    },
+  const [pageInfo, setPageInfo] = useState({
+    allPage: 0,
+    curPage: 0,
+    startPage: null,
+    endPage: null,
   });
   const [ref, inView] = useInView(); // 무한 스크롤
   const [btnView, setBtnView] = useState(false);
@@ -43,18 +38,11 @@ const BuyListPage = () => {
       console.log("page", page);
 
       const response = await API.get("/user/buylist", token);
-      const data = response.data;
+      const data = response.data.OrdersWithReview; // 배열
 
       console.log("data", data);
-      setInfo({
-        average: data.average,
-        matchingProgress: data.matchingProgress,
-        foundMatching: data.foundMatching,
-        pageInfo: { ...data.pageInfo },
-      });
 
-      console.log("1", response.data);
-      setBuyList([...buyList, ...data.buyList]);
+      setBuyList([...buyList, ...data]);
       setPage((page) => page + 1);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -97,6 +85,7 @@ const BuyListPage = () => {
       behavior: "smooth",
     });
   };
+  console.log("buy", buyList);
   return (
     <>
       <nav className={style.nav}>

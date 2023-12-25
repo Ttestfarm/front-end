@@ -10,10 +10,10 @@ import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   userInfoAtom,
   isPostcodeModalAtom,
@@ -21,16 +21,16 @@ import {
   zonecodeAtom,
   isSuccessModalAtom,
   tokenAtom,
-} from "../../recoil/Atoms";
+} from '../../recoil/Atoms';
 
 const RequestForm = () => {
   const token = useRecoilValue(tokenAtom);
   const userInfo = useRecoilValue(userInfoAtom);
   const [data, setData] = useState({
-    requestProduct: "",
-    requestQuantity: "",
-    requestDate: "",
-    requestMessage: "",
+    requestProduct: '',
+    requestQuantity: '',
+    requestDate: '',
+    requestMessage: '',
     tel: userInfo.userTel,
     address1: userInfo.address1,
     address2: userInfo.address2,
@@ -85,8 +85,8 @@ const RequestForm = () => {
 
   //datepicker
   const today = dayjs();
-  const oneMonthLater = today.add(1, "month");
-  const datePickerFormat = "YYYY-MM-DD";
+  const oneMonthLater = today.add(1, 'month');
+  const datePickerFormat = 'YYYY-MM-DD';
   const datePickerUtils = {
     format: datePickerFormat,
     parse: (value) => dayjs(value, datePickerFormat, true).toDate(),
@@ -143,171 +143,172 @@ const RequestForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="60%">
+      <Card width="55%">
         <h1>못난이 농산물을 요청합니다!</h1>
         <Form onSubmit={SubmitHandler}>
           <div className={style.main}>
-          <div className={style.left}>
-            <img
-              src={uglyfarm}
-              alt="agly"
-            />
-          </div>
-          <div className={style.right}>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              name="requestProduct"
-              label="요청 농산물"
-              value={data.requestProduct}
-              onChange={inputHandle}
-              sx={inputStyle}
-              size="small"
-              color="success"
-            />
-            <TextField
-              id="outlined-basic"
-              label="필요한 양"
-              variant="outlined"
-              name="requestQuantity"
-              value={data.requestQuantity}
-              onChange={inputHandle}
-              size="small"
-              helperText="kg/박스 또는 개수"
-              sx={inputStyle}
-              color="success"
-            />
-
-            <TextField
-              variant="outlined"
-              label="요청 메세지"
-              id="outlined-multiline-flexible"
-              multiline
-              rows={3}
-              name="requestMessage"
-              value={data.requestMessage}
-              //onChange={inputHandle}
-              onChange={(e) => handleSetValue(e)}
-              onKeyDown={(e) => handleSetTab(e)}
-              size="small"
-              sx={inputStyle}
-              color="success"
-            />
-            <LocalizationProvider
-              dateAdapter={AdapterDayjs}
-              dateFormats={datePickerUtils}
-            >
-              <div components={['DatePicker']}>
-                <DatePicker
-                  format="YYYY-MM-DD"
-                  defaultValue={dayjs()}
-                  disablePast
-                  label="요청서 유효기간"
-                  showDaysOutsideCurrentMonth
-                  maxDate={oneMonthLater}
-                  value={data.requestDate}
-                  slotProps={{ textField: { size: 'small' } }}
-                  onChange={(newValue) => {
-                    dateFormatChange(newValue);
-                  }}
-                  sx={inputStyle}
-                  color="success"
-                />
-              </div>
-            </LocalizationProvider>
-            <div className={style.address}>
-              <input
-                type="text"
-                name="address1"
-                value={data.address1}
-                hidden
+            <div className={style.left}>
+              <img
+                src={uglyfarm}
+                alt="agly"
               />
-              <input
-                type="text"
-                name="address2"
-                value={data.address2}
-                placeholder={'도로명 주소'}
-                disabled
-                sx={inputStyle}
-              />
-              <button
-                className={style['certify-btn']}
-                onClick={onClicktoggleAddressModal}
-              >
-                <TravelExploreIcon color="success" />
-              </button>
             </div>
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              label="상세주소"
-              name="address3"
-              value={data.address3}
-              onChange={inputHandle}
-              size="small"
-              sx={inputStyle}
-              color="success"
-            />
-            <TextField
-              id="outlined-basic"
-              label="받는 분 연락처"
-              variant="outlined"
-              name="tel"
-              value={data.tel}
-              onChange={inputHandle}
-              size="small"
-              helperText="숫자만 입력(01056781004)"
-              sx={inputStyle}
-              color="success"
-            />
+            <div className={style.right}>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                name="requestProduct"
+                label="요청 농산물"
+                value={data.requestProduct}
+                onChange={inputHandle}
+                sx={inputStyle}
+                size="small"
+                color="success"
+              />
+              <TextField
+                id="outlined-basic"
+                label="필요한 양"
+                variant="outlined"
+                name="requestQuantity"
+                value={data.requestQuantity}
+                onChange={inputHandle}
+                size="small"
+                helperText="kg/박스 또는 개수"
+                sx={inputStyle}
+                color="success"
+              />
+
+              <TextField
+                variant="outlined"
+                label="요청 메세지"
+                id="outlined-multiline-flexible"
+                multiline
+                rows={3}
+                name="requestMessage"
+                value={data.requestMessage}
+                //onChange={inputHandle}
+                onChange={(e) => handleSetValue(e)}
+                onKeyDown={(e) => handleSetTab(e)}
+                size="small"
+                sx={inputStyle}
+                color="success"
+              />
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                dateFormats={datePickerUtils}
+              >
+                <div components={['DatePicker']}>
+                  <DatePicker
+                    format="YYYY-MM-DD"
+                    defaultValue={dayjs()}
+                    disablePast
+                    label="요청서 유효기간"
+                    showDaysOutsideCurrentMonth
+                    maxDate={oneMonthLater}
+                    value={data.requestDate}
+                    slotProps={{ textField: { size: 'small' } }}
+                    onChange={(newValue) => {
+                      dateFormatChange(newValue);
+                    }}
+                    sx={inputStyle}
+                    color="success"
+                  />
+                </div>
+              </LocalizationProvider>
+              <div className={style.address}>
+                <input
+                  type="text"
+                  name="address1"
+                  value={data.address1}
+                  hidden
+                />
+                <input
+                  type="text"
+                  name="address2"
+                  value={data.address2}
+                  placeholder={'도로명 주소'}
+                  disabled
+                  sx={inputStyle}
+                />
+                <button
+                  className={style['certify-btn']}
+                  onClick={onClicktoggleAddressModal}
+                >
+                  <TravelExploreIcon color="success" />
+                </button>
+              </div>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                label="상세주소"
+                name="address3"
+                value={data.address3}
+                onChange={inputHandle}
+                size="small"
+                sx={inputStyle}
+                color="success"
+              />
+              <TextField
+                id="outlined-basic"
+                label="받는 분 연락처"
+                variant="outlined"
+                name="tel"
+                value={data.tel}
+                onChange={inputHandle}
+                size="small"
+                helperText="숫자만 입력(01056781004)"
+                sx={inputStyle}
+                color="success"
+              />
+            </div>
           </div>
-        </div>
-        <div className={style.infobox}>
-          <div className={style.title}>
-            <ErrorOutlineIcon
-              fontSize="small"
-              color="success"
-            />
-            유의 사항
+          <div className={style.infobox}>
+            <div className={style.title}>
+              <ErrorOutlineIcon
+                fontSize="small"
+                color="success"
+              />
+              유의 사항
+            </div>
+            <p>
+              • 언프리티팜은 못난이 농산물의 특성상 개성있는 농산물이
+              배송됩니다.
+            </p>
+            <p>• 아쉽지만 환불이 불가능해요. 신중하게 요청해 주세요!</p>
+            <p>• 배송 주소와 연락처는 매칭 완료시 파머님에게만 보여집니다.</p>
+            <p className={style.padding1}>
+              • 매칭 신청 내용은 수정이 되지 않습니다!
+            </p>
+            <p className={style.padding}>
+              수정을 원하시면 삭제 후 재작성 부탁드립니다.
+            </p>
+            <p className={style.padding1}>
+              • 매칭 유효기간은 오늘로부터 최대 1개월까지 설정 가능합니다.
+            </p>
+            <p className={style.padding}>
+              기간이 만료된 신청은 자동으로 삭제됩니다.
+            </p>
           </div>
-          <p>
-            • 언프리티팜은 못난이 농산물의 특성상 개성있는 농산물이 배송됩니다.
-          </p>
-          <p>• 아쉽지만 환불이 불가능해요. 신중하게 요청해 주세요!</p>
-          <p>• 배송 주소와 연락처는 매칭 완료시 파머님에게만 보여집니다.</p>
-          <p className={style.padding1}>
-            • 매칭 신청 내용은 수정이 되지 않습니다!
-          </p>
-          <p className={style.padding}>
-            수정을 원하시면 삭제 후 재작성 부탁드립니다.
-          </p>
-          <p className={style.padding1}>
-            • 매칭 유효기간은 오늘로부터 최대 1개월까지 설정 가능합니다.
-          </p>
-          <p className={style.padding}>
-            기간이 만료된 신청은 자동으로 삭제됩니다.
-          </p>
-        </div>
-        <footer className={style.footer}>
-          <button
-            onClick={(e) => resetHandler(e)}
-            className={style.btn1}
-          >
-            다시쓰기
-          </button>
-          <button
-            type="submit"
-            className={style.btn}
-          >
-            매칭 신청
-          </button>
-          <button
-            onClick={() => navigate('/matching')}
-            className={style.btn1}
-          >
-            돌아가기
-          </button>
-        </footer>
+          <footer className={style.footer}>
+            <button
+              onClick={(e) => resetHandler(e)}
+              className={style.btn1}
+            >
+              다시쓰기
+            </button>
+            <button
+              type="submit"
+              className={style.btn}
+            >
+              매칭 신청
+            </button>
+            <button
+              onClick={() => navigate('/matching')}
+              className={style.btn1}
+            >
+              돌아가기
+            </button>
+          </footer>
         </Form>
         {isPostcodeModal && <Postcode />}
       </Card>

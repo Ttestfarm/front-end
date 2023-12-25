@@ -20,16 +20,12 @@
 }
 
 .details {
-  margin-top: 4px;
-  line-height: normal;
-  margin-bottom: 55px;
+  margin-bottom: 1rem;
+  font-style: italic;
 }
-
-.date,
-.farmName,
-.itemName,
-.quantity {
-  margin-right: 10px;
+.date {
+  font-size: 13px;
+  color: #75786c;
 }
 .content {
   margin-bottom: 28px;

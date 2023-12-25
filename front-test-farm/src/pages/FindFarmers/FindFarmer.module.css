@@ -9,7 +9,7 @@
   justify-content: space-between;
   width: 70%;
   padding: 3rem 0;
-  margin: auto;
+  /* margin: auto; */
 }
 .wrapper button {
   cursor: pointer;
@@ -20,7 +20,6 @@
 }
 .sorts button {
   background: none;
-
   border: none;
   font-size: 1.1rem;
   font-weight: bold;
@@ -60,6 +59,7 @@
 .searchButton {
   background-color: var(--color-button2);
   color: #e2e4d4;
+  margin-right: 0.6rem;
 }
 .resetButton {
   background-color: #e2e4d4;
@@ -92,7 +92,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 80%;
-  margin: 0 auto;
+  margin: auto;
 }
 .upIcon {
   display: flex;

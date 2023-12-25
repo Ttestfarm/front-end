@@ -1,0 +1,37 @@
+.card {
+  margin: 1rem;
+  padding-left: 2rem;
+}
+.container {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 10px;
+}
+.img {
+  width: 100px;
+  height: 100px;
+  margin-left: 1rem;
+  border: 1px solid var(--color-main);
+}
+.img img {
+  width: 100%;
+  height: 100%;
+}
+
+.middle {
+  flex: 2;
+}
+.middle a {
+  color: green;
+  font-weight: 700;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewContainer {
+  display: flex;
+  justify-content: center;
+}

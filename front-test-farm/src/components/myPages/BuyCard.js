@@ -10,7 +10,7 @@ const BuyCard = ({ buyItem }) => {
     //모달 화면 오픈
   };
   console.log("buyItem", buyItem);
-  const formattedDate = dateFormatter(buyItem.payInfoSummaryDto.createAt);
+  const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   console.log(formattedDate);
   return (
     <div className={style.card}>
@@ -26,7 +26,7 @@ const BuyCard = ({ buyItem }) => {
             <Link> 주문상세 &gt;</Link>
           </section>
           <section className={style.right}>
-            <button>{buyItem.payInfoSummaryDto.state}</button>
+            <button>{buyItem.payInfo.state}</button>
             {buyItem.review === null ? (
               <button onClick={reviewHandler}>후기쓰기</button>
             ) : (

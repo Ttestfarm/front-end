@@ -122,7 +122,7 @@ const BuyListPage = () => {
       <section>
         {buyList.length > 0
           ? buyList.map((buyItem) => (
-              <BuyCard key={buyItem.orders.ordersId} buyItem={buyItem} />
+              <BuyCard key={buyItem.payInfo.receiptId} buyItem={buyItem} />
             ))
           : ` 아직은 구매내역이 없습니다. 
           요청서를 작성하거나 못난이 농산물을 구매할 수 있어요! `}

@@ -73,7 +73,7 @@
 
 .infobox {
   border-radius: 4px;
-  width: 80%;
+  width: 90%;
   margin: 1rem auto;
   background-color: #e2e4d4;
   padding: 1rem 1.5rem;
@@ -130,15 +130,15 @@
   transform: scale(1.1);
 }
 
-.btn1 {
+.btn {
   background-color: var(--color-button2);
   color: #fff;
 }
 
-.btn2 {
+/* .btn2 {
   background-color: #e2e4d4;
   color: var(--color-main);
-}
+} */
 
 /* 
 /* Add media query to adjust layout for smaller screens */

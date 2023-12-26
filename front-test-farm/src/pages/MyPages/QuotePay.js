@@ -14,7 +14,7 @@ const QuotePayPage = () => {
   const navigate = useNavigate();
 
   const quotationId = useParams().quotationId;
-  //const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [paymentInfo, setPaymentInfo] = useState(null);
 
   const [quoteData, setQuoteData] = useState(null);
@@ -49,7 +49,6 @@ const QuotePayPage = () => {
       });
     }
   }, [quoteData]);
-
   useEffect(() => {
     const jquery = document.createElement("script");
     jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
@@ -81,9 +80,12 @@ const QuotePayPage = () => {
         );
 
         if (
-          parseInt(quoteData.quote.quotation.quotationPrice) ===
-          res.data.response.amount
+          parseInt(
+            quoteData.quote.quotation.quotationPrice +
+              quoteData.quote.quotation.quotationDelivery
+          ) === res.data.response.amount
         ) {
+          console.log(quoteData.quote.quotation.quotationPrice);
           try {
             const response = await API.post2(`/payment`, token, {
               receiptId: rsp.imp_uid,
@@ -96,12 +98,13 @@ const QuotePayPage = () => {
               pgTid: rsp.pg_tid,
               pgType: rsp.pg_type,
               state: rsp.status.toUpperCase(),
-              paidAt: rsp.paid_at,
               productName: rsp.name,
               quotationId: quoteData.quote.quotation.quotationId,
               productPrice: quoteData.quote.quotation.quotationPrice, //상품 가격?
               paymentDelivery: quoteData.quote.quotation.quotationDelivery,
-              quotationQuantity: quoteData.quote.quotation.quotationQuantity,
+              quotationQuantity:
+                quoteData.quote.quotation.quotationQuantity.toString(),
+              farmerId: quoteData.quote.quotation.farmerId,
             });
 
             alert(response.data);

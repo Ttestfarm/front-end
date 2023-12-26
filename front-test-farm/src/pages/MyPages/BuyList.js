@@ -15,8 +15,8 @@ const BuyListPage = () => {
   const [buyList, setBuyList] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
-    allPage: 1,
-    curPage: 1,
+    allPage: 0,
+    curPage: 0,
     startPage: null,
     endPage: null,
   });
@@ -33,6 +33,7 @@ const BuyListPage = () => {
       const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
 
+      console.log('3', response.data);
       setBuyList([...buyList, ...data]);
       setPageInfo({ ...response.data.pageInfo });
       setPage((page) => page + 1);

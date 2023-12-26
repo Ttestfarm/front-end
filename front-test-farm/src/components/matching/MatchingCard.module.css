@@ -47,3 +47,9 @@
   background-color: var(--color-button2);
   color: #e2e4d4;
 }
+
+.btns button:disabled {
+  transition: none;
+  transform: none;
+  cursor: default;
+}

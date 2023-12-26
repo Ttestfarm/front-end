@@ -35,8 +35,7 @@ const MatchingListPage = () => {
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      
-
+      if (info?.pageInfo?.curPage > info?.pageInfo?.allPage) return;
       const response = await axios.get(
         `${API.serverUrl}/matching?page=${page}`
       );
@@ -50,7 +49,6 @@ const MatchingListPage = () => {
         pageInfo: { ...data.pageInfo },
       });
 
-    
       setMatchingList([...matchingList, ...data.matchingList]);
       setPage((page) => page + 1);
     } catch (error) {
@@ -61,11 +59,9 @@ const MatchingListPage = () => {
   // fetchData();
 
   useEffect(() => {
-    if (inView) {
+    if (inView && info.pageInfo.curPage <= info.pageInfo.allPage) {
       console.log(inView, '무한스크롤 요청했시유');
 
-      //if (page > info.pageInfo.allPage) return;
-      //패치 요청
       fetchData(page);
     }
   }, [inView]);

@@ -1,15 +1,19 @@
 import React, { useRef, useState } from 'react';
 import ModalContainer from './Modal';
-import { Avatar, Rating, TextareaAutosize } from '@mui/material';
+import { Rating, TextField } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CloseIcon from '@mui/icons-material/Close';
-import { TextField } from '@mui/material';
+import { handleSetValue, handleSetTab } from '../../util/textInsertWithTab';
 import picDefault from '../../assets/third_img.png';
-import { Form } from 'react-router-dom';
 import dateFormatter from '../../util/date';
 import style from './ReviewModal.module.css';
+import * as API from '../../api/index';
+import { useRecoilValue } from 'recoil';
+import { tokenAtom } from '../../recoil/Atoms';
+import { Form } from 'react-router-dom';
 
 const ReviewModal = (props) => {
+  const token = useRecoilValue(tokenAtom);
   const [rating, setRating] = useState(3);
   const [file, setFile] = useState('');
   const [content, setContent] = useState('');
@@ -18,7 +22,7 @@ const ReviewModal = (props) => {
   //날짜 변환
   const formattedDate = dateFormatter(props.orderInfo.date);
   //원화로 변환
-  const numericPrice = parseInt(props.orderInfo.productPrice);
+  const numericPrice = parseInt(props.orderInfo.amount);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   const onFileChange = (e) => {
@@ -32,98 +36,136 @@ const ReviewModal = (props) => {
   };
   console.log('props', props);
 
-  //
-  const handleSetValue = (e) => {
-    setContent(e.target.value);
-  };
+  // //
+  // const handleSetValue = (e) => {
+  //   setContent(e.target.value);
+  // };
 
-  const handleSetTab = (e) => {
-    console.log(e.keyCode);
-    if (e.keyCode === 9) {
-      e.preventDefault();
-      let val = e.target.value;
-      let start = e.target.selectionStart;
-      let end = e.target.selectionEnd;
-      e.target.value = val.substring(0, start) + '\t' + val.substring(end);
-      e.target.selectionStart = e.target.selectionEnd = start + 1;
-      handleSetValue(e);
-      return false; //  prevent focus
-    }
-  };
-  //
+  // const handleSetTab = (e) => {
+  //   console.log(e.keyCode);
+  //   if (e.keyCode === 9) {
+  //     e.preventDefault();
+  //     let val = e.target.value;
+  //     let start = e.target.selectionStart;
+  //     let end = e.target.selectionEnd;
+  //     e.target.value = val.substring(0, start) + '\t' + val.substring(end);
+  //     e.target.selectionStart = e.target.selectionEnd = start + 1;
+  //     handleSetValue(e);
+  //     return false; //  prevent focus
+  //   }
+  // };
+  // //
 
   const closeModal = () => {
     props.onClose();
   };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('ordersId', props.orderInfo.ordersId);
+    formData.append('content', content);
+    formData.append('rating', rating);
+    if (file !== null) {
+      formData.append('reviewpixUrl', file);
+    }
+
+    try {
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+
+        // const response = await API.formPost(
+        //   `/user/buylist?ordersId=${props.orderInfo.ordersId}`,
+        //   token,
+        //   formData
+        // );
+        const response = await API.formPost('/buylist', token, formData);
+        console.log('리뷰 전송!', response);
+
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {props.isOpen && (
         <ModalContainer>
-          <header className={style.header}>
-            <div>
-              <p>{formattedDate}</p>
-              <p>구매하신 {props.orderInfo.productName}</p>
-              <p>₩ {formattedPrice}</p>
-            </div>
-            <div className={style['img-rating']}>
-              <Avatar
-                ref={imgBoxRef}
-                src={picDefault}
-                onChange={onFileChange}
-                sx={{ width: 130, height: 130 }}
-              ></Avatar>
+          <Form>
+            <header className={style.header}>
+              <div>
+                <p className={style.date}>{formattedDate}</p>
+                <p>
+                  구매한&nbsp;
+                  <span className={style.name}>
+                    {props.orderInfo.productName}
+                  </span>
+                </p>
+                <p className={style.won}>₩ {formattedPrice}</p>
+              </div>
 
-              <Rating
-                name="simple-controlled"
-                value={rating}
-                onChange={(event, newValue) => {
-                  setRating(newValue);
-                }}
-              />
-              <button
-                onClick={() => document.getElementById('file').click()}
-                className={style.addBtn}
-              >
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  hidden
+              <div className={style['img-rating']}>
+                <img
+                  src={picDefault}
+                  width="130px"
+                  height="130px"
+                  alt="picDefault"
+                  ref={imgBoxRef}
+                  onClick={() => document.getElementById('file').click()}
                 />
-                <AddAPhotoIcon sx={{ fontSize: 'small' }} />
-                &nbsp;사진추가
-              </button>
-            </div>
-            <div className={style.closeBtn}>
-              <CloseIcon
-                onClick={closeModal}
-                sx={{ fontSize: 'large' }}
+                <Rating
+                  name="rating simple-controlled"
+                  value={rating}
+                  onChange={(event, newValue) => {
+                    setRating(newValue);
+                  }}
+                />
+                <button
+                  onClick={() => document.getElementById('file').click()}
+                  className={style.addBtn}
+                >
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                    hidden
+                  />
+                  <AddAPhotoIcon sx={{ fontSize: 'small' }} />
+                  &nbsp;사진추가
+                </button>
+              </div>
+              <div className={style.closeBtn}>
+                <CloseIcon
+                  onClick={closeModal}
+                  sx={{ fontSize: 'large' }}
+                />
+              </div>
+            </header>
+            <main className={style.main}>
+              <TextField
+                variant="outlined"
+                id="outlined-multiline-flexible fullwidth"
+                multiline
+                fullWidth
+                rows={7}
+                name="content"
+                value={content}
+                label="리뷰 남기기"
+                //onChange={inputHandle}
+                onChange={(e) => handleSetValue(e, setContent)}
+                onKeyDown={(e) => handleSetTab(e)}
+                color="success"
               />
-            </div>
-          </header>
-          <main>
-            <TextField
-              variant="outlined"
-              id="outlined-multiline-flexible fullwidth"
-              multiline
-              fullWidth
-              rows={7}
-              name="content"
-              value={content}
-              label="리뷰 남기기"
-              //onChange={inputHandle}
-              onChange={(e) => handleSetValue(e)}
-              onKeyDown={(e) => handleSetTab(e)}
-              size="small"
-              // sx={inputStyle}
-              color="success"
-            />
-          </main>
-          <footer className={style.footer}>
-            <button>리뷰 저장</button>
-          </footer>
+            </main>
+            <footer className={style.footer}>
+              <button onClick={submitHandler}>리뷰 저장</button>
+            </footer>
+          </Form>
         </ModalContainer>
       )}
     </>

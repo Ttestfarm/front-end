@@ -13,6 +13,7 @@ const BuyCard = ({ buyItem }) => {
     date: buyItem.payInfo.createAt,
     productName: buyItem.payInfo.productName,
     productPrice: buyItem.payInfo.productPrice,
+    ordersId: buyItem.payInfo.ordersId,
   });
 
   //모달 화면 오픈

@@ -7,10 +7,10 @@ const MatchingCard = ({ item }) => {
   return (
     <Card
       width="300px"
-      height="300px"
+      height="250px"
     >
       <p>
-        <span className={style.name}>{item.userName}</span> 님의 요청서
+        <span className={style.name}>🍊{item.userName}</span> 님의 요청서
       </p>
       <div className={style.container}>
         <div className={style.left}>
@@ -25,10 +25,10 @@ const MatchingCard = ({ item }) => {
         </div>
       </div>
       <div className={style.btns}>
-        <button>
-          <Link to={`/matching?reqformId=${item.requestId}`}>따라 사기</Link>
+        <button className={style.btn1}>
+          <Link to={`/matching/buy/${item.requestId}`}>따라 사기</Link>
         </button>
-        <button>견적 보내기</button>
+        <button className={style.btn2}>견적 보내기</button>
       </div>
     </Card>
   );

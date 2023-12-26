@@ -43,6 +43,7 @@ import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
 
 import Pay from './components/FarmersDetail/Pay';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <MatchingListPage /> },
           { path: 'requestform', element: <RequestForm /> },
+          { path: 'buy/:reqformId', element: <RequestForm /> },
         ],
       },
       {

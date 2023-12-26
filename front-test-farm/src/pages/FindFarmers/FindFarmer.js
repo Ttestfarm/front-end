@@ -90,6 +90,13 @@ const FindFarmerPage = () => {
 
   return (
     <Fragment>
+      <div className={style.farmerRegBtn}>
+        <span>아직 등록을 안하셨다면? 👨‍🌾&nbsp;&nbsp; </span>
+
+        <Link to="reg-farmer">
+          <button className={style.regBtn}>파머 등록</button>
+        </Link>
+      </div>
       <section className={style.wrapper}>
         <div className={style.search}>
           <input
@@ -123,12 +130,6 @@ const FindFarmerPage = () => {
           {' | '}
           <button onClick={() => listHandler(keyword, 'followCount', 1)}>
             찜이 많은 순
-          </button>
-        </div>
-
-        <div>
-          <button className={style.regBtn}>
-            <Link to="reg-farmer">파머 등록</Link>
           </button>
         </div>
       </section>

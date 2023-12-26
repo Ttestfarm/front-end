@@ -122,6 +122,7 @@ const ModifyUserPage = () => {
     } else {
       setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
+      setUpdateData({...updateData, userPassword:inputPassword})
     }
   };
 
@@ -167,6 +168,7 @@ const ModifyUserPage = () => {
   }
 
   const RegistHandler = async () => {
+    console.log("updateData",updateData);
     try {
       const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
@@ -212,7 +214,6 @@ const ModifyUserPage = () => {
   return (
     <RegistSection
       title={'내 정보 관리'}
-      style={{ padding: 0 }}
     >
       <div className={style['form-control']}>
         <label htmlFor="name">이름</label>
@@ -352,15 +353,15 @@ const ModifyUserPage = () => {
         {telHasError && (
           <p className={style['error-text']}>인증번호를 입력해 주세요.</p>
         )}
-        <button
-          id="join"
-          className={style['join-btn']}
-          disabled={!formIsValid}
-          onClick={RegistHandler}
-        >
-          정보 수정 완료
-        </button>
       </div>
+      <button
+        id="join"
+        className={style['join-btn']}
+        disabled={!formIsValid}
+        onClick={RegistHandler}
+      >
+        정보 수정 완료
+      </button>
       {isPostcodeModal && <Postcode />}
     </RegistSection>
   );

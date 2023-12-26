@@ -48,7 +48,6 @@ const FarmerDetailPage = () => {
     e.preventDefault();
     try {
       const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
-      console.log('32123', response);
 
       setFarmerInfo({ ...farmerInfo, followCount: response.data.followCount });
       setFarmerfollow(response.data.isSelect);
@@ -95,29 +94,26 @@ const FarmerDetailPage = () => {
                     fontSize: 30,
                   }}
                   onClick={followHandler}
+                  className={style.follow}
                 />
-                <span>({farmerInfo.followCount}명)</span>
+                <span> ({farmerInfo.followCount}명이 찜)</span>
               </div>
             </section>
 
             <div className={style.farmDetails}>
               <div>
-                <span className={style.farmName}>🌾팜 이름</span>
-                <span className={style.farmNameData}>
-                  {farmerInfo.farmName}
-                </span>
+                <span className={style.name}>🌾팜 이름</span>
+                <span className={style.value}>{farmerInfo.farmName}</span>
               </div>
               <br />
               <div>
-                <span className={style.farmerName}>📞연락처</span>
-                <span className={style.farmerNameData}>
-                  {farmerInfo.farmTel}
-                </span>
+                <span className={style.name}>📞연락처</span>
+                <span className={style.value}>{farmerInfo.farmTel}</span>
               </div>
               <br />
               <div className={style.farmsAddress}>
-                <span className={style.farmAddress}>🏡팜 주소</span>
-                <span className={style.farmAddressData}>
+                <span className={style.name}>🏡팜 주소</span>
+                <span className={style.value}>
                   {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
                 </span>
               </div>
@@ -131,7 +127,9 @@ const FarmerDetailPage = () => {
         <ProductsList farmerId={farmerId} />
       </main>
       <main className={style.main}>
-        <header className={style.header}>후기</header>
+        <header className={style.header}>
+          {farmerInfo?.farmName}님에게 남겨진 후기
+        </header>
         <ReviewList farmerId={farmerId} />
       </main>
     </div>

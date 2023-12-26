@@ -13,7 +13,7 @@ const Oauth = () => {
 
   useEffect(() => {
     console.log('token:' + stoken);
-    setToken({ type: 'token', payload: stoken });
+    setToken(stoken);
 
     axios
       .get(`${API.serverUrl}/user/userInfo`, {

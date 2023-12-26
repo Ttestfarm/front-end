@@ -5,10 +5,13 @@
   margin: 2rem 0.5rem;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 0.4rem;
 }
 .left {
   flex: 1;
+  color: rgb(99, 98, 98);
 }
 .right {
   font-weight: bold;
@@ -16,6 +19,7 @@
 }
 
 .btns {
+  margin: 1rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -24,10 +28,22 @@
   border: none;
   padding: 0.3rem 1rem;
   border-radius: 4px;
-  color: aliceblue;
-  background-color: var(--color-button2);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-
+.btns button:hover {
+  transform: scale(1.1);
+}
 .btns a {
-  color: aliceblue;
+  color: var(--color-button2);
+}
+.btn1 {
+  background-color: #e2e4d4;
+  color: var(--color-button2);
+}
+.btn2 {
+  background-color: var(--color-button2);
+  color: #e2e4d4;
 }

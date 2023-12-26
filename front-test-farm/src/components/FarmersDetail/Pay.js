@@ -38,7 +38,10 @@ const Pay = () => {
     merchant_uid: `mid_${new Date().getTime()}`,
     buyer_name: state.deliveryInfo.name,
     buyer_tel: state.deliveryInfo.tel,
-    buyer_addr: state.deliveryInfo.address,
+    buyer_addr:
+      state.deliveryInfo.address1 +
+      state.deliveryInfo.address2 +
+      state.deliveryInfo.address3,
   });
 
   useEffect(() => {
@@ -93,7 +96,7 @@ const Pay = () => {
               paymentMethod: rsp.pay_method,
               pgTid: rsp.pg_tid,
               pgType: rsp.pg_type,
-              status: rsp.status,
+              state: rsp.status.toUpperCase(),
               paidAt: rsp.paid_at,
               productName: rsp.name,
               productPrice: productPrice,
@@ -121,11 +124,16 @@ const Pay = () => {
   };
 
   return (
-    <>
+    <div className={"checkout-container"}>
       <div>checkoutpage</div>
       <div>수령인 이름: {state.deliveryInfo.name}</div>
       <div>수령인 전화번호: {state.deliveryInfo.tel}</div>
-      <div>수령 주소: {state.deliveryInfo.address}</div>
+      <div>
+        수령 주소:{" "}
+        {state.deliveryInfo.address1 +
+          state.deliveryInfo.address2 +
+          state.deliveryInfo.address3}
+      </div>
       <div>상품명: {state.deliveryInfo.productName}</div>
       <div>상품가격: {state.deliveryInfo.productPrice}</div>
       <div>수량: {state.deliveryInfo.quantity}</div>
@@ -137,7 +145,7 @@ const Pay = () => {
         원
       </div>
       <button onClick={requestPay}>결제하기</button>
-    </>
+    </div>
   );
 };
 export default Pay;

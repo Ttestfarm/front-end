@@ -59,12 +59,19 @@
 .infoContent {
   padding: 0.6rem;
 }
-.ListBox {
+/* .ListBox {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
 
   margin: 2rem auto;
+} */
+.ListBox {
+  width: 940px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px; 
 }
 .upIcon {
   display: flex;

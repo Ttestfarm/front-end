@@ -5,12 +5,19 @@ import Pagination from './Pagination';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const OrderList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const [ordList, setOrdList] = useState([]);
   const [farmerId, setFarmerId] = useState(1);
-  const [type, setType] = useState("1"); // 1: 매칭, 2: 주문
+  const [type, setType] = useState('매칭'); // 1: 매칭, 2: 주문
   const [page, setPage] = useState(1);
 
   const [isOpen, setIsOpen] = useState(false); // 발송 Modal
@@ -38,13 +45,13 @@ const OrderList = () => {
     testFunction()
   }, []);
 
-    const changeType = async (idx) => { // 필터 변경
-      if (idx === type) {
+    const changeType = async (selType) => { // 필터 변경
+      if (selType === type) {
         alert("이미 선택");
       } else {
         try {
-          setType(idx);
-          let type = idx;
+          setType(selType);
+          let type = selType;
           let page = 1;
           const response = await API.get(`/farmer/orderlist/${type}/${page}`, token);
           const data = response.data;
@@ -119,51 +126,65 @@ const OrderList = () => {
     }
 
     return (
-      <div className="quotation-status">
+      <div>
         <div className="quotation-status-header">
-          <span>#배송 완료 된 견적서는 배송 현황에서 볼 수 있습니다!</span>
-          <div className="dropdown">
-            <button className="dropbtn">
+          <div className='warning-text'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+            <ellipse cx="10.2691" cy="10.5273" rx="9.72222" ry="10" fill="#49680D" />
+            <text x="50%" y="50%" textAnchor='middle' dy=".3em" fill="#fff" fontSize="12">
+              !
+            </text>
+          </svg>
+          <span>
+            &nbsp;배송 완료 된 견적서는 배송 현황에서 볼 수 있습니다!
+          </span>
+        </div>
+          <div className="state-dropdown">
+            <button className="state-dropbtn">
               {type}
             </button>
-            <div className="dropdown-content">
-              <a href="#" key="1" onClick={() => changeType("1")}>매칭</a>
-              <a href="#" key="2" onClick={() => changeType("2")}>주문</a>
+            <div className="state-dropdown-content">
+              <a href="#" key="1" onClick={() => changeType('매칭')}>매칭</a>
+              <a href="#" key="2" onClick={() => changeType('주문')}>주문</a>
             </div>
           </div>
         </div>
-        <div className="quotation-list">
-          <table>
-            <tr>
-              <th>&nbsp;</th>
-              <th>주문번호</th>
-              <th>농산물</th>
-              <th>수량</th>
-              <th>가격</th>
-              <th>받는이</th>
-              <th>연락처</th>
-              <th>주소</th>
-            </tr>
+        <TableContainer component={Paper}>
+        <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="right">&nbsp;</TableCell>
+              <TableCell align="right">주문번호</TableCell>
+              <TableCell align="right">농산물</TableCell>
+              <TableCell align="right">가격</TableCell>
+              <TableCell align="right">수량&nbsp;</TableCell>
+              <TableCell align="right">받는이&nbsp;</TableCell>
+              <TableCell align="right">연락처&nbsp;</TableCell>
+              <TableCell align="right">주소&nbsp;</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {ordList.length > 0 && ordList.map(ord => (
-              <tr key={ord.ordersId}>
-                <td>
+              <TableRow key={ord.ordersId}>
+                <TableCell>
                   <button className="quotation-delete-btn" onClick={() => onClickButton(ord.ordersId, ord.product, ord.quantity)}>발송</button>
-                </td>
-                <td>
+                </TableCell>
+                <TableCell align="right">
                   <Link to={`orderdetail/${ord.ordersId}/${type}`}>
                     {ord.ordersId}
                   </Link>
-                </td>
-                <td>{ord.product}</td>
-                <td>{ord.quantity}kg</td>
-                <td>{ord.price}</td>
-                <td>{ord.name}</td>
-                <td>{ord.tel}</td>
-                <td>{ord.address}</td>
-              </tr>
+                </TableCell>
+                <TableCell align="right">{ord.product}</TableCell>
+                <TableCell align="right">{ord.quantity}</TableCell>
+                <TableCell align="right">{ord.price}</TableCell>
+                <TableCell align="right">{ord.name}</TableCell>
+                <TableCell align="right">{ord.tel}</TableCell>
+                <TableCell align="right">{ord.address}</TableCell>
+              </TableRow>
             ))}
-          </table>
-        </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
         {isOpen && (<div id="myModal" className="modal" onClick={handleOutsideClick}>
           {/* 모달 내용 */}
           <div className="modal-content">

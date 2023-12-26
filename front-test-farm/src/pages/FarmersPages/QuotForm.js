@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import axios from 'axios';
 
 const QuotForm = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -18,6 +19,7 @@ const QuotForm = () => {
     'requestId': `${request.requestId}`,
     'product': `${request.requestProduct}`,
     'quantity': `${request.requestQuantity}`,
+    'delivery': '',
     'price': '',
     'comment': '',
     'picture': '',
@@ -77,17 +79,19 @@ const QuotForm = () => {
     try {
       e.preventDefault();
       const formDataObj = new FormData();
-
       formDataObj.append('requestId', formData.requestId);
       formDataObj.append('quotationProduct', formData.product);
       formDataObj.append('quotationQuantity', formData.quantity);
+      formDataObj.append('quotationDelivery', formData.delivery);
       formDataObj.append('quotationPrice', formData.price);
       formDataObj.append('quotationComment', formData.comment);
       files.forEach((file, index) => {
         formDataObj.append(`quotationPicture${index + 1}`, file);
       });
+      console.log(formDataObj.get('requestId'));
       console.log(formDataObj.get('quotationPicture1'));
-      const response = await API.formPost(`/farmer/regquot'`, token, formDataObj);
+      const response = await API.formPost(`/farmer/regquot`, token, formDataObj);
+
       const data = response.data;
 
       alert(data);
@@ -148,7 +152,6 @@ const QuotForm = () => {
                 variant="outlined"
                 name="delivery"
                 label="배송비"
-                value={request.delivery}
                 sx={inputStyle}
                 size="small"
                 color="success"

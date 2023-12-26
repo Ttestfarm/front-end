@@ -44,7 +44,8 @@
 }
 
 .picture {
-  margin-top: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 
   display: flex;
   justify-content: space-around;

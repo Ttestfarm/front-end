@@ -12,6 +12,16 @@
   color: darkgray;
 }
 
+.header p {
+  color: black;
+  font-weight: bold;
+}
+
+.header span {
+  color: #c9c9c9;
+  font-weight: 400;
+}
+
 .wrapper {
   display: flex;
   max-width: 100%;
@@ -69,6 +79,12 @@
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  /* text-decoration: none; */
+}
+
+.link {
+  text-decoration: none;
+  color: #fff;
 }
 
 .right button:hover {

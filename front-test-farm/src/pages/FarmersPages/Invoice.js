@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import './style/Invoice.css';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import * as API from '../../api/index';
 
 const Invoice = () => {
@@ -9,6 +16,7 @@ const Invoice = () => {
 
   const [calList, setCalList] = useState([]);
   const [page, setPage] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [date, setDate] = useState();
 
   let today = new Date();
@@ -65,6 +73,7 @@ const Invoice = () => {
       console.log(data);
       setPage(data.pageInfo);
       setCalList(data.calList);
+      setTotalPrice(data.totalPrice);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -77,9 +86,8 @@ const Invoice = () => {
 
   return (
     <>
-      <calendar />
       <div className="cal-form">
-        <h2>조회하기</h2>
+        <h1>조회하기</h1>
         <div className="cal-search">
           <div className="cal-search-date">
             <h3>조회기간</h3>
@@ -113,27 +121,36 @@ const Invoice = () => {
         </div>
         <div className="cal-result">
           <div className="cal-result-money">
-            <span>정산금액</span>
-            <span>50,000</span>
+            <span>총 정산금액</span>
+            <span>{calList > 0 ?
+             totalPrice :
+             '0'}</span>
           </div>
-          <div className="cal-result-list">
-            <table>
-              <tr>
-                <th>정산예정일</th>
-                <th>정산완료일</th>
-                <th>수수료</th>
-                <th>금액</th>
-                <th>정산구분</th>
-              </tr>
-              <tr>
-                <td>2023.10.11</td>
-                <td>2023.11.15</td>
-                <td>?</td>
-                <td>50,000</td>
-                <td>완료</td>
-              </tr>
-            </table>
-          </div>
+          <TableContainer component={Paper}>
+        <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="right">주문 번호</TableCell>
+              <TableCell align="right">정산예정일</TableCell>
+              <TableCell align="right">수수료</TableCell>
+              <TableCell align="right">금액&nbsp;</TableCell>
+              <TableCell align="right">정산구분&nbsp;</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {calList.map((invoice) => (
+              <TableRow
+              key={invoice.receiptId}
+              >
+              <TableCell align="right">{invoice.invoiceDate}</TableCell>
+              <TableCell align="right">{invoice.invoiceCommission}</TableCell>
+              <TableCell align="right">{invoice.invoicePrice}</TableCell>
+              <TableCell align="right">{invoice.state === 'COMPLETED' ? '정산완료' : '미정산'}</TableCell>
+            </TableRow>
+            ))}
+    </TableBody>
+    </Table>
+      </TableContainer>
         </div>
       </div>
     </>

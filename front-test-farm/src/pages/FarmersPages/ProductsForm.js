@@ -6,7 +6,7 @@ import leftimg from '../../assets/quotform.jpg';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 
 const ProductsForm = () => {
@@ -15,12 +15,11 @@ const ProductsForm = () => {
   const handleShippingChange = (e) => {
     setIsFreeShipping(e.target.value);
   };
-
+  const navigate = useNavigate();
   const [titleImage, setTitleImage] = useState();
   const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
     product: '',
-    quantity: '',
     price: null,
     stock: null,
     description: '',
@@ -94,12 +93,12 @@ const ProductsForm = () => {
       e.preventDefault();
       const formDataObj = new FormData();
       formDataObj.append('productName', formData.product);
-      formDataObj.append('productQuantity', formData.quantity);
       formDataObj.append('productPrice', formData.price);
       formDataObj.append('productStock', formData.stock);
       formDataObj.append('productDescription', formData.description);
       formDataObj.append('ShippingCost', formData.shippingFee);
 
+      console.log(formData.description)
       formDataObj.append("titleImage", titleImage);
       images.forEach((image, index) => {
         formDataObj.append(`image${index + 1}`, image);
@@ -107,14 +106,14 @@ const ProductsForm = () => {
 
       console.log(formDataObj);
 
-      const response = await API.formPost(`/regproduct`, token, formDataObj);
+      const response = await API.formPost(`/farmer/regproduct`, token, formDataObj);
       const data = response.data;
+      
       console.log(response);
+      navigate('/farmerpage/');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-
-
   };
 
   return (
@@ -167,7 +166,7 @@ const ProductsForm = () => {
                 variant="outlined"
                 label="추가 설명"
                 id="outlined-multiline-flexible"
-                name="comment"
+                name="description"
                 rows={3}
                 multiline
                 onChange={handleInputChange}

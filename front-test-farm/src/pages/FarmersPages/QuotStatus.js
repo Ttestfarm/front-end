@@ -33,8 +33,8 @@ const QuotStatus = () => {
       const response = await API.get(`/farmer/quotlist/${state}/${page}`, token);
       const data = response.data;
 
-      setPageInfo([...data.pageInfo]);
-      setQuotList([...data.quotList]);
+      setPageInfo(data.pageInfo);
+      setQuotList(data.quotList);
       console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -85,7 +85,6 @@ const QuotStatus = () => {
   };
 
   return (
-    // <div className="quotation-status">
     <div>
       <div className="quotation-status-header">
         <div className='warning-text'>

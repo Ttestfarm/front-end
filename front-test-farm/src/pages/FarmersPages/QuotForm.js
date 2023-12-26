@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import axios from 'axios';
 
 const QuotForm = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -87,8 +88,10 @@ const QuotForm = () => {
       files.forEach((file, index) => {
         formDataObj.append(`quotationPicture${index + 1}`, file);
       });
+      console.log(formDataObj.get('requestId'));
       console.log(formDataObj.get('quotationPicture1'));
-      const response = await API.formPost(`/farmer/regquot'`, token, formDataObj);
+      const response = await API.formPost(`/farmer/regquot`, token, formDataObj);
+
       const data = response.data;
 
       alert(data);

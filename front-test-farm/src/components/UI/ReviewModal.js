@@ -1,40 +1,40 @@
-import React, { useRef, useState } from 'react';
-import ModalContainer from './Modal';
-import { Rating, TextField } from '@mui/material';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import CloseIcon from '@mui/icons-material/Close';
-import { handleSetValue, handleSetTab } from '../../util/textInsertWithTab';
-import picDefault from '../../assets/third_img.png';
-import dateFormatter from '../../util/date';
-import style from './ReviewModal.module.css';
-import * as API from '../../api/index';
-import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
-import { Form } from 'react-router-dom';
+import React, { useRef, useState } from "react";
+import ModalContainer from "./Modal";
+import { Rating, TextField } from "@mui/material";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import CloseIcon from "@mui/icons-material/Close";
+import { handleSetValue, handleSetTab } from "../../util/textInsertWithTab";
+import picDefault from "../../assets/third_img.png";
+import dateFormatter from "../../util/date";
+import style from "./ReviewModal.module.css";
+import * as API from "../../api/index";
+import { useRecoilValue } from "recoil";
+import { tokenAtom } from "../../recoil/Atoms";
+import { Form } from "react-router-dom";
 
 const ReviewModal = (props) => {
   const token = useRecoilValue(tokenAtom);
   const [rating, setRating] = useState(3);
-  const [file, setFile] = useState('');
-  const [content, setContent] = useState('');
+  const [file, setFile] = useState("");
+  const [content, setContent] = useState("");
 
   const imgBoxRef = useRef();
   //날짜 변환
   const formattedDate = dateFormatter(props.orderInfo.date);
   //원화로 변환
   const numericPrice = parseInt(props.orderInfo.amount);
-  const formattedPrice = numericPrice.toLocaleString('ko-KR');
+  const formattedPrice = numericPrice.toLocaleString("ko-KR");
 
   const onFileChange = (e) => {
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
-    console.log('file', imageSrc);
+    console.log("file", imageSrc);
 
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
     }
   };
-  console.log('props', props);
+  console.log("props", props);
 
   const closeModal = () => {
     props.onClose();
@@ -44,11 +44,12 @@ const ReviewModal = (props) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('ordersId', props.orderInfo.ordersId);
-    formData.append('content', content);
-    formData.append('rating', rating);
+    formData.append("receiptId", props.orderInfo.receiptId);
+    formData.append("content", content);
+    formData.append("rating", rating);
+    formData.append("farmerId", props.orderInfo.farmerId);
     if (file !== null) {
-      formData.append('reviewpixUrl', file);
+      formData.append("reviewpixUrl", file);
     }
 
     try {
@@ -60,8 +61,8 @@ const ReviewModal = (props) => {
         //   token,
         //   formData
         // );
-        const response = await API.formPost('/buylist', token, formData);
-        console.log('리뷰 전송!', response);
+        const response = await API.formPost("/buylist", token, formData);
+        console.log("리뷰 전송!", response);
 
         closeModal();
       }
@@ -87,14 +88,14 @@ const ReviewModal = (props) => {
                 <p className={style.won}>₩ {formattedPrice}</p>
               </div>
 
-              <div className={style['img-rating']}>
+              <div className={style["img-rating"]}>
                 <img
                   src={picDefault}
                   width="130px"
                   height="130px"
                   alt="picDefault"
                   ref={imgBoxRef}
-                  onClick={() => document.getElementById('file').click()}
+                  onClick={() => document.getElementById("file").click()}
                 />
                 <Rating
                   name="rating simple-controlled"
@@ -104,7 +105,7 @@ const ReviewModal = (props) => {
                   }}
                 />
                 <button
-                  onClick={() => document.getElementById('file').click()}
+                  onClick={() => document.getElementById("file").click()}
                   className={style.addBtn}
                 >
                   <input
@@ -115,15 +116,12 @@ const ReviewModal = (props) => {
                     onChange={onFileChange}
                     hidden
                   />
-                  <AddAPhotoIcon sx={{ fontSize: 'small' }} />
+                  <AddAPhotoIcon sx={{ fontSize: "small" }} />
                   &nbsp;사진추가
                 </button>
               </div>
               <div className={style.closeBtn}>
-                <CloseIcon
-                  onClick={closeModal}
-                  sx={{ fontSize: 'large' }}
-                />
+                <CloseIcon onClick={closeModal} sx={{ fontSize: "large" }} />
               </div>
             </header>
             <main className={style.main}>

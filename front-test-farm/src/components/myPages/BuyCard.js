@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import style from './BuyCard.module.css';
-import Card from '../UI/Card';
-import BuyReviewCard from './BuyReviewCard';
-import dateFormatter from '../../util/date';
-import ReviewModal from '../UI/ReviewModal';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import style from "./BuyCard.module.css";
+import Card from "../UI/Card";
+import BuyReviewCard from "./BuyReviewCard";
+import dateFormatter from "../../util/date";
+import ReviewModal from "../UI/ReviewModal";
 
 const BuyCard = ({ buyItem }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
@@ -13,7 +13,8 @@ const BuyCard = ({ buyItem }) => {
     date: buyItem.payInfo.createAt,
     productName: buyItem.payInfo.productName,
     productPrice: buyItem.payInfo.productPrice,
-    ordersId: buyItem.payInfo.ordersId,
+    receiptId: buyItem.payInfo.receiptId,
+    farmerId: buyItem.payInfo.farmerId,
   });
 
   //모달 화면 오픈
@@ -25,7 +26,7 @@ const BuyCard = ({ buyItem }) => {
     setModalOpen(false);
   };
 
-  console.log('buyItem', buyItem.payInfo.createAt);
+  console.log("buyItem", buyItem.payInfo.createAt);
   //날짜 변환
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   return (
@@ -33,10 +34,7 @@ const BuyCard = ({ buyItem }) => {
       <Card width="90%">
         <div className={style.container}>
           <section className={style.img}>
-            <img
-              src={buyItem.orders}
-              alt="farm produce"
-            />
+            <img src={buyItem.orders} alt="farm produce" />
           </section>
           <section className={style.middle}>
             <p className={style.date}>{formattedDate}</p>
@@ -51,14 +49,11 @@ const BuyCard = ({ buyItem }) => {
               {buyItem.payInfo.state}
             </button>
             {buyItem.review === null ? (
-              <button
-                className={style.reviewBtn}
-                onClick={openReviewModal}
-              >
+              <button className={style.reviewBtn} onClick={openReviewModal}>
                 후기쓰기
               </button>
             ) : (
-              ''
+              ""
             )}
           </section>
         </div>
@@ -70,7 +65,7 @@ const BuyCard = ({ buyItem }) => {
         />
         <div className={style.reviewContainer}>
           {buyItem.review === null ? (
-            '작성된 후기가 없어요😢'
+            "작성된 후기가 없어요😢"
           ) : (
             <BuyReviewCard review={buyItem.review} />
           )}

@@ -96,7 +96,7 @@ const Pay = () => {
               paymentMethod: rsp.pay_method,
               pgTid: rsp.pg_tid,
               pgType: rsp.pg_type,
-              status: rsp.status,
+              state: rsp.status.toUpperCase(),
               paidAt: rsp.paid_at,
               productName: rsp.name,
               productPrice: productPrice,
@@ -124,7 +124,7 @@ const Pay = () => {
   };
 
   return (
-    <>
+    <div className={"checkout-container"}>
       <div>checkoutpage</div>
       <div>수령인 이름: {state.deliveryInfo.name}</div>
       <div>수령인 전화번호: {state.deliveryInfo.tel}</div>
@@ -145,7 +145,7 @@ const Pay = () => {
         원
       </div>
       <button onClick={requestPay}>결제하기</button>
-    </>
+    </div>
   );
 };
 export default Pay;

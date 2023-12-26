@@ -1,4 +1,5 @@
 import React from "react";
+import Postcode from "../../api/PostCode";
 import style from "./DeliveryInfo.module.css";
 const DeliveryInfo = ({
   isOpen,
@@ -24,6 +25,11 @@ const DeliveryInfo = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit();
+  };
+
+  //주소찾기 모달 열기
+  const onClicktoggleAddressModal = async (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -78,6 +84,7 @@ const DeliveryInfo = ({
                     onChange={(e) => setAddress1(e.target.value)}
                     required
                     className={style.name}
+                    onClick={onClicktoggleAddressModal}
                   ></input>
                   <input
                     id="address2"
@@ -86,6 +93,7 @@ const DeliveryInfo = ({
                     required
                     className={style.name}
                   ></input>
+
                   <input
                     id="address3"
                     value={address3}

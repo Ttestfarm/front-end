@@ -23,6 +23,8 @@ const ReviewModal = (props) => {
   const formattedDate = dateFormatter(props.orderInfo.date);
   //원화로 변환
   const numericPrice = parseInt(props.orderInfo.amount);
+  console.log(props.orderInfo.amount);
+  console.log("여기요가", numericPrice);
   const formattedPrice = numericPrice.toLocaleString("ko-KR");
 
   const onFileChange = (e) => {
@@ -56,11 +58,6 @@ const ReviewModal = (props) => {
       for (const [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
 
-        // const response = await API.formPost(
-        //   `/user/buylist?ordersId=${props.orderInfo.ordersId}`,
-        //   token,
-        //   formData
-        // );
         const response = await API.formPost("/buylist", token, formData);
         console.log("리뷰 전송!", response);
 

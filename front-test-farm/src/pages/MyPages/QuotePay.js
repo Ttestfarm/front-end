@@ -105,6 +105,7 @@ const QuotePayPage = () => {
               quotationQuantity:
                 quoteData.quote.quotation.quotationQuantity.toString(),
               farmerId: quoteData.quote.quotation.farmerId,
+              requestId: quoteData.quote.request.requestId,
             });
 
             alert(response.data);

@@ -122,6 +122,7 @@ const ModifyUserPage = () => {
     } else {
       setCheckPwdMsg('비밀번호가 일치합니다.');
       setRepasswordIsValid(true);
+      setUpdateData({...updateData, userPassword:inputPassword})
     }
   };
 
@@ -167,6 +168,7 @@ const ModifyUserPage = () => {
   }
 
   const RegistHandler = async () => {
+    console.log("updateData",updateData);
     try {
       const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();

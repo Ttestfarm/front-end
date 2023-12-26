@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import style from "./Home.module.css";
 import serviceOneImg from '../../assets/main-service-one.png';
 import serviceTwoImg from '../../assets/main-service-two.png';
+import circleOne from '../../assets/circle-one.png';
+import circleTwo from '../../assets/circle-two.png';
 import Carousel from "../../components/Layout/Carousel";
 import Footer from "./Footer";
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -59,8 +61,11 @@ const HomePage = () => {
 
         <div className={style["service-one"]}>
           <div className={style["service-one-text"]}>
-            <p>판매될 기회조차 얻지 못하는 못난이 농산물이지만</p>
-            <p>맛과 품질은 훌륭한 농산물을 구매하는 현명한 소비자를 위해 탄생했습니다</p>
+            <img src={circleOne} alt="circle-one" />
+            <p>필요한 농산물을 매칭 요청해보세요!</p>
+            <p>판매가 가능한 파머님이 직접 견적서를 보내드립니다</p>
+            <p>간편하게 결제 후</p>
+            <p>문 앞으로 배송된 농산물을 받아보실 수 있습니다</p>
           </div>
           <div className={style["service-one-img"]}>
             <img src={serviceOneImg} alt="service-one" />
@@ -72,8 +77,11 @@ const HomePage = () => {
             <img src={serviceTwoImg} alt="service-two" />
           </div>
           <div className={style["service-two-text"]}>
-          <p>판매될 기회조차 얻지 못하는 못난이 농산물이지만</p>
-          <p>맛과 품질은 훌륭한 농산물을 구매하는 현명한 소비자를 위해 탄생했습니다</p>
+            <img src={circleTwo} alt="circle-two" />
+            <p>원하는 파머의 농산물을 직접 구매해보세요!</p>
+            <p>구매후기나 평점이 좋은 파머님 혹은</p>
+            <p>원하는 농산물을 판매하는 파머님을 직접 찾아서</p>
+            <p>바로 구매하실 수 있습니다</p>
           </div>
         </div>
       </section>

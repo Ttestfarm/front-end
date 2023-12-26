@@ -164,9 +164,8 @@ const RegistFarmerPage = ({ page }) => {
     reset: resetfarmInterest,
   } = useUserInput(val.isNotEmptyValue);
 
-  //이미지
+  //이미지 바꾸면 화면에 출력
   const onFileChange = (e) => {
-    //이미지 바꾸면 화면에 출력하기
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
     console.log('file', imageSrc);
@@ -255,13 +254,21 @@ const RegistFarmerPage = ({ page }) => {
           token,
           formData
         );
-
+        
         console.log('response', response);
         setIsSucessModal({
           state: true,
           message: '파머 등록 성공!',
         });
-        //navigate('/farmers');
+
+        const newFarmerId = response.data.farmerId;
+        console.log(newFarmerId);
+
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          farmerId: newFarmerId,
+          userRole: 'ROLE_FARMER',
+        }));
       } else {
         await API.put(
           `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
@@ -271,7 +278,7 @@ const RegistFarmerPage = ({ page }) => {
           state: true,
           message: '파머 정보 수정이 완료 되었습니다.',
         });
-        navigate('/farmers');
+        navigate('/farmers/requestlist');
       }
     } catch (error) {
       console.log(error);

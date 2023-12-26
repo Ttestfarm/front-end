@@ -95,8 +95,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1rem;
-  font-weight: 700;
+  /* font-size: 1rem; */
+  /* font-weight: 700; */
   border-top: 1px solid #464C3A;
   border-bottom: 1px solid #464C3A;
 }
@@ -109,46 +109,94 @@
   font-size: 22px;
   line-height: 30px;
   font-weight: 600;
-  margin-top: 5rem;
+  margin-top: 7rem;
   margin-bottom: 2rem;
 }
 
 .service-one {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
 .service-one-text {
-  background-color: #F5F5F7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 490px;
+  height: 263px;
+  background-color: #E2E4D4;
+  margin-right: 2rem;
+}
+
+.service-one-text img {
+  width: 45px;
+  height: 45px;
+}
+
+/* .service-one-text > p:nth-child(1) {
+  font-weight: 500;
+  margin: 2rem 0;
+} */
+
+.service-one-text > p:nth-of-type(1) {
+  font-weight: 700;
+  font-size: 22px;
+  margin: 1.2rem 0;
+}
+
+.service-one-text > p:nth-of-type(2),
+.service-one-text > p:nth-of-type(3),
+.service-one-text > p:nth-of-type(4) {
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .service-one-img {
-  /* background-image: url('../../assets/main-service-one.png'); */
   width: 490px;
-  height: 260px;
+  height: 263px;
 }
 
 .service-two {
   display: flex;
-  justify-content: space-between;
   margin-top: 1rem;
-  margin-bottom: 5rem;
+  margin-bottom: 7rem;
 }
 
 .service-two-text {
-  background-color: #F5F5F7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #E2E4D4;
   width: 490px;
-  height: 260px;
+  height: 263px;
+}
+
+.service-two-text img {
+  width: 45px;
+  height: 45px;
+}
+
+.service-two-text > p:nth-of-type(1) {
+  font-weight: 700;
+  font-size: 22px;
+  margin: 1.2rem 0;
+}
+
+.service-two-text > p:nth-of-type(2),
+.service-two-text > p:nth-of-type(3),
+.service-two-text > p:nth-of-type(4) {
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .service-two-img {
-  /* background-image: url('../../assets/main-service-two.png'); */
-  width: 490px;
-  height: 260px;
+  width: 493px;
+  height: 263px;
+  margin-right: 2rem;
 }
-
 
 .farmer-join {
   width: 70%;
@@ -156,7 +204,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 4rem auto;
+  margin: 5rem auto;
   font-size: 1.2rem;
   font-weight: 700;
   gap: 1.8rem;
@@ -167,10 +215,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-size: 18px;
+  font-size: 22px;
   /* font-size: 25px; */
   line-height: 30px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .farmer-join-btn {

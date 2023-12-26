@@ -38,7 +38,10 @@ const Pay = () => {
     merchant_uid: `mid_${new Date().getTime()}`,
     buyer_name: state.deliveryInfo.name,
     buyer_tel: state.deliveryInfo.tel,
-    buyer_addr: state.deliveryInfo.address,
+    buyer_addr:
+      state.deliveryInfo.address1 +
+      state.deliveryInfo.address2 +
+      state.deliveryInfo.address3,
   });
 
   useEffect(() => {

@@ -13,7 +13,7 @@ import { tokenAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
   const token = useRecoilValue(tokenAtom);
-  console.log('hr', token);
+
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);
   const [info, setInfo] = useState({
@@ -50,7 +50,7 @@ const MatchingListPage = () => {
         pageInfo: { ...data.pageInfo },
       });
 
-      console.log('1', response.data);
+    
       setMatchingList([...matchingList, ...data.matchingList]);
       setPage((page) => page + 1);
     } catch (error) {

@@ -36,26 +36,6 @@ const ReviewModal = (props) => {
   };
   console.log('props', props);
 
-  // //
-  // const handleSetValue = (e) => {
-  //   setContent(e.target.value);
-  // };
-
-  // const handleSetTab = (e) => {
-  //   console.log(e.keyCode);
-  //   if (e.keyCode === 9) {
-  //     e.preventDefault();
-  //     let val = e.target.value;
-  //     let start = e.target.selectionStart;
-  //     let end = e.target.selectionEnd;
-  //     e.target.value = val.substring(0, start) + '\t' + val.substring(end);
-  //     e.target.selectionStart = e.target.selectionEnd = start + 1;
-  //     handleSetValue(e);
-  //     return false; //  prevent focus
-  //   }
-  // };
-  // //
-
   const closeModal = () => {
     props.onClose();
   };

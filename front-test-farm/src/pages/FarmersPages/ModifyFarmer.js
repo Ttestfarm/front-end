@@ -196,9 +196,8 @@ const ModifyFarmerPage = ({ page }) => {
     reset: resetfarmInterest,
   } = useUserInput(val.isNotEmptyValue);
 
-  //이미지
+  //이미지 바꾸면 화면에 출력하기
   const onFileChange = (e) => {
-    //이미지 바꾸면 화면에 출력하기
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
     console.log('file', imageSrc);
@@ -259,57 +258,25 @@ const ModifyFarmerPage = ({ page }) => {
   }
 
   const RegistHandler = async (e) => {
-    e.preventDefault();
-
-    console.log('page', page);
-    const formData = new FormData();
-    formData.append('farmName', farmNameValue);
-    formData.append('farmTel', farmTelValue);
-    formData.append('telSelected', myFarmTel);
-    formData.append('farmAddress', address2);
-    formData.append('farmAddressDetail', farmAddressDetailValue);
-    formData.append('registrationNum', registrationNumValue);
-    formData.append('farmBank', selected);
-    formData.append('farmAccountNum', farmAccountNumValue);
-    formData.append('farmInterest', farmInterestValue);
-    if (file !== null) {
-      formData.append('farmPixurl', file);
-    }
+    console.log("updateData",updateData);
 
     try {
-      if (page === 'reg-farmer') {
-        console.log('제출용', formData);
-        for (const [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
-        const response = await API.formPost(
-          '/findfarmer/reg-farmer',
-          token,
-          formData
-        );
+      const response = await API.put(`/farmer/modify-farmer`, token, updateData);
 
-        console.log('response', response);
+      console.log(response.data);
+      setFarmerInfo({ ...response.data});
+      if (response.status === 200) {
         setIsSucessModal({
           state: true,
-          message: '파머 등록 성공!',
+          message: '파머 정보가 수정 되었습니다.',
         });
-        //navigate('/farmers');
-      } else {
-        await API.put(
-          `/farmerpage/modify-farm/${userInfo?.user?.farmerId}`,
-          formData
-        );
-        setIsSucessModal({
-          state: true,
-          messa3ge: '파머 정보 수정이 완료 되었습니다.',
-        });
-        navigate('/farmers');
-      }
+      } 
+      navigate('/farmers/requestlist');
     } catch (error) {
       console.log(error);
       setIsErrorModal({
         state: true,
-        message: error.response,
+        message: error.message,
       });
     }
   };
@@ -354,11 +321,11 @@ const ModifyFarmerPage = ({ page }) => {
             onBlur={farmNameBlurHandler}
             placeholder={'농장 이름을 입력하세요.'}
           />
-          {farmNameHasError && (
+          {/* {farmNameHasError && (
             <p className={style['error-text']}>
               이름은 2자 ~ 9자까지 입력가능합니다.
             </p>
-          )}
+          )} */}
         </div>
 
         <div className={style['form-control']}>
@@ -377,7 +344,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="file"
             name="file"
             accept="image/*"
-            onChange={inputHandle}
+            onChange={onFileChange}
             hidden
           />
         </div>
@@ -484,11 +451,11 @@ const ModifyFarmerPage = ({ page }) => {
             onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
-          {farmAccountNumHasError && (
+          {/* {farmAccountNumHasError && (
             <p className={style['error-text']}>
               정산을 위해 계좌번호를 입력해주세요.
             </p>
-          )}
+          )} */}
         </div>
 
         <div className={style['form-control']}>
@@ -514,7 +481,7 @@ const ModifyFarmerPage = ({ page }) => {
 
         <button
           className={style['join-btn']}
-          disabled={!formIsValid}
+          //disabled={!formIsValid}
           onClick={RegistHandler}
         >
           완료

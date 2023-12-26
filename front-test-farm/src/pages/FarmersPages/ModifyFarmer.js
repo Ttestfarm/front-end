@@ -87,7 +87,10 @@ const ModifyFarmerPage = ({ page }) => {
   
     return farmInterest
       .split(', ') // 주어진 데이터 형태에 따라 ', '로 분리
-      .map((item) => item.trim().replace(/^#/, '')) // 각 단어 앞의 '#' 제거
+      .map((item) => {
+        const trimmedItem = item.trim();
+        return trimmedItem.startsWith('#') ? trimmedItem : `#${trimmedItem}`;
+      }) // 각 단어 앞에 '#' 추가
       .join(' ');
   };
 

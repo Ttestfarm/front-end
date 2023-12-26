@@ -75,6 +75,20 @@ const DeliveryInfo = ({
                     required
                     className={style.name}
                   ></input>
+                  <input
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    className={style.name}
+                  ></input>
+                  <input
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    className={style.name}
+                  ></input>
                 </div>
               </div>
               <div className={style["row"]}>

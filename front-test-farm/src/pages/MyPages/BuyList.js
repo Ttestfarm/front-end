@@ -11,18 +11,14 @@ import { tokenAtom } from "../../recoil/Atoms";
 
 const BuyListPage = () => {
   const token = useRecoilValue(tokenAtom);
+
   const [buyList, setBuyList] = useState([]);
   const [page, setPage] = useState(1);
-  const [info, setInfo] = useState({
-    average: 0,
-    matchingProgress: 0,
-    foundMatching: 0,
-    pageInfo: {
-      allPage: 0,
-      curPage: 0,
-      startPage: null,
-      endPage: null,
-    },
+  const [pageInfo, setPageInfo] = useState({
+    allPage: 0,
+    curPage: 1,
+    startPage: null,
+    endPage: null,
   });
   const [ref, inView] = useInView(); // 무한 스크롤
   const [btnView, setBtnView] = useState(false);
@@ -42,19 +38,13 @@ const BuyListPage = () => {
     try {
       console.log("page", page);
 
-      const response = await API.get("/user/buylist", token);
-      const data = response.data;
+      const response = await API.get(`/user/buylist?page=${page}`, token);
+      const data = response.data.OrdersWithReview; // 배열
 
       console.log("data", data);
-      setInfo({
-        average: data.average,
-        matchingProgress: data.matchingProgress,
-        foundMatching: data.foundMatching,
-        pageInfo: { ...data.pageInfo },
-      });
 
-      console.log("1", response.data);
-      setBuyList([...buyList, ...data.buyList]);
+      setBuyList([...buyList, ...data]);
+      setPageInfo()
       setPage((page) => page + 1);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -97,6 +87,7 @@ const BuyListPage = () => {
       behavior: "smooth",
     });
   };
+  console.log("buy", buyList);
   return (
     <>
       <nav className={style.nav}>
@@ -122,7 +113,7 @@ const BuyListPage = () => {
       <section>
         {buyList.length > 0
           ? buyList.map((buyItem) => (
-              <BuyCard key={buyItem.orders.ordersId} buyItem={buyItem} />
+              <BuyCard key={buyItem.payInfo.receiptId} buyItem={buyItem} />
             ))
           : ` 아직은 구매내역이 없습니다. 
           요청서를 작성하거나 못난이 농산물을 구매할 수 있어요! `}

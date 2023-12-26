@@ -269,7 +269,7 @@ const RegistFarmerPage = ({ page }) => {
         );
         setIsSucessModal({
           state: true,
-          messa3ge: '파머 정보 수정이 완료 되었습니다.',
+          message: '파머 정보 수정이 완료 되었습니다.',
         });
         navigate('/farmers');
       }

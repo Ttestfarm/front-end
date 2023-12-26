@@ -25,7 +25,7 @@
   flex-direction: row;
 }
 .left button {
-  margin: 2rem;
+  margin: 1rem;
   padding: 0.5rem 1rem;
   border: none;
   background-color: var(--color-button2);

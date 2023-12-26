@@ -35,7 +35,7 @@ const MatchingListPage = () => {
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      console.log('page', page);
+      
 
       const response = await axios.get(
         `${API.serverUrl}/matching?page=${page}`

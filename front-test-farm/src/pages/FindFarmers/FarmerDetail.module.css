@@ -51,6 +51,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+.follow {
+  transition: all 0.3s ease-in-out;
+}
+.follow:hover {
+  transform: scale(1.2);
 }
 .flexbox {
   display: flex;

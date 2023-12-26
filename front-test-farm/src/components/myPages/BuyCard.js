@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import style from './BuyCard.module.css';
 import Card from '../UI/Card';
 import BuyReviewCard from './BuyReviewCard';
 import dateFormatter from '../../util/date';
+import ReviewModal from '../UI/ReviewModal';
 
 const BuyCard = ({ buyItem }) => {
-  const reviewHandler = () => {
-    //모달 화면 오픈
+  const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
+  const [enteredData, setEnteredData] = useState({});
+  const [orderInfo, setOrderInfo] = useState({
+    date: buyItem.payInfo.createAt,
+    productName: buyItem.payInfo.productName,
+    productPrice: buyItem.payInfo.productPrice,
+  });
+
+  //모달 화면 오픈
+  const openReviewModal = () => {
+    setModalOpen(true);
   };
-  console.log('buyItem', buyItem);
-  const formattedDate = dateFormatter(buyItem.payInfo.createdAt);
-  console.log(formattedDate);
+  //모달 닫기
+  const closeReviewModal = () => {
+    setModalOpen(false);
+  };
+
+  console.log('buyItem', buyItem.payInfo.createAt);
+  //날짜 변환
+  const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   return (
     <div className={style.card}>
       <Card width="90%">
@@ -23,20 +38,35 @@ const BuyCard = ({ buyItem }) => {
             />
           </section>
           <section className={style.middle}>
-            <p>{formattedDate}</p>
-            <p>이름</p>
-            <p>발송인</p>
+            <p className={style.date}>{formattedDate}</p>
+            <p>구매 농산물 : {buyItem.payInfo.productName}</p>
+            <p>발송인 :{buyItem.payInfo.farmerName}</p>
             <Link> 주문상세 &gt;</Link>
           </section>
           <section className={style.right}>
-            <button>{buyItem.payInfo.state}</button>
+            <button
+              className={`${style.state} ${style[buyItem.payInfo.state]}`}
+            >
+              {buyItem.payInfo.state}
+            </button>
             {buyItem.review === null ? (
-              <button onClick={reviewHandler}>후기쓰기</button>
+              <button
+                className={style.reviewBtn}
+                onClick={openReviewModal}
+              >
+                후기쓰기
+              </button>
             ) : (
               ''
             )}
           </section>
         </div>
+
+        <ReviewModal
+          isOpen={modalOpen}
+          onClose={closeReviewModal}
+          orderInfo={orderInfo}
+        />
         <div className={style.reviewContainer}>
           {buyItem.review === null ? (
             '작성된 후기가 없어요😢'

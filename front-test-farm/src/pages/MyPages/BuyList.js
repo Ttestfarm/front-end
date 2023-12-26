@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import style from './BuyList.module.css';
-import BuyCard from '../../components/myPages/BuyCard';
-import * as API from '../../api/index';
-import { useInView } from 'react-intersection-observer';
-import { AnimatePresence } from 'framer-motion';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import React, { useState, useEffect, useRef } from "react";
+import style from "./BuyList.module.css";
+import BuyCard from "../../components/myPages/BuyCard";
+import * as API from "../../api/index";
+import { useInView } from "react-intersection-observer";
+import { AnimatePresence } from "framer-motion";
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 
-import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
+import { useRecoilValue } from "recoil";
+import { tokenAtom } from "../../recoil/Atoms";
 
 const BuyListPage = () => {
   const token = useRecoilValue(tokenAtom);
@@ -35,23 +35,23 @@ const BuyListPage = () => {
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      console.log('page', page);
+      console.log("page", page);
 
-      const response = await API.get('/user/buylist', token);
+      const response = await API.get("/user/buylist", token);
       const data = response.data.OrdersWithReview; // 배열
 
-      console.log('data', data);
+      console.log("data", data);
 
       setBuyList([...buyList, ...data]);
       setPage((page) => page + 1);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
     if (inView) {
-      console.log(inView, '무한스크롤 요청했시유');
+      console.log(inView, "무한스크롤 요청했시유");
 
       //if (page > info.pageInfo.allPage) return;
       //패치 요청
@@ -62,11 +62,11 @@ const BuyListPage = () => {
   //scroll to top
   useEffect(() => {
     const timer = setInterval(() => {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     }, 100);
     return () => {
       clearInterval(timer);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -82,10 +82,10 @@ const BuyListPage = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
-  console.log('buy', buyList);
+  console.log("buy", buyList);
   return (
     <>
       <nav className={style.nav}>
@@ -111,10 +111,7 @@ const BuyListPage = () => {
       <section>
         {buyList.length > 0
           ? buyList.map((buyItem) => (
-              <BuyCard
-                key={buyItem.payInfo.receiptId}
-                buyItem={buyItem}
-              />
+              <BuyCard key={buyItem.payInfo.receiptId} buyItem={buyItem} />
             ))
           : ` 아직은 구매내역이 없습니다. 
           요청서를 작성하거나 못난이 농산물을 구매할 수 있어요! `}
@@ -124,7 +121,7 @@ const BuyListPage = () => {
           {btnView ? (
             <ArrowCircleUpIcon
               color="success"
-              sx={{ fontSize: { lg: '50px' } }}
+              sx={{ fontSize: { lg: "50px" } }}
               initial={{ opacity: 0, y: 50 }}
               animate={{
                 opacity: 1,

@@ -48,7 +48,6 @@ const FarmerDetailPage = () => {
     e.preventDefault();
     try {
       const response = await API.get(`/findfarmer/${farmerId}/follow`, token);
-      console.log('32123', response);
 
       setFarmerInfo({ ...farmerInfo, followCount: response.data.followCount });
       setFarmerfollow(response.data.isSelect);
@@ -95,8 +94,9 @@ const FarmerDetailPage = () => {
                     fontSize: 30,
                   }}
                   onClick={followHandler}
+                  className={style.follow}
                 />
-                <span>({farmerInfo.followCount}명)</span>
+                <span> ({farmerInfo.followCount}명이 찜)</span>
               </div>
             </section>
 
@@ -128,7 +128,7 @@ const FarmerDetailPage = () => {
       </main>
       <main className={style.main}>
         <header className={style.header}>
-          {farmerInfo?.farmName}님에 대한 후기
+          {farmerInfo?.farmName}님에게 남겨진 후기
         </header>
         <ReviewList farmerId={farmerId} />
       </main>

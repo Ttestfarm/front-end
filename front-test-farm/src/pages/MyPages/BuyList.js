@@ -11,11 +11,12 @@ import { tokenAtom } from "../../recoil/Atoms";
 
 const BuyListPage = () => {
   const token = useRecoilValue(tokenAtom);
+
   const [buyList, setBuyList] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
     allPage: 0,
-    curPage: 0,
+    curPage: 1,
     startPage: null,
     endPage: null,
   });
@@ -37,12 +38,13 @@ const BuyListPage = () => {
     try {
       console.log("page", page);
 
-      const response = await API.get("/user/buylist", token);
+      const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
 
       console.log("data", data);
 
       setBuyList([...buyList, ...data]);
+      setPageInfo()
       setPage((page) => page + 1);
     } catch (error) {
       console.error("Error fetching data:", error);

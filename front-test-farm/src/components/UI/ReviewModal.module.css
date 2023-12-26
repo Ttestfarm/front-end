@@ -4,6 +4,16 @@
   gap: 10px;
   padding: 2rem;
 }
+.date {
+  color: darkgray;
+  font-style: italic;
+}
+.name {
+  font-weight: 700;
+}
+.won {
+  color: green;
+}
 .img-rating {
   padding-top: 1rem;
   display: flex;
@@ -20,6 +30,9 @@
   padding: 0.5rem 3rem;
   border-radius: 10px;
   cursor: pointer;
+}
+.main {
+  padding: 2rem;
 }
 .footer {
   display: flex;

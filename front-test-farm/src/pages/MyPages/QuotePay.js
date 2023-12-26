@@ -39,7 +39,10 @@ const QuotePayPage = () => {
         pay_method: "card",
         name: quoteData.quote.quotation.quotationProduct, //상품명
         merchant_uid: `mid_${new Date().getTime()}`,
-        amount: parseInt(quoteData.quote.quotation.quotationPrice),
+        amount: parseInt(
+          quoteData.quote.quotation.quotationPrice +
+            quoteData.quote.quotation.quotationDelivery
+        ),
         buyer_name: quoteData.quote.request.name,
         buyer_tel: quoteData.quote.request.tel,
         buyer_addr: quoteData.quote.request.address1,
@@ -96,6 +99,8 @@ const QuotePayPage = () => {
               paidAt: rsp.paid_at,
               productName: rsp.name,
               quotationId: quoteData.quote.quotation.quotationId,
+              productPrice: quoteData.quote.quotation.quotationPrice, //상품 가격?
+              paymentDelivery: quoteData.quote.quotation.quotationDelivery,
               count: quoteData.quote.quotation.quotationQuantity,
             });
 
@@ -144,10 +149,16 @@ const QuotePayPage = () => {
                 <p className={style.p1}>
                   {quoteData.quote.quotation.quotationQuantity}
                 </p>
-                <p>{quoteData.quote.quotation.quotationPrice}</p>
-                <p className={style.p1}>배송비 안옴</p>
+                <p className={style.p1}>
+                  {quoteData.quote.quotation.quotationPrice}
+                </p>
+                <p className={style.p1}>
+                  +{quoteData.quote.quotation.quotationDelivery}
+                </p>
                 <p className={style.blueFont}>
-                  총계{quoteData.quote.quotation.quotationPrice}
+                  총계
+                  {quoteData.quote.quotation.quotationPrice +
+                    quoteData.quote.quotation.quotationDelivery}
                 </p>
               </div>
             </main>

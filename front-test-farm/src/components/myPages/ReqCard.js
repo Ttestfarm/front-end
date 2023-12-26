@@ -5,17 +5,19 @@ import * as API from '../../api/index';
 import QuotCard from '../../components/myPages/QuotCard';
 import { useRecoilValue } from 'recoil';
 import { tokenAtom } from '../../recoil/Atoms';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
+import { pink } from '@mui/material/colors';
+import { isToday, dateFormatter } from '../../util/date';
 
 const ReqCard = ({ req }) => {
   const token = useRecoilValue(tokenAtom);
   //견적서 카드
   const [quotList, setQuotList] = useState([]);
   const [showList, setShowList] = useState(false);
+
   //견적서 리스트 요청
   const reqQuoteHandler = async () => {
     try {
-      console.log('요청아이디:', req.request.requestId);
-      console.log('token?', token);
       const response = await API.get(`/user/${req.request.requestId}`, token);
 
       console.log(response);
@@ -28,11 +30,18 @@ const ReqCard = ({ req }) => {
     }
   };
 
+  const formattedDate = dateFormatter(req.request.createDate);
+
   return (
     <div className={style.container}>
       <Card width="80%">
         <header className={style.header}>
-          <span>{req.request.requestDate}</span> 에 작성한 요청서
+          <span>{formattedDate}</span> 에 작성한 요청서
+          {isToday(formattedDate) && (
+            <span className={style.blink}>
+              <FiberNewIcon sx={{ color: pink[500], fontSize: 30 }} />
+            </span>
+          )}
         </header>
         <div className={style.wrapper}>
           <section className={style.left}>

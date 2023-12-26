@@ -15,7 +15,7 @@ const BuyListPage = () => {
   const [buyList, setBuyList] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
-    allPage: 0,
+    allPage: 1,
     curPage: 1,
     startPage: null,
     endPage: null,
@@ -25,26 +25,16 @@ const BuyListPage = () => {
 
   const scrollRef = useRef(0);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const response = await API.get('/user/buylist', token);
-  //     console.log(response);
-  //   }
-  //   fetchData();
-  // }, [buyList]);
-
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      console.log('page', page);
-
+      console.log('page', pageInfo);
+      if (pageInfo.curPage > pageInfo.allPage) return;
       const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
 
-      console.log('data', data);
-
       setBuyList([...buyList, ...data]);
-      setPageInfo();
+      setPageInfo({ ...response.data.pageInfo });
       setPage((page) => page + 1);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -52,11 +42,7 @@ const BuyListPage = () => {
   };
 
   useEffect(() => {
-    if (inView) {
-      console.log(inView, '무한스크롤 요청했시유');
-
-      //if (page > info.pageInfo.allPage) return;
-      //패치 요청
+    if (inView && pageInfo.curPage <= pageInfo.allPage) {
       fetchData(page);
     }
   }, [inView]);
@@ -87,7 +73,7 @@ const BuyListPage = () => {
       behavior: 'smooth',
     });
   };
-  console.log('buy', buyList);
+
   return (
     <>
       <nav className={style.nav}>

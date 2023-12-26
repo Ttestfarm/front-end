@@ -1,4 +1,6 @@
-const dateFormatter = (dateValue) => {
+import dayjs from 'dayjs';
+
+export const dateFormatter = (dateValue) => {
   const createDate = dateValue;
   const date = new Date(createDate); //date형식으로 변환
   const year = date.getFullYear();
@@ -10,4 +12,9 @@ const dateFormatter = (dateValue) => {
   return formattedDate;
 };
 
-export default dateFormatter;
+//오늘 날짜 찾기
+export const isToday = (date) => {
+  const today = dayjs().format('YYYY-MM-DD');
+  const requestDate = dayjs(date).format('YYYY-MM-DD');
+  return today === requestDate;
+};

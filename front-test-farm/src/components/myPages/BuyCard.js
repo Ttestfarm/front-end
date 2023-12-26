@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import style from './BuyCard.module.css';
 import Card from '../UI/Card';
 import BuyReviewCard from './BuyReviewCard';
-import dateFormatter from '../../util/date';
+import { dateFormatter } from '../../util/date';
 import ReviewModal from '../UI/ReviewModal';
 
 const BuyCard = ({ buyItem }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
-  const [enteredData, setEnteredData] = useState({});
   const [orderInfo, setOrderInfo] = useState({
     date: buyItem.payInfo.createAt,
     productName: buyItem.payInfo.productName,
@@ -25,10 +24,9 @@ const BuyCard = ({ buyItem }) => {
   const closeReviewModal = () => {
     setModalOpen(false);
   };
-
-  console.log('buyItem', buyItem);
   //날짜 변환
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
+  const item = buyItem.payInfo;
   return (
     <div className={style.card}>
       <Card width="90%">
@@ -49,17 +47,21 @@ const BuyCard = ({ buyItem }) => {
             <button
               className={`${style.state} ${style[buyItem.payInfo.state]}`}
             >
-              {buyItem.payInfo.state}
+              {item.state === 'PAID'
+                ? '결제완료'
+                : item.state === 'CANCEL'
+                ? '결제취소'
+                : item.state === 'SHIPPING'
+                ? '배송중'
+                : '배송완료'}
             </button>
-            {buyItem.review === null ? (
+            {item.state === 'COMPLETED' && buyItem.review === null && (
               <button
                 className={style.reviewBtn}
                 onClick={openReviewModal}
               >
                 후기쓰기
               </button>
-            ) : (
-              ''
             )}
           </section>
         </div>

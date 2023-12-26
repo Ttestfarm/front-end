@@ -55,11 +55,6 @@ const ReviewModal = (props) => {
       for (const [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
 
-        // const response = await API.formPost(
-        //   `/user/buylist?ordersId=${props.orderInfo.ordersId}`,
-        //   token,
-        //   formData
-        // );
         const response = await API.formPost('/buylist', token, formData);
         console.log('리뷰 전송!', response);
 

@@ -95,13 +95,13 @@ const QuotePayPage = () => {
               paymentMethod: rsp.pay_method,
               pgTid: rsp.pg_tid,
               pgType: rsp.pg_type,
-              status: rsp.status,
+              state: rsp.status.toUpperCase(),
               paidAt: rsp.paid_at,
               productName: rsp.name,
               quotationId: quoteData.quote.quotation.quotationId,
               productPrice: quoteData.quote.quotation.quotationPrice, //상품 가격?
               paymentDelivery: quoteData.quote.quotation.quotationDelivery,
-              // count: Number(quoteData.quote.quotation.quotationQuantity),
+              quotationQuantity: quoteData.quote.quotation.quotationQuantity,
             });
 
             alert(response.data);

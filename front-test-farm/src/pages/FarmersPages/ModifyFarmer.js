@@ -355,8 +355,8 @@ const ModifyFarmerPage = ({ page }) => {
             type="text"
             id="farmTel"
             name="farmTel"
-            //value={myFarmTel ? userTel : farmTelValue}
-            value={updateData.farmTel}
+            //value={updateData.farmTel}
+            value={myFarmTel ? userTel : farmTelValue}
             onChange={inputHandle}
             onBlur={farmTelBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}

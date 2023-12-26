@@ -52,9 +52,11 @@ const DeliveryList = () => {
     <div>
     <div className="delivery-header">
       <div>
-        <button className="delivery-delete-btn" onClick={() => changeState("SHIPPING")}>배송중</button>
-        <button className="delivery-delete-btn" onClick={() => changeState("COMPLETED")}>배송완료</button>
-      </div >
+        <div className="button-group">
+          <button className="delivery-delete-btn" onClick={() => changeState("SHIPPING")}>배송중</button>
+          <button className="delivery-delete-btn" onClick={() => changeState("COMPLETED")}>배송완료</button>
+        </div>
+      </div>
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">

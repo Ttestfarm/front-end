@@ -71,8 +71,9 @@
   justify-content: center;
 
   &:hover {
-    background: red;
+    background: #8B9478;
     color: #fff;
+    border: none;
   }
 }
 

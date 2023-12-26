@@ -1,11 +1,6 @@
 .quotation-status {
-  width: 90%;
-  /* margin: 0 auto; */
+  width: 80%;
   padding: 10px;
-
-  /* border-radius: 24px;
-  border: 5px solid #75786c; */
-
   color: #000;
   font-family: Inter;
   font-size: 1rem;
@@ -16,30 +11,41 @@
 
 .quotation-status-header {
   margin: 0 auto;
-
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
 .quotation-delete-btn {
-  padding: 10px 20px 10px 20px;
-  background: #49680d;
-  border-radius: 10px;
-  border: none;
-  color: #fff;
+  padding: 5px 10px;
+  height: 36px;
+
+  color: #191919;
+  background-color: #D9D9D9;
   font-size: 1.2rem;
+  font-weight: 600;
+
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .warning-text {
-  margin: 20px 0px 20px 0px;
+  margin: 18px 0px 20px 0px;
 
-  color: #a4a3a3;
+  color: #000;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 400;
 
   padding: 5px;
-  padding-right: 20px;
+  padding-right: 10px;
 
   display: flex;
   align-items: center;
@@ -52,18 +58,20 @@
 
 /* Dropdown Button */
 .state-dropbtn {
-  padding: 10px 20px 10px 20px;
-
-  color: white;
-  background-color: red;
+  padding: 5px 10px;
+  width: 110px;
+  color: #fff;
+  background-color: #49680D;
   font-size: 1.2rem;
-
-  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
   border: none;
+  cursor: pointer;
 }
 
 .state-dropbtn span {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
@@ -104,18 +112,22 @@
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /* .dropdown:hover .dropbtn {background-color: #49680D;} */
 
-.delivery-header {
+/* .delivery-header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
 .delivery-delete-btn {
-  padding: 10px 20px 10px 20px;
-  background: #49680d;
-  margin: 10px;
-  border-radius: 10px;
-  border: none;
+  margin: 18px 0 0 0;
+  padding: 5px 10px;
+
   color: #fff;
+  background-color: #49680D;
   font-size: 1.2rem;
-}
+  font-weight: 600;
+
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: none;
+} */

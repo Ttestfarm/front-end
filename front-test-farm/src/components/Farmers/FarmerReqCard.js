@@ -8,23 +8,23 @@ const FarmerReqCard = ({ req }) => {
     <div className={style.container}>
       <Card width="80%">
         <header className={style.header}>
-          <p>{req.name} <span>님의 요청서</span></p>
+          <p>{req.name}&nbsp;<span>님의 요청서</span></p>
         </header>
         <div className={style.wrapper}>
           <section className={style.left}>
             <p className={style.name}>
-              품목 : <span>{req.requestProduct}</span>&nbsp;&nbsp;
-              수량 : <span>{req.requestQuantity}</span> <br />
-              배송지 : <span>{req.address2}</span>
+              품목: <span>{req.requestProduct}</span>&nbsp;&nbsp;
+              수량: <span>{req.requestQuantity}</span><br />
+              배송지: <span>{req.address2}</span>
             </p>
-            <p className={style.reqMsg}>&lt;🥕요청 메세지 &gt;</p>
-            <p className={style.paragraph}>{req.requestMessage}</p>
+            <p className={style.reqMsg}>
+              🥕요청 메세지🥕<br />
+              {req.requestMessage}
+            </p>
           </section>
           <section className={style.right}>
             <p>
-              📨 <span>
-                내용 추가 추가 추
-              </span>
+              <span>✉&nbsp;내용 추가 추가</span>
             </p>
             <button>
               <Link

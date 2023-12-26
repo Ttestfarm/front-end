@@ -118,7 +118,7 @@ const ProductsForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="100%">
+      <Card width="80%">
         <h1>상품 등록</h1>
         <Form onSubmit={submitServer}>
           <div className={style.main}>

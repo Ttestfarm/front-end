@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import style from './style/QuotStatus.css';
 import { Link, useNavigate } from 'react-router-dom';
-import Pagination from './Pagination';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import Table from '@mui/material/Table';
@@ -11,6 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import * as API from '../../api/index';
 
 const QuotStatus = () => {
@@ -18,10 +19,10 @@ const QuotStatus = () => {
   const [quotList, setQuotList] = useState([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
-    allPage: '',
-    curPage: '',
-    startPage: '',
-    endPage: ''
+    allPage: 1,
+    curPage: 1,
+    startPage: 1,
+    endPage: 0
   })
   //  CANCEL, READY, EXPIRED, COMPLETED
   const [state, SetState] = useState('READY');
@@ -42,7 +43,7 @@ const QuotStatus = () => {
   }
   useEffect(() => {
     testFunction()
-  }, []);
+  }, [page]);
 
   // 견적서 상태 바뀌면 List 가져오기
   const changeState = async (state) => {
@@ -82,6 +83,10 @@ const QuotStatus = () => {
       console.error('Error fetching data:', error);
       alert(error);
     }
+  };
+
+  const onChangePage = (_, value) => {
+    setPage(value);
   };
 
   return (
@@ -177,51 +182,18 @@ const QuotStatus = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-
-      {/* <div className="quotation-list">
-        <table>
-          <tr>
-            <th>&nbsp;</th>
-            <th>견적서번호</th>
-            <th>농산물</th>
-            <th>수량</th>
-            <th>가격</th>
-            <th>주소</th>
-            <th>상태</th>
-          </tr>
-          {quotList.length > 0 &&
-            quotList.map((quot) => (
-              <tr key={quot.quotationId}>
-                <td>
-                  {state == 'READY' && (
-                    <input
-                      type="checkbox"
-                      onClick={() => addCancelList(quot.quotationId)}
-                    />
-                  )}
-                </td>
-                <td>
-                  <Link to={`/farmerpage/quotdetail/${quot.quotationId}`}>
-                    {quot.quotationId}
-                  </Link>
-                </td>
-                <td>{quot.product}</td>
-                <td>{quot.quantity}kg</td>
-                <td>{quot.price}</td>
-                <td>{quot.address2}</td>
-                <td>
-                  {state == 'READY'
-                    ? '대기중'
-                    : state == 'EXPIRED'
-                      ? '요청만료'
-                      : '취소'}
-                </td>
-              </tr>
-            ))}
-        </table>
+        <div className={style.pagination}>
+        <Stack spacing={2}>
+          <Pagination
+            className={style.Pagination}
+            count={pageInfo?.allPage}
+            page={pageInfo?.curPage}
+            onChange={onChangePage}
+            size="small"
+          />
+        </Stack>
       </div>
-      <Pagination /> */}
+      </TableContainer>
     </div >
   );
 };

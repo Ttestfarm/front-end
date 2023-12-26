@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './style/QuotStatus.css';
-import Pagination from './Pagination';
+import style from './style/QuotStatus.css';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
@@ -19,6 +20,12 @@ const OrderList = () => {
   const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState('매칭'); // 1: 매칭, 2: 주문
   const [page, setPage] = useState(1);
+  const [pageInfo, setPageInfo] = useState({
+    allPage: 1,
+    curPage: 1,
+    startPage: 1,
+    endPage: 0,
+  });
 
   const [isOpen, setIsOpen] = useState(false); // 발송 Modal
 
@@ -36,6 +43,8 @@ const OrderList = () => {
       const response2 = await API.get(`/companylist`, token);
       const com = response2.data;
       setCompany(...com);
+
+      console.log(data.ordersList);
     } catch(error) {
       console.error('Error fetching data:', error);
     }
@@ -43,7 +52,11 @@ const OrderList = () => {
   // 배송 현황(매칭) 리스트
   useEffect(() => {
     testFunction()
-  }, []);
+  }, [page]);
+
+  const onChangePage = (_, value) => {
+    setPage(value);
+  };
 
     const changeType = async (selType) => { // 필터 변경
       if (selType === type) {
@@ -56,8 +69,8 @@ const OrderList = () => {
           const response = await API.get(`/farmer/orderlist/${type}/${page}`, token);
           const data = response.data;
 
-          setPage(data.page);
           setOrdList([...data.ordersList]);
+          setPageInfo(data.pageInfo);
         } catch(error) {
           console.error('Error fetching data:', error);
         }
@@ -208,7 +221,17 @@ const OrderList = () => {
           </div>
         </div>
         )}
-        <Pagination />
+        <div className={style.pagination}>
+        <Stack spacing={2}>
+          <Pagination
+            className={style.Pagination}
+            count={pageInfo?.allPage}
+            page={pageInfo?.curPage}
+            onChange={onChangePage}
+            size="small"
+          />
+        </Stack>
+      </div>
       </div>
     );
   }

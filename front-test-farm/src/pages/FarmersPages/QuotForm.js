@@ -90,7 +90,7 @@ const QuotForm = () => {
       });
       console.log(formDataObj.get('requestId'));
       console.log(formDataObj.get('quotationPicture1'));
-      const response = await API.formPost(`/farmer/regquot`, token, formDataObj);
+      const response = await API.formPost('/farmer/regquot', token, formDataObj);
 
       const data = response.data;
 
@@ -118,7 +118,7 @@ const QuotForm = () => {
                 id="outlined-basic"
                 variant="outlined"
                 name="product"
-                label="품목"
+                label="품목명"
                 value={request.requestProduct}
                 sx={inputStyle}
                 size="small"

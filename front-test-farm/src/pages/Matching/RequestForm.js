@@ -26,6 +26,7 @@ import {
 const RequestForm = () => {
   const token = useRecoilValue(tokenAtom);
   const userInfo = useRecoilValue(userInfoAtom);
+  const [reqformId, setReqformId] = useState(null);
   const [data, setData] = useState({
     requestProduct: '',
     requestQuantity: '',
@@ -36,6 +37,35 @@ const RequestForm = () => {
     address2: userInfo.address2,
     address3: userInfo.address3,
   });
+
+  // //따라사기
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const reqformIdParam = urlParams.get('reqformId');
+
+  //   if (reqformIdParam) {
+  //     setReqformId(reqformIdParam);
+  //     fetchRequestInfo(reqformIdParam); // API에서 정보를 가져오는 함수 호출
+  //     console.log(reqformId);
+  //   }
+  // }, []); // 컴포넌트가 처음 로딩될 때만 실행
+
+  // const fetchRequestInfo = async (reqformId) => {
+  //   try {
+  //     // API를 통해 요청서 정보 가져오기
+  //     const response = await API.get(`/matching/buy/${reqformId}`, token);
+  //     const requestData = response.data;
+
+  //     setData({
+  //       requestProduct: requestData.requestProduct,
+  //       requestQuantity: requestData.requestQuantity,
+  //       ...data,
+  //     });
+  //   } catch (error) {
+  //     console.error('Error fetching request info:', error);
+  //   }
+  // };
+  // //
 
   //
   const handleSetValue = (e) => {
@@ -110,7 +140,6 @@ const RequestForm = () => {
       requestMessage: '',
       tel: userInfo?.userTel,
       address1: userInfo?.address1,
-      //address1: userInfo.address1 != null ? userInfo.address1 : '',
       address2: userInfo.address2 != null ? userInfo.address2 : '',
       address3: userInfo?.address3,
     });

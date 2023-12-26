@@ -26,7 +26,7 @@ const MatchingCard = ({ item }) => {
       </div>
       <div className={style.btns}>
         <button className={style.btn1}>
-          <Link to={`/matching?reqformId=${item.requestId}`}>따라 사기</Link>
+          <Link to={`/matching/buy/${item.requestId}`}>따라 사기</Link>
         </button>
         <button className={style.btn2}>견적 보내기</button>
       </div>

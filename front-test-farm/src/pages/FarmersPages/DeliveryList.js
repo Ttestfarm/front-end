@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import style from './style/QuotStatus.css';
-import Pagination from './Pagination';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import Table from '@mui/material/Table';
@@ -87,7 +86,6 @@ const DeliveryList = () => {
         </TableBody>
         </Table>
       </TableContainer>
-      <Pagination />
       </div>
   );
 };

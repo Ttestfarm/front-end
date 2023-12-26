@@ -67,6 +67,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <MatchingListPage /> },
           { path: 'requestform', element: <RequestForm /> },
+          { path: 'buy/:reqformId', element: <RequestForm /> },
         ],
       },
       {

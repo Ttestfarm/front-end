@@ -5,7 +5,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CloseIcon from '@mui/icons-material/Close';
 import { handleSetValue, handleSetTab } from '../../util/textInsertWithTab';
 import picDefault from '../../assets/third_img.png';
-import dateFormatter from '../../util/date';
+import { dateFormatter } from '../../util/date';
 import style from './ReviewModal.module.css';
 import * as API from '../../api/index';
 import { useRecoilValue } from 'recoil';

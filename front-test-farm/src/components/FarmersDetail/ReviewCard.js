@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import style from './ReviewCard.module.css'; // 리뷰 카드의 스타일 파일 import
-import dateFormatter from '../../util/date';
+import { dateFormatter } from '../../util/date';
 import Rating from '@mui/material/Rating';
 
 const ReviewCard = ({ review }) => {

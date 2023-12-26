@@ -67,6 +67,16 @@
   background-color: rgb(237, 234, 234);
 }
 
+@keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink-effect 1s step-end 5;
+}
+
 @media (max-width: 768px) {
   .wrapper {
     flex-direction: column;

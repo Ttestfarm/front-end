@@ -12,14 +12,15 @@ import * as API from '../../api/index';
 const QuotDetail = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const quotation = useParams();
-  const [files, setFiles] = useState([image, image, image, image, image]);
+  const [files, setFiles] = useState([]);
+  const images = [image, image, image, image, image];
   const [quot, setQuot] = useState({
-    quotationProduct: null,
-    quotationQuantity: null,
-    quotationPrice: null,
-    quotationDelivery: null,
-    quotationComment: null,
-    quotationPicture: null
+    quotationProduct: '',
+    quotationQuantity: '',
+    quotationPrice: '',
+    quotationDelivery: '',
+    quotationComment: '',
+    quotationPicture: ''
   });
   const inputStyle = { width: '90%', margin: 1, color: 'success' };
 
@@ -29,7 +30,12 @@ const QuotDetail = () => {
       const response = await API.get(`/farmer/quotdetail/${quotation.quotationId}`, token);
       const data = response.data;
       setQuot(data)
-      // window.location.replace("/farmerpage/")
+      let fileurl = data.quotationImages;
+      if (fileurl !== null && fileurl !== '') {
+        let filenums = fileurl.split(',');
+        console.log(filenums);
+        setFiles(filenums);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -37,23 +43,6 @@ const QuotDetail = () => {
   useEffect(() => {
     testFunction()
   }, []);
-
-  const fileChange = (e) => {
-    let filearr = e.target.files;
-    for (let i = 0; i < filearr.length; i++) {
-      files.splice(i, 1, './upload/' + filearr[i].name);
-      console.log('./upload/' + filearr[i].name);
-      // console.log(filearr[i].name);
-    }
-    let id = e.target.id;
-    setFiles([...files]);
-  };
-
-  const deleteClick = (idx) => {
-    files.splice(idx, 1, image);
-    setFiles([...files]);
-  };
-
 
   return (
     <div className={style.container}>
@@ -124,7 +113,7 @@ const QuotDetail = () => {
               color="success"
               disabled
             />
-            <TextField style={{display : 'none'}}
+            <TextField style={{ display: 'none' }}
               variant="outlined"
               label="추가 설명"
               id="outlined-multiline-flexible"
@@ -142,25 +131,30 @@ const QuotDetail = () => {
           <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
         </div>
         <div className={style.images}>
-            {files.map((file, index) =>
-              <div key={index}>
-                {file !== image ?
-                  <button onClick={() => deleteClick(index)}>x</button> :
-                  ''
-                }
-                <img
-                  src={image}
-                  alt='이미지 없음'
-                  id={index}
-                  width={"100px"}
-                  height={"100px"}
-                  // onClick={imageClick}
-                />
-              </div>
-            )}
-          </div>
+          {files.length !== 0 ?
+            files.map((num) => (
+              <img
+                key={num}
+                src={`http://localhost:8090/img/${num}`}
+                alt='이미지 없음'
+                width={"100px"}
+                height={"100px"}
+              />
+            ))
+            :
+            images.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt='이미지 없음'
+                width={"100px"}
+                height={"100px"}
+              />
+            ))
+          }
+        </div>
         <div className={style.footer}>
-            <button className={style.btn2}><Link to={'/farmerpage/quotstatus'}>돌아가기</Link></button>
+          <button className={style.btn2}><Link to={'/farmerpage/quotstatus'}>돌아가기</Link></button>
         </div>
       </Card>
     </div>

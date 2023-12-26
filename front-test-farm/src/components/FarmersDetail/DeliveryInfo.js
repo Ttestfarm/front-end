@@ -6,11 +6,15 @@ const DeliveryInfo = ({
   onSubmit,
   name,
   tel,
-  address,
+  address1,
+  address2,
+  address3,
   quantity,
   setName,
   setTel,
-  setAddress,
+  setAddress1,
+  setAddress2,
+  setAddress3,
   setQuantity,
 }) => {
   const closeModal = () => {
@@ -69,23 +73,23 @@ const DeliveryInfo = ({
                 </div>
                 <div className={style["col-75"]}>
                   <input
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    id="address1"
+                    value={address1}
+                    onChange={(e) => setAddress1(e.target.value)}
                     required
                     className={style.name}
                   ></input>
                   <input
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    id="address2"
+                    value={address2}
+                    onChange={(e) => setAddress2(e.target.value)}
                     required
                     className={style.name}
                   ></input>
                   <input
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    id="address3"
+                    value={address3}
+                    onChange={(e) => setAddress3(e.target.value)}
                     required
                     className={style.name}
                   ></input>

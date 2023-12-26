@@ -125,7 +125,12 @@ const Pay = () => {
       <div>checkoutpage</div>
       <div>수령인 이름: {state.deliveryInfo.name}</div>
       <div>수령인 전화번호: {state.deliveryInfo.tel}</div>
-      <div>수령 주소: {state.deliveryInfo.address}</div>
+      <div>
+        수령 주소:{" "}
+        {state.deliveryInfo.address1 +
+          state.deliveryInfo.address2 +
+          state.deliveryInfo.address3}
+      </div>
       <div>상품명: {state.deliveryInfo.productName}</div>
       <div>상품가격: {state.deliveryInfo.productPrice}</div>
       <div>수량: {state.deliveryInfo.quantity}</div>

@@ -1,17 +1,22 @@
 import React from 'react';
 import style from './BuyReviewCard.module.css';
+import { Rating } from '@mui/material';
 
 const BuyReviewCard = ({ review }) => {
   return (
-    <section>
-      <div className={style.leftContainer}>
-        <p>{review.rating}</p>
-        <p>{review.content}</p>
+    <section className={style.section}>
+      <div className={style.left}>
+        <Rating
+          name="read-only"
+          value={review.rating}
+          readOnly
+        />
+        <p className={style.paragraph}>{review.content}</p>
       </div>
 
       <div className={style.img}>
         <img
-          src={review.rieviewPixUrl}
+          src={review.rieviewpixUrl}
           alt="review pix"
         />
       </div>

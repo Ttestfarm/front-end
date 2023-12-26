@@ -46,17 +46,27 @@
 .farmname {
   text-align: center;
   font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1.2rem;
 }
 .card-details {
   font-size: 1.1rem;
-  margin-top: 1rem;
   padding: 0 1.5rem 1rem 2rem;
 }
 .farmaddress {
-  margin: 1rem 0;
+  margin-bottom: 0.5rem;
 }
 .category {
+  display: flex;
+  flex-direction: column;
   word-wrap: break-word;
+}
+.category p {
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-main);
 }
 .detail {
   display: inline-block;

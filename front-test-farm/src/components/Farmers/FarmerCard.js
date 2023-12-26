@@ -9,14 +9,12 @@ const FarmerCard = ({ farmer }) => {
   return (
     <div className={style['farmer-card']}>
       <div className={style['card-header']}>
-        <button className={style.detail}>
-          <Link
-            to={`${farmer.farmerId}`}
-            className={style['details']}
-          >
-            상세보기
-          </Link>
-        </button>
+        <Link
+          to={`/findfarmer/${farmer.farmerId}`}
+          className={style['details']}
+        >
+          <button className={style.detail}>상세보기</button>
+        </Link>
       </div>
 
       <div className={style['image-container']}>
@@ -42,9 +40,12 @@ const FarmerCard = ({ farmer }) => {
       </div>
 
       <div className={style['card-details']}>
-        <div className={style['farmname']}>🌾{farmer?.farmName}</div>
-        <div className={style['farmaddress']}>🌳 {farmer?.farmAddress}</div>
-        <div className={style['category']}>{farmer?.farmInterest}</div>
+        <div className={style['farmname']}>{farmer?.farmName}</div>
+        <div className={style['farmaddress']}>{farmer?.farmAddress}</div>
+        <div className={style['category']}>
+          <p>🥦 관심 농산물 🥦</p>
+          {farmer?.farmInterest}
+        </div>
       </div>
     </div>
   );

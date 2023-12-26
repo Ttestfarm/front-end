@@ -101,7 +101,7 @@ const QuotePayPage = () => {
               quotationId: quoteData.quote.quotation.quotationId,
               productPrice: quoteData.quote.quotation.quotationPrice, //상품 가격?
               paymentDelivery: quoteData.quote.quotation.quotationDelivery,
-              count: quoteData.quote.quotation.quotationQuantity,
+              // count: Number(quoteData.quote.quotation.quotationQuantity),
             });
 
             alert(response.data);

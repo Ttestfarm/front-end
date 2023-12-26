@@ -4,11 +4,6 @@ import style from './FarmerReqCard.module.css';
 import { Link } from 'react-router-dom';
 
 const FarmerReqCard = ({ req }) => {
-  useEffect(() => {
-    console.log("here");
-    console.log(req);
-  }, []);
-
   return (
     <div className={style.container}>
       <Card width="80%">
@@ -18,22 +13,26 @@ const FarmerReqCard = ({ req }) => {
         <div className={style.wrapper}>
           <section className={style.left}>
             <p className={style.name}>
-              <span>
-                {req.requestProduct} {req.requestQuantity}
-              </span>
+              품목 : <span>{req.requestProduct}</span>&nbsp;&nbsp;
+              수량 : <span>{req.requestQuantity}</span> <br />
+              배송지 : <span>{req.address2}</span>
             </p>
             <p className={style.reqMsg}>&lt;🥕요청 메세지 &gt;</p>
             <p className={style.paragraph}>{req.requestMessage}</p>
           </section>
           <section className={style.right}>
             <p>
-              📨<span> {req.quotationCount}</span>개의 견적서 보내기
+              📨 <span>
+                내용 추가 추가 추
+              </span>
             </p>
-            <Link
-              className='link-to'
-              to={`/farmerpage/quotform/${req.requestId}/${req.requestProduct}/${req.requestQuantity}`}>
-              견적 보내기
-            </Link>
+            <button>
+              <Link
+                className={style.link}
+                to={`/farmerpage/quotform/${req.requestId}/${req.requestProduct}/${req.requestQuantity}`}>
+                견적서 보내기
+              </Link>
+            </button>
           </section>
         </div>
       </Card>

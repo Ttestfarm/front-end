@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './style/RequestList.css';
 import { Link } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import FarmerReqCard from '../../components/Farmers/FarmerReqCard';
+import axios from 'axios';
 
 const RequestList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
-  const [test, setTest] = useState({});
-  // const [intProduct, setIntProduct] = useState(); // farmer InterestProduct1 값이 기본값으로 저장
+
   const [interestList, setInterestList] = useState([]);
   const [reqList, setReqList] = useState([]);
   const [selInt, setSelInt] = useState();
+  const [page, setPage] = useState(1);
+
+  const [ref, inView] = useInView(); // 무한 스크롤
+  const [btnView, setBtnView] = useState(false);
 
   const effectFunc = async () => {
     try {
@@ -25,6 +30,7 @@ const RequestList = () => {
       console.error('Error fetching data:', error);
     }
   }
+
   useEffect(() => {
     effectFunc();
   }, []);
@@ -33,7 +39,8 @@ const RequestList = () => {
     try {
       const response = await API.get(`/farmer/requestlist?farmInterest=${interestOne}`, token);
       const data = response.data;
-      setReqList([...data]);
+      setReqList([...data.reqList]);
+      setPage(data.pageInfo);
       setSelInt(interestOne);
     } catch (error) {
       console.error('Error fetching data:', error);

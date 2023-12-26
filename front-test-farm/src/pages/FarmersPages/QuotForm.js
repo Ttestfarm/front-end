@@ -18,6 +18,7 @@ const QuotForm = () => {
     'requestId': `${request.requestId}`,
     'product': `${request.requestProduct}`,
     'quantity': `${request.requestQuantity}`,
+    'delivery': '',
     'price': '',
     'comment': '',
     'picture': '',
@@ -77,10 +78,10 @@ const QuotForm = () => {
     try {
       e.preventDefault();
       const formDataObj = new FormData();
-
       formDataObj.append('requestId', formData.requestId);
       formDataObj.append('quotationProduct', formData.product);
       formDataObj.append('quotationQuantity', formData.quantity);
+      formDataObj.append('quotationDelivery', formData.delivery);
       formDataObj.append('quotationPrice', formData.price);
       formDataObj.append('quotationComment', formData.comment);
       files.forEach((file, index) => {
@@ -148,7 +149,6 @@ const QuotForm = () => {
                 variant="outlined"
                 name="delivery"
                 label="배송비"
-                value={request.delivery}
                 sx={inputStyle}
                 size="small"
                 color="success"

@@ -9,7 +9,6 @@ import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import axios from 'axios';
 
 const QuotForm = () => {
   const token = useRecoilValue(tokenAtom); //리코일

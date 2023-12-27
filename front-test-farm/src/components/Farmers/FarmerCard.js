@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import style from './FarmerCard.module.css'; // CSS 모듈을 변수로 가져오기
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Rating } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 
 const FarmerCard = ({ farmer }) => {
   return (

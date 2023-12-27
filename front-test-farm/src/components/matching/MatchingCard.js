@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import Card from '../UI/Card';
 import style from './MatchingCard.module.css';
 import { useRecoilValue } from 'recoil';
-import { userInfoAtom } from '../../recoil/Atoms';
+import { tokenAtom, userInfoAtom } from '../../recoil/Atoms';
 
 const MatchingCard = ({ item }) => {
+  const token = useRecoilValue(tokenAtom);
   const userInfo = useRecoilValue(userInfoAtom);
+  console.log('user', userInfo);
   return (
     <Card
       width="300px"
@@ -31,7 +33,12 @@ const MatchingCard = ({ item }) => {
         <Link
           to={`/matching/buy/${item.requestProduct}/${item.requestQuantity}`}
         >
-          <button className={style.btn1}>따라 사기</button>
+          <button
+            className={style.btn1}
+            disabled={!token}
+          >
+            따라 사기
+          </button>
         </Link>
 
         <Link
@@ -39,7 +46,7 @@ const MatchingCard = ({ item }) => {
         >
           <button
             className={style.btn2}
-            disabled={userInfo.farmerId === null}
+            disabled={!userInfo.farmerId}
           >
             견적 보내기
           </button>

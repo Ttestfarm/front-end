@@ -15,9 +15,7 @@ import axios from 'axios';
 import * as API from '../../api/index';
 
 import { isSuccessModalAtom } from './../../recoil/Atoms';
-
-//전화번호 파싱해야합니다!!
-//css 수정해야합니다!!
+import { phoneFormat } from '../../util/validation';
 
 const FarmerDetailPage = () => {
   const token = useRecoilValue(tokenAtom);
@@ -57,6 +55,7 @@ const FarmerDetailPage = () => {
   };
 
   console.log('farmerInfo', farmerInfo);
+  // const formattedPhone = phoneFormat(farmerInfo.farmTel);
   return (
     <div className={style.container}>
       {farmerInfo != null && (

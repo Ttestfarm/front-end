@@ -9,10 +9,11 @@ import * as API from '../../api/index';
 import axios from 'axios';
 import MatchingCard from '../../components/matching/MatchingCard';
 import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
+import { tokenAtom, userInfoAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
   const token = useRecoilValue(tokenAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
 
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);

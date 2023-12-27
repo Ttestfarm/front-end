@@ -63,11 +63,13 @@ const router = createBrowserRouter([
 
       {
         path: 'matching',
-        // element: <MatchingPage />,
         children: [
           { index: true, element: <MatchingListPage /> },
           { path: 'requestform', element: <RequestForm /> },
-          { path: 'buy/:reqformId', element: <RequestForm /> },
+          {
+            path: 'buy/:requestProduct/:requestQuantity',
+            element: <RequestForm />,
+          },
         ],
       },
       {
@@ -75,7 +77,6 @@ const router = createBrowserRouter([
         element: <FindFarmerRootLayout />,
         children: [
           { index: true, element: <FindFarmerPage /> },
-          { path: ':farmerId', element: <FarmerDetailPage /> },
           { path: ':farmerId', element: <FarmerDetailPage /> },
           {
             path: 'reg-farmer',

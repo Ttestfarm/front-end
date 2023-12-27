@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../UI/Card';
 import style from './MatchingCard.module.css';
+import { useRecoilValue } from 'recoil';
+import { userInfoAtom } from '../../recoil/Atoms';
 
 const MatchingCard = ({ item }) => {
+  const userInfo = useRecoilValue(userInfoAtom);
   return (
     <Card
       width="300px"
@@ -25,10 +28,22 @@ const MatchingCard = ({ item }) => {
         </div>
       </div>
       <div className={style.btns}>
-        <button className={style.btn1}>
-          <Link to={`/matching/buy/${item.requestId}`}>따라 사기</Link>
-        </button>
-        <button className={style.btn2}>견적 보내기</button>
+        <Link
+          to={`/matching/buy/${item.requestProduct}/${item.requestQuantity}`}
+        >
+          <button className={style.btn1}>따라 사기</button>
+        </Link>
+
+        <Link
+          to={`/farmerpage/quotform/${item.requestId}/${item.requestProduct}/${item.requestQuantity}`}
+        >
+          <button
+            className={style.btn2}
+            disabled={userInfo.farmerId === null}
+          >
+            견적 보내기
+          </button>
+        </Link>
       </div>
     </Card>
   );

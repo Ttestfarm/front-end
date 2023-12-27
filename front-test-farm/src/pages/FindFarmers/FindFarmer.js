@@ -13,6 +13,7 @@ const FindFarmerPage = () => {
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
   const [farmerList, setFarmerList] = useState([]);
+  
   const [ref, inView] = useInView(); // 무한 스크롤
   const [btnView, setBtnView] = useState(false);
 

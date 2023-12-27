@@ -122,6 +122,7 @@ const LoginPage = () => {
             >
               이메일 찾기
             </Link>
+            <span>{' | '}</span>
             <Link
               id="find-password"
               to="/find-pw"
@@ -140,7 +141,9 @@ const LoginPage = () => {
 
         <div className={style.join}>
           <span>아직 회원이 아니신가요?</span>
-          <Link to="/join">회원가입</Link>
+          <Link to="/join">
+            <button>회원가입</button>
+          </Link>
         </div>
       </div>
     </div>

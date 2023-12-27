@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import style from "./BuyCard.module.css";
-import Card from "../UI/Card";
-import BuyReviewCard from "./BuyReviewCard";
-import { dateFormatter } from "../../util/date";
-import ReviewModal from "../UI/ReviewModal";
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import style from './BuyCard.module.css';
+import Card from '../UI/Card';
+import BuyReviewCard from './BuyReviewCard';
+import { dateFormatter } from '../../util/date';
+import ReviewModal from '../UI/ReviewModal';
+import * as API from '../../api/index';
 const BuyCard = ({ buyItem }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
   const [orderInfo, setOrderInfo] = useState({
@@ -16,7 +16,7 @@ const BuyCard = ({ buyItem }) => {
     farmerId: buyItem.payInfo.farmerId,
   });
 
-  //모달 화면 오픈
+  //모달 화면 오픈buyItem.payInfo.
   const openReviewModal = () => {
     setModalOpen(true);
   };
@@ -32,7 +32,10 @@ const BuyCard = ({ buyItem }) => {
       <Card width="90%">
         <div className={style.container}>
           <section className={style.img}>
-            <img src={buyItem.orders} alt="farm produce" />
+            <img
+              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail}`}
+              alt="farm produce"
+            />
           </section>
           <section className={style.middle}>
             <p className={style.date}>{formattedDate}</p>
@@ -44,16 +47,19 @@ const BuyCard = ({ buyItem }) => {
             <button
               className={`${style.state} ${style[buyItem.payInfo.state]}`}
             >
-              {item.state === "PAID"
-                ? "결제완료"
-                : item.state === "CANCEL"
-                ? "결제취소"
-                : item.state === "SHIPPING"
-                ? "배송중"
-                : "배송완료"}
+              {item.state === 'PAID'
+                ? '결제완료'
+                : item.state === 'CANCEL'
+                ? '결제취소'
+                : item.state === 'SHIPPING'
+                ? '배송중'
+                : '배송완료'}
             </button>
-            {item.state === "COMPLETED" && buyItem.review === null && (
-              <button className={style.reviewBtn} onClick={openReviewModal}>
+            {item.state === 'COMPLETED' && buyItem.review === null && (
+              <button
+                className={style.reviewBtn}
+                onClick={openReviewModal}
+              >
                 후기쓰기
               </button>
             )}
@@ -67,7 +73,7 @@ const BuyCard = ({ buyItem }) => {
         />
         <div className={style.reviewContainer}>
           {buyItem.review === null ? (
-            "작성된 후기가 없어요😢"
+            '작성된 후기가 없어요😢'
           ) : (
             <BuyReviewCard review={buyItem.review} />
           )}

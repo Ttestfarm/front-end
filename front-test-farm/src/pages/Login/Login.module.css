@@ -130,14 +130,17 @@
 
 .find > a {
   text-decoration: none;
+  color: #fff;
 }
 
 .find > a:visited {
   color: #ffffff;
+  font-weight: 600;
 }
-
-.find > a:first-of-type {
-  margin-right: 15px;
+.find span {
+  color: #f3e9ac;
+  font-weight: 600;
+  margin: 0 0.1rem;
 }
 
 .login-btn {
@@ -159,10 +162,18 @@
   color: #ffffff;
 }
 
-.join > a {
-  font-weight: 600;
-}
-
-.join > a:visited {
+.join button {
+  border: 2px solid transparent;
+  background-color: transparent;
+  padding: 0.5rem 4.2rem;
+  margin: 0.5rem;
+  font-weight: 800;
   color: #b7c06d;
+  font-size: 1.2rem;
+  margin: 0.2rem;
+}
+.join button:hover {
+  border: 2px solid #b7c06d;
+  border-radius: 10px;
+  cursor: pointer;
 }

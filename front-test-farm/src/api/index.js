@@ -1,11 +1,11 @@
 import axios from "axios";
 
 //  http://localhost:8090
-const backendPort = '8090';
+const backendPort = "8090";
 // process.env.REACT_APP_URL
-const serverUrl = 'http://' + window.location.hostname + ':' + backendPort;
+const serverUrl = "http://" + window.location.hostname + ":" + backendPort;
 const imgUrl =
-  'http://' + window.location.hostname + ':' + backendPort + '/uploads/';
+  "http://" + window.location.hostname + ":" + backendPort + "/img";
 
 async function get(endpoint, authToken) {
   return axios.get(serverUrl + endpoint, {
@@ -56,10 +56,10 @@ async function put(endpoint, authToken, data) {
   });
 }
 
-async function del(endpoint, params = '') {
-  return axios.delete(serverUrl + endpoint + '/' + params, {
+async function del(endpoint, params = "") {
+  return axios.delete(serverUrl + endpoint + "/" + params, {
     headers: {
-      Authorization: `${localStorage.getItem('token')}`,
+      Authorization: `${localStorage.getItem("token")}`,
     },
   });
 }

@@ -99,7 +99,7 @@ const ModifyFarmerPage = ({ page }) => {
   const inputHandle = (e) => {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   };
-
+  console.log(updateData);
   useEffect(() => {
     if (page === 'reg-farmer' && userInfo && userInfo.farmerId !== null) {
       navigate('/farmerpage/requestlist');
@@ -333,10 +333,11 @@ const ModifyFarmerPage = ({ page }) => {
         <div className={style['form-control']}>
           <label htmlFor="file">팜 대표사진</label>
           <img
-            src={picDefault}
+            //src={picDefault}
+            src={updateData.farmPixurl || picDefault}
             width="150px"
             height="150px"
-            alt="picDefault"
+            alt="Farm pix"
             ref={imgBoxRef}
             value={updateData.farmPixurl}
             onClick={() => document.getElementById('file').click()}
@@ -357,8 +358,7 @@ const ModifyFarmerPage = ({ page }) => {
             type="text"
             id="farmTel"
             name="farmTel"
-            //value={updateData.farmTel}
-            value={farmTelValue}
+            value={updateData.farmTel}
             onChange={inputHandle}
             onBlur={farmTelBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}
@@ -421,7 +421,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="registrationNum"
             name="registrationNum"
             value={updateData.registrationNum}
-            onChange={registrationNumChangeHandler}
+            onChange={inputHandle}
             onBlur={registrationNumBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}
           />
@@ -444,7 +444,6 @@ const ModifyFarmerPage = ({ page }) => {
             name="farmBank"
             value={updateData.farmBank}
             onChange={selectHandler}
-            //value={selected}
           >
             <option value="" disabled>
               은행 선택
@@ -459,7 +458,7 @@ const ModifyFarmerPage = ({ page }) => {
             type="text"
             name="farmAccountNum"
             value={updateData.farmAccountNum}
-            onChange={farmAccountNumChangeHandler}
+            onChange={inputHandle}
             onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
@@ -477,7 +476,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="farm-interest"
             name="farmInterest"
             value={formattedFarmInterest(updateData.farmInterest)}
-            onChange={farmInterestChangeHandler}
+            onChange={inputHandle}
             placeholder={'예) #토마토 #바나나 #사과'}
           />
 
@@ -493,7 +492,7 @@ const ModifyFarmerPage = ({ page }) => {
 
         <button
           className={style['join-btn']}
-          disabled={!formIsValid}
+          //disabled={!formIsValid}
           onClick={RegistHandler}
         >
           완료

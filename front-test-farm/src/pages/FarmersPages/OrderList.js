@@ -18,7 +18,7 @@ const OrderList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const [ordList, setOrdList] = useState([]);
   const [farmerId, setFarmerId] = useState(1);
-  const [type, setType] = useState('매칭'); // 1: 매칭, 2: 주문
+  const [type, setType] = useState('matching'); // 1: matching, 2: order
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
     allPage: 1,
@@ -49,7 +49,7 @@ const OrderList = () => {
       console.error('Error fetching data:', error);
     }
   }
-  // 배송 현황(매칭) 리스트
+  // 배송 현황(matching) 리스트
   useEffect(() => {
     testFunction()
   }, [page]);
@@ -71,6 +71,7 @@ const OrderList = () => {
 
         setOrdList([...data.ordersList]);
         setPageInfo(data.pageInfo);
+        console.log(data.ordersList);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -154,11 +155,11 @@ const OrderList = () => {
         </div>
         <div className="state-dropdown">
           <button className="state-dropbtn">
-            {type}
+            {type === 'matching' ? '매칭': '주문'}
           </button>
           <div className="state-dropdown-content">
-            <a href="#" key="1" onClick={() => changeType('매칭')}>매칭</a>
-            <a href="#" key="2" onClick={() => changeType('주문')}>주문</a>
+            <a href="#" key="1" onClick={() => changeType('matching')}>매칭</a>
+            <a href="#" key="2" onClick={() => changeType('order')}>주문</a>
           </div>
         </div>
       </div>
@@ -183,7 +184,7 @@ const OrderList = () => {
                   <button className="quotation-delete-btn" onClick={() => onClickButton(ord.receiptId, ord.productName, ord.quotationQuantity)}>발송</button>
                 </TableCell>
                 <TableCell align="right">
-                  <Link to={`orderdetail/${ord.receiptId}/${type}`}>
+                  <Link to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}>
                     {ord.receiptId}
                   </Link>
                 </TableCell>
@@ -203,7 +204,7 @@ const OrderList = () => {
         <div className="modal-content">
           <span className="close" onClick={closeModal}>&times;</span>
           <h2>발송 입력</h2>
-          <p>주문 번호 : {ordersId}</p>
+          <p>order 번호 : {ordersId}</p>
           <p>품 목 :{product}</p>
           <p>수 량 :{quantity}</p>
           <div>

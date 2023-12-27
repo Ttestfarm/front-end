@@ -137,7 +137,7 @@ const router = createBrowserRouter([
             element: <OrderList />,
           },
           {
-            path: 'orderlist/orderdetail/:ordersId/:type',
+            path: 'orderlist/orderdetail/:receiptId/:type',
             element: <OrderDetail />,
           },
           {

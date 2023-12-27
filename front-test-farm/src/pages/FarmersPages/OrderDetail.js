@@ -25,6 +25,7 @@ const OrderDetail = () => {
       const response = await API.get(`/farmer/orderdetail/${receiptId}/${type}`, token);
       const data = response.data;
       setOrd(data);
+      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -71,7 +72,7 @@ const OrderDetail = () => {
       <div className="compleate-detail-form-header">
         <h2>주문번호 {ord.receiptId}</h2>
         <span>
-          {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.date}
+          {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.paidAt}
         </span>
       </div>
       <hr />
@@ -79,51 +80,51 @@ const OrderDetail = () => {
         <h3>배송정보</h3>
         <p>
           <span>수령인</span>
-          <span>{ord.name}</span>
+          <span>{ord.buyerName}</span>
         </p>
         <p>
           <span>연락처</span>
-          <span>{ord.tel}</span>
+          <span>{ord.buyerTel}</span>
         </p>
         <p>
           <span>배송주소</span>
-          <span>{ord.address}</span>
+          <span>{ord.buyerAddress}</span>
         </p>
         <p>
           <span>품목</span>
-          <span>{ord.product}</span>
+          <span>{ord.productName}</span>
         </p>
         <p>
           <span>수량</span>
-          <span>{ord.quantity}kg</span>
+          <span>{ord.quotationQuantity}</span>
         </p>
       </div>
       <hr />
-      <div className="info">
+      {/* <div className="info">
         <h3>배송메모</h3>
         <p>
           <span>수령장소</span>
           <span>{ }</span>
         </p>
       </div>
-      <hr />
+      <hr /> */}
       <div className="info">
         <h3>결제정보</h3>
         <p>
           <span>결제수단</span>
-          <span>{ord.paymentBank}</span>
+          <span>{ord.pgType}</span>
         </p>
         <p>
           <span>상품금액</span>
-          <span>{ord.price}</span>
+          <span>{ord.productPrice}</span>
         </p>
         <p>
           <span>배송비</span>
-          <span>{ord.delivery === 0 ? "무료" : ord.delivery}</span>
+          <span>{ord.paymentDelivery === 0 ? "무료" : ord.paymentDelivery}</span>
         </p>
         <p>
           <h3>총 결제금액</h3>
-          <span>{ord.paymentPrice}</span>
+          <span>{ord.amount}</span>
         </p>
       </div>
       <hr />

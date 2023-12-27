@@ -2,7 +2,12 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import style from './QuotePay.module.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { isErrorModalAtom, tokenAtom, userInfoAtom } from '../../recoil/Atoms';
+import {
+  isErrorModalAtom,
+  isSuccessModalAtom,
+  tokenAtom,
+  userInfoAtom,
+} from '../../recoil/Atoms';
 import { importIamport, userCode } from '../../api/iamport';
 import * as API from '../../api/index';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,6 +16,8 @@ import Card from '../../components/UI/Card';
 const QuotePayPage = () => {
   const token = useRecoilValue(tokenAtom);
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
+  const [, setIsSucceessModal] = useRecoilState(isSuccessModalAtom);
+
   const navigate = useNavigate();
 
   const quotationId = useParams().quotationId;
@@ -108,24 +115,28 @@ const QuotePayPage = () => {
               requestId: quoteData.quote.request.requestId,
             });
 
-            alert(response.data);
+            setIsSucceessModal({
+              state: true,
+              message: '감사합니다. 결제 성공 💸',
+            });
+            navigate('/mypage/buylist');
           } catch (error) {
             console.error('Error while processing payment:', error);
             setIsErrorModal({
               state: true,
-              message: '[뜨핫] 결제가 중지되었습니다.',
+              message: rsp.error_msg,
             });
           }
         } else {
           setIsErrorModal({
             state: true,
-            message: '[앗!에러?] 결제가 중지되었습니다.',
+            message: rsp.error_msg,
           });
         }
       } else {
         setIsErrorModal({
           state: true,
-          message: '결제를 취소합니다.',
+          message: rsp.error_msg,
         });
       }
     } catch (error) {

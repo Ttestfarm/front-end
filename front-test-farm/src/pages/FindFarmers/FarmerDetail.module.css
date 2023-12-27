@@ -26,8 +26,8 @@
   margin: 2.5rem 1rem 1rem 1rem;
 }
 .farmerInfoCard {
-  width: fit-content;
-  margin: 1rem;
+  width: 90%;
+  margin: 1rem auto;
   flex-shrink: 0;
   background: #e2e4d4;
   justify-content: center;
@@ -69,7 +69,7 @@
 .flexbox {
   display: flex;
   flex-direction: row;
-  padding: 3rem 4rem;
+  padding: 3rem 2rem;
   gap: 5rem;
 }
 .leftSection {
@@ -102,12 +102,12 @@
 .left {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1.5;
 }
 .right {
   display: flex;
   flex-direction: column;
-  flex: 4;
+  flex: 3.5;
 }
 
 .name {

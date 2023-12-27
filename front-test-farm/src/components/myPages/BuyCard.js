@@ -55,7 +55,7 @@ const BuyCard = ({ buyItem }) => {
                 ? '배송중'
                 : '배송완료'}
             </button>
-            {item.state === 'COMPLETED' && buyItem.review === null && (
+            {item.state === 'PAID' && buyItem.review === null && (
               <button
                 className={style.reviewBtn}
                 onClick={openReviewModal}

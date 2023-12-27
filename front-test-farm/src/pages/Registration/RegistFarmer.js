@@ -216,7 +216,7 @@ const RegistFarmerPage = ({ page }) => {
 
   if (
     farmNameIsValid &&
-    (myFarmTel || farmTelIsValid) &&
+    farmTelIsValid &&
     farmAddressDetailIsValid &&
     farmAccountNumIsValid &&
     registrationNum &&
@@ -371,12 +371,12 @@ const RegistFarmerPage = ({ page }) => {
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
 
-          <Checkbox
+          {/* <Checkbox
             checked={myFarmTel}
             onChange={setMyFarmTel}
           >
             <span>내 핸드폰 번호 사용하기</span>
-          </Checkbox>
+          </Checkbox> */}
         </div>
 
         <div className={farmAddressStyles}>
@@ -425,8 +425,13 @@ const RegistFarmerPage = ({ page }) => {
             value={registrationNumValue}
             onChange={registrationNumChangeHandler}
             onBlur={registrationNumBlurHandler}
-            placeholder={'사업자 등록번호를 입력해 주세요.'}
+            placeholder={'숫자만 입력해 주세요.'}
           />
+          {/* {farmAccountNumHasError && (
+            <p className={style['error-text']}>
+              정산을 위해 계좌번호를 입력해주세요.
+            </p>
+          )} */}
           <p className={style['error-text']}>{regiNumMsg}</p>
         </div>
 

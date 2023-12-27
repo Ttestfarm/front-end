@@ -8,21 +8,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 
 const FarmerCard = ({ farmer }) => {
-  const token = useRecoilValue(tokenAtom);
-  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
-  const navigate = useNavigate();
-
-  const userOnly = () => {
-    if (token) {
-      window.location.href = `/findfarmer/${farmer.farmerId}`;
-    } else {
-      setIsErrorModal({
-        state: true,
-        message: '로그인이 필요한 서비스입니다.',
-      });
-      navigate('/login');
-    }
-  };
   return (
     <div className={style['farmer-card']}>
       <div className={style['card-header']}>

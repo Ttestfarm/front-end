@@ -55,7 +55,7 @@ const FarmerDetailPage = () => {
   };
 
   console.log('farmerInfo', farmerInfo);
-  const formattedPhone = phoneFormat(farmerInfo.farmTel);
+  // const formattedPhone = phoneFormat(farmerInfo.farmTel);
   return (
     <div className={style.container}>
       {farmerInfo != null && (
@@ -107,7 +107,7 @@ const FarmerDetailPage = () => {
               <br />
               <div>
                 <span className={style.name}>📞연락처</span>
-                <span className={style.value}>{formattedPhone}</span>
+                <span className={style.value}>{farmerInfo.farmTel}</span>
               </div>
               <br />
               <div className={style.farmsAddress}>

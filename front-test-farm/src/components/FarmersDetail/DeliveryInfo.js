@@ -84,7 +84,7 @@ const DeliveryInfo = ({
                 </div>
                 <div className={style['col-75']}>
                   <input
-                    hidden
+                    
                     id="address1"
                     value={address1}
                     onChange={(e) => setAddress1(e.target.value)}

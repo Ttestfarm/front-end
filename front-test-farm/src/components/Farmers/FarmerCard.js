@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
 import style from './FarmerCard.module.css'; // CSS 모듈을 변수로 가져오기
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Rating } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 
 const FarmerCard = ({ farmer }) => {
+  const token = useRecoilValue(tokenAtom);
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
+  const navigate = useNavigate();
+
+  const userOnly = () => {
+    if (token) {
+      window.location.href = `/findfarmer/${farmer.farmerId}`;
+    } else {
+      setIsErrorModal({
+        state: true,
+        message: '로그인이 필요한 서비스입니다.',
+      });
+      navigate('/login');
+    }
+  };
   return (
     <div className={style['farmer-card']}>
       <div className={style['card-header']}>

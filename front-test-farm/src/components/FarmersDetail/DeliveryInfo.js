@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Postcode from '../../api/PostCode';
+import Postcode2 from '../../api/PostCode2';
 import style from './DeliveryInfo.module.css';
 import ModalContainer from '../UI/Modal';
 import CloseIcon from '@mui/icons-material/Close';
@@ -158,7 +158,7 @@ const DeliveryInfo = ({
             </div>
           </Card>
           {isPostcodeModal && (
-            <Postcode setAddressFromPostcode={handleAddressFromPostcode} />
+            <Postcode2 setAddressFromPostcode={handleAddressFromPostcode} />
           )}
         </ModalContainer>
       )}

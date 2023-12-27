@@ -33,7 +33,6 @@ const Postcode = ({ setAddressFromPostcode }) => {
       console.log(address1);
     }
 
-    setAddressFromPostcode(address1, fullAddress);
     setZonecode(address1);
     setPostcodeAddress(fullAddress);
     setIsPostcodeModal(false);

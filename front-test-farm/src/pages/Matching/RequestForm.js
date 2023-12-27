@@ -29,7 +29,6 @@ const RequestForm = ({ page }) => {
   const token = useRecoilValue(tokenAtom);
   const { requestProduct = '', requestQuantity = '' } = useParams();
   const userInfo = useRecoilValue(userInfoAtom);
-  const [reqformId, setReqformId] = useState(null);
   const [data, setData] = useState({
     requestProduct: requestProduct || '',
     requestQuantity: requestQuantity || '',

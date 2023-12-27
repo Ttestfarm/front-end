@@ -3,7 +3,6 @@ import { Form, Link, useNavigate, useNavigation } from 'react-router-dom';
 import axios from 'axios';
 
 import style from './Login.module.css';
-import naver from '../../assets/naver.png';
 import * as API from '../../api';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenAtom, isErrorModalAtom, userInfoAtom } from '../../recoil/Atoms';
@@ -51,7 +50,6 @@ const LoginPage = () => {
       const token = response.headers['authorization'];
 
       const res = await API.get('/user/userInfo', token);
-      //console.log('here', res.data);
       setUserInfo(res.data);
 
       setTokenDuration();
@@ -77,7 +75,7 @@ const LoginPage = () => {
         <Form className={style['kakao-naver']}>
           <Link
             id="kakao-login"
-            to="http://localhost:8090/oauth2/authorization/kakao"
+            to={`${API.serverUrl}/oauth2/authorization/kakao`}
           >
             <img
               src="https://d3cpiew7rze14b.cloudfront.net/assets/app/kakao_icon.svg"

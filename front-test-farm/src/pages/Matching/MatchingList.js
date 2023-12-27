@@ -130,6 +130,7 @@ const MatchingListPage = () => {
             ))
           : '매칭 리스트가 없습니다.'}
       </section>
+      <div ref={ref}></div>
       <div className={style.upIcon}>
         <AnimatePresence>
           {btnView ? (
@@ -147,7 +148,6 @@ const MatchingListPage = () => {
           ) : null}
         </AnimatePresence>
       </div>
-      <div ref={ref}></div>
     </>
   );
 };

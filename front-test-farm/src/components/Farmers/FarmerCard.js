@@ -19,6 +19,7 @@ const FarmerCard = ({ farmer }) => {
 
       <div className={style['image-container']}>
         <img
+          //src={`${API.serverUrl}/img/${num}`}
           src={farmer?.farmPixurl}
           alt="Farmer Card"
           className={style['image']}
@@ -43,7 +44,9 @@ const FarmerCard = ({ farmer }) => {
         <div className={style['farmname']}>{farmer?.farmName}</div>
         <div className={style['farmaddress']}>{farmer?.farmAddress}</div>
         <div className={style['category']}>
-          <p><span>🥦</span>관심 농산물<span>🥦</span></p>
+          <p>
+            <span>🥦</span>관심 농산물<span>🥦</span>
+          </p>
           {farmer?.farmInterest}
         </div>
       </div>

@@ -34,14 +34,9 @@ const QuotForm = () => {
 
   const fileChange = (e) => {
     let filearr = e.target.files;
-    // console.log(filearr);
     setFiles([...filearr]);
-    // files.splice(i, 1, './upload/' + filearr[i].name)
-    // console.log('./upload/' + filearr[i].name);
-    // console.log(filearr[i].name);
   }
-  // let id = e.target.id;
-  // setFiles([...files]);
+
 
   const handleSetTab = (e) => {
     console.log(e.keyCode);
@@ -85,11 +80,10 @@ const QuotForm = () => {
       formDataObj.append('quotationDelivery', formData.delivery);
       formDataObj.append('quotationPrice', formData.price);
       formDataObj.append('quotationComment', formData.comment);
+
       files.forEach((file, index) => {
-        formDataObj.append(`quotationPicture${index + 1}`, file);
+        formDataObj.append('images', file);
       });
-      console.log(formDataObj.get('requestId'));
-      console.log(formDataObj.get('quotationPicture1'));
       const response = await API.formPost('/farmer/regquot', token, formDataObj);
 
       const data = response.data;

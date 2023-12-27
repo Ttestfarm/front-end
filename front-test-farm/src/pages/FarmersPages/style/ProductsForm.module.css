@@ -31,7 +31,7 @@
   width: 90%;
   height: 80%;
   margin: auto;
-  border-radius: 25px;
+  border-radius: 10px;
   object-fit: cover;
   position: absolute;
 }
@@ -71,8 +71,9 @@
   justify-content: center;
 
   &:hover {
-    background: red;
+    background: #8B9478;
     color: #fff;
+    border: none;
   }
 }
 

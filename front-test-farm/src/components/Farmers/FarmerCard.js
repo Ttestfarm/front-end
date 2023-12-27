@@ -43,7 +43,7 @@ const FarmerCard = ({ farmer }) => {
         <div className={style['farmname']}>{farmer?.farmName}</div>
         <div className={style['farmaddress']}>{farmer?.farmAddress}</div>
         <div className={style['category']}>
-          <p>🥦 관심 농산물 🥦</p>
+          <p><span>🥦</span>관심 농산물<span>🥦</span></p>
           {farmer?.farmInterest}
         </div>
       </div>

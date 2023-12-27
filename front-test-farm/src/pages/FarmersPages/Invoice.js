@@ -87,7 +87,7 @@ const Invoice = () => {
   return (
     <>
       <div className="cal-form">
-        <h1>조회하기</h1>
+        {/* <h1>조회하기</h1> */}
         <div className="cal-search">
           <div className="cal-search-date">
             <h3>조회기간</h3>

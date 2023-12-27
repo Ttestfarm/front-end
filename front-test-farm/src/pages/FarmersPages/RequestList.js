@@ -130,7 +130,7 @@ const RequestList = () => {
             </text>
           </svg>
           <span>
-            &nbsp;파머님이 판매가능한 품목 중 매칭을 기다리는 요청이 있어요!
+            &nbsp;&nbsp;파머님이 판매가능한 품목 중 매칭을 기다리는 요청이 있어요!
           </span>
         </div>
         <div className="dropdown">
@@ -141,9 +141,9 @@ const RequestList = () => {
                 interest !== null && <a href="#" key={interest} onClick={() => changeInterest(interest)}>{interest}</a>
               ))
             }
-          </div >
-        </div >
-      </div >
+          </div>
+        </div>
+      </div>
       <div>
         {reqList.length > 0
           ? reqList.map((reqItem) => (
@@ -156,7 +156,7 @@ const RequestList = () => {
             <p
               className='noneList'
             >
-              {selInt}의 요청서가 없습니다.
+              {selInt}의 요청서가 없습니다😢
             </p>
           </div>
         }

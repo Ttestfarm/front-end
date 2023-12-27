@@ -68,6 +68,9 @@
   align-items: center;
   color: var(--color-main);
 }
+.category span {
+  font-size: 13px;
+}
 .detail {
   display: inline-block;
   background-color: #2b331d;

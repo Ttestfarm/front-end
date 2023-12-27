@@ -3,6 +3,8 @@ import Postcode from '../../api/PostCode';
 import style from './DeliveryInfo.module.css';
 import ModalContainer from '../UI/Modal';
 import CloseIcon from '@mui/icons-material/Close';
+import { useRecoilState } from 'recoil';
+import { isPostcodeModalAtom } from '../../recoil/Atoms';
 import Card from '../UI/Card';
 const DeliveryInfo = ({
   isOpen,
@@ -21,7 +23,8 @@ const DeliveryInfo = ({
   setAddress3,
   setQuantity,
 }) => {
-  const [isPostcodeModal, setIsPostcodeModal] = useState(false);
+  const [isPostcodeModal, setIsPostcodeModal] =
+    useRecoilState(isPostcodeModalAtom);
 
   const closeModal = () => {
     onClose();
@@ -36,7 +39,6 @@ const DeliveryInfo = ({
   const handleAddressFromPostcode = (address1, address2) => {
     setAddress1(address1);
     setAddress2(address2);
-    //setIsPostcodeModal(false);
     setIsPostcodeModal((prev) => !prev);
   };
   //주소찾기 모달 열기
@@ -45,7 +47,6 @@ const DeliveryInfo = ({
     setIsPostcodeModal((prev) => !prev);
   };
 
-  console.log('주소모달', isPostcodeModal);
   return (
     <>
       {isOpen && (
@@ -61,7 +62,7 @@ const DeliveryInfo = ({
               <form onSubmit={handleSubmit}>
                 <div className={style['row']}>
                   <div className={style['col-25']}>
-                    <label htmlFor="name">수령인 이름</label>
+                    <label htmlFor="name">수령인</label>
                   </div>
                   <div className={style['col-75']}>
                     <input
@@ -71,6 +72,7 @@ const DeliveryInfo = ({
                       onChange={(e) => setName(e.target.value)}
                       required
                       className={style.name}
+                      placeholder="성함"
                     />
                   </div>
                 </div>
@@ -87,6 +89,7 @@ const DeliveryInfo = ({
                       onChange={(e) => setTel(e.target.value)}
                       required
                       className={style.name}
+                      placeholder="숫자만(ex: 01056781004)"
                     />
                   </div>
                 </div>
@@ -112,6 +115,7 @@ const DeliveryInfo = ({
                       onClick={onClicktoggleAddressModal}
                       required
                       className={style.name}
+                      placeholder="도로명 주소(클릭)"
                     ></input>
 
                     <input
@@ -120,6 +124,7 @@ const DeliveryInfo = ({
                       onChange={(e) => setAddress3(e.target.value)}
                       required
                       className={style.name}
+                      placeholder="상세 주소"
                     ></input>
                   </div>
                 </div>
@@ -130,11 +135,13 @@ const DeliveryInfo = ({
                   <div className={style['col-75']}>
                     <input
                       type="number"
+                      min={1}
                       id="quantity"
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                       required
                       className={style.name}
+                      placeholder="최소: 1"
                     ></input>
                   </div>
                 </div>
@@ -144,7 +151,7 @@ const DeliveryInfo = ({
                     type="submit"
                     className={style.submit}
                   >
-                    결제하기
+                    💳 결제하기
                   </button>
                 </div>
               </form>

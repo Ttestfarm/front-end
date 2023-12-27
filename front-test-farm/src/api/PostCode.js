@@ -45,8 +45,13 @@ const Postcode = ({ setAddressFromPostcode }) => {
   return (
     <ModalContainer>
       <DaumPostcodeEmbed onComplete={handleComplete} />
-      <div>
-        <button onClick={onClickCloseModal}>닫기</button>
+      <div className={style.div}>
+        <button
+          onClick={onClickCloseModal}
+          className={style.closeBtn}
+        >
+          👋닫기
+        </button>
       </div>
     </ModalContainer>
   );

@@ -23,3 +23,16 @@ export const isTel = (value) =>
   value.trim().match(/^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]))(\d{3,4})(\d{4})$/);
 
 export const isNotEmptyValue = (value) => value.trim() !== '';
+
+// ({2,3}) - ({3,4}) - ({4})
+export const phoneFormat = (phoneNumber) => {
+  const value = phoneNumber.replace(/[^0-9]/g, '');
+  // 00 OR 000 지정
+  const firstLength = value.length > 9 ? 3 : 2;
+
+  return [
+    value.slice(0, firstLength), // 첫번째 구간 (00 or 000)
+    value.slice(firstLength, value.length - 4), // 두번째 구간 (000 or 0000)
+    value.slice(value.length - 4), // 남은 마지막 모든 숫자
+  ].join('-');
+};

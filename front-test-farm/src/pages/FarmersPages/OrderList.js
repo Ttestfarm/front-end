@@ -149,7 +149,7 @@ const OrderList = () => {
             </text>
           </svg>
           <span>
-            &nbsp;배송 완료 된 견적서는 배송 현황에서 볼 수 있습니다!
+            &nbsp;&nbsp;배송 완료 된 견적서는 배송 현황에서 볼 수 있습니다!
           </span>
         </div>
         <div className="state-dropdown">

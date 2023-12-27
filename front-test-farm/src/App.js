@@ -20,7 +20,7 @@ import ReqListPage from './pages/MyPages/ReqList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
 import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
-import OrderedProductPage from './pages/MyPages/OrderedProduct';
+//import OrderedProductPage from './pages/MyPages/OrderedProduct';
 import QuotePayPage from './pages/MyPages/QuotePay';
 
 import RequestList from './pages/FarmersPages/RequestList';
@@ -93,16 +93,7 @@ const router = createBrowserRouter([
           { path: 'quotepay/:quotationId', element: <QuotePayPage /> },
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
-          {
-            path: 'buylist',
-            element: <BuyListPage />,
-            children: [
-              {
-                path: ':orderId',
-                element: <OrderedProductPage />,
-              },
-            ],
-          },
+          { path: 'buylist', element: <BuyListPage /> },
         ],
       },
       {

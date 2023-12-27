@@ -231,7 +231,6 @@ const RegistFarmerPage = ({ page }) => {
   const RegistHandler = async (e) => {
     e.preventDefault();
 
-    console.log('page', page);
     const formData = new FormData();
     formData.append('farmName', farmNameValue);
     formData.append('farmTel', farmTelValue);
@@ -257,8 +256,8 @@ const RegistFarmerPage = ({ page }) => {
           token,
           formData
         );
-        
-        console.log('response', response);
+
+        console.log('response', response.data);
         setIsSucessModal({
           state: true,
           message: '파머 등록 성공!',
@@ -308,10 +307,9 @@ const RegistFarmerPage = ({ page }) => {
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
-  const registrationNumStyles =
-    registrationNumHasError
-      ? `${style['form-control']} ${style.invalid}`
-      : style['form-control'];
+  const registrationNumStyles = registrationNumHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
   const farmAccountStyles = farmAccountNumHasError
     ? `${style['form-control']} ${style.invalid}`
@@ -437,9 +435,7 @@ const RegistFarmerPage = ({ page }) => {
             </p>
           )}
           {registrationNum === true && (
-            <p className={style['success-text']}>
-              {regiNumMsg}
-            </p>
+            <p className={style['success-text']}>{regiNumMsg}</p>
           )}
         </div>
 
@@ -451,11 +447,17 @@ const RegistFarmerPage = ({ page }) => {
             onChange={selectHandler}
             value={selected}
           >
-            <option value="" disabled>
+            <option
+              value=""
+              disabled
+            >
               은행 선택
             </option>
             {bankOption.map((item) => (
-              <option value={item} key={item}>
+              <option
+                value={item}
+                key={item}
+              >
                 {item}
               </option>
             ))}

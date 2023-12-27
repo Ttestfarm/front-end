@@ -94,9 +94,6 @@ const RequestForm = ({ page }) => {
     data.address3 === null ||
     reqMsg === '';
 
-  console.log('data', data);
-  console.log('reqMsg', reqMsg);
-  console.log('disabled', disabled);
   const resetHandler = (e) => {
     e.preventDefault();
 

@@ -1,32 +1,23 @@
 import React from 'react';
 import style from './SuccessModal.module.css';
-import success from '../../assets/success.png';
-import picExam from '../../assets/pic-exam.png';
+import ok from '../../assets/ok.png';
+import carrot from '../../assets/carrot.png';
 import ModalContainer from './Modal';
 
 const SuccessModal = (props) => {
   return (
     <ModalContainer>
       <header className={style.header}>
-        <button onClick={props.onClose}>X</button>
+        <img src={ok} alt="ok" />
       </header>
 
       <main className={style.main}>
-        <img
-          src={success}
-          alt="success"
-        />
         <p>{props.message}</p>
       </main>
       <footer className={style.footer}>
-        <button onClick={props.onClose}>OK</button>
+        <button onClick={props.onClose}>확인</button>
+        <img src={carrot} alt="carrot" />
       </footer>
-      <div className={style.lowImage}>
-        <img
-          src={picExam}
-          alt="lowfeat"
-        />
-      </div>
     </ModalContainer>
   );
 };

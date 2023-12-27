@@ -137,9 +137,10 @@
   color: #ffffff;
   font-weight: 600;
 }
+
 .find span {
-  color: #f3e9ac;
-  font-weight: 600;
+  color: #fff;
+  font-weight: 300;
   margin: 0 0.1rem;
 }
 
@@ -172,6 +173,7 @@
   font-size: 1.2rem;
   margin: 0.2rem;
 }
+
 .join button:hover {
   border: 2px solid #b7c06d;
   border-radius: 10px;

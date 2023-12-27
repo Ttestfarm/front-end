@@ -17,7 +17,7 @@ const DeliveryList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
 
   const [deliveryList, setDeliveryList] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
     allPage: 1,
     curPage: 1,
@@ -31,7 +31,8 @@ const DeliveryList = () => {
       const response = await API.get(`/farmer/deliverylist/${state}/${page}`, token);
       const data = response.data;
       setDeliveryList([...data.deliveryList]);
-      setPage(data.pageInfo);
+      setPageInfo([...data.pageInfo]);
+      console.log(data.deliveryList);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -49,10 +50,12 @@ const DeliveryList = () => {
       if (state === select) {
         alert("이미 선택 하셨습니다.");
       } else {
-        const response = await API.get(`/farmer/deliverylist/${select}/${page.curPage}`, token);
+        console.log(select);
+        console.log(state);
+        const response = await API.get(`/farmer/deliverylist/${select}/${page}`, token);
         const data = response.data;
         setDeliveryList([...data.deliveryList]);
-        setPage(data.pageInfo);
+        setPageInfo(data.pageInfo);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -83,14 +86,14 @@ const DeliveryList = () => {
           </TableHead>
           <TableBody>
             {deliveryList.length > 0 ? deliveryList.map(dlist => (
-              <TableRow key={dlist.deliveryId}>
-                <TableCell align="right">{dlist.ordersId}</TableCell>
-                <TableCell align="right">{dlist.product}</TableCell>
-                <TableCell align="right">{dlist.quantity}</TableCell>
+              <TableRow key={dlist.receiptId}>
+                <TableCell align="right">{dlist.receiptId}</TableCell>
+                <TableCell align="right">{dlist.productName}</TableCell>
+                <TableCell align="right">{dlist.quotationQuantity}</TableCell>
                 {/* <TableCell align="right">{dlist.tinvoice}</TableCell> */}
-                <TableCell align="right">{dlist.price}</TableCell>
-                <TableCell align="right">{dlist.address}</TableCell>
-                <TableCell align="right">{dlist.deliveryState}</TableCell>
+                <TableCell align="right">{dlist.productPrice}</TableCell>
+                <TableCell align="right">{dlist.buyerAddress}</TableCell>
+                <TableCell align="right">{dlist.state === 'SHIPPING' ? '배송중' : '배송완료' }</TableCell>
               </TableRow>
             ))
               : "배송 리스트가 없습니다."

@@ -50,21 +50,21 @@ const RegistFarmerPage = ({ page }) => {
     farmPixurl: '',
   });
 
-  useEffect(() => {
-    if (farmerInfo) {
-      setFormDatas({
-        farmName: farmerInfo?.farmer?.farmName,
-        farmTel: farmerInfo?.farmer?.farmTel,
-        farmAddress: farmerInfo?.farmer?.farmAddress,
-        farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
-        registrationNum: farmerInfo?.farmer?.registrationNum,
-        farmBank: farmerInfo?.farmer?.farmBank,
-        farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
-        farmInterest: farmerInfo?.farmer?.farmInterest,
-        farmPixurl: farmerInfo?.farmer?.farmPixurl,
-      });
-    }
-  }, [farmerInfo]);
+  // useEffect(() => {
+  //   if (farmerInfo) {
+  //     setFormDatas({
+  //       farmName: farmerInfo?.farmer?.farmName,
+  //       farmTel: farmerInfo?.farmer?.farmTel,
+  //       farmAddress: farmerInfo?.farmer?.farmAddress,
+  //       farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
+  //       registrationNum: farmerInfo?.farmer?.registrationNum,
+  //       farmBank: farmerInfo?.farmer?.farmBank,
+  //       farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
+  //       farmInterest: farmerInfo?.farmer?.farmInterest,
+  //       farmPixurl: farmerInfo?.farmer?.farmPixurl,
+  //     });
+  //   }
+  // }, [farmerInfo]);
 
   const navigate = useNavigate();
 
@@ -86,13 +86,13 @@ const RegistFarmerPage = ({ page }) => {
     };
   }, [setAddress2]);
 
-  useEffect(() => {
-    if (myFarmTel) {
-      setUserTel(userInfo.userTel || '');
-    } else {
-      setUserTel('');
-    }
-  }, [myFarmTel, userInfo]);
+  // useEffect(() => {
+  //   if (myFarmTel) {
+  //     setUserTel(userInfo.userTel || '');
+  //   } else {
+  //     setUserTel('');
+  //   }
+  // }, [myFarmTel, userInfo]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -120,7 +120,7 @@ const RegistFarmerPage = ({ page }) => {
     valueChangeHandler: farmTelChangeHandler,
     inputBlurHandler: farmTelBlurHandler,
     reset: resetfarmTel,
-  } = useUserInput(val.isTel, myFarmTel);
+  } = useUserInput(val.isTel);
 
   // const {
   //   value: { postcodeAddress },
@@ -142,6 +142,8 @@ const RegistFarmerPage = ({ page }) => {
 
   const {
     value: registrationNumValue,
+    isValid: registrationNumIsValid,
+    hasError: registrationNumHasError,
     valueChangeHandler: registrationNumChangeHandler,
     inputBlurHandler: registrationNumBlurHandler,
     reset: resetRegistrationNum,
@@ -175,13 +177,13 @@ const RegistFarmerPage = ({ page }) => {
     }
   };
 
-  //주소찾기 모달 열기
+  // 주소찾기 모달 열기
   const onClicktoggleAddressModal = async (e) => {
     e.preventDefault();
     setIsPostcodeModal((prev) => !prev);
   };
 
-  //사업자등록번호 확인
+  // 사업자등록번호 확인
   const registrationNumCheckHandler = async (e) => {
     e.preventDefault();
     const registrationNum = registrationNumValue;
@@ -199,6 +201,7 @@ const RegistFarmerPage = ({ page }) => {
           message: '등록할 수 없는 번호입니다.',
         });
       }
+      // setRegiNumMsg('');
     } catch (error) {
       setIsErrorModal({
         state: true,
@@ -216,10 +219,10 @@ const RegistFarmerPage = ({ page }) => {
 
   if (
     farmNameIsValid &&
-    (myFarmTel || farmTelIsValid) &&
+    farmTelIsValid &&
     farmAddressDetailIsValid &&
     farmAccountNumIsValid &&
-    registrationNum &&
+    registrationNumIsValid &&
     file
   ) {
     formIsValid = true;
@@ -306,7 +309,7 @@ const RegistFarmerPage = ({ page }) => {
     : style['form-control'];
 
   const registrationNumStyles =
-    registrationNum === 'false'
+    registrationNumHasError
       ? `${style['form-control']} ${style.invalid}`
       : style['form-control'];
 
@@ -362,7 +365,7 @@ const RegistFarmerPage = ({ page }) => {
             type="text"
             id="farmTel"
             name="farmTel"
-            value={myFarmTel ? userTel : farmTelValue}
+            value={farmTelValue}
             onChange={farmTelChangeHandler}
             onBlur={farmTelBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}
@@ -371,12 +374,12 @@ const RegistFarmerPage = ({ page }) => {
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
 
-          <Checkbox
+          {/* <Checkbox
             checked={myFarmTel}
             onChange={setMyFarmTel}
           >
             <span>내 핸드폰 번호 사용하기</span>
-          </Checkbox>
+          </Checkbox> */}
         </div>
 
         <div className={farmAddressStyles}>
@@ -421,13 +424,23 @@ const RegistFarmerPage = ({ page }) => {
           </div>
           <input
             type="text"
+            id="registrationNum"
             name="registrationNum"
             value={registrationNumValue}
             onChange={registrationNumChangeHandler}
             onBlur={registrationNumBlurHandler}
-            placeholder={'사업자 등록번호를 입력해 주세요.'}
+            placeholder={'숫자만 입력해 주세요.'}
           />
-          <p className={style['error-text']}>{regiNumMsg}</p>
+          {registrationNumHasError && (
+            <p className={style['error-text']}>
+              사업자 등록번호를 확인해주세요.
+            </p>
+          )}
+          {registrationNum === true && (
+            <p className={style['success-text']}>
+              {regiNumMsg}
+            </p>
+          )}
         </div>
 
         <div className={farmAccountStyles}>

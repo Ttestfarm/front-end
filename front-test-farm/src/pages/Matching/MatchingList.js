@@ -9,10 +9,11 @@ import * as API from '../../api/index';
 import axios from 'axios';
 import MatchingCard from '../../components/matching/MatchingCard';
 import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
+import { tokenAtom, userInfoAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
   const token = useRecoilValue(tokenAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
 
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);
@@ -130,6 +131,7 @@ const MatchingListPage = () => {
             ))
           : '매칭 리스트가 없습니다.'}
       </section>
+      <div ref={ref}></div>
       <div className={style.upIcon}>
         <AnimatePresence>
           {btnView ? (
@@ -147,7 +149,6 @@ const MatchingListPage = () => {
           ) : null}
         </AnimatePresence>
       </div>
-      <div ref={ref}></div>
     </>
   );
 };

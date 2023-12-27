@@ -150,7 +150,7 @@ const FindFarmerPage = () => {
             ))
           : '파머 목록이 없습니다.'}
       </div>
-
+      <div ref={ref}></div>
       <div className={style.upIcon}>
         <AnimatePresence>
           {btnView ? (
@@ -168,7 +168,6 @@ const FindFarmerPage = () => {
           ) : null}
         </AnimatePresence>
       </div>
-      <div ref={ref}></div>
     </Fragment>
   );
 };

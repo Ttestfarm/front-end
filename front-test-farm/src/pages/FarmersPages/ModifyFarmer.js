@@ -118,13 +118,13 @@ const ModifyFarmerPage = ({ page }) => {
     };
   }, [setAddress2]);
 
-  useEffect(() => {
-    if (myFarmTel) {
-      setUserTel(userInfo.userTel || '');
-    } else {
-      setUserTel('');
-    }
-  }, [myFarmTel, userInfo]);
+  // useEffect(() => {
+  //   if (myFarmTel) {
+  //     setUserTel(userInfo.userTel || '');
+  //   } else {
+  //     setUserTel('');
+  //   }
+  // }, [myFarmTel, userInfo]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -152,7 +152,7 @@ const ModifyFarmerPage = ({ page }) => {
     valueChangeHandler: farmTelChangeHandler,
     inputBlurHandler: farmTelBlurHandler,
     reset: resetfarmTel,
-  } = useUserInput(val.isTel, myFarmTel, updateData.farmTel, setUpdateData);
+  } = useUserInput(val.isTel, updateData.farmTel, setUpdateData);
 
   // const {
   //   value: { postcodeAddress },
@@ -174,6 +174,8 @@ const ModifyFarmerPage = ({ page }) => {
 
   const {
     value: registrationNumValue,
+    isValid: registrationNumIsValid,
+    hasError: registrationNumHasError,
     valueChangeHandler: registrationNumChangeHandler,
     inputBlurHandler: registrationNumBlurHandler,
     reset: resetRegistrationNum,
@@ -248,10 +250,10 @@ const ModifyFarmerPage = ({ page }) => {
 
   if (
     farmNameIsValid &&
-    (myFarmTel || farmTelIsValid) &&
+    farmTelIsValid &&
     farmAddressDetailIsValid &&
     farmAccountNumIsValid &&
-    registrationNum &&
+    registrationNumIsValid &&
     file
   ) {
     formIsValid = true;
@@ -297,8 +299,8 @@ const ModifyFarmerPage = ({ page }) => {
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
-  const registrationNumStyles =
-    registrationNum === 'false'
+    const registrationNumStyles =
+    registrationNumHasError
       ? `${style['form-control']} ${style.invalid}`
       : style['form-control'];
 
@@ -321,11 +323,11 @@ const ModifyFarmerPage = ({ page }) => {
             onBlur={farmNameBlurHandler}
             placeholder={'농장 이름을 입력하세요.'}
           />
-          {/* {farmNameHasError && (
+          {farmNameHasError && (
             <p className={style['error-text']}>
               이름은 2자 ~ 9자까지 입력가능합니다.
             </p>
-          )} */}
+          )}
         </div>
 
         <div className={style['form-control']}>
@@ -356,7 +358,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="farmTel"
             name="farmTel"
             //value={updateData.farmTel}
-            value={myFarmTel ? userTel : farmTelValue}
+            value={farmTelValue}
             onChange={inputHandle}
             onBlur={farmTelBlurHandler}
             placeholder={'숫자만 입력해 주세요.'}
@@ -365,12 +367,12 @@ const ModifyFarmerPage = ({ page }) => {
             <p className={style['error-text']}>전화번호를 정확히 입력하세요.</p>
           )}
 
-          <Checkbox
+          {/* <Checkbox
             checked={myFarmTel}
             onChange={setMyFarmTel}
           >
             <span>내 핸드폰 번호 사용하기</span>
-          </Checkbox>
+          </Checkbox> */}
         </div>
 
         <div className={farmAddressStyles}>
@@ -387,7 +389,7 @@ const ModifyFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddress"
-            //value={address2}
+            value={address2}
             value={updateData.farmAddress}
             // onChange={farmAddressChangeHandler}
             // onBlur={farmAddressBlurHandler}
@@ -416,13 +418,23 @@ const ModifyFarmerPage = ({ page }) => {
           </div>
           <input
             type="text"
+            id="registrationNum"
             name="registrationNum"
             value={updateData.registrationNum}
-            onChange={inputHandle}
+            onChange={registrationNumChangeHandler}
             onBlur={registrationNumBlurHandler}
-            placeholder={'사업자 등록번호를 입력해 주세요.'}
+            placeholder={'숫자만 입력해 주세요.'}
           />
-          <p className={style['error-text']}>{regiNumMsg}</p>
+          {registrationNumHasError && (
+            <p className={style['error-text']}>
+              사업자 등록번호를 확인해주세요.
+            </p>
+          )}
+          {registrationNum === true && (
+            <p className={style['success-text']}>
+              {regiNumMsg}
+            </p>
+          )}
         </div>
 
         <div className={farmAccountStyles}>
@@ -431,7 +443,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="bank-select"
             name="farmBank"
             value={updateData.farmBank}
-            onChange={inputHandle}
+            onChange={selectHandler}
             //value={selected}
           >
             <option value="" disabled>
@@ -447,15 +459,15 @@ const ModifyFarmerPage = ({ page }) => {
             type="text"
             name="farmAccountNum"
             value={updateData.farmAccountNum}
-            onChange={inputHandle}
+            onChange={farmAccountNumChangeHandler}
             onBlur={farmAccountNumBlurHandler}
             placeholder={'계좌번호를 입력해 주세요. (숫자만 입력)'}
           />
-          {/* {farmAccountNumHasError && (
+          {farmAccountNumHasError && (
             <p className={style['error-text']}>
               정산을 위해 계좌번호를 입력해주세요.
             </p>
-          )} */}
+          )}
         </div>
 
         <div className={style['form-control']}>
@@ -465,7 +477,7 @@ const ModifyFarmerPage = ({ page }) => {
             id="farm-interest"
             name="farmInterest"
             value={formattedFarmInterest(updateData.farmInterest)}
-            onChange={inputHandle}
+            onChange={farmInterestChangeHandler}
             placeholder={'예) #토마토 #바나나 #사과'}
           />
 
@@ -481,7 +493,7 @@ const ModifyFarmerPage = ({ page }) => {
 
         <button
           className={style['join-btn']}
-          //disabled={!formIsValid}
+          disabled={!formIsValid}
           onClick={RegistHandler}
         >
           완료

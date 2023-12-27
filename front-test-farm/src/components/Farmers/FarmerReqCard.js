@@ -24,7 +24,7 @@ const FarmerReqCard = ({ req }) => {
           </section>
           <section className={style.right}>
             <p>
-              <span>✉&nbsp;내용 추가 추가</span>
+              <span>✉&nbsp;재고확인 후 신중하게 보내주세요!</span>
             </p>
             <button>
               <Link

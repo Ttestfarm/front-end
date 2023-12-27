@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import style from './PostCode.module.css';
 import {
@@ -33,6 +33,7 @@ const Postcode = ({ setAddressFromPostcode }) => {
       console.log(address1);
     }
 
+    setAddressFromPostcode(address1, fullAddress);
     setZonecode(address1);
     setPostcodeAddress(fullAddress);
     setIsPostcodeModal(false);

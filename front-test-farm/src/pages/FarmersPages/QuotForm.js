@@ -9,7 +9,6 @@ import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import axios from 'axios';
 
 const QuotForm = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -97,8 +96,8 @@ const QuotForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="100%">
-        <h1>견적서 작성하기!</h1>
+      <Card width="80%">
+        <h1>견적서 작성하기</h1>
         <Form onSubmit={SendHandler}>
           <div className={style.main}>
             <div className={style.left}>
@@ -169,7 +168,7 @@ const QuotForm = () => {
             </div>
           </div>
           <div className={style.picture}>
-            <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 5장)</span>
+            <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다 (최대 5장)</span>
             <label htmlFor='file'>사진 첨부</label>
             <input name='file' type='file' id='file' multiple="multiple" accept='image/*' onChange={fileChange} />
           </div>
@@ -197,24 +196,24 @@ const QuotForm = () => {
                 fontSize="small"
                 color="success"
               />
-              유의 사항
+              &nbsp;유의사항
             </div>
             <p className={style.padding1}>
-              •파머님! 재고 파악 후 신중하게 보내주세요!
+              • 파머님! 재고 파악 후 신중하게 보내주세요!
             </p>
             <p>
-              •재고 부족으로 인한 판매 취소가 누적될 경우 패널티가 부과됩니다.<br />(3회 이상 누적 시 요청서 수신이 일주일간 중지됩니다.
+              • 재고 부족으로 인한 판매 취소가 누적될 경우 패널티가 부과됩니다.<br />(3회 이상 누적 시 요청서 수신이 일주일간 중지됩니다.)
             </p>
             <p>
-              •고객님이 견적서 수락을 하면 바로 결제가 진행됩니다.<br />신속하고 안전한 배송을 준비해주세요.
+              • 고객님이 견적서 수락을 하면 바로 결제가 진행됩니다.<br />신속하고 안전한 배송을 준비해주세요.
             </p>
             <p>
-              •추가적으로 생각나는 말이 있다면 적어두도록 하겠습니다.
+              • 추가적으로 생각나는 말이 있다면 적어두도록 하겠습니다.
             </p>
           </div>
 
           <div className={style.footer}>
-            <button className={style.btn1}>견석서<br />보내기</button>
+            <button className={style.btn1}>견적서 보내기</button>
             <button className={style.btn2}><Link to={'/farmerpage/requestlist'}>돌아가기</Link></button>
           </div>
         </Form >

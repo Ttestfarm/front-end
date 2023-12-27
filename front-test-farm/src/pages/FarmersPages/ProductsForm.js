@@ -34,7 +34,7 @@ const ProductsForm = () => {
   };
 
   const handleSetTab = (e) => {
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     if (e.keyCode === 9) {
       e.preventDefault();
       let val = e.target.value;
@@ -65,11 +65,7 @@ const ProductsForm = () => {
 
   const fileChange = (e) => {
     let filearr = e.target.files;
-    // console.log(filearr);
     setFiles([...filearr]);
-    // files.splice(i, 1, './upload/' + filearr[i].name)
-    // console.log('./upload/' + filearr[i].name);
-    // console.log(filearr[i].name);
   }
 
   const handleInputChange = (e) => {
@@ -100,15 +96,15 @@ const ProductsForm = () => {
 
       console.log(formData.description)
       formDataObj.append("titleImage", titleImage);
-      images.forEach((image, index) => {
-        formDataObj.append(`image${index + 1}`, image);
+      images.forEach((image) => {
+        formDataObj.append('images', image);
       });
 
       console.log(formDataObj);
 
       const response = await API.formPost(`/farmer/regproduct`, token, formDataObj);
       const data = response.data;
-      
+
       console.log(response);
       navigate('/farmerpage/');
     } catch (error) {
@@ -118,7 +114,7 @@ const ProductsForm = () => {
 
   return (
     <div className={style.container}>
-      <Card width="100%">
+      <Card width="80%">
         <h1>상품 등록</h1>
         <Form onSubmit={submitServer}>
           <div className={style.main}>
@@ -224,8 +220,8 @@ const ProductsForm = () => {
           </div>
           <div className={style.picture}>
             <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 4장)</span>
-            <label htmlFor='file'>사진 첨부</label>
-            <input name='images' type='file' id='file' multiple="multiple" accept='image/*' onChange={fileChange} />
+            <label htmlFor='files'>사진 첨부</label>
+            <input name='files' type='file' id='files' multiple="multiple" accept='image/*' onChange={fileChange} />
           </div>
           <div className={style.images}>
             {files.map((file, index) =>

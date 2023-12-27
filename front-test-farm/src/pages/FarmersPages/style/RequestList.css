@@ -5,13 +5,12 @@
   justify-content: space-between;
   /* display: grid;
   grid-template-columns: repeat(2, 1fr); */
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   margin-bottom: 10px;
 }
 
 .warning-text {
-  /* margin-bottom: 30px; */
   margin: 20px 0px 20px 0px;
 
   padding: 5px;
@@ -19,7 +18,7 @@
 
   display: flex;
   align-items: center;
-
+  color: #000;
   border-radius: 5px;
   border: 1px solid #000;
   background: #fefcf4;
@@ -134,19 +133,20 @@
 
 /* Dropdown Button */
 .dropbtn {
-  margin: 15px 15px 0 0;
-  padding: 15px;
+  margin: 18px 0 0 0;
+  padding: 5px 10px;
 
   color: white;
-  background-color: #ffb000;
-  font-size: 1rem;
-
+  background-color: #49680D;
+  font-size: 1.2rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   border: none;
+  cursor: pointer;
 }
 
 .dropbtn span {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 

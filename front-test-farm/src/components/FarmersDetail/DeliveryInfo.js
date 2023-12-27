@@ -1,6 +1,8 @@
-import React from "react";
-import Postcode from "../../api/PostCode";
-import style from "./DeliveryInfo.module.css";
+import React from 'react';
+import Postcode from '../../api/PostCode';
+import style from './DeliveryInfo.module.css';
+import ModalContainer from '../UI/Modal';
+import CloseIcon from '@mui/icons-material/Close';
 const DeliveryInfo = ({
   isOpen,
   onClose,
@@ -35,17 +37,20 @@ const DeliveryInfo = ({
   return (
     <>
       {isOpen && (
-        <div className={style.modal}>
-          <div className={style.modalcontent}>
-            <span className="close" onClick={closeModal}>
-              &times;
+        <ModalContainer>
+          <div className={style.box}>
+            <span
+              className={style.closeBtn}
+              onClick={closeModal}
+            >
+              <CloseIcon className={style.closeIcon} />
             </span>
             <form onSubmit={handleSubmit}>
-              <div className={style["row"]}>
-                <div className={style["col-25"]}>
+              <div className={style['row']}>
+                <div className={style['col-25']}>
                   <label htmlFor="name">수령인 이름</label>
                 </div>
-                <div className={style["col-75"]}>
+                <div className={style['col-75']}>
                   <input
                     type="text"
                     id="name"
@@ -57,11 +62,11 @@ const DeliveryInfo = ({
                 </div>
               </div>
 
-              <div className={style["row"]}>
-                <div className={style["col-25"]}>
-                  <label htmlFor="tel">수령인 전화번호</label>
+              <div className={style['row']}>
+                <div className={style['col-25']}>
+                  <label htmlFor="tel">수령인 연락처</label>
                 </div>
-                <div className={style["col-75"]}>
+                <div className={style['col-75']}>
                   <input
                     type="tel"
                     id="tel"
@@ -73,12 +78,13 @@ const DeliveryInfo = ({
                 </div>
               </div>
 
-              <div className={style["row"]}>
-                <div className={style["col-25"]}>
+              <div className={style['row']}>
+                <div className={style['col-25']}>
                   <label htmlFor="address">배송지</label>
                 </div>
-                <div className={style["col-75"]}>
+                <div className={style['col-75']}>
                   <input
+                    
                     id="address1"
                     value={address1}
                     onChange={(e) => setAddress1(e.target.value)}
@@ -103,11 +109,11 @@ const DeliveryInfo = ({
                   ></input>
                 </div>
               </div>
-              <div className={style["row"]}>
-                <div className={style["col-25"]}>
+              <div className={style['row']}>
+                <div className={style['col-25']}>
                   <label htmlFor="quantity">수량</label>
                 </div>
-                <div className={style["col-75"]}>
+                <div className={style['col-75']}>
                   <input
                     type="number"
                     id="quantity"
@@ -119,12 +125,17 @@ const DeliveryInfo = ({
                 </div>
               </div>
 
-              <button type="submit" className={style.submit}>
-                결제하기
-              </button>
+              <div className={style.footer}>
+                <button
+                  type="submit"
+                  className={style.submit}
+                >
+                  결제하기
+                </button>
+              </div>
             </form>
           </div>
-        </div>
+        </ModalContainer>
       )}
     </>
   );

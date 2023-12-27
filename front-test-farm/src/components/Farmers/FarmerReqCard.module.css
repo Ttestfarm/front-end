@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .container span {
@@ -15,6 +16,7 @@
 .header p {
   color: black;
   font-weight: bold;
+  padding-left: 48px;
 }
 
 .header span {
@@ -45,10 +47,12 @@
 
 .name {
   font-size: 1.2rem;
+  line-height: 30px;
 }
 
 .reqMsg {
   margin: 1rem 0;
+  line-height: 30px;
 }
 
 .paragraph {
@@ -71,6 +75,7 @@
 }
 
 .right button {
+  font-size: 1.2rem;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   background-color: var(--color-button2);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import style from './RequestForm.module.css';
 import Card from '../../components/UI/Card';
 import uglyfarm from '../../assets/uglyfarm.jpg';
@@ -10,6 +11,7 @@ import { TextField } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
+import { handleSetValue, handleSetTab } from '../../util/textInsertWithTab';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -23,69 +25,22 @@ import {
   tokenAtom,
 } from '../../recoil/Atoms';
 
-const RequestForm = () => {
+const RequestForm = ({ page }) => {
   const token = useRecoilValue(tokenAtom);
+  const { requestProduct = '', requestQuantity = '' } = useParams();
   const userInfo = useRecoilValue(userInfoAtom);
   const [reqformId, setReqformId] = useState(null);
   const [data, setData] = useState({
-    requestProduct: '',
-    requestQuantity: '',
+    requestProduct: requestProduct || '',
+    requestQuantity: requestQuantity || '',
     requestDate: '',
-    requestMessage: '',
+    //requestMessage: '',
     tel: userInfo.userTel,
     address1: userInfo.address1,
     address2: userInfo.address2,
     address3: userInfo.address3,
   });
-
-  // //따라사기
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const reqformIdParam = urlParams.get('reqformId');
-
-  //   if (reqformIdParam) {
-  //     setReqformId(reqformIdParam);
-  //     fetchRequestInfo(reqformIdParam); // API에서 정보를 가져오는 함수 호출
-  //     console.log(reqformId);
-  //   }
-  // }, []); // 컴포넌트가 처음 로딩될 때만 실행
-
-  // const fetchRequestInfo = async (reqformId) => {
-  //   try {
-  //     // API를 통해 요청서 정보 가져오기
-  //     const response = await API.get(`/matching/buy/${reqformId}`, token);
-  //     const requestData = response.data;
-
-  //     setData({
-  //       requestProduct: requestData.requestProduct,
-  //       requestQuantity: requestData.requestQuantity,
-  //       ...data,
-  //     });
-  //   } catch (error) {
-  //     console.error('Error fetching request info:', error);
-  //   }
-  // };
-  // //
-
-  //
-  const handleSetValue = (e) => {
-    setData({ ...data, requestMessage: e.target.value });
-  };
-
-  const handleSetTab = (e) => {
-    console.log(e.keyCode);
-    if (e.keyCode === 9) {
-      e.preventDefault();
-      let val = e.target.value;
-      let start = e.target.selectionStart;
-      let end = e.target.selectionEnd;
-      e.target.value = val.substring(0, start) + '\t' + val.substring(end);
-      e.target.selectionStart = e.target.selectionEnd = start + 1;
-      handleSetValue(e);
-      return false; //  prevent focus
-    }
-  };
-  //
+  const [reqMsg, setReqMsg] = useState('');
 
   const [isPostcodeModal, setIsPostcodeModal] =
     useRecoilState(isPostcodeModalAtom);
@@ -130,18 +85,31 @@ const RequestForm = () => {
   };
   //datepicker 끝
 
+  const disabled =
+    data.requestProduct === '' ||
+    data.requestQuantity === '' ||
+    data.requestDate === '' ||
+    data.tel === null ||
+    data.address1 === null ||
+    data.address2 === null ||
+    data.address3 === null ||
+    reqMsg === '';
+
+  console.log('data', data);
+  console.log('reqMsg', reqMsg);
+  console.log('disabled', disabled);
   const resetHandler = (e) => {
     e.preventDefault();
 
+    setReqMsg('');
     setData({
-      requestProduct: '',
-      requestQuantity: '',
+      requestProduct: requestProduct || '',
+      requestQuantity: requestQuantity || '',
       requestDate: '',
-      requestMessage: '',
-      tel: userInfo?.userTel,
-      address1: userInfo?.address1,
+      tel: userInfo.userTel != null ? userInfo.userTel : '',
+      address1: userInfo.address1 != null ? userInfo.address1 : '',
       address2: userInfo.address2 != null ? userInfo.address2 : '',
-      address3: userInfo?.address3,
+      address3: userInfo.address3 != null ? userInfo.address3 : '',
     });
   };
 
@@ -150,6 +118,7 @@ const RequestForm = () => {
     try {
       const enteredData = {
         ...data,
+        requestMessage: reqMsg,
       };
       console.log('entered', enteredData);
       const response = await API.post(`/matching/request`, token, enteredData);
@@ -214,9 +183,8 @@ const RequestForm = () => {
                 multiline
                 rows={3}
                 name="requestMessage"
-                value={data.requestMessage}
-                //onChange={inputHandle}
-                onChange={(e) => handleSetValue(e)}
+                value={reqMsg}
+                onChange={(e) => handleSetValue(e, setReqMsg)}
                 onKeyDown={(e) => handleSetTab(e)}
                 size="small"
                 sx={inputStyle}
@@ -328,6 +296,7 @@ const RequestForm = () => {
             <button
               type="submit"
               className={style.btn}
+              disabled={disabled}
             >
               매칭 신청
             </button>

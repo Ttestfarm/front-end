@@ -100,9 +100,10 @@ const QuotStatus = () => {
             </text>
           </svg>
           <span>
-            &nbsp;무분별한 견적서 취소는 서비스 이용에 패널티가 부여됩니다. 주의하세요!
+            &nbsp;&nbsp;무분별한 견적서 취소는 서비스 이용에 패널티가 부여됩니다. 주의하세요!
           </span>
         </div>
+        <div className="button-group">
         <button
           className="quotation-delete-btn"
           onClick={cancelQuot}
@@ -114,7 +115,7 @@ const QuotStatus = () => {
             {state == 'READY'
               ? '대기중'
               : state == 'EXPIRED'
-                ? '요청만료'
+                ? '요청 만료'
                 : '취소'}
           </button>
           <div className="state-dropdown-content">
@@ -141,8 +142,9 @@ const QuotStatus = () => {
             </a>
           </div>
         </div>
+        </div>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} width="80%">
         <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
           <TableHead>
             <TableRow>

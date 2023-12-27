@@ -20,7 +20,6 @@ import ReqListPage from './pages/MyPages/ReqList';
 import ModifyUserPage from './pages/MyPages/ModifyUser';
 import BuyListPage from './pages/MyPages/BuyList';
 import FollowFarmerPage from './pages/MyPages/FollowFarmer';
-//import OrderedProductPage from './pages/MyPages/OrderedProduct';
 import QuotePayPage from './pages/MyPages/QuotePay';
 
 import RequestList from './pages/FarmersPages/RequestList';
@@ -43,6 +42,7 @@ import ProductRegForm from './pages/ProductRegistration/ProductRegForm';
 import ProductRegiForm from './pages/ProductRegistration/ProductRegiForm';
 
 import Pay from './components/FarmersDetail/Pay';
+import BuyDetailPage from './components/myPages/BuyDetail';
 
 const router = createBrowserRouter([
   {
@@ -94,6 +94,7 @@ const router = createBrowserRouter([
           { path: 'modify-user', element: <ModifyUserPage /> },
           { path: 'followlist', element: <FollowFarmerPage /> },
           { path: 'buylist', element: <BuyListPage /> },
+          { path: 'buylist/:receiptId', element: <BuyDetailPage /> },
         ],
       },
       {

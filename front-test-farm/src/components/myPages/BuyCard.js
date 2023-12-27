@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './BuyCard.module.css';
 import Card from '../UI/Card';
 import BuyReviewCard from './BuyReviewCard';
@@ -16,6 +16,7 @@ const BuyCard = ({ buyItem }) => {
     farmerId: buyItem.payInfo.farmerId,
   });
 
+  const navigate = useNavigate();
   //모달 화면 오픈buyItem.payInfo.
   const openReviewModal = () => {
     setModalOpen(true);
@@ -27,6 +28,8 @@ const BuyCard = ({ buyItem }) => {
   //날짜 변환
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   const item = buyItem.payInfo;
+
+  console.log('nyf', buyItem);
   return (
     <div className={style.card}>
       <Card width="90%">
@@ -41,7 +44,22 @@ const BuyCard = ({ buyItem }) => {
             <p className={style.date}>{formattedDate}</p>
             <p>구매 농산물 : {buyItem.payInfo.productName}</p>
             <p>발송인 :{buyItem.payInfo.farmName}</p>
-            <Link> 주문상세 &gt;</Link>
+            {/* <button
+              onClick={() => {
+                navigate(`/mypage/buylist/${buyItem.payInfo.receiptId}`, {
+                  state: { ord: { ...buyItem.payInfo } },
+                });
+              }}
+            >
+              {' '}
+              주문상세 &gt;
+            </button> */}
+            <Link
+              to={`/mypage/buylist/${buyItem.payInfo.receiptId}`}
+              state={{ ord: { ...buyItem.payInfo } }}
+            >
+              주문상세 &gt;
+            </Link>
           </section>
           <section className={style.right}>
             <button

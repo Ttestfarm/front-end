@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import style from './PostCode.module.css';
 import {
@@ -9,7 +9,7 @@ import {
 import { useRecoilState } from 'recoil';
 import ModalContainer from './../components/UI/Modal';
 
-const Postcode = () => {
+const Postcode = ({ setAddressFromPostcode }) => {
   const [, setPostcodeAddress] = useRecoilState(postcodeAddressAtom);
   const [, setIsPostcodeModal] = useRecoilState(isPostcodeModalAtom);
   const [, setZonecode] = useRecoilState(zonecodeAtom);
@@ -33,6 +33,7 @@ const Postcode = () => {
       console.log(address1);
     }
 
+    setAddressFromPostcode(address1, fullAddress);
     setZonecode(address1);
     setPostcodeAddress(fullAddress);
     setIsPostcodeModal(false);
@@ -45,8 +46,13 @@ const Postcode = () => {
   return (
     <ModalContainer>
       <DaumPostcodeEmbed onComplete={handleComplete} />
-      <div>
-        <button onClick={onClickCloseModal}>닫기</button>
+      <div className={style.div}>
+        <button
+          onClick={onClickCloseModal}
+          className={style.closeBtn}
+        >
+          👋닫기
+        </button>
       </div>
     </ModalContainer>
   );

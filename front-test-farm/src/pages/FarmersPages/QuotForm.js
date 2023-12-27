@@ -87,7 +87,6 @@ const QuotForm = () => {
 
       const data = response.data;
 
-      alert(data);
       navigate('/farmerpage/requestlist');
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -148,7 +147,7 @@ const QuotForm = () => {
                 sx={inputStyle}
                 size="small"
                 color="success"
-                placeholder="배송비를 입력해주세요"
+                helperText="무료배송은 숫자 0 입력해주세요"
                 onChange={handleInputChange}
               />
               <TextField

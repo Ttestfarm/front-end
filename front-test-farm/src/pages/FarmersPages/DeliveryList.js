@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import style from './style/QuotStatus.css';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,22 +18,31 @@ const DeliveryList = () => {
 
   const [deliveryList, setDeliveryList] = useState([]);
   const [page, setPage] = useState(0);
+  const [pageInfo, setPageInfo] = useState({
+    allPage: 1,
+    curPage: 1,
+    startPage: 1,
+    endPage: 0,
+  });
   const [state, setState] = useState("SHIPPING"); // 0:오류, 1:배송중, 2:배송완료
 
-  const testFunction = async() => {
+  const testFunction = async () => {
     try {
       const response = await API.get(`/farmer/deliverylist/${state}/${page}`, token);
       const data = response.data;
       setDeliveryList([...data.deliveryList]);
       setPage(data.pageInfo);
-    } catch(error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
-    }     
+    }
   }
   useEffect(() => {
     testFunction();
   }, []);
 
+  const onChangePage = (_, value) => {
+    setPage(value);
+  };
   const changeState = async (select) => {
     try {
       setState(select);
@@ -42,19 +53,19 @@ const DeliveryList = () => {
         const data = response.data;
         setDeliveryList([...data.deliveryList]);
         setPage(data.pageInfo);
-      } 
-    } catch(error) {
+      }
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   return (
     <div>
-    <div className="delivery-header">
-      <div>
-        <button className="delivery-delete-btn" onClick={() => changeState("SHIPPING")}>배송중</button>
-        <button className="delivery-delete-btn" onClick={() => changeState("COMPLETED")}>배송완료</button>
-      </div >
+      <div className="delivery-header">
+        <div>
+          <button className="delivery-delete-btn" onClick={() => changeState("SHIPPING")}>배송중</button>
+          <button className="delivery-delete-btn" onClick={() => changeState("COMPLETED")}>배송완료</button>
+        </div >
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
@@ -70,23 +81,33 @@ const DeliveryList = () => {
           </TableHead>
           <TableBody>
             {deliveryList.length > 0 ? deliveryList.map(dlist => (
-            <TableRow key={dlist.deliveryId}>
-              <TableCell align="right">{dlist.ordersId}</TableCell>
-              <TableCell align="right">{dlist.product}</TableCell>
-              <TableCell align="right">{dlist.quantity}</TableCell>
-              {/* <TableCell align="right">{dlist.tinvoice}</TableCell> */}
-              <TableCell align="right">{dlist.price}</TableCell>
-              <TableCell align="right">{dlist.address}</TableCell>
-              <TableCell align="right">{dlist.deliveryState}</TableCell>
-            </TableRow>
-          ))
-          : "배송 리스트가 없습니다."
-        }
-          
-        </TableBody>
+              <TableRow key={dlist.deliveryId}>
+                <TableCell align="right">{dlist.ordersId}</TableCell>
+                <TableCell align="right">{dlist.product}</TableCell>
+                <TableCell align="right">{dlist.quantity}</TableCell>
+                {/* <TableCell align="right">{dlist.tinvoice}</TableCell> */}
+                <TableCell align="right">{dlist.price}</TableCell>
+                <TableCell align="right">{dlist.address}</TableCell>
+                <TableCell align="right">{dlist.deliveryState}</TableCell>
+              </TableRow>
+            ))
+              : "배송 리스트가 없습니다."
+            }
+          </TableBody>
         </Table>
       </TableContainer>
+      <div className={style.pagination}>
+        <Stack spacing={2}>
+          <Pagination
+            className={style.Pagination}
+            count={pageInfo?.allPage}
+            page={pageInfo?.curPage}
+            onChange={onChangePage}
+            size="small"
+          />
+        </Stack>
       </div>
+    </div>
   );
 };
 

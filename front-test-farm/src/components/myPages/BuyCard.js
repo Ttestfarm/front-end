@@ -5,7 +5,7 @@ import Card from "../UI/Card";
 import BuyReviewCard from "./BuyReviewCard";
 import { dateFormatter } from "../../util/date";
 import ReviewModal from "../UI/ReviewModal";
-
+import * as API from "../../api/index";
 const BuyCard = ({ buyItem }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
   const [orderInfo, setOrderInfo] = useState({
@@ -16,7 +16,7 @@ const BuyCard = ({ buyItem }) => {
     farmerId: buyItem.payInfo.farmerId,
   });
 
-  //모달 화면 오픈
+  //모달 화면 오픈buyItem.payInfo.
   const openReviewModal = () => {
     setModalOpen(true);
   };
@@ -32,7 +32,10 @@ const BuyCard = ({ buyItem }) => {
       <Card width="90%">
         <div className={style.container}>
           <section className={style.img}>
-            <img src={buyItem.orders} alt="farm produce" />
+            <img
+              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail}`}
+              alt="farm produce"
+            />
           </section>
           <section className={style.middle}>
             <p className={style.date}>{formattedDate}</p>

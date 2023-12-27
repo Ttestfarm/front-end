@@ -3,6 +3,7 @@ import style from "./ProductCard.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import DeliveryInfo from "./DeliveryInfo"; // DeliveryInfo 컴포넌트 import
 import Card from "../UI/Card";
+import * as API from "../../api/index";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -51,7 +52,10 @@ const ProductCard = ({ product }) => {
       <Card width="300px">
         <div className={style.container}>
           <div className={style.imageWrapper}>
-            <img src={product.thumbNail} alt="product thumbnail" />
+            <img
+              src={`${API.imgUrl}/${product.thumbNail}`}
+              alt="product thumbnail"
+            />
           </div>
           <h3>🌱{product.productName}</h3>
           <div className={style.product}>

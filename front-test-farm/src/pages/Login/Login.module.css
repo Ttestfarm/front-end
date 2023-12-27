@@ -130,6 +130,10 @@
 
 .find > a {
   text-decoration: none;
+  color: #fff;
+}
+
+.find > a:visited {
   color: #ffffff;
   font-weight: 600;
 }

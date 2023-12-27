@@ -10,30 +10,28 @@
 }
 
 .header {
-  color: darkgray;
+  padding: 0 1rem;
 }
 
 .header p {
   color: black;
   font-weight: bold;
-  padding-left: 48px;
 }
 
 .header span {
-  color: #c9c9c9;
+  color: #A4A3A3;
   font-weight: 400;
 }
 
 .wrapper {
   display: flex;
   max-width: 100%;
-  flex-wrap: wrap;
 }
 
 .left {
   display: flex;
   flex-direction: column;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem 0 1rem 1.5rem;
   flex: 2;
   flex-wrap: wrap;
   min-width: 0;
@@ -46,13 +44,18 @@
 }
 
 .name {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 30px;
 }
 
+.name > span:last-of-type {
+  font-size: 0.9rem;
+}
+
 .reqMsg {
-  margin: 1rem 0;
+  margin: 1rem 0 0 0;
   line-height: 30px;
+  font-weight: 500;
 }
 
 .paragraph {
@@ -62,6 +65,7 @@
 .right {
   flex: 1;
   display: flex;
+  padding: 1rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -70,8 +74,10 @@
   min-width: 0;
 }
 
-.right p {
-  padding: 1rem;
+.right span {
+  padding: 0 0 0.3rem 0;
+  font-size: 0.8rem;
+  font-weight: 300;
 }
 
 .right button {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  padding: 3rem;
+  padding: 1rem 0;
 }
 
 .container h1 {

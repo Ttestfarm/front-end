@@ -90,7 +90,7 @@ const QuotStatus = () => {
   };
 
   return (
-    <div>
+    <div className="quotation-status">
       <div className="quotation-status-header">
         <div className='warning-text'>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -113,10 +113,10 @@ const QuotStatus = () => {
         <div className="state-dropdown">
           <button className="state-dropbtn">
             {state == 'READY'
-              ? '대기중'
+              ? '▼ 대기중'
               : state == 'EXPIRED'
-                ? '요청 만료'
-                : '취소'}
+                ? '▼ 요청 만료'
+                : '▼ 취소'}
           </button>
           <div className="state-dropdown-content">
             <a
@@ -144,8 +144,8 @@ const QuotStatus = () => {
         </div>
         </div>
       </div>
-      <TableContainer component={Paper} width="80%">
-        <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
+      <TableContainer component={Paper} className="table-container">
+        <Table className='table-main' aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="right">삭제</TableCell>

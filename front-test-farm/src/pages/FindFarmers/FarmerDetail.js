@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import style from './FarmerDetail.module.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import backBtn from '../../assets/back_btn.png';
-import { Rating } from '@mui/material';
-import { pink } from '@mui/material/colors';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import React, { useState, useEffect } from "react";
+import style from "./FarmerDetail.module.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import backBtn from "../../assets/back_btn.png";
+import { Rating } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
-import ProductsList from '../../components/FarmersDetail/ProductsList';
-import ReviewList from '../../components/FarmersDetail/ReviewList';
+import ProductsList from "../../components/FarmersDetail/ProductsList";
+import ReviewList from "../../components/FarmersDetail/ReviewList";
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { tokenAtom, userInfoAtom } from './../../recoil/Atoms';
-import axios from 'axios';
-import * as API from '../../api/index';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { tokenAtom, userInfoAtom } from "./../../recoil/Atoms";
+import axios from "axios";
+import * as API from "../../api/index";
 
-import { isSuccessModalAtom } from './../../recoil/Atoms';
-import { phoneFormat } from '../../util/validation';
+import { isSuccessModalAtom } from "./../../recoil/Atoms";
+import { phoneFormat } from "../../util/validation";
 
 const FarmerDetailPage = () => {
   const token = useRecoilValue(tokenAtom);
@@ -54,42 +54,32 @@ const FarmerDetailPage = () => {
     }
   };
 
-  console.log('farmerInfo', farmerInfo);
+  console.log("farmerInfo", farmerInfo);
   // const formattedPhone = phoneFormat(farmerInfo.farmTel);
   return (
     <div className={style.container}>
       {farmerInfo != null && (
         <main className={style.farmerInfoCard}>
-          <button
-            className={style.backBtn}
-            onClick={() => navigate(-1)}
-          >
-            <img
-              src={backBtn}
-              alt="go to back btn"
-            />
+          <button className={style.backBtn} onClick={() => navigate(-1)}>
+            <img src={backBtn} alt="go to back btn" />
           </button>
           <div className={style.flexbox}>
             <section className={style.leftSection}>
               <div className={style.imageContainer}>
                 <img
-                  src={farmerInfo}
+                  src={`${API.imgUrl}/${farmerInfo?.farmPixurl}`}
                   alt="farmer"
                 />
               </div>
 
               <div className={style.info}>
-                <Rating
-                  name="read-only"
-                  value={farmerInfo.rating}
-                  readOnly
-                />
-                (<span>{farmerInfo.reviewCount}명</span>)
+                <Rating name="read-only" value={farmerInfo.rating} readOnly />(
+                <span>{farmerInfo.reviewCount}명</span>)
               </div>
               <div className={style.info}>
                 <PersonAddAlt1Icon
                   sx={{
-                    color: farmerfollow ? pink[500] : 'black',
+                    color: farmerfollow ? pink[500] : "black",
                     fontSize: 30,
                   }}
                   onClick={followHandler}
@@ -113,7 +103,7 @@ const FarmerDetailPage = () => {
               <div className={style.farmsAddress}>
                 <span className={style.name}>🏡팜 주소</span>
                 <span className={style.value}>
-                  {farmerInfo.farmAddress + ' ' + farmerInfo.farmAddressDetail}
+                  {farmerInfo.farmAddress + " " + farmerInfo.farmAddressDetail}
                 </span>
               </div>
               <div></div>

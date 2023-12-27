@@ -1,7 +1,7 @@
 .footer {
   width: 100%;
   height: auto;
-  background-color: #B7C06D;
+  background-color: #b7c06d;
   display: flex;
   align-items: center;
   padding: 20px 100px;
@@ -9,7 +9,7 @@
   color: #191919;
 }
 
-.footer p {
+.footer div {
   width: 100%;
   font-weight: 500;
   font-size: 13px;
@@ -22,7 +22,7 @@
   font-size: 23px;
   margin-bottom: 20px;
   text-align: left;
-  color: #49680D;
+  color: #49680d;
 }
 
 .footer-customCenter {
@@ -32,7 +32,7 @@
 
 .footer-customCenter > span {
   font-weight: 900;
-  color: #49680D;
+  color: #49680d;
 }
 
 .footer-mallInfo {

@@ -11,7 +11,7 @@ const BuyCard = ({ buyItem }) => {
   const [orderInfo, setOrderInfo] = useState({
     date: buyItem.payInfo.createAt,
     productName: buyItem.payInfo.productName,
-    productPrice: buyItem.payInfo.productPrice,
+    productPrice: buyItem.payInfo.amount,
     receiptId: buyItem.payInfo.receiptId,
     farmerId: buyItem.payInfo.farmerId,
   });

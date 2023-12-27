@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { AnimatePresence } from 'framer-motion';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -8,12 +8,12 @@ import style from './MatchingList.module.css';
 import * as API from '../../api/index';
 import axios from 'axios';
 import MatchingCard from '../../components/matching/MatchingCard';
-import { useRecoilValue } from 'recoil';
-import { tokenAtom, userInfoAtom } from '../../recoil/Atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
 
 const MatchingListPage = () => {
   const token = useRecoilValue(tokenAtom);
-  const userInfo = useRecoilValue(userInfoAtom);
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
 
   const [matchingList, setMatchingList] = useState([]);
   const [page, setPage] = useState(1);
@@ -32,6 +32,7 @@ const MatchingListPage = () => {
   const [btnView, setBtnView] = useState(false);
 
   const scrollRef = useRef(0);
+  const navigate = useNavigate();
 
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
@@ -94,6 +95,18 @@ const MatchingListPage = () => {
     });
   };
 
+  const joinHandler = () => {
+    if (token) {
+      navigate('/matching/requestform');
+    } else {
+      setIsErrorModal({
+        state: true,
+        message: '먼저 로그인이 필요합니다.',
+      });
+      navigate('/login');
+    }
+  };
+
   return (
     <>
       <section className={style.header}>
@@ -102,10 +115,7 @@ const MatchingListPage = () => {
         <p>필요하신 만큼만 주문하세요!</p>
         <p className={style.context}>공동구매처럼 기다릴 필요도 없습니다.</p>
         <p> 프리티 파머스가 여러분의 요청서를 확인 후 배송해 드립니다.</p>
-
-        <button>
-          <Link to="/matching/requestform">매칭 요청서 작성하기</Link>
-        </button>
+        <button onClick={joinHandler}>매칭 요청서 작성하기</button>
       </section>
       <section className={style.infoBox}>
         <div>

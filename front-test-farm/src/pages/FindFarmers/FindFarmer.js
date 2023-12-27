@@ -13,11 +13,15 @@ const FindFarmerPage = () => {
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
   const [farmerList, setFarmerList] = useState([]);
-  
+
   const [ref, inView] = useInView(); // 무한 스크롤
   const [btnView, setBtnView] = useState(false);
 
   const scrollRef = useRef(0);
+
+  const handleFocus = () => {
+    setKeyword('');
+  };
 
   //키워드 검색어 입력
   const keywordChangeHandler = (e) => {
@@ -104,6 +108,7 @@ const FindFarmerPage = () => {
             type="text"
             value={keyword}
             onChange={keywordChangeHandler}
+            onFocus={handleFocus}
             placeholder="품목명을 입력하세요"
           />
           <button

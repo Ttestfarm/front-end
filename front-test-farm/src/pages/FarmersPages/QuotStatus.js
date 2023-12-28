@@ -152,9 +152,9 @@ const QuotStatus = () => {
           </button>
           <div className="state-dropdown">
             <button className="state-dropbtn">
-              {state == 'READY'
+              {state === 'READY'
                 ? '▼ 대기중'
-                : state == 'EXPIRED'
+                : state === 'EXPIRED'
                 ? '▼ 요청 만료'
                 : '▼ 취소'}
             </button>
@@ -207,7 +207,7 @@ const QuotStatus = () => {
             {quotList.map((quot) => (
               <TableRow key={quot.quotationId}>
                 <TableCell align="center">
-                  {state == 'READY' && (
+                  {state === 'READY' && (
                     <input
                       type="checkbox"
                       onClick={() => addCancelList(quot.quotationId)}
@@ -224,9 +224,9 @@ const QuotStatus = () => {
                 <TableCell align="center">{quot.quotationQuantity}</TableCell>
                 <TableCell align="center">{quot.address2}</TableCell>
                 <TableCell align="center">
-                  {state == 'READY'
+                  {state === 'READY'
                     ? '대기중'
-                    : state == 'EXPIRED'
+                    : state === 'EXPIRED'
                     ? '요청만료'
                     : '취소'}
                 </TableCell>

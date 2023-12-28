@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className={style.card}>
-      <Card width="280px">
+      <Card width="292px">
         <div className={style.container}>
           <div className={style.imageWrapper}>
             <img

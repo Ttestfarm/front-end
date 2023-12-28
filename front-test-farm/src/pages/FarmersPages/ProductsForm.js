@@ -3,21 +3,25 @@ import style from './style/ProductsForm.module.css';
 import Card from '../../components/UI/Card';
 import image from '../../assets/blankimage.png';
 import leftimg from '../../assets/quotform.jpg';
-import { tokenAtom } from '../../recoil/Atoms'; //리코일 
-import { useRecoilValue } from 'recoil'; // 리코일
+import { isSuccessModalAtom, tokenAtom } from '../../recoil/Atoms'; //리코일
+import { useRecoilValue, useRecoilState } from 'recoil'; // 리코일
 import * as API from '../../api/index';
 import { Form, Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 
 const ProductsForm = () => {
   const token = useRecoilValue(tokenAtom); //리코일
+  const [, setIsSuccessModal] = useRecoilState(isSuccessModalAtom);
   const [isFreeShipping, setIsFreeShipping] = useState('free'); // 상태 추가: 기본값으로 무료배송 선택
   const handleShippingChange = (e) => {
     setIsFreeShipping(e.target.value);
   };
   const navigate = useNavigate();
+  const imgBoxRef = useRef();
+
   const [titleImage, setTitleImage] = useState();
   const [images, setImages] = useState([]);
+
   const [formData, setFormData] = useState({
     product: '',
     price: null,
@@ -25,13 +29,13 @@ const ProductsForm = () => {
     stock: null,
     description: '',
     category: '',
-    shippingFee: ''
+    shippingFee: '',
   });
 
   const [isAdditionalFeeEnabled, setIsAdditionalFeeEnabled] = useState(true); //기본값 설정 선택
 
   const handleAdditionalFeeChange = (e) => {
-    setIsAdditionalFeeEnabled(e.target.value === "설정");
+    setIsAdditionalFeeEnabled(e.target.value === '설정');
   };
 
   const handleSetTab = (e) => {
@@ -50,24 +54,23 @@ const ProductsForm = () => {
 
   let selectImg = null;
   const inputStyle = { width: '90%', margin: 1, color: 'success' };
-  const [files, setFiles] = useState([
-    image, image, image, image
-  ]);
+  const [files, setFiles] = useState([]);
 
   const deleteClick = (idx) => {
-    files.splice(idx, 1, image)
+    files.splice(idx, 1, image);
     setFiles([...files]);
-  }
+  };
 
   const imageClick = (e) => {
     selectImg = e;
-    document.getElementById("file").click();
-  }
+    const img = document.getElementById('file').click();
+    console.log('img', img);
+  };
 
   const fileChange = (e) => {
     let filearr = e.target.files;
     setFiles([...filearr]);
-  }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -77,12 +80,22 @@ const ProductsForm = () => {
     });
   };
 
+  // const handelTitleImageChange = (e) => {
+  //   setTitleImage(e.target.files[0]);
+  // };
+
   const handelTitleImageChange = (e) => {
-    setTitleImage(e.target.files[0]);
+    const imageSrc = URL.createObjectURL(e.target.files[0]);
+    imgBoxRef.current.src = imageSrc;
+
+    if (e.target.files.length > 0) {
+      setTitleImage(e.target.files[0]);
+    }
   };
 
   const handelImageChange = (e) => {
-    setImages([...images, ...e.target.files]);
+    const selectedImages = Array.from(e.target.files);
+    setImages([...images, ...selectedImages]);
   };
 
   const submitServer = async (e) => {
@@ -95,24 +108,36 @@ const ProductsForm = () => {
       formDataObj.append('productStock', formData.stock);
       formDataObj.append('productDescription', formData.description);
 
-      if ( isFreeShipping === 'free') {
+      if (isFreeShipping === 'free') {
         formDataObj.append('ShippingCost', 0);
       } else {
         formDataObj.append('ShippingCost', formData.shippingFee);
       }
 
-      formDataObj.append("titleImage", titleImage);
-      files.forEach((image) => {
+      formDataObj.append('titleImage', titleImage);
+      images.forEach((image) => {
+        console.log(image);
         formDataObj.append('images', image);
       });
 
-      console.log(formDataObj.get('images'));
+      // console.log(formDataObj.get('images'));
 
-      const response = await API.formPost(`/farmer/regproduct`, token, formDataObj);
+      const response = await API.formPost(
+        `/farmer/regproduct`,
+        token,
+        formDataObj
+      );
       const data = response.data;
 
       console.log(response);
-      navigate('/farmerpage/');
+      if (response.status === 200) {
+        setIsSuccessModal({
+          state: true,
+          message: '상품등록을 성공하였습니다!',
+        });
+      }
+
+      navigate('/farmerpage/requestlist');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -162,7 +187,7 @@ const ProductsForm = () => {
                 size="small"
                 color="success"
                 placeholder=""
-                helperText="1 박스의 kg 수를 입력해주세요."
+                helperText="1 박스당 kg으로 입력해주세요."
                 onChange={handleInputChange}
               />
               <TextField
@@ -188,7 +213,7 @@ const ProductsForm = () => {
                 sx={inputStyle}
                 size="small"
                 color="success"
-                placeholder='파머님이 추가로 고객님에게 남기고 싶은 말을 적어주세요.'
+                placeholder="파머님이 추가로 고객님에게 남기고 싶은 말을 적어주세요."
               />
               <div className={style.shippingradio}>
                 <input
@@ -224,54 +249,84 @@ const ProductsForm = () => {
           </div>
           <div className={style.picture}>
             <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(대표 사진)</span>
-            <label htmlFor='file'>사진 첨부</label>
-            <input name='titleImage' type='file' id='file' accept='image/*' onChange={handelTitleImageChange} />
+            <label htmlFor="file">사진 첨부</label>
+            <input
+              name="titleImage"
+              type="file"
+              id="file"
+              accept="image/*"
+              onChange={handelTitleImageChange}
+            />
           </div>
           <div className={style.images}>
             <img
               src={image}
-              alt='이미지 없음'
-              width={"100px"}
-              height={"100px"}
-              onClick={imageClick}
+              alt="이미지 없음"
+              width={'130px'}
+              height={'130px'}
+              ref={imgBoxRef}
+              onClick={() => document.getElementById('file').click()}
             />
           </div>
           <div className={style.picture}>
             <span>*실제 판매되는 상품의 사진이면 더욱 좋습니다(최대 4장)</span>
-            <label htmlFor='files'>사진 첨부</label>
-            <input name='files' type='file' id='files' multiple="multiple" accept='image/*' onChange={fileChange} />
+            <label htmlFor="files">사진 첨부</label>
+
+            <input
+              name="files"
+              type="file"
+              id="files"
+              multiple="multiple"
+              accept="image/*"
+              //onChange={fileChange}
+              onChange={handelImageChange}
+            />
           </div>
           <div className={style.images}>
-            {files.map((file, index) =>
+            {images.map((img, index) => (
               <div key={index}>
-                {file !== image ?
-                  <button onClick={() => deleteClick(index)}>x</button> :
-                  ''
-                }
                 <img
-                  src={image}
-                  alt='이미지 없음'
+                  src={URL.createObjectURL(img)}
+                  alt="이미지 없음"
                   id={index}
-                  width={"100px"}
-                  height={"100px"}
+                  width={'130px'}
+                  height={'130px'}
                   onClick={imageClick}
                 />
               </div>
-            )}
+            ))}
           </div>
+          {/* <div className={style.images}>
+            {previewImages.map((preview, index) => (
+              <div key={index}>
+                {preview && (
+                  <img
+                    src={preview}
+                    alt={`이미지 ${index + 1}`}
+                    width={'130px'}
+                    height={'130px'}
+                    onClick={() => document.getElementById('files').click()}
+                  />
+                )}
+              </div>
+            ))}
+          </div> */}
           <br />
           <div className={style.footer}>
             <button className={style.btn1}>다시쓰기</button>
-            <button className={style.btn2} type="submit">
+            <button
+              className={style.btn2}
+              type="submit"
+            >
               상품 등록
             </button>
-            <button className={style.btn1}><Link to={`/farmerpage/requestlist`}>돌아가기</Link></button>
+            <button className={style.btn1}>
+              <Link to={`/farmerpage/requestlist`}>돌아가기</Link>
+            </button>
           </div>
-
-
         </Form>
       </Card>
-    </div >
+    </div>
   );
 };
 

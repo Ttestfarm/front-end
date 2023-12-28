@@ -41,6 +41,7 @@ const ReviewModal = (props) => {
 
   const closeModal = () => {
     props.onClose();
+    navigate('/mypage/buylist');
   };
 
   const submitHandler = async (e) => {
@@ -66,7 +67,9 @@ const ReviewModal = (props) => {
         });
       }
       closeModal();
-      navigate('/mypage/buylist');
+      //props.onClose();
+      
+      // navigate('/mypage/buylist');
     } catch (error) {
       console.log(error);
     }

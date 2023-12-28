@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './style/Invoice.css';
-import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms'; //리코일
 import { useRecoilValue } from 'recoil'; // 리코일
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,9 +10,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import * as API from '../../api/index';
+import { useRecoilState } from 'recoil';
 
 const Invoice = () => {
   const [token, setToken] = useState(null);
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
 
   const [calList, setCalList] = useState([]);
   const [page, setPage] = useState(0);
@@ -28,7 +30,7 @@ const Invoice = () => {
   const [sDate, setSDate] = useState(null);
   const [eDate, setEDate] = useState(dateString);
 
-  const [state, setState] = useState("선택");
+  const [state, setState] = useState('선택');
 
   // const searchInvoice = () => {
   //   axios.get(`http://localhost:8090/farmer/quotlist/${state}/${page}`, {
@@ -41,31 +43,37 @@ const Invoice = () => {
 
   const handelSDate = (e) => {
     setSDate(e.target.value);
-  }
+  };
 
   const handelEDate = (e) => {
     setEDate(e.target.value);
-  }
+  };
 
   const handelState = (e) => {
     let tempState = e.target.value; // 상태 임시 저장 변수
-    if (tempState === "선택") {
-      alert("정산 구분을 선택해주세요.");
+    if (tempState === '선택') {
+      setIsErrorModal({ state: true, message: '정산 구분을 선택해주세요.' });
     } else {
       setState(e.target.value);
     }
-  }
+  };
 
   const search = async () => {
     try {
       if (sDate === null) {
-        return alert("기간을 선택해주세요.");
+        return setIsErrorModal({
+          state: true,
+          message: '기간을 선택해주세요.',
+        });
       }
-      if (state === "선택") {
-        return alert("정산 구분을 선택해주세요.");
+      if (state === '선택') {
+        return setIsErrorModal({
+          state: true,
+          message: '정산 구분을 선택해주세요.',
+        });
       }
 
-      const date = sDate + "~" + eDate; // 기간 임시 저장
+      const date = sDate + '~' + eDate; // 기간 임시 저장
       setDate(date); // 기간 저장
 
       const response = await API.get(`/farmer/invoice/${date}/${page}`, token);
@@ -77,12 +85,12 @@ const Invoice = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }
+  };
 
   const reset = () => {
     setSDate(null);
-    setState("선택");
-  }
+    setState('선택');
+  };
 
   return (
     <>
@@ -108,8 +116,17 @@ const Invoice = () => {
           </div>
           <div className="cal-search-state">
             <h3>정산구분</h3>
-            <select className="select" name="state" onChange={handelState}>
-              <option value="선택" selected>선택</option>
+            <select
+              className="select"
+              name="state"
+              onChange={handelState}
+            >
+              <option
+                value="선택"
+                selected
+              >
+                선택
+              </option>
               <option value="미정산">미정산</option>
               <option value="정산완료">정산완료</option>
             </select>
@@ -122,35 +139,39 @@ const Invoice = () => {
         <div className="cal-result">
           <div className="cal-result-money">
             <span>총 정산금액</span>
-            <span>{calList > 0 ?
-             totalPrice :
-             '0'}</span>
+            <span>{calList > 0 ? totalPrice : '0'}</span>
           </div>
           <TableContainer component={Paper}>
-        <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">주문 번호</TableCell>
-              <TableCell align="right">정산예정일</TableCell>
-              <TableCell align="right">수수료</TableCell>
-              <TableCell align="right">금액&nbsp;</TableCell>
-              <TableCell align="right">정산구분&nbsp;</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {calList.map((invoice) => (
-              <TableRow
-              key={invoice.receiptId}
-              >
-              <TableCell align="right">{invoice.invoiceDate}</TableCell>
-              <TableCell align="right">{invoice.invoiceCommission}</TableCell>
-              <TableCell align="right">{invoice.invoicePrice}</TableCell>
-              <TableCell align="right">{invoice.state === 'COMPLETED' ? '정산완료' : '미정산'}</TableCell>
-            </TableRow>
-            ))}
-    </TableBody>
-    </Table>
-      </TableContainer>
+            <Table
+              sx={{ backgroundColor: '#fefcf4' }}
+              className="quot-list"
+              aria-label="simple table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">주문 번호</TableCell>
+                  <TableCell align="right">정산예정일</TableCell>
+                  <TableCell align="right">수수료</TableCell>
+                  <TableCell align="right">금액&nbsp;</TableCell>
+                  <TableCell align="right">정산구분&nbsp;</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {calList.map((invoice) => (
+                  <TableRow key={invoice.receiptId}>
+                    <TableCell align="right">{invoice.invoiceDate}</TableCell>
+                    <TableCell align="right">
+                      {invoice.invoiceCommission}
+                    </TableCell>
+                    <TableCell align="right">{invoice.invoicePrice}</TableCell>
+                    <TableCell align="right">
+                      {invoice.state === 'COMPLETED' ? '정산완료' : '미정산'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       </div>
     </>

@@ -76,42 +76,41 @@ const DeliveryList = () => {
         <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">주문번호</TableCell>
-              <TableCell align="right">품목</TableCell>
-              <TableCell align="right">수량</TableCell>
-              <TableCell align="right">가격&nbsp;</TableCell>
-              <TableCell align="right">주소&nbsp;</TableCell>
-              <TableCell align="right">상태&nbsp;</TableCell>
+              <TableCell align="center">주문번호</TableCell>
+              <TableCell align="center">품목</TableCell>
+              <TableCell align="center">수량</TableCell>
+              <TableCell align="center">가격&nbsp;</TableCell>
+              <TableCell align="center">주소&nbsp;</TableCell>
+              <TableCell align="center">상태&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {deliveryList.length > 0 ? deliveryList.map(dlist => (
               <TableRow key={dlist.receiptId}>
-                <TableCell align="right">{dlist.receiptId}</TableCell>
-                <TableCell align="right">{dlist.productName}</TableCell>
-                <TableCell align="right">{dlist.quotationQuantity}</TableCell>
-                {/* <TableCell align="right">{dlist.tinvoice}</TableCell> */}
-                <TableCell align="right">{dlist.productPrice}</TableCell>
-                <TableCell align="right">{dlist.buyerAddress}</TableCell>
-                <TableCell align="right">{dlist.state === 'SHIPPING' ? '배송중' : '배송완료' }</TableCell>
+                <TableCell align="center">{dlist.receiptId}</TableCell>
+                <TableCell align="center">{dlist.productName}</TableCell>
+                <TableCell align="center">{dlist.quotationQuantity}</TableCell>
+                {/* <TableCell align="center">{dlist.tinvoice}</TableCell> */}
+                <TableCell align="center">{dlist.productPrice}</TableCell>
+                <TableCell align="center">{dlist.buyerAddress}</TableCell>
+                <TableCell align="center">{dlist.state === 'SHIPPING' ? '배송중' : '배송완료'}</TableCell>
               </TableRow>
             ))
               : "배송 리스트가 없습니다."
             }
           </TableBody>
         </Table>
+        <div>
+          <Stack spacing={2} alignItems="center">
+            <Pagination
+              count={pageInfo?.allPage}
+              page={pageInfo?.curPage}
+              onChange={onChangePage}
+              size="small"
+            />
+          </Stack>
+        </div>
       </TableContainer>
-      <div className={style.pagination}>
-        <Stack spacing={2}>
-          <Pagination
-            className={style.Pagination}
-            count={pageInfo?.allPage}
-            page={pageInfo?.curPage}
-            onChange={onChangePage}
-            size="small"
-          />
-        </Stack>
-      </div>
     </div>
   );
 };

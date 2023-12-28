@@ -95,18 +95,18 @@ const ProductsForm = () => {
       formDataObj.append('productStock', formData.stock);
       formDataObj.append('productDescription', formData.description);
 
-      if (formData === 'free') {
+      if ( isFreeShipping === 'free') {
         formDataObj.append('ShippingCost', 0);
       } else {
         formDataObj.append('ShippingCost', formData.shippingFee);
       }
 
       formDataObj.append("titleImage", titleImage);
-      images.forEach((image) => {
+      files.forEach((image) => {
         formDataObj.append('images', image);
       });
 
-      console.log(formDataObj);
+      console.log(formDataObj.get('images'));
 
       const response = await API.formPost(`/farmer/regproduct`, token, formDataObj);
       const data = response.data;

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import style from './ReviewCard.module.css'; // 리뷰 카드의 스타일 파일 import
-import { dateFormatter } from '../../util/date';
-import Rating from '@mui/material/Rating';
-import * as API from '../../api/index';
+import React, { useState } from "react";
+import style from "./ReviewCard.module.css"; // 리뷰 카드의 스타일 파일 import
+import { dateFormatter } from "../../util/date";
+import Rating from "@mui/material/Rating";
+import * as API from "../../api/index";
 
 const ReviewCard = ({ review }) => {
   const [value] = useState(1);
@@ -18,11 +18,7 @@ const ReviewCard = ({ review }) => {
         </div>
 
         <div className={style.details}>
-          <Rating
-            name="read-only"
-            value={review.rating}
-            readOnly
-          />
+          <Rating name="read-only" value={review.rating} readOnly />
           <span className={style.span}>{formattedDate}</span>
           <span className={style.span}>{review.productName}</span>
           <span className={style.span}>{review.count}</span>

@@ -17,7 +17,6 @@ import Paper from '@mui/material/Paper';
 const OrderList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const [ordList, setOrdList] = useState([]);
-  const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState('matching'); // 1: matching, 2: order
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
@@ -126,12 +125,13 @@ const OrderList = () => {
         console.log(invoice);
         const response = await API.get(`/farmer/sendparcel/${ordersId}/${code}/${name}/${invoice}`, token);
         const data = response.data;
-        alert(data);
+
         console.log(data);
         setCode("00");
         setInvoice("");
         setIsOpen(false);
         // 페이지 다시 요청
+        window.location.reload();
       }
     } catch (error) {
       alert(error.data);
@@ -214,9 +214,9 @@ const OrderList = () => {
         <div className="modal-content">
           <span className="close" onClick={closeModal}>&times;</span>
           <h2>발송 입력</h2>
-          <p>order 번호 : {ordersId}</p>
-          <p>품 목 :{product}</p>
-          <p>수 량 :{quantity}</p>
+          <p>주문 번호 : {ordersId}</p>
+          <p>품 목 : {product}</p>
+          <p>수 량 : {quantity}</p>
           <div>
             택 배 사 :
             <select name="tcode" onChange={handleSelect}>

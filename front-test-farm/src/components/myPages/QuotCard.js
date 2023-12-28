@@ -4,6 +4,7 @@ import { Avatar, Rating } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { Form, Navigate, useNavigate, Link } from "react-router-dom";
+import * as API from "../../api/index";
 
 const QuotCard = ({ quoteItem }) => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const QuotCard = ({ quoteItem }) => {
         <section className={style.left}>
           <Avatar
             alt="farmPixurl"
-            src={quoteItem.farmPix}
+            src={`${API.imgUrl}/${quoteItem.farmPix}`}
             sx={avatarStyle}
           ></Avatar>
           <div className={style.rating}>

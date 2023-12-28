@@ -104,57 +104,57 @@ const QuotStatus = () => {
           </span>
         </div>
         <div className="button-group">
-        <button
-          className="quotation-delete-btn"
-          onClick={cancelQuot}
-        >
-          견적서 취소
-        </button>
-        <div className="state-dropdown">
-          <button className="state-dropbtn">
-            {state == 'READY'
-              ? '▼ 대기중'
-              : state == 'EXPIRED'
-                ? '▼ 요청 만료'
-                : '▼ 취소'}
+          <button
+            className="quotation-delete-btn"
+            onClick={cancelQuot}
+          >
+            견적서 취소
           </button>
-          <div className="state-dropdown-content">
-            <a
-              href="#"
-              key="0"
-              onClick={() => changeState('EXPIRED')}
-            >
-              요청 만료
-            </a>
-            <a
-              href="#"
-              key="1"
-              onClick={() => changeState('READY')}
-            >
-              대기중
-            </a>
-            <a
-              href="#"
-              key="2"
-              onClick={() => changeState('CANCEL')}
-            >
-              취소
-            </a>
+          <div className="state-dropdown">
+            <button className="state-dropbtn">
+              {state == 'READY'
+                ? '▼ 대기중'
+                : state == 'EXPIRED'
+                  ? '▼ 요청 만료'
+                  : '▼ 취소'}
+            </button>
+            <div className="state-dropdown-content">
+              <a
+                href="#"
+                key="0"
+                onClick={() => changeState('EXPIRED')}
+              >
+                요청 만료
+              </a>
+              <a
+                href="#"
+                key="1"
+                onClick={() => changeState('READY')}
+              >
+                대기중
+              </a>
+              <a
+                href="#"
+                key="2"
+                onClick={() => changeState('CANCEL')}
+              >
+                취소
+              </a>
+            </div>
           </div>
-        </div>
         </div>
       </div>
       <TableContainer component={Paper} className="table-container">
         <Table className='table-main' aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">삭제</TableCell>
-              <TableCell align="right">견적서 번호</TableCell>
-              <TableCell align="right">품목</TableCell>
-              <TableCell align="right">가격&nbsp;</TableCell>
-              <TableCell align="right">수량&nbsp;</TableCell>
-              <TableCell align="right">주소&nbsp;</TableCell>
-              <TableCell align="right">상태&nbsp;</TableCell>
+              <TableCell align='center'>삭제</TableCell>
+              <TableCell align="center">견적서 번호</TableCell>
+              <TableCell align="center">품목</TableCell>
+              <TableCell align="center">가격&nbsp;</TableCell>
+              <TableCell align="center">수량&nbsp;</TableCell>
+              <TableCell align="center">주소&nbsp;</TableCell>
+              <TableCell align="center">상태&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -162,39 +162,38 @@ const QuotStatus = () => {
               <TableRow
                 key={quot.quotationId}
               >
-                <TableCell align="right">
+                <TableCell align='center'>
                   {state == 'READY' && (
                     <input
-                      type="checkbox"
+                      type='checkbox'
                       onClick={() => addCancelList(quot.quotationId)}
                     />
                   )}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align='center'>
                   <Link to={`/farmerpage/quotdetail/${quot.quotationId}`}>
                     {quot.quotationId}
                   </Link>
                 </TableCell>
-                <TableCell align="right">{quot.quotationProduct}</TableCell>
-                <TableCell align="right">{quot.quotationPrice}</TableCell>
-                <TableCell align="right">{quot.quotationQuantity}</TableCell>
-                <TableCell align="right">{quot.address2}</TableCell>
-                <TableCell align="right">{state == 'READY' ? '대기중' : state == 'EXPIRED' ? '요청만료' : '취소'}</TableCell>
+                <TableCell align='center'>{quot.quotationProduct}</TableCell>
+                <TableCell align='center'>{quot.quotationPrice}</TableCell>
+                <TableCell align='center'>{quot.quotationQuantity}</TableCell>
+                <TableCell align='center'>{quot.address2}</TableCell>
+                <TableCell align='center'>{state == 'READY' ? '대기중' : state == 'EXPIRED' ? '요청만료' : '취소'}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <div className={style.pagination}>
-        <Stack spacing={2}>
-          <Pagination
-            className={style.Pagination}
-            count={pageInfo?.allPage}
-            page={pageInfo?.curPage}
-            onChange={onChangePage}
-            size="small"
-          />
-        </Stack>
-      </div>
+        <div>
+          <Stack spacing={2} alignItems="center">
+            <Pagination
+              count={pageInfo?.allPage}
+              page={pageInfo?.curPage}
+              onChange={onChangePage}
+              size="small"
+            />
+          </Stack>
+        </div>
       </TableContainer>
     </div >
   );

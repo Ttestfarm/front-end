@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './ErrorModal.module.css';
-import success from '../../assets/success.png';
-import picExam from '../../assets/pic-exam.png';
+import negative from '../../assets/negative.png';
+import carrot from '../../assets/carrot.png';
 import ModalContainer from './Modal';
 
 const ErrorModal = ({ message, onClose }) => {
@@ -9,25 +9,17 @@ const ErrorModal = ({ message, onClose }) => {
     <>
       <ModalContainer>
         <header className={style.header}>
-          <button onClick={onClose}>X</button>
+          <img src={negative} alt="negative" />
         </header>
 
         <main className={style.main}>
-          <img
-            src={success}
-            alt="success"
-          />
           <p>{message}</p>
         </main>
+        
         <footer className={style.footer}>
-          <button onClick={onClose}>OK</button>
+          <button onClick={onClose}>확인</button>
+          <img src={carrot} alt="carrot" />
         </footer>
-        <div className={style.lowImage}>
-          <img
-            src={picExam}
-            alt="lowfeat"
-          />
-        </div>
       </ModalContainer>
     </>
   );

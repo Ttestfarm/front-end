@@ -8,21 +8,25 @@ import picDefault from '../../assets/third_img.png';
 import { dateFormatter } from '../../util/date';
 import style from './ReviewModal.module.css';
 import * as API from '../../api/index';
-import { useRecoilValue } from 'recoil';
-import { tokenAtom } from '../../recoil/Atoms';
-import { Form } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms';
+import { Form, useNavigate } from 'react-router-dom';
 
 const ReviewModal = (props) => {
   const token = useRecoilValue(tokenAtom);
   const [rating, setRating] = useState(3);
   const [file, setFile] = useState('');
   const [content, setContent] = useState('');
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
+  const navigate = useNavigate();
 
   const imgBoxRef = useRef();
   //날짜 변환
   const formattedDate = dateFormatter(props.orderInfo.date);
   //원화로 변환
-  const numericPrice = parseInt(props.orderInfo.amount);
+  console.log('p', props);
+  console.log('총가격', props.orderInfo.productPrice);
+  const numericPrice = parseInt(props.orderInfo.productPrice);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   const onFileChange = (e) => {
@@ -52,14 +56,17 @@ const ReviewModal = (props) => {
     }
 
     try {
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
+      const response = await API.formPost('/buylist', token, formData);
+      console.log('리뷰 전송!', response);
 
-        const response = await API.formPost('/buylist', token, formData);
-        console.log('리뷰 전송!', response);
-
-        closeModal();
+      if (response.status !== 200) {
+        setIsErrorModal({
+          state: true,
+          message: response.data,
+        });
       }
+      closeModal();
+      navigate('/mypage/buylist');
     } catch (error) {
       console.log(error);
     }

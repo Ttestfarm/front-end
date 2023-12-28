@@ -6,7 +6,7 @@ import leftimg from '../../assets/quotform.jpg';
 import { tokenAtom } from '../../recoil/Atoms'; //리코일 
 import { useRecoilValue } from 'recoil'; // 리코일
 import * as API from '../../api/index';
-import { Form, useNavigate } from 'react-router-dom';
+import { Form, Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 
 const ProductsForm = () => {
@@ -21,6 +21,7 @@ const ProductsForm = () => {
   const [formData, setFormData] = useState({
     product: '',
     price: null,
+    quantity: null,
     stock: null,
     description: '',
     category: '',
@@ -90,11 +91,16 @@ const ProductsForm = () => {
       const formDataObj = new FormData();
       formDataObj.append('productName', formData.product);
       formDataObj.append('productPrice', formData.price);
+      formDataObj.append('productQuantity', formData.quantity);
       formDataObj.append('productStock', formData.stock);
       formDataObj.append('productDescription', formData.description);
-      formDataObj.append('ShippingCost', formData.shippingFee);
 
-      console.log(formData.description)
+      if (formData === 'free') {
+        formDataObj.append('ShippingCost', 0);
+      } else {
+        formDataObj.append('ShippingCost', formData.shippingFee);
+      }
+
       formDataObj.append("titleImage", titleImage);
       images.forEach((image) => {
         formDataObj.append('images', image);
@@ -129,11 +135,11 @@ const ProductsForm = () => {
                 id="outlined-basic"
                 variant="outlined"
                 name="product"
-                label="품목"
+                label="품목명"
                 sx={inputStyle}
                 size="small"
                 color="success"
-                placeholder="상품명을 입력해주세요"
+                placeholder="품목명을 입력해주세요"
                 onChange={handleInputChange}
               />
               <TextField
@@ -145,6 +151,18 @@ const ProductsForm = () => {
                 size="small"
                 color="success"
                 placeholder="판매 금액을 입력해주세요"
+                onChange={handleInputChange}
+              />
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                name="quantity"
+                label="수량"
+                sx={inputStyle}
+                size="small"
+                color="success"
+                placeholder=""
+                helperText="1 박스의 kg 수를 입력해주세요."
                 onChange={handleInputChange}
               />
               <TextField
@@ -247,7 +265,7 @@ const ProductsForm = () => {
             <button className={style.btn2} type="submit">
               상품 등록
             </button>
-            <button className={style.btn1}>돌아가기</button>
+            <button className={style.btn1}><Link to={`/farmerpage/requestlist`}>돌아가기</Link></button>
           </div>
 
 

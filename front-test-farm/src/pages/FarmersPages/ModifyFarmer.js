@@ -41,7 +41,10 @@ const ModifyFarmerPage = ({ page }) => {
   useEffect(() => {
     const getFarmerInfo = async () => {
       try {
-        const response = await API.get(`/farmer/farmerInfo/${userInfo.farmerId}`, token);
+        const response = await API.get(
+          `/farmer/farmerInfo/${userInfo.farmerId}`,
+          token
+        );
         setFarmerInfo(response.data);
         console.log(response.data);
       } catch (error) {
@@ -59,7 +62,7 @@ const ModifyFarmerPage = ({ page }) => {
     if (farmerInfo) {
       setUpdateData({
         farmName: farmerInfo?.farmName || '',
-        farmTel: farmerInfo?.farmTel || '',  
+        farmTel: farmerInfo?.farmTel || '',
         farmAddress: farmerInfo?.farmAddress || '',
         farmAddressDetail: farmerInfo?.farmAddressDetail || '',
         registrationNum: farmerInfo?.registrationNum || '',
@@ -79,12 +82,12 @@ const ModifyFarmerPage = ({ page }) => {
       }));
     }
   }, [farmerInfo]);
-  
+
   const formattedFarmInterest = (farmInterest) => {
     if (!farmInterest) {
       return '';
     }
-  
+
     return farmInterest
       .split(', ') // 주어진 데이터 형태에 따라 ', '로 분리
       .map((item) => {
@@ -170,7 +173,12 @@ const ModifyFarmerPage = ({ page }) => {
     valueChangeHandler: farmAddressDetailChangeHandler,
     inputBlurHandler: farmAddressDetailBlurHandler,
     reset: resetfarmAddressDetail,
-  } = useUserInput(val.isNotEmptyValue, false, updateData.farmAddressDetail, setUpdateData);
+  } = useUserInput(
+    val.isNotEmptyValue,
+    false,
+    updateData.farmAddressDetail,
+    setUpdateData
+  );
 
   const {
     value: registrationNumValue,
@@ -179,7 +187,12 @@ const ModifyFarmerPage = ({ page }) => {
     valueChangeHandler: registrationNumChangeHandler,
     inputBlurHandler: registrationNumBlurHandler,
     reset: resetRegistrationNum,
-  } = useUserInput(val.isNotEmptyValue, false, updateData.registrationNum, setUpdateData);
+  } = useUserInput(
+    val.isNotEmptyValue,
+    false,
+    updateData.registrationNum,
+    setUpdateData
+  );
 
   const {
     value: farmAccountNumValue,
@@ -189,7 +202,7 @@ const ModifyFarmerPage = ({ page }) => {
     inputBlurHandler: farmAccountNumBlurHandler,
     reset: resetfarmAccountNum,
   } = useUserInput(val.isNotEmptyValue);
-  
+
   const {
     value: farmInterestValue,
     isValid: farmInterestIsValid,
@@ -260,19 +273,23 @@ const ModifyFarmerPage = ({ page }) => {
   }
 
   const RegistHandler = async (e) => {
-    console.log("updateData",updateData);
+    console.log('updateData', updateData);
 
     try {
-      const response = await API.put(`/farmer/modify-farmer`, token, updateData);
+      const response = await API.put(
+        `/farmer/modify-farmer`,
+        token,
+        updateData
+      );
 
       console.log(response.data);
-      setFarmerInfo({ ...response.data});
+      setFarmerInfo({ ...response.data });
       if (response.status === 200) {
         setIsSucessModal({
           state: true,
           message: '파머 정보가 수정 되었습니다.',
         });
-      } 
+      }
       navigate('/farmers/requestlist');
     } catch (error) {
       console.log(error);
@@ -299,10 +316,9 @@ const ModifyFarmerPage = ({ page }) => {
     ? `${style['form-control']} ${style.invalid}`
     : style['form-control'];
 
-    const registrationNumStyles =
-    registrationNumHasError
-      ? `${style['form-control']} ${style.invalid}`
-      : style['form-control'];
+  const registrationNumStyles = registrationNumHasError
+    ? `${style['form-control']} ${style.invalid}`
+    : style['form-control'];
 
   const farmAccountStyles = farmAccountNumHasError
     ? `${style['form-control']} ${style.invalid}`
@@ -334,7 +350,7 @@ const ModifyFarmerPage = ({ page }) => {
           <label htmlFor="file">팜 대표사진</label>
           <img
             //src={picDefault}
-            src={updateData.farmPixurl || picDefault}
+            src={`${API.imgUrl}/${updateData.farmPixurl}` || picDefault}
             width="150px"
             height="150px"
             alt="Farm pix"
@@ -389,7 +405,6 @@ const ModifyFarmerPage = ({ page }) => {
           <input
             type="text"
             name="farmAddress"
-            value={address2}
             value={updateData.farmAddress}
             // onChange={farmAddressChangeHandler}
             // onBlur={farmAddressBlurHandler}
@@ -431,9 +446,7 @@ const ModifyFarmerPage = ({ page }) => {
             </p>
           )}
           {registrationNum === true && (
-            <p className={style['success-text']}>
-              {regiNumMsg}
-            </p>
+            <p className={style['success-text']}>{regiNumMsg}</p>
           )}
         </div>
 
@@ -445,11 +458,17 @@ const ModifyFarmerPage = ({ page }) => {
             value={updateData.farmBank}
             onChange={selectHandler}
           >
-            <option value="" disabled>
+            <option
+              value=""
+              disabled
+            >
               은행 선택
             </option>
             {bankOption.map((item) => (
-              <option value={item} key={item}>
+              <option
+                value={item}
+                key={item}
+              >
                 {item}
               </option>
             ))}

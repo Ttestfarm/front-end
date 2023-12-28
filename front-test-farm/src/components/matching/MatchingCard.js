@@ -8,7 +8,7 @@ import { tokenAtom, userInfoAtom } from '../../recoil/Atoms';
 const MatchingCard = ({ item }) => {
   const token = useRecoilValue(tokenAtom);
   const userInfo = useRecoilValue(userInfoAtom);
-  console.log('user', userInfo);
+
   return (
     <Card
       width="300px"

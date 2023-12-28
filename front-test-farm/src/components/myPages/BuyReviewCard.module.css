@@ -1,22 +1,24 @@
 .section {
   margin: 1rem;
-  border: 1px solid #e5e2e2;
-  border-radius: 4px;
+
   display: grid;
   grid-template-columns: 3fr 1fr;
   width: 90%;
 }
 .left {
   margin: 1rem;
+  border: 1px solid #ddf1cf;
+  border-radius: 8px;
+  padding: 1rem;
 }
 .paragraph {
   white-space: pre-wrap;
 }
 .img {
-  border: 1px solid var(--color-main);
+  border: 1px solid #ddf1cf;
   border-radius: 8px;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   margin: 1rem;
   padding: 1rem;
 }

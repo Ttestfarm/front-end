@@ -1,5 +1,5 @@
-.container {
-  width: 80%;
+/* .container {
+  width: 70%;
   border-radius: 10px;
   border: 5px solid #75786c;
   margin: 8rem auto;
@@ -10,21 +10,24 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: 2rem;
+} */
+.container {
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
-
-.main {
-  font-size: 1.5rem;
-}
-
 .header {
   display: flex;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 700;
-  margin: 1rem;
+  margin: 2.5rem 1rem 1rem 1rem;
 }
 .farmerInfoCard {
   width: 90%;
+  margin: 1rem auto;
   flex-shrink: 0;
   background: #e2e4d4;
   justify-content: center;
@@ -66,7 +69,7 @@
 .flexbox {
   display: flex;
   flex-direction: row;
-  padding: 3rem 4rem;
+  padding: 3rem 2rem;
   gap: 5rem;
 }
 .leftSection {
@@ -90,20 +93,30 @@
 
 .farmDetails {
   display: flex;
-  flex-direction: column;
   color: #2c2a2a;
-  padding: 3rem 0 2rem;
+  padding: 1.5rem 0;
+}
+.farmDetails span {
+  margin: 0.4rem;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  flex: 1.5;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  flex: 3.5;
 }
 
 .name {
-  height: 36px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin: 2rem;
 }
 
 .value {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
 }
 

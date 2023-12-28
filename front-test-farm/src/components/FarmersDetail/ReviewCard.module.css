@@ -1,7 +1,7 @@
 .reviewCard {
   border: 1px solid #75786c;
   border-radius: 10px;
-  width: 300px;
+  width: 280px;
   height: 260px;
   /* flex-shrink: 0; */
   overflow: hidden;

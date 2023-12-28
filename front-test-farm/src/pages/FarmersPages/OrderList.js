@@ -155,7 +155,7 @@ const OrderList = () => {
         </div>
         <div className="state-dropdown">
           <button className="state-dropbtn">
-            {type === 'matching' ? '매칭': '주문'}
+            {type === 'matching' ? '매칭' : '주문'}
           </button>
           <div className="state-dropdown-content">
             <a href="#" key="1" onClick={() => changeType('matching')}>매칭</a>
@@ -198,6 +198,16 @@ const OrderList = () => {
             ))}
           </TableBody>
         </Table>
+        <div>
+          <Stack spacing={2} alignItems="center">
+            <Pagination
+              count={pageInfo?.allPage}
+              page={pageInfo?.curPage}
+              onChange={onChangePage}
+              size="small"
+            />
+          </Stack>
+        </div>
       </TableContainer>
       {isOpen && (<div id="myModal" className="modal" onClick={handleOutsideClick}>
         {/* 모달 내용 */}
@@ -222,17 +232,6 @@ const OrderList = () => {
         </div>
       </div>
       )}
-      <div className={style.pagination}>
-        <Stack spacing={2}>
-          <Pagination
-            className={style.Pagination}
-            count={pageInfo?.allPage}
-            page={pageInfo?.curPage}
-            onChange={onChangePage}
-            size="small"
-          />
-        </Stack>
-      </div>
     </div>
   );
 }

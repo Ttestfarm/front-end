@@ -167,14 +167,14 @@ const OrderList = () => {
         <Table sx={{ backgroundColor: '#fefcf4' }} className='quot-list' aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">&nbsp;</TableCell>
-              <TableCell align="right">주문번호</TableCell>
-              <TableCell align="right">농산물</TableCell>
-              <TableCell align="right">가격</TableCell>
-              <TableCell align="right">수량&nbsp;</TableCell>
-              <TableCell align="right">받는이&nbsp;</TableCell>
-              <TableCell align="right">연락처&nbsp;</TableCell>
-              <TableCell align="right">주소&nbsp;</TableCell>
+              <TableCell align="center">&nbsp;</TableCell>
+              <TableCell align="center">주문번호</TableCell>
+              <TableCell align="center">농산물</TableCell>
+              <TableCell align="center">가격</TableCell>
+              <TableCell align="center">수량&nbsp;</TableCell>
+              <TableCell align="center">받는이&nbsp;</TableCell>
+              <TableCell align="center">연락처&nbsp;</TableCell>
+              <TableCell align="center">주소&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -183,17 +183,17 @@ const OrderList = () => {
                 <TableCell>
                   <button className="quotation-delete-btn" onClick={() => onClickButton(ord.receiptId, ord.productName, ord.quotationQuantity)}>발송</button>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   <Link to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}>
                     {ord.receiptId}
                   </Link>
                 </TableCell>
-                <TableCell align="right">{ord.productName}</TableCell>
-                <TableCell align="right">{ord.productPrice}</TableCell>
-                <TableCell align="right">{ord.quotationQuantity}</TableCell>
-                <TableCell align="right">{ord.buyerName}</TableCell>
-                <TableCell align="right">{ord.buyerTel}</TableCell>
-                <TableCell align="right">{ord.buyerAddress}</TableCell>
+                <TableCell align="center">{ord.productName}</TableCell>
+                <TableCell align="center">{ord.productPrice}</TableCell>
+                <TableCell align="center">{ord.quotationQuantity}</TableCell>
+                <TableCell align="center">{ord.buyerName}</TableCell>
+                <TableCell align="center">{ord.buyerTel}</TableCell>
+                <TableCell align="center">{ord.buyerAddress}</TableCell>
               </TableRow>
             ))}
           </TableBody>

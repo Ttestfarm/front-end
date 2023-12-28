@@ -171,7 +171,7 @@ const QuotePayPage = () => {
                   {quoteData.quote.quotation.quotationPrice}
                 </p>
                 <p className={style.p1}>
-                  +{quoteData.quote.quotation.quotationDelivery}
+                  {quoteData.quote.quotation.quotationDelivery}
                 </p>
                 <p className={style.blueFont}>
                   총계

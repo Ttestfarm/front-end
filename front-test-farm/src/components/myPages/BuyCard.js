@@ -6,7 +6,7 @@ import BuyReviewCard from './BuyReviewCard';
 import { dateFormatter } from '../../util/date';
 import ReviewModal from '../UI/ReviewModal';
 import * as API from '../../api/index';
-const BuyCard = ({ buyItem }) => {
+const BuyCard = ({ buyItem, fetchData }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
   const [orderInfo, setOrderInfo] = useState({
     date: buyItem.payInfo.createAt,
@@ -17,13 +17,14 @@ const BuyCard = ({ buyItem }) => {
   });
 
   const navigate = useNavigate();
-  //모달 화면 오픈buyItem.payInfo.
+  //모달 화면 오픈
   const openReviewModal = () => {
     setModalOpen(true);
   };
   //모달 닫기
   const closeReviewModal = () => {
     setModalOpen(false);
+    fetchData();
   };
   //날짜 변환
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
@@ -44,16 +45,7 @@ const BuyCard = ({ buyItem }) => {
             <p className={style.date}>{formattedDate}</p>
             <p>구매 농산물 : {buyItem.payInfo.productName}</p>
             <p>발송인 :{buyItem.payInfo.farmName}</p>
-            {/* <button
-              onClick={() => {
-                navigate(`/mypage/buylist/${buyItem.payInfo.receiptId}`, {
-                  state: { ord: { ...buyItem.payInfo } },
-                });
-              }}
-            >
-              {' '}
-              주문상세 &gt;
-            </button> */}
+
             <Link
               to={`/mypage/buylist/${buyItem.payInfo.receiptId}`}
               state={{ ord: { ...buyItem.payInfo } }}
@@ -73,7 +65,7 @@ const BuyCard = ({ buyItem }) => {
                 ? '배송중'
                 : '배송완료'}
             </button>
-            {item.state === 'PAID' && buyItem.review === null && (
+            {item.state === 'SHIPPING' && buyItem.review === null && (
               <button
                 className={style.reviewBtn}
                 onClick={openReviewModal}

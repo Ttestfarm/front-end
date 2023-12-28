@@ -50,22 +50,6 @@ const RegistFarmerPage = ({ page }) => {
     farmPixurl: '',
   });
 
-  // useEffect(() => {
-  //   if (farmerInfo) {
-  //     setFormDatas({
-  //       farmName: farmerInfo?.farmer?.farmName,
-  //       farmTel: farmerInfo?.farmer?.farmTel,
-  //       farmAddress: farmerInfo?.farmer?.farmAddress,
-  //       farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
-  //       registrationNum: farmerInfo?.farmer?.registrationNum,
-  //       farmBank: farmerInfo?.farmer?.farmBank,
-  //       farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
-  //       farmInterest: farmerInfo?.farmer?.farmInterest,
-  //       farmPixurl: farmerInfo?.farmer?.farmPixurl,
-  //     });
-  //   }
-  // }, [farmerInfo]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,14 +69,6 @@ const RegistFarmerPage = ({ page }) => {
       setAddress2('');
     };
   }, [setAddress2]);
-
-  // useEffect(() => {
-  //   if (myFarmTel) {
-  //     setUserTel(userInfo.userTel || '');
-  //   } else {
-  //     setUserTel('');
-  //   }
-  // }, [myFarmTel, userInfo]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);

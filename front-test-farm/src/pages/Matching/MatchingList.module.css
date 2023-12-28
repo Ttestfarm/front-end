@@ -20,6 +20,9 @@
   color: beige;
   font-weight: 700;
 }
+.reqBtn {
+  cursor: pointer;
+}
 .header button {
   margin-top: 20px;
   background-color: #ffb000;

@@ -1,10 +1,10 @@
-import React from "react";
-import style from "./QuotCard.module.css";
-import { Avatar, Rating } from "@mui/material";
-import { pink } from "@mui/material/colors";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import { Form, Navigate, useNavigate, Link } from "react-router-dom";
-import * as API from "../../api/index";
+import React, { useState } from 'react';
+import style from './QuotCard.module.css';
+import { Avatar, Rating } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { Form, Navigate, useNavigate, Link } from 'react-router-dom';
+import * as API from '../../api/index';
 
 const QuotCard = ({ quoteItem }) => {
   const navigate = useNavigate();
@@ -12,13 +12,25 @@ const QuotCard = ({ quoteItem }) => {
   const avatarStyle = {
     width: 100,
     height: 100,
-    border: "solid",
+    border: 'solid',
   };
   const numericPrice = parseInt(quoteItem.quote.quotationPrice);
-  const formattedPrice = numericPrice.toLocaleString("ko-KR");
+  const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   console.log(quoteItem);
-  console.log("아이디", quoteItem.quote.quotationId);
+  console.log('아이디', quoteItem.quote.quotationId);
+
+  // //이미지처리
+  let fileurl = quoteItem.quote.quotationImages;
+  console.log('fileurl', fileurl);
+  let filenums;
+
+  if (fileurl !== null) {
+    filenums = fileurl.split(',');
+  } else {
+    filenums = [];
+  }
+
   return (
     <>
       <div className={style.container}>
@@ -48,16 +60,37 @@ const QuotCard = ({ quoteItem }) => {
         <section className={style.right}>
           <p className={style.farmName}>
             <span className={style.italic}>From. </span>
-            {quoteItem.farmName} ({quoteItem.farmAddress})
+            {quoteItem.farmName}{' '}
           </p>
-          <p>
+          <span className={style.addr}>({quoteItem.farmAddress})</span>
+          <p className={style.p}>
             <span>견적가 {formattedPrice} 원</span>
+            {' / '}
+            <span className={style.span}>
+              배송비&nbsp;
+              {quoteItem.quote.quotationDelivery === 0
+                ? '0'
+                : quoteItem.quote.quotationDelivery}
+              원
+            </span>
           </p>
-          <p>
-            <span>배송비{quoteItem.quote.quotationDelivery} 원</span>
+
+          <p className={style.p}></p>
+
+          <p className={style.paragraph}>{quoteItem.quote.quotationComment}</p>
+          <p className={style.img}>
+            {filenums.length !== 0 &&
+              filenums.map((num) => (
+                <img
+                  key={num}
+                  src={`${API.imgUrl}/${num}`}
+                  className={style.innerImg}
+                  width="100px"
+                  height="100px"
+                  alt="quotepix"
+                />
+              ))}
           </p>
-          <p>{quoteItem.quote.quotationComment}</p>
-          {/* {quoteItem.quote.quotationPicture && 이미지 여러개면 어떻게 와?} */}
         </section>
       </div>
     </>

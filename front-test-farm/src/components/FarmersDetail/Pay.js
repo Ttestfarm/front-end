@@ -162,14 +162,14 @@ const Pay = () => {
           <p className={style.title}>🌱 상품 정보</p>
           <main>
             <div className={style.name}>
-              <p>못난이 농산물</p>
+              <p className={style.p1}>못난이 농산물</p>
               <p>구매 가격</p>
               <p>수량</p>
               <p className={style.p1}>배송비</p>
               <p className={style.blueFont}>총 금액</p>
             </div>
             <div className={style.value}>
-              <p>{info.productName}</p>
+              <p className={style.p1}>{info.productName}</p>
               <p> {info.productPrice}</p>
               <p>{info.quantity}</p>
               <p className={style.p1}>

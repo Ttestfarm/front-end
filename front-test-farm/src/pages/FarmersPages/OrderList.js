@@ -19,7 +19,6 @@ const OrderList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
   const [ordList, setOrdList] = useState([]);
-  const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState('matching'); // 1: matching, 2: order
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
@@ -158,6 +157,7 @@ const OrderList = () => {
         setInvoice('');
         setIsOpen(false);
         // 페이지 다시 요청
+        window.location.reload();
       }
     } catch (error) {
       setIsErrorModal({
@@ -231,49 +231,35 @@ const OrderList = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell align="right">&nbsp;</TableCell>
-              <TableCell align="right">주문번호</TableCell>
-              <TableCell align="right">농산물</TableCell>
-              <TableCell align="right">가격</TableCell>
-              <TableCell align="right">수량&nbsp;</TableCell>
-              <TableCell align="right">받는이&nbsp;</TableCell>
-              <TableCell align="right">연락처&nbsp;</TableCell>
-              <TableCell align="right">주소&nbsp;</TableCell>
+              <TableCell align="center">&nbsp;</TableCell>
+              <TableCell align="center">주문번호</TableCell>
+              <TableCell align="center">농산물</TableCell>
+              <TableCell align="center">가격</TableCell>
+              <TableCell align="center">수량&nbsp;</TableCell>
+              <TableCell align="center">받는이&nbsp;</TableCell>
+              <TableCell align="center">연락처&nbsp;</TableCell>
+              <TableCell align="center">주소&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {ordList.length > 0 &&
-              ordList.map((ord) => (
-                <TableRow key={ord.receiptId}>
-                  <TableCell>
-                    <button
-                      className="quotation-delete-btn"
-                      onClick={() =>
-                        onClickButton(
-                          ord.receiptId,
-                          ord.productName,
-                          ord.quotationQuantity
-                        )
-                      }
-                    >
-                      발송
-                    </button>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link
-                      to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}
-                    >
-                      {ord.receiptId}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">{ord.productName}</TableCell>
-                  <TableCell align="right">{ord.productPrice}</TableCell>
-                  <TableCell align="right">{ord.quotationQuantity}</TableCell>
-                  <TableCell align="right">{ord.buyerName}</TableCell>
-                  <TableCell align="right">{ord.buyerTel}</TableCell>
-                  <TableCell align="right">{ord.buyerAddress}</TableCell>
-                </TableRow>
-              ))}
+            {ordList.length > 0 && ordList.map(ord => (
+              <TableRow key={ord.receiptId}>
+                <TableCell>
+                  <button className="quotation-delete-btn" onClick={() => onClickButton(ord.receiptId, ord.productName, ord.quotationQuantity)}>발송</button>
+                </TableCell>
+                <TableCell align="center">
+                  <Link to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}>
+                    {ord.receiptId}
+                  </Link>
+                </TableCell>
+                <TableCell align="center">{ord.productName}</TableCell>
+                <TableCell align="center">{ord.productPrice}</TableCell>
+                <TableCell align="center">{ord.quotationQuantity}</TableCell>
+                <TableCell align="center">{ord.buyerName}</TableCell>
+                <TableCell align="center">{ord.buyerTel}</TableCell>
+                <TableCell align="center">{ord.buyerAddress}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <div>

@@ -29,10 +29,6 @@ const QuotePayPage = () => {
     const getQuote = async () => {
       try {
         const response = await API.get(`/user/request/${quotationId}`, token);
-<<<<<<< HEAD
-        console.log("quotepay", response);
-=======
->>>>>>> 05bcaf90bf051915b51959d727b0d79255525704
         setQuoteData({ ...response.data });
       } catch (error) {
         console.log(error);

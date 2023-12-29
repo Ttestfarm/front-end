@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router";
-import style from "./BuyDetail.module.css";
-import Card from "../UI/Card";
-import { dateFormatter } from "./../../util/date";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router';
+import style from './BuyDetail.module.css';
+import Card from '../UI/Card';
+import { dateFormatter } from './../../util/date';
+import axios from 'axios';
 
 const BuyDetailPage = () => {
   // const token = useRecoilValue(tokenAtom);
@@ -12,19 +12,27 @@ const BuyDetailPage = () => {
   const { state } = location;
   const ord = state?.ord;
 
-  const handleDelivery = () => {
+  const handleDelivery = async () => {
     const formDataObj = new FormData();
-    formDataObj.append("t_code", "04");
-    formDataObj.append("t_invoice", "1000214214");
-    formDataObj.append("t_key", "OstBNzBg0PI7Tr96ol661A");
-    navigate("http://info.sweettracker.co.kr/tracking/5", {
-      state: { formDataObj: { ...formDataObj } },
-    });
-    // const res = axios.post(
-    //   "http://info.sweettracker.co.kr/tracking/5",
-    //   formDataObj
-    // );
-    // console.log(res);
+    formDataObj.append('t_code', '04');
+    formDataObj.append('t_invoice', '1000214214');
+    formDataObj.append('t_key', 'OstBNzBg0PI7Tr96ol661A');
+    await axios
+      .post('http://info.sweettracker.co.kr/tracking/5', formDataObj)
+      .then((response) => {
+        console.log(response);
+        const queryString = new URLSearchParams(formDataObj).toString();
+
+        const absoluteUrl = `https://info.sweettracker.co.kr/tracking/5?${queryString}`;
+
+        window.open(absoluteUrl, '_blank');
+        // navigate(absoluteUrl, {
+        //   state: { formDataObj: { ...formDataObj } },
+        // });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   console.log(ord);
@@ -35,18 +43,21 @@ const BuyDetailPage = () => {
         <div className={style.header}>
           <h2>주문번호 {ord.receiptId}</h2>
           <span>
-            {ord.state === "PAID"
-              ? "결제완료"
-              : ord.state === "CANCEL"
-              ? "결제취소"
-              : ord.state === "SHIPPING"
-              ? "배송중"
-              : "배송완료"}{" "}
+            {ord.state === 'PAID'
+              ? '결제완료'
+              : ord.state === 'CANCEL'
+              ? '결제취소'
+              : ord.state === 'SHIPPING'
+              ? '배송중'
+              : '배송완료'}{' '}
             {formattedDate}
           </span>
         </div>
         <div className={style.container}>
-          <p className={style.title} onClick={handleDelivery}>
+          <p
+            className={style.title}
+            onClick={handleDelivery}
+          >
             📬 배송 정보
           </p>
           <main>
@@ -85,13 +96,16 @@ const BuyDetailPage = () => {
               <p> {ord.paymentMethod}</p>
               <p>{ord.productPrice}</p>
               <p className={style.p1}>
-                {ord.paymentDelivery === 0 ? "무료" : ord.paymentDelivery}
+                {ord.paymentDelivery === 0 ? '무료' : ord.paymentDelivery}
               </p>
               <p>{ord.amount}</p>
             </div>
           </main>
           <div className={style.btns}>
-            <button className={style.cancel} onClick={() => navigate(-1)}>
+            <button
+              className={style.cancel}
+              onClick={() => navigate(-1)}
+            >
               목록으로
             </button>
           </div>

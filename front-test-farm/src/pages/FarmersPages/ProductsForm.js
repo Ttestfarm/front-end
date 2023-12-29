@@ -39,7 +39,6 @@ const ProductsForm = () => {
   };
 
   const handleSetTab = (e) => {
-    // console.log(e.keyCode);
     if (e.keyCode === 9) {
       e.preventDefault();
       let val = e.target.value;
@@ -64,7 +63,6 @@ const ProductsForm = () => {
   const imageClick = (e) => {
     selectImg = e;
     const img = document.getElementById('file').click();
-    console.log('img', img);
   };
 
   const fileChange = (e) => {
@@ -116,11 +114,9 @@ const ProductsForm = () => {
 
       formDataObj.append('titleImage', titleImage);
       images.forEach((image) => {
-        console.log(image);
         formDataObj.append('images', image);
       });
 
-      // console.log(formDataObj.get('images'));
 
       const response = await API.formPost(
         `/farmer/regproduct`,
@@ -129,7 +125,6 @@ const ProductsForm = () => {
       );
       const data = response.data;
 
-      console.log(response);
       if (response.status === 200) {
         setIsSuccessModal({
           state: true,

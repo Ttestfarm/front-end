@@ -45,10 +45,8 @@ const OrderList = () => {
       setOrdList([...data.ordersList]);
       const response2 = await API.get(`/companylist`, token);
       const com = response2.data;
-      console.log(com);
       setCompany([...com]);
 
-      console.log(data.ordersList);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -82,7 +80,6 @@ const OrderList = () => {
 
         setOrdList([...data.ordersList]);
         setPageInfo(data.pageInfo);
-        console.log(data.ordersList);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -94,7 +91,6 @@ const OrderList = () => {
   const [quantity, setQuantity] = useState();
   // Modal 관련
   const onClickButton = (receiptId, product, quantity) => {
-    // console.log(ordersId, product, quantity);
     setIsOpen(true);
 
     setOrdersId(receiptId);
@@ -138,10 +134,6 @@ const OrderList = () => {
           message: '택배사를 선택해주세요.',
         });
       } else {
-        console.log(ordersId);
-        console.log(code);
-        console.log(name);
-        console.log(invoice);
         const response = await API.get(
           `/farmer/sendparcel/${ordersId}/${code}/${name}/${invoice}`,
           token
@@ -152,7 +144,6 @@ const OrderList = () => {
           message: data,
         });
 
-        console.log(data);
         setCode('00');
         setInvoice('');
         setIsOpen(false);

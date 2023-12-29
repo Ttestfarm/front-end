@@ -36,7 +36,6 @@ const DeliveryList = () => {
       const data = response.data;
       setDeliveryList([...data.deliveryList]);
       setPageInfo([...data.pageInfo]);
-      console.log(data.deliveryList);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -54,8 +53,6 @@ const DeliveryList = () => {
       if (state === select) {
         setIsErrorModal({ state: true, message: '이미 선택 하셨습니다.' });
       } else {
-        console.log(select);
-        console.log(state);
         const response = await API.get(
           `/farmer/deliverylist/${select}/${page}`,
           token

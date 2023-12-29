@@ -42,7 +42,6 @@ const ProductCard = ({ product }) => {
     };
     navigate('/pay', { state: { deliveryInfo } });
     setIsModalOpen(false); // 모달 닫기
-    console.log(deliveryInfo);
   };
   const numericPrice = parseInt(product.productPrice);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');

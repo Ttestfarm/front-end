@@ -30,7 +30,6 @@ const BuyCard = ({ buyItem, fetchData }) => {
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   const item = buyItem.payInfo;
 
-  console.log('nyf', buyItem);
   return (
     <div className={style.card}>
       <Card width="90%">

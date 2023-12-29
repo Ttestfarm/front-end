@@ -17,12 +17,9 @@ const QuotCard = ({ quoteItem }) => {
   const numericPrice = parseInt(quoteItem.quote.quotationPrice);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
-  console.log(quoteItem);
-  console.log('아이디', quoteItem.quote.quotationId);
 
   // //이미지처리
   let fileurl = quoteItem.quote.quotationImages;
-  console.log('fileurl', fileurl);
   let filenums;
 
   if (fileurl !== null) {

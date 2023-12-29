@@ -28,9 +28,6 @@ const Postcode = ({ setAddressFromPostcode }) => {
           extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
-      console.log(extraAddress);
-      console.log(fullAddress);
-      console.log(address1);
     }
 
     setZonecode(address1);

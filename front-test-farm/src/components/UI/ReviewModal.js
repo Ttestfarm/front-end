@@ -24,15 +24,12 @@ const ReviewModal = (props) => {
   //날짜 변환
   const formattedDate = dateFormatter(props.orderInfo.date);
   //원화로 변환
-  console.log('p', props);
-  console.log('총가격', props.orderInfo.productPrice);
   const numericPrice = parseInt(props.orderInfo.productPrice);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   const onFileChange = (e) => {
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
-    console.log('file', imageSrc);
 
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -58,7 +55,6 @@ const ReviewModal = (props) => {
 
     try {
       const response = await API.formPost('/buylist', token, formData);
-      console.log('리뷰 전송!', response);
 
       if (response.status !== 200) {
         setIsErrorModal({

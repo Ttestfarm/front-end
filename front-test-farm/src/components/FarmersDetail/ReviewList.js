@@ -19,10 +19,8 @@ const ReviewList = ({ farmerId }) => {
   useEffect(() => {
     const getLists = async () => {
       const response = await API.get(`/findfarmer/${farmerId}/review/${page}`);
-      console.log(response.data.reviewList);
       setReviewList(response.data.reviewList);
       setPageInfo(response.data.pageInfo);
-      console.log('리뷰페이지', pageInfo);
     };
 
     getLists();

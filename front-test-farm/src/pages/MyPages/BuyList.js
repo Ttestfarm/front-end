@@ -28,7 +28,6 @@ const BuyListPage = () => {
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      console.log('page', pageInfo);
       if (pageInfo.curPage > pageInfo.allPage) return;
       const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
@@ -73,7 +72,6 @@ const BuyListPage = () => {
       behavior: 'smooth',
     });
   };
-  console.log('buy', buyList);
   return (
     <>
       <nav className={style.nav}>

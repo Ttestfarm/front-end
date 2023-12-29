@@ -45,7 +45,6 @@ const QuotStatus = () => {
 
       setPageInfo(data.pageInfo);
       setQuotList(data.quotList);
-      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -57,13 +56,11 @@ const QuotStatus = () => {
   // 견적서 상태 바뀌면 List 가져오기
   const changeState = async (state) => {
     try {
-      console.log(state);
       const response = await API.get(
         `/farmer/quotlist/${state}/${page}`,
         token
       );
       const data = response.data;
-      console.log(data);
 
       setPageInfo(data.pageInfo);
       setQuotList([...data.quotList]);

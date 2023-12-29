@@ -35,7 +35,6 @@ const QuotDetail = () => {
       let fileurl = data.quotationImages;
       if (fileurl !== null && fileurl !== '') {
         let filenums = fileurl.split(',');
-        console.log(filenums);
         setFiles(filenums);
       }
     } catch (error) {

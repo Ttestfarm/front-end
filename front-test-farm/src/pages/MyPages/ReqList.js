@@ -12,7 +12,6 @@ const ReqListPage = () => {
     async function fetchData() {
       const response = await API.get('/user', token); // 리코일토큰을 넣어서 요청
 
-      console.log(response.data.requestWithCountList);
       setReqList(response.data.requestWithCountList);
     }
     fetchData();

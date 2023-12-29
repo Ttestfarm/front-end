@@ -46,7 +46,6 @@ const ModifyFarmerPage = ({ page }) => {
           token
         );
         setFarmerInfo(response.data);
-        console.log(response.data);
       } catch (error) {
         // 오류 처리
         console.error(error);
@@ -102,7 +101,6 @@ const ModifyFarmerPage = ({ page }) => {
   const inputHandle = (e) => {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   };
-  console.log(updateData);
   useEffect(() => {
     if (page === 'reg-farmer' && userInfo && userInfo.farmerId !== null) {
       navigate('/farmerpage/requestlist');
@@ -215,7 +213,6 @@ const ModifyFarmerPage = ({ page }) => {
   const onFileChange = (e) => {
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
-    console.log('file', imageSrc);
 
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -273,7 +270,6 @@ const ModifyFarmerPage = ({ page }) => {
   }
 
   const RegistHandler = async (e) => {
-    console.log('updateData', updateData);
 
     try {
       const response = await API.put(
@@ -282,7 +278,6 @@ const ModifyFarmerPage = ({ page }) => {
         updateData
       );
 
-      console.log(response.data);
       setFarmerInfo({ ...response.data });
       if (response.status === 200) {
         setIsSucessModal({

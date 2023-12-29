@@ -29,7 +29,10 @@ const QuotePayPage = () => {
     const getQuote = async () => {
       try {
         const response = await API.get(`/user/request/${quotationId}`, token);
+<<<<<<< HEAD
         console.log("quotepay", response);
+=======
+>>>>>>> 05bcaf90bf051915b51959d727b0d79255525704
         setQuoteData({ ...response.data });
       } catch (error) {
         console.log(error);
@@ -80,15 +83,11 @@ const QuotePayPage = () => {
         });
       });
 
-      console.log(rsp);
 
       if (rsp.success) {
         const res = await axios.post(
           `${API.serverUrl}/payment/validation/${rsp.imp_uid}`
         );
-        console.log(res.data.response.amount);
-        console.log(quoteData.quote.quotation.quotationPrice);
-        console.log(quoteData.quote.quotation.quotationDelivery);
 
         if (
           parseInt(
@@ -96,7 +95,6 @@ const QuotePayPage = () => {
               quoteData.quote.quotation.quotationDelivery
           ) === res.data.response.amount
         ) {
-          console.log(quoteData.quote.quotation.quotationPrice);
           try {
             const response = await API.post2(`/payment`, token, {
               receiptId: rsp.imp_uid,

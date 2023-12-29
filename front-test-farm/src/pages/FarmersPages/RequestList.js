@@ -29,10 +29,8 @@ const RequestList = () => {
 
   const effectFunc = async () => {
     try {
-      console.log('맨 처음');
       const response = await API.get(`/farmer/farmInterest`, token);
       const data = response.data;
-      // console.log(data.reqList.length);
       setInterestList([...data.interestList]);
       setSelInt(data.interestList[0]);
     } catch (error) {
@@ -46,7 +44,6 @@ const RequestList = () => {
 
   useEffect(() => {
     if (inView && pageInfo.curPage <= pageInfo.allPage) {
-      console.log(inView, '무한스크롤 요청했시유');
 
       //if (page > info.pageInfo.allPage) return;
       //패치 요청
@@ -56,7 +53,6 @@ const RequestList = () => {
 
   const changeInterest = async (interestOne) => {
     try {
-      console.log(`관심 품목 변경 : ${interestOne} & ${page}`);
       const response = await API.get(
         `/farmer/requestlist?farmInterest=${interestOne}`,
         token
@@ -67,9 +63,6 @@ const RequestList = () => {
       setSelInt(interestOne);
       setPage((page) => 1);
 
-      console.log(data.reqList);
-      console.log(reqList);
-      console.log(data.pageInfo);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -77,7 +70,6 @@ const RequestList = () => {
 
   const fetchData = async (interestOne, page) => {
     try {
-      console.log(`${interestOne} 요청 & ${page}`);
       const response = await API.get(
         `/farmer/requestlist?farmInterest=${interestOne}&page=${page}`,
         token
@@ -89,9 +81,6 @@ const RequestList = () => {
 
       setPageInfo(data.pageInfo);
       setSelInt(interestOne);
-      console.log(data.reqList);
-      console.log(data.pageInfo);
-      console.log('page', page);
 
       setPage((page) => page + 1);
     } catch (error) {
@@ -124,7 +113,6 @@ const RequestList = () => {
       behavior: 'smooth',
     });
   };
-  console.log('1', selInt);
 
   return (
     <div className="container">

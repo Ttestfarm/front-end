@@ -43,7 +43,6 @@ const MatchingListPage = () => {
       );
       const data = response.data;
 
-      console.log('data', data);
       setInfo({
         average: data.average,
         matchingProgress: data.matchingProgress,
@@ -62,7 +61,6 @@ const MatchingListPage = () => {
 
   useEffect(() => {
     if (inView && info.pageInfo.curPage <= info.pageInfo.allPage) {
-      console.log(inView, '무한스크롤 요청했시유');
 
       fetchData(page);
     }

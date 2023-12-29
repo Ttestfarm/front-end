@@ -78,7 +78,6 @@ const Invoice = () => {
 
       const response = await API.get(`/farmer/invoice/${date}/${page}`, token);
       const data = response.data;
-      console.log(data);
       setPage(data.pageInfo);
       setCalList(data.calList);
       setTotalPrice(data.totalPrice);

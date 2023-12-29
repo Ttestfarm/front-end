@@ -45,7 +45,6 @@ const LoginPage = () => {
 
       const response = await axios.post(`${API.serverUrl}/login`, loginData);
 
-      console.log('response', response);
 
       const token = response.headers['authorization'];
 

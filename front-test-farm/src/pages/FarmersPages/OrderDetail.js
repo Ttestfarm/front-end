@@ -35,7 +35,6 @@ const OrderDetail = () => {
       );
       const data = response.data;
       setOrd(data);
-      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -49,7 +48,6 @@ const OrderDetail = () => {
   };
 
   const sendCancelText = async () => {
-    // console.log(cancelText);
     try {
       if (cancelText !== null) {
         const response = await API.post(`/farmer/ordercancel`, token, {
@@ -58,7 +56,6 @@ const OrderDetail = () => {
         });
         const data = response.data;
         setIsSucceessModal({ state: true, message: data });
-        console.log(data);
         setOpen(false);
         // 결제 완료 페이지로 이동
         navigate('/farmerpage/orderList');

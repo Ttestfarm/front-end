@@ -20,9 +20,7 @@ const ReqCard = ({ req }) => {
     try {
       const response = await API.get(`/user/${req.request.requestId}`, token);
 
-      console.log(response);
 
-      console.log('show', showList);
       setQuotList([...response.data.quotesWithFarmer]);
       setShowList(!showList);
     } catch (error) {

@@ -116,7 +116,6 @@ const JoinForm = () => {
     e.preventDefault();
 
     if (!formIsValid) return;
-    console.log('회원가입 제출!');
 
     resetName();
     resetEmail();

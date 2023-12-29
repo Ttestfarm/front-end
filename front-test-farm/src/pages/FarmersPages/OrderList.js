@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import style from './style/QuotStatus.css';
+//import style from './style/QuotStatus.css';
+import style from './style/OrderDeatil.css';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms'; //리코일
@@ -18,7 +19,6 @@ const OrderList = () => {
   const token = useRecoilValue(tokenAtom); //리코일
   const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
   const [ordList, setOrdList] = useState([]);
-  const [farmerId, setFarmerId] = useState(1);
   const [type, setType] = useState('matching'); // 1: matching, 2: order
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
@@ -45,10 +45,8 @@ const OrderList = () => {
       setOrdList([...data.ordersList]);
       const response2 = await API.get(`/companylist`, token);
       const com = response2.data;
-      console.log(com);
       setCompany([...com]);
 
-      console.log(data.ordersList);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -82,7 +80,6 @@ const OrderList = () => {
 
         setOrdList([...data.ordersList]);
         setPageInfo(data.pageInfo);
-        console.log(data.ordersList);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -94,7 +91,6 @@ const OrderList = () => {
   const [quantity, setQuantity] = useState();
   // Modal 관련
   const onClickButton = (receiptId, product, quantity) => {
-    // console.log(ordersId, product, quantity);
     setIsOpen(true);
 
     setOrdersId(receiptId);
@@ -138,10 +134,6 @@ const OrderList = () => {
           message: '택배사를 선택해주세요.',
         });
       } else {
-        console.log(ordersId);
-        console.log(code);
-        console.log(name);
-        console.log(invoice);
         const response = await API.get(
           `/farmer/sendparcel/${ordersId}/${code}/${name}/${invoice}`,
           token
@@ -152,11 +144,11 @@ const OrderList = () => {
           message: data,
         });
 
-        console.log(data);
         setCode('00');
         setInvoice('');
         setIsOpen(false);
         // 페이지 다시 요청
+        window.location.reload();
       }
     } catch (error) {
       setIsErrorModal({
@@ -205,20 +197,20 @@ const OrderList = () => {
             {type === 'matching' ? '매칭' : '주문'}
           </button>
           <div className="state-dropdown-content">
-            <a
+            <Link
               href="#"
               key="1"
               onClick={() => changeType('matching')}
             >
               매칭
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               key="2"
               onClick={() => changeType('order')}
             >
               주문
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -230,49 +222,35 @@ const OrderList = () => {
         >
           <TableHead>
             <TableRow>
-              <TableCell align="right">&nbsp;</TableCell>
-              <TableCell align="right">주문번호</TableCell>
-              <TableCell align="right">농산물</TableCell>
-              <TableCell align="right">가격</TableCell>
-              <TableCell align="right">수량&nbsp;</TableCell>
-              <TableCell align="right">받는이&nbsp;</TableCell>
-              <TableCell align="right">연락처&nbsp;</TableCell>
-              <TableCell align="right">주소&nbsp;</TableCell>
+              <TableCell align="center">&nbsp;</TableCell>
+              <TableCell align="center">주문번호</TableCell>
+              <TableCell align="center">농산물</TableCell>
+              <TableCell align="center">가격</TableCell>
+              <TableCell align="center">수량&nbsp;</TableCell>
+              <TableCell align="center">받는이&nbsp;</TableCell>
+              <TableCell align="center">연락처&nbsp;</TableCell>
+              <TableCell align="center">주소&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {ordList.length > 0 &&
-              ordList.map((ord) => (
-                <TableRow key={ord.receiptId}>
-                  <TableCell>
-                    <button
-                      className="quotation-delete-btn"
-                      onClick={() =>
-                        onClickButton(
-                          ord.receiptId,
-                          ord.productName,
-                          ord.quotationQuantity
-                        )
-                      }
-                    >
-                      발송
-                    </button>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Link
-                      to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}
-                    >
-                      {ord.receiptId}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="right">{ord.productName}</TableCell>
-                  <TableCell align="right">{ord.productPrice}</TableCell>
-                  <TableCell align="right">{ord.quotationQuantity}</TableCell>
-                  <TableCell align="right">{ord.buyerName}</TableCell>
-                  <TableCell align="right">{ord.buyerTel}</TableCell>
-                  <TableCell align="right">{ord.buyerAddress}</TableCell>
-                </TableRow>
-              ))}
+            {ordList.length > 0 && ordList.map(ord => (
+              <TableRow key={ord.receiptId}>
+                <TableCell>
+                  <button className="quotation-delete-btn" onClick={() => onClickButton(ord.receiptId, ord.productName, ord.quotationQuantity)}>발송</button>
+                </TableCell>
+                <TableCell align="center">
+                  <Link to={`/farmerpage/orderlist/orderdetail/${ord.receiptId}/${type}`}>
+                    {ord.receiptId}
+                  </Link>
+                </TableCell>
+                <TableCell align="center">{ord.productName}</TableCell>
+                <TableCell align="center">{ord.productPrice}</TableCell>
+                <TableCell align="center">{ord.quotationQuantity}</TableCell>
+                <TableCell align="center">{ord.buyerName}</TableCell>
+                <TableCell align="center">{ord.buyerTel}</TableCell>
+                <TableCell align="center">{ord.buyerAddress}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <div>
@@ -303,43 +281,50 @@ const OrderList = () => {
             >
               &times;
             </span>
-            <h2>발송 입력</h2>
-            <p>order 번호 : {ordersId}</p>
-            <p>품 목 :{product}</p>
-            <p>수 량 :{quantity}</p>
-            <div>
-              택 배 사 :
-              <select
-                name="tcode"
-                onChange={handleSelect}
-              >
-                <option
-                  value="00"
-                  selected
+            <h1 className="header">발송 입력</h1>
+            <div className="flexContainer">
+              <p>order 번호 : {ordersId}</p>
+              <p>품 목 : {product}</p>
+              <p>수 량 : {quantity}</p>
+              <p>
+                택 배 사 :
+                <select
+                  name="tcode"
+                  onChange={handleSelect}
                 >
-                  선택
-                </option>
-                {company.length > 0 &&
-                  company.map((com) => (
-                    <option
-                      key={com.code}
-                      value={com.code}
-                      data-name={com.name}
-                    >
-                      {com.name}
-                    </option>
-                  ))}
-              </select>
+                  <option
+                    value="00"
+                    selected
+                  >
+                    선택
+                  </option>
+                  {company.length > 0 &&
+                    company.map((com) => (
+                      <option
+                        key={com.code}
+                        value={com.code}
+                        data-name={com.name}
+                      >
+                        {com.name}
+                      </option>
+                    ))}
+                </select>
+              </p>
+              <p>
+                송장 번호 :{' '}
+                <input
+                  type="text"
+                  value={invoice}
+                  onChange={handleInvoice}
+                />
+              </p>
+              <button
+                className="button"
+                onClick={() => sendparcel(ordersId)}
+              >
+                발송
+              </button>
             </div>
-            <p>
-              송장 번호 :{' '}
-              <input
-                type="text"
-                value={invoice}
-                onChange={handleInvoice}
-              />
-            </p>
-            <button onClick={() => sendparcel(ordersId)}>발송</button>
           </div>
         </div>
       )}

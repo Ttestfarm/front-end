@@ -8,7 +8,6 @@ const ReviewCard = ({ review }) => {
   const [value] = useState(1);
   const formattedDate = dateFormatter(review.createDate);
 
-  console.log(review);
   return (
     <div className={style.reviewCard}>
       <div className={style.reviewContents}>

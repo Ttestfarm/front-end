@@ -116,10 +116,8 @@ const RequestForm = ({ page }) => {
         ...data,
         requestMessage: reqMsg,
       };
-      console.log('entered', enteredData);
       const response = await API.post(`/matching/request`, token, enteredData);
 
-      console.log('response', response);
 
       if (response.status === 200) {
         setIsSucessModal({

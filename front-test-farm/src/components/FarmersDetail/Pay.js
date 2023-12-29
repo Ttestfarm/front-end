@@ -32,7 +32,7 @@ const Pay = () => {
       const calculatedResult = productPrice * quantity;
       setResult(calculatedResult); // result 상태 업데이트
     } else {
-      console.log("올바른 숫자 형식이 아닙니다.");
+      setIsErrorModal({ state: true, message: "올바른 숫자 형식이 아닙니다." });
     }
   }, [productPrice, quantity]);
   const [paymentInfo, setPaymentInfo] = useState({
@@ -69,9 +69,6 @@ const Pay = () => {
   const info = state.deliveryInfo;
   const formattedPhoneNumber = phoneFormat(info.tel);
   const requestPay = async () => {
-    console.log("quantity:", quantity);
-    console.log("productStock:", productStock);
-
     if (quantity > productStock) {
       setIsErrorModal({
         state: true,
@@ -88,8 +85,6 @@ const Pay = () => {
           resolve(response);
         });
       });
-
-      console.log(rsp);
 
       if (rsp.success) {
         const res = await API.post2(`/payment/validation/${rsp.imp_uid}`);
@@ -116,7 +111,6 @@ const Pay = () => {
               paymentDelivery: state.deliveryInfo.paymentDelivery,
             });
 
-            console.log(response.data);
             setIsSucceessModal({
               state: true,
               message: "감사합니다. 결제 성공 💸",

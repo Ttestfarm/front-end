@@ -12,8 +12,6 @@ const BuyDetailPage = () => {
   const ord = state?.ord;
 
   const formattedDate = dateFormatter(ord.createAt);
-  console.log(ord.createAt);
-  console.log(formattedDate);
   return (
     <div className={style.content}>
       <Card width="650px">

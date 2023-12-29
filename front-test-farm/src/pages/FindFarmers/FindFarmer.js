@@ -42,7 +42,6 @@ const FindFarmerPage = () => {
         `/findfarmer?keyword=${keyword}&sortType=${psortType}&page=${ppage}`
       );
 
-      console.log('res', response.data);
       setPageInfo(response.data.pageInfo);
       if (ppage === 1) {
         setFarmerList([...response.data.farmerList]);
@@ -59,7 +58,6 @@ const FindFarmerPage = () => {
 
   useEffect(() => {
     if (inView) {
-      console.log(inView, '무한스크롤 요청했시유');
 
       //패치 요청
       listHandler(keyword, sortType, page);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import style from './style/QuotStatus.css';
+//import style from './style/QuotStatus.css';
+import style from './style/OrderDeatil.css';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { isErrorModalAtom, tokenAtom } from '../../recoil/Atoms'; //리코일
@@ -205,20 +206,20 @@ const OrderList = () => {
             {type === 'matching' ? '매칭' : '주문'}
           </button>
           <div className="state-dropdown-content">
-            <a
+            <Link
               href="#"
               key="1"
               onClick={() => changeType('matching')}
             >
               매칭
-            </a>
-            <a
+            </Link>
+            <Link
               href="#"
               key="2"
               onClick={() => changeType('order')}
             >
               주문
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -303,43 +304,50 @@ const OrderList = () => {
             >
               &times;
             </span>
-            <h2>발송 입력</h2>
-            <p>order 번호 : {ordersId}</p>
-            <p>품 목 :{product}</p>
-            <p>수 량 :{quantity}</p>
-            <div>
-              택 배 사 :
-              <select
-                name="tcode"
-                onChange={handleSelect}
-              >
-                <option
-                  value="00"
-                  selected
+            <h1 className="header">발송 입력</h1>
+            <div className="flexContainer">
+              <p>order 번호 : {ordersId}</p>
+              <p>품 목 : {product}</p>
+              <p>수 량 : {quantity}</p>
+              <p>
+                택 배 사 :
+                <select
+                  name="tcode"
+                  onChange={handleSelect}
                 >
-                  선택
-                </option>
-                {company.length > 0 &&
-                  company.map((com) => (
-                    <option
-                      key={com.code}
-                      value={com.code}
-                      data-name={com.name}
-                    >
-                      {com.name}
-                    </option>
-                  ))}
-              </select>
+                  <option
+                    value="00"
+                    selected
+                  >
+                    선택
+                  </option>
+                  {company.length > 0 &&
+                    company.map((com) => (
+                      <option
+                        key={com.code}
+                        value={com.code}
+                        data-name={com.name}
+                      >
+                        {com.name}
+                      </option>
+                    ))}
+                </select>
+              </p>
+              <p>
+                송장 번호 :{' '}
+                <input
+                  type="text"
+                  value={invoice}
+                  onChange={handleInvoice}
+                />
+              </p>
+              <button
+                className="button"
+                onClick={() => sendparcel(ordersId)}
+              >
+                발송
+              </button>
             </div>
-            <p>
-              송장 번호 :{' '}
-              <input
-                type="text"
-                value={invoice}
-                onChange={handleInvoice}
-              />
-            </p>
-            <button onClick={() => sendparcel(ordersId)}>발송</button>
           </div>
         </div>
       )}

@@ -78,24 +78,26 @@ hr {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  /* background-color: rgb(0, 0, 0); */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefcf4;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
+  margin: 15% auto;
+  padding: 2rem;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  border-radius: 20px;
+  font-size: 1rem;
+  width: 40%;
 }
 
 /* The Close Button */
 .close {
   color: #aaa;
   float: right;
-  font-size: 28px;
+  font-size: 45px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -104,4 +106,46 @@ hr {
 .close:focus {
   color: black;
   text-decoration: none;
+}
+.header {
+  text-align: center;
+  font-weight: 800;
+}
+.flexContainer {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.flexContainer p {
+  padding: 0.5rem;
+}
+.modal-content select {
+  font-size: 1.3rem;
+  padding: 0.4rem;
+  width: 17rem;
+}
+.flexContainer input[type='text'] {
+  height: 35px;
+  font-size: 1.3rem;
+  padding: 0.3rem;
+  width: 15rem;
+  box-sizing: border-box;
+}
+
+.button {
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: var(--color-button2);
+  color: #e2e4d4;
+  width: 150px;
+  margin: 2rem auto 0;
 }

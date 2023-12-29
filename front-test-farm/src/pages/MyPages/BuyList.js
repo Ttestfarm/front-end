@@ -33,7 +33,6 @@ const BuyListPage = () => {
       const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
 
-
       setBuyList([...buyList, ...data]);
       setPageInfo({ ...response.data.pageInfo });
       setPage((page) => page + 1);
@@ -74,7 +73,7 @@ const BuyListPage = () => {
       behavior: 'smooth',
     });
   };
-
+  console.log('buy', buyList);
   return (
     <>
       <nav className={style.nav}>

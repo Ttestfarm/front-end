@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router";
 import style from "./BuyDetail.module.css";
 import Card from "../UI/Card";
 import { dateFormatter } from "./../../util/date";
+import axios from "axios";
 
 const BuyDetailPage = () => {
   // const token = useRecoilValue(tokenAtom);
@@ -11,6 +12,22 @@ const BuyDetailPage = () => {
   const { state } = location;
   const ord = state?.ord;
 
+  const handleDelivery = () => {
+    const formDataObj = new FormData();
+    formDataObj.append("t_code", "04");
+    formDataObj.append("t_invoice", "1000214214");
+    formDataObj.append("t_key", "OstBNzBg0PI7Tr96ol661A");
+    navigate("http://info.sweettracker.co.kr/tracking/5", {
+      state: { formDataObj: { ...formDataObj } },
+    });
+    // const res = axios.post(
+    //   "http://info.sweettracker.co.kr/tracking/5",
+    //   formDataObj
+    // );
+    // console.log(res);
+  };
+
+  console.log(ord);
   const formattedDate = dateFormatter(ord.createAt);
   return (
     <div className={style.content}>
@@ -29,7 +46,9 @@ const BuyDetailPage = () => {
           </span>
         </div>
         <div className={style.container}>
-          <p className={style.title}>📬 배송 정보</p>
+          <p className={style.title} onClick={handleDelivery}>
+            📬 배송 정보
+          </p>
           <main>
             <div className={style.name}>
               <p>수령인</p>

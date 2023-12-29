@@ -79,7 +79,6 @@ const QuotePayPage = () => {
         });
       });
 
-
       if (rsp.success) {
         const res = await axios.post(
           `${API.serverUrl}/payment/validation/${rsp.imp_uid}`

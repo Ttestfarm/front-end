@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { importIamport, userCode } from '../../api/iamport';
-import { useLocation, useNavigate } from 'react-router-dom'; // useLocation 불러오기
-import axios from 'axios';
-import * as API from '../../api/index';
+import React, { useState, useEffect } from "react";
+import { importIamport, userCode } from "../../api/iamport";
+import { useLocation, useNavigate } from "react-router-dom"; // useLocation 불러오기
+import axios from "axios";
+import * as API from "../../api/index";
 import {
   isErrorModalAtom,
   isSuccessModalAtom,
   tokenAtom,
-} from '../../recoil/Atoms'; //리코일
-import { useRecoilState, useRecoilValue } from 'recoil'; // 리코일
-import style from './Pay.module.css';
-import { phoneFormat } from '../../util/validation';
-import Card from '../UI/Card';
+} from "../../recoil/Atoms"; //리코일
+import { useRecoilState, useRecoilValue } from "recoil"; // 리코일
+import style from "./Pay.module.css";
+import { phoneFormat } from "../../util/validation";
+import Card from "../UI/Card";
 
 const Pay = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -32,12 +32,12 @@ const Pay = () => {
       const calculatedResult = productPrice * quantity;
       setResult(calculatedResult); // result 상태 업데이트
     } else {
-      console.log('올바른 숫자 형식이 아닙니다.');
+      console.log("올바른 숫자 형식이 아닙니다.");
     }
   }, [productPrice, quantity]);
   const [paymentInfo, setPaymentInfo] = useState({
-    pg: 'html5_inicis',
-    pay_method: 'card',
+    pg: "html5_inicis",
+    pay_method: "card",
     name: state.deliveryInfo.productName,
     amount: parseInt(
       state.deliveryInfo.productPrice * state.deliveryInfo.quantity +
@@ -46,17 +46,14 @@ const Pay = () => {
     merchant_uid: `mid_${new Date().getTime()}`,
     buyer_name: state.deliveryInfo.name,
     buyer_tel: state.deliveryInfo.tel,
-    buyer_addr:
-      state.deliveryInfo.address1 +
-      state.deliveryInfo.address2 +
-      state.deliveryInfo.address3,
+    buyer_addr: state.deliveryInfo.address2 + state.deliveryInfo.address3,
   });
 
   useEffect(() => {
-    const jquery = document.createElement('script');
-    jquery.src = 'http://code.jquery.com/jquery-1.12.4.min.js';
-    const iamport = document.createElement('script');
-    iamport.src = 'http://cdn.iamport.kr/js/iamport.payment-1.1.7.js';
+    const jquery = document.createElement("script");
+    jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+    const iamport = document.createElement("script");
+    iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
     document.head.appendChild(jquery);
     document.head.appendChild(iamport);
     return () => {
@@ -72,13 +69,13 @@ const Pay = () => {
   const info = state.deliveryInfo;
   const formattedPhoneNumber = phoneFormat(info.tel);
   const requestPay = async () => {
-    console.log('quantity:', quantity);
-    console.log('productStock:', productStock);
+    console.log("quantity:", quantity);
+    console.log("productStock:", productStock);
 
     if (quantity > productStock) {
       setIsErrorModal({
         state: true,
-        message: '[재고 부족] 상품 수량을 확인해주세요.',
+        message: "[재고 부족] 상품 수량을 확인해주세요.",
       });
       return;
     }
@@ -122,11 +119,11 @@ const Pay = () => {
             console.log(response.data);
             setIsSucceessModal({
               state: true,
-              message: '감사합니다. 결제 성공 💸',
+              message: "감사합니다. 결제 성공 💸",
             });
-            navigate('/mypage/buylist');
+            navigate("/mypage/buylist");
           } catch (error) {
-            console.error('Error while processing payment:', error);
+            console.error("Error while processing payment:", error);
           }
         } else {
           setIsErrorModal({ state: true, message: rsp.error_msg });
@@ -135,7 +132,7 @@ const Pay = () => {
         setIsErrorModal({ state: true, message: rsp.error_msg });
       }
     } catch (error) {
-      console.error('Error occurred during payment:', error);
+      console.error("Error occurred during payment:", error);
     }
   };
 
@@ -173,7 +170,7 @@ const Pay = () => {
               <p> {info.productPrice}</p>
               <p>{info.quantity}</p>
               <p className={style.p1}>
-                {deliveryFee === null ? '무료' : deliveryFee}
+                {deliveryFee === null ? "무료" : deliveryFee}
               </p>
               <p className={style.blueFont}>{totalPrice}</p>
             </div>
@@ -183,16 +180,10 @@ const Pay = () => {
           </div>
 
           <div className={style.btns}>
-            <button
-              className={style.cancel}
-              onClick={() => navigate(-1)}
-            >
+            <button className={style.cancel} onClick={() => navigate(-1)}>
               취소
             </button>
-            <button
-              className={style.pay}
-              onClick={requestPay}
-            >
+            <button className={style.pay} onClick={requestPay}>
               결제하기
             </button>
           </div>

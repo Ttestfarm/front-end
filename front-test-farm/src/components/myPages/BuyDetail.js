@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router';
-import style from './BuyDetail.module.css';
-import Card from '../UI/Card';
-import { dateFormatter } from './../../util/date';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, useLocation } from "react-router";
+import style from "./BuyDetail.module.css";
+import Card from "../UI/Card";
+import { dateFormatter } from "./../../util/date";
 
 const BuyDetailPage = () => {
   // const token = useRecoilValue(tokenAtom);
@@ -18,13 +18,13 @@ const BuyDetailPage = () => {
         <div className={style.header}>
           <h2>주문번호 {ord.receiptId}</h2>
           <span>
-            {ord.state === 'PAID'
-              ? '결제완료'
-              : ord.state === 'CANCEL'
-              ? '결제취소'
-              : ord.state === 'SHIPPING'
-              ? '배송중'
-              : '배송완료'}{' '}
+            {ord.state === "PAID"
+              ? "결제완료"
+              : ord.state === "CANCEL"
+              ? "결제취소"
+              : ord.state === "SHIPPING"
+              ? "배송중"
+              : "배송완료"}{" "}
             {formattedDate}
           </span>
         </div>
@@ -51,6 +51,7 @@ const BuyDetailPage = () => {
             <div className={style.value}>
               <p>{ord.productName}</p>
               <p>{ord.count}</p>
+              <p>{ord.quotationQuantity}</p>
             </div>
           </main>
           <p className={style.title}>🧾결제 정보</p>
@@ -65,16 +66,13 @@ const BuyDetailPage = () => {
               <p> {ord.paymentMethod}</p>
               <p>{ord.productPrice}</p>
               <p className={style.p1}>
-                {ord.paymentDelivery === 0 ? '무료' : ord.paymentDelivery}
+                {ord.paymentDelivery === 0 ? "무료" : ord.paymentDelivery}
               </p>
               <p>{ord.amount}</p>
             </div>
           </main>
           <div className={style.btns}>
-            <button
-              className={style.cancel}
-              onClick={() => navigate(-1)}
-            >
+            <button className={style.cancel} onClick={() => navigate(-1)}>
               목록으로
             </button>
           </div>

@@ -37,7 +37,7 @@ const BuyCard = ({ buyItem, fetchData }) => {
         <div className={style.container}>
           <section className={style.img}>
             <img
-              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail}`}
+              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail.split(",")[0]}`}
               alt="farm produce"
             />
           </section>

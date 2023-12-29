@@ -12,7 +12,8 @@ const BuyReviewCard = ({ review }) => {
       </div>
 
       <div className={style.img}>
-        <img src={`${API.imgUrl}/${review?.reviewpixUrl}`} alt="review pix" />
+        <img src={`${API.imgUrl}/${review?.reviewpixUrl}`} alt="review pix"
+          className={style["imgs"]} />
       </div>
     </section>
   );

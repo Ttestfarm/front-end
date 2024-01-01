@@ -29,14 +29,16 @@ const ProductsList = ({ farmerId }) => {
     <>
       <main className={style.list}>
         <div className={style.productList}>
-          {productList.length > 0
-            ? productList.map((product) => (
-                <ProductCard
-                  key={product.productId}
-                  product={product}
-                />
-              ))
-            : '현재 판매중인 상품이 없습니다.'}
+          {productList.length > 0 ? (
+            productList.map((product) => (
+              <ProductCard
+                key={product.productId}
+                product={product}
+              />
+            ))
+          ) : (
+            <div className={style.infoText}>현재 판매중인 상품이 없습니다.</div>
+          )}
         </div>
         <div className={style.pagination}>
           <Stack spacing={2}>

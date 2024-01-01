@@ -28,12 +28,10 @@ const BuyListPage = () => {
   //무한스크롤시 데이터 요청 고고
   const fetchData = async () => {
     try {
-      console.log('page', pageInfo);
       if (pageInfo.curPage > pageInfo.allPage) return;
       const response = await API.get(`/user/buylist?page=${page}`, token);
       const data = response.data.OrdersWithReview; // 배열
 
-      console.log('3', response.data);
       setBuyList([...buyList, ...data]);
       setPageInfo({ ...response.data.pageInfo });
       setPage((page) => page + 1);
@@ -74,7 +72,6 @@ const BuyListPage = () => {
       behavior: 'smooth',
     });
   };
-
   return (
     <>
       <nav className={style.nav}>
@@ -103,6 +100,7 @@ const BuyListPage = () => {
               <BuyCard
                 key={buyItem.payInfo.receiptId}
                 buyItem={buyItem}
+                fetchData={fetchData}
               />
             ))
           : ` 아직은 구매내역이 없습니다. 

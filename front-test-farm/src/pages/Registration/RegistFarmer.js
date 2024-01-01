@@ -50,22 +50,6 @@ const RegistFarmerPage = ({ page }) => {
     farmPixurl: '',
   });
 
-  // useEffect(() => {
-  //   if (farmerInfo) {
-  //     setFormDatas({
-  //       farmName: farmerInfo?.farmer?.farmName,
-  //       farmTel: farmerInfo?.farmer?.farmTel,
-  //       farmAddress: farmerInfo?.farmer?.farmAddress,
-  //       farmAddressDetail: farmerInfo?.farmer?.farmAddressDetail,
-  //       registrationNum: farmerInfo?.farmer?.registrationNum,
-  //       farmBank: farmerInfo?.farmer?.farmBank,
-  //       farmAccountNum: farmerInfo?.farmer?.farmAccountNum,
-  //       farmInterest: farmerInfo?.farmer?.farmInterest,
-  //       farmPixurl: farmerInfo?.farmer?.farmPixurl,
-  //     });
-  //   }
-  // }, [farmerInfo]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,14 +69,6 @@ const RegistFarmerPage = ({ page }) => {
       setAddress2('');
     };
   }, [setAddress2]);
-
-  // useEffect(() => {
-  //   if (myFarmTel) {
-  //     setUserTel(userInfo.userTel || '');
-  //   } else {
-  //     setUserTel('');
-  //   }
-  // }, [myFarmTel, userInfo]);
 
   const setIsSucessModal = useSetRecoilState(isSuccessModalAtom);
   const setIsErrorModal = useSetRecoilState(isErrorModalAtom);
@@ -170,7 +146,6 @@ const RegistFarmerPage = ({ page }) => {
   const onFileChange = (e) => {
     const imageSrc = URL.createObjectURL(e.target.files[0]);
     imgBoxRef.current.src = imageSrc;
-    console.log('file', imageSrc);
 
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -247,24 +222,18 @@ const RegistFarmerPage = ({ page }) => {
 
     try {
       if (page === 'reg-farmer') {
-        console.log('제출용', formData);
-        for (const [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
         const response = await API.formPost(
           '/findfarmer/reg-farmer',
           token,
           formData
         );
 
-        console.log('response', response.data);
         setIsSucessModal({
           state: true,
           message: '파머 등록 성공!',
         });
 
         const newFarmerId = response.data.farmerId;
-        console.log(newFarmerId);
 
         setUserInfo((prevUserInfo) => ({
           ...prevUserInfo,

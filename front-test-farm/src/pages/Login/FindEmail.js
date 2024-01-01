@@ -42,14 +42,12 @@ const FindEmailPage = () => {
 
   //핸드폰 인증번호 요청
   const sendSMS = async (e) => {
-    console.log(userTel);
     await API.get(`/modify-user/check-sms/${userTel}`)
     .then((response) => {
       setIsSucessModal({
         state: true,
         message: "인증번호를 발송했습니다.",
       });
-      console.log(response.data);
       setAuthNum(response.data);
     });
   };
@@ -87,7 +85,6 @@ const FindEmailPage = () => {
         .then((response) => {
           if (response.status === 200) {
             const userEmail = response.data;
-            console.log(userEmail);
             resetName();
             resetTel();
 

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import style from './BuyCard.module.css';
-import Card from '../UI/Card';
-import BuyReviewCard from './BuyReviewCard';
-import { dateFormatter } from '../../util/date';
-import ReviewModal from '../UI/ReviewModal';
-import * as API from '../../api/index';
-const BuyCard = ({ buyItem }) => {
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import style from "./BuyCard.module.css";
+import Card from "../UI/Card";
+import BuyReviewCard from "./BuyReviewCard";
+import { dateFormatter } from "../../util/date";
+import ReviewModal from "../UI/ReviewModal";
+import * as API from "../../api/index";
+const BuyCard = ({ buyItem, fetchData }) => {
   const [modalOpen, setModalOpen] = useState(false); //리뷰 모달
   const [orderInfo, setOrderInfo] = useState({
     date: buyItem.payInfo.createAt,
@@ -14,29 +14,30 @@ const BuyCard = ({ buyItem }) => {
     productPrice: buyItem.payInfo.amount,
     receiptId: buyItem.payInfo.receiptId,
     farmerId: buyItem.payInfo.farmerId,
+    quotationQuantity: buyItem.payInfo.quotationQuantity,
   });
 
   const navigate = useNavigate();
-  //모달 화면 오픈buyItem.payInfo.
+  //모달 화면 오픈
   const openReviewModal = () => {
     setModalOpen(true);
   };
   //모달 닫기
   const closeReviewModal = () => {
     setModalOpen(false);
+    fetchData();
   };
   //날짜 변환
   const formattedDate = dateFormatter(buyItem.payInfo.createAt);
   const item = buyItem.payInfo;
 
-  console.log('nyf', buyItem);
   return (
     <div className={style.card}>
       <Card width="90%">
         <div className={style.container}>
           <section className={style.img}>
             <img
-              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail}`}
+              src={`${API.imgUrl}/${buyItem?.payInfo?.thumbNail.split(",")[0]}`}
               alt="farm produce"
             />
           </section>
@@ -44,16 +45,7 @@ const BuyCard = ({ buyItem }) => {
             <p className={style.date}>{formattedDate}</p>
             <p>구매 농산물 : {buyItem.payInfo.productName}</p>
             <p>발송인 :{buyItem.payInfo.farmName}</p>
-            {/* <button
-              onClick={() => {
-                navigate(`/mypage/buylist/${buyItem.payInfo.receiptId}`, {
-                  state: { ord: { ...buyItem.payInfo } },
-                });
-              }}
-            >
-              {' '}
-              주문상세 &gt;
-            </button> */}
+
             <Link
               to={`/mypage/buylist/${buyItem.payInfo.receiptId}`}
               state={{ ord: { ...buyItem.payInfo } }}
@@ -65,19 +57,16 @@ const BuyCard = ({ buyItem }) => {
             <button
               className={`${style.state} ${style[buyItem.payInfo.state]}`}
             >
-              {item.state === 'PAID'
-                ? '결제완료'
-                : item.state === 'CANCEL'
-                ? '결제취소'
-                : item.state === 'SHIPPING'
-                ? '배송중'
-                : '배송완료'}
+              {item.state === "PAID"
+                ? "결제완료"
+                : item.state === "CANCEL"
+                ? "결제취소"
+                : item.state === "SHIPPING"
+                ? "배송중"
+                : "배송완료"}
             </button>
-            {item.state === 'PAID' && buyItem.review === null && (
-              <button
-                className={style.reviewBtn}
-                onClick={openReviewModal}
-              >
+            {item.state === "SHIPPING" && buyItem.review === null && (
+              <button className={style.reviewBtn} onClick={openReviewModal}>
                 후기쓰기
               </button>
             )}
@@ -91,7 +80,7 @@ const BuyCard = ({ buyItem }) => {
         />
         <div className={style.reviewContainer}>
           {buyItem.review === null ? (
-            '작성된 후기가 없어요😢'
+            "작성된 후기가 없어요😢"
           ) : (
             <BuyReviewCard review={buyItem.review} />
           )}

@@ -42,14 +42,13 @@ const ProductCard = ({ product }) => {
     };
     navigate('/pay', { state: { deliveryInfo } });
     setIsModalOpen(false); // 모달 닫기
-    console.log(deliveryInfo);
   };
   const numericPrice = parseInt(product.productPrice);
   const formattedPrice = numericPrice.toLocaleString('ko-KR');
 
   return (
     <div className={style.card}>
-      <Card width="280px">
+      <Card width="292px">
         <div className={style.container}>
           <div className={style.imageWrapper}>
             <img

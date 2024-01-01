@@ -1,17 +1,17 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import style from './QuotePay.module.css';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import style from "./QuotePay.module.css";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   isErrorModalAtom,
   isSuccessModalAtom,
   tokenAtom,
   userInfoAtom,
-} from '../../recoil/Atoms';
-import { importIamport, userCode } from '../../api/iamport';
-import * as API from '../../api/index';
-import { useParams, useNavigate } from 'react-router-dom';
-import Card from '../../components/UI/Card';
+} from "../../recoil/Atoms";
+import { importIamport, userCode } from "../../api/iamport";
+import * as API from "../../api/index";
+import { useParams, useNavigate } from "react-router-dom";
+import Card from "../../components/UI/Card";
 
 const QuotePayPage = () => {
   const token = useRecoilValue(tokenAtom);
@@ -29,7 +29,6 @@ const QuotePayPage = () => {
     const getQuote = async () => {
       try {
         const response = await API.get(`/user/request/${quotationId}`, token);
-        console.log('quotepay', response);
         setQuoteData({ ...response.data });
       } catch (error) {
         console.log(error);
@@ -42,8 +41,8 @@ const QuotePayPage = () => {
   useEffect(() => {
     if (quoteData) {
       setPaymentInfo({
-        pg: 'html5_inicis',
-        pay_method: 'card',
+        pg: "html5_inicis",
+        pay_method: "card",
         name: quoteData.quote.quotation.quotationProduct, //상품명
         merchant_uid: `mid_${new Date().getTime()}`,
         amount: parseInt(
@@ -52,15 +51,16 @@ const QuotePayPage = () => {
         ),
         buyer_name: quoteData.quote.request.name,
         buyer_tel: quoteData.quote.request.tel,
-        buyer_addr: quoteData.quote.request.address1,
+        buyer_addr:
+          quoteData.quote.request.address2 + quoteData.quote.request.address3,
       });
     }
   }, [quoteData]);
   useEffect(() => {
-    const jquery = document.createElement('script');
-    jquery.src = 'http://code.jquery.com/jquery-1.12.4.min.js';
-    const iamport = document.createElement('script');
-    iamport.src = 'http://cdn.iamport.kr/js/iamport.payment-1.1.7.js';
+    const jquery = document.createElement("script");
+    jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
+    const iamport = document.createElement("script");
+    iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
     document.head.appendChild(jquery);
     document.head.appendChild(iamport);
     return () => {
@@ -79,15 +79,10 @@ const QuotePayPage = () => {
         });
       });
 
-      console.log(rsp);
-
       if (rsp.success) {
         const res = await axios.post(
           `${API.serverUrl}/payment/validation/${rsp.imp_uid}`
         );
-        console.log(res.data.response.amount);
-        console.log(quoteData.quote.quotation.quotationPrice);
-        console.log(quoteData.quote.quotation.quotationDelivery);
 
         if (
           parseInt(
@@ -95,7 +90,6 @@ const QuotePayPage = () => {
               quoteData.quote.quotation.quotationDelivery
           ) === res.data.response.amount
         ) {
-          console.log(quoteData.quote.quotation.quotationPrice);
           try {
             const response = await API.post2(`/payment`, token, {
               receiptId: rsp.imp_uid,
@@ -120,11 +114,11 @@ const QuotePayPage = () => {
 
             setIsSucceessModal({
               state: true,
-              message: '감사합니다. 결제 성공 💸',
+              message: "감사합니다. 결제 성공 💸",
             });
-            navigate('/mypage/buylist');
+            navigate("/mypage/buylist");
           } catch (error) {
-            console.error('Error while processing payment:', error);
+            console.error("Error while processing payment:", error);
             setIsErrorModal({
               state: true,
               message: rsp.error_msg,
@@ -143,7 +137,7 @@ const QuotePayPage = () => {
         });
       }
     } catch (error) {
-      console.error('Error occurred during payment:', error);
+      console.error("Error occurred during payment:", error);
     }
   };
 
@@ -171,7 +165,7 @@ const QuotePayPage = () => {
                   {quoteData.quote.quotation.quotationPrice}
                 </p>
                 <p className={style.p1}>
-                  +{quoteData.quote.quotation.quotationDelivery}
+                  {quoteData.quote.quotation.quotationDelivery}
                 </p>
                 <p className={style.blueFont}>
                   총계
@@ -201,16 +195,10 @@ const QuotePayPage = () => {
               <span>못난이 농산물을 아껴주셔서 대단히 감사합니다.</span>
             </div>
             <div className={style.btns}>
-              <button
-                className={style.cancel}
-                onClick={() => navigate(-1)}
-              >
+              <button className={style.cancel} onClick={() => navigate(-1)}>
                 취소
               </button>
-              <button
-                className={style.pay}
-                onClick={requestPay}
-              >
+              <button className={style.pay} onClick={requestPay}>
                 결제하기
               </button>
             </div>

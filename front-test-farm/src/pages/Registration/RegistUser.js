@@ -65,28 +65,14 @@ const RegistUserPage = () => {
 
   const emailDuplicateCheackHandler = async () => {
     if (emailIsValid) {
-      // try {
-      //   const response = await axios.post(`${API.serverUrl}/join/check-email`, {
-      //     userEmail: emailValue,
-      //   });
-
-      //   if (response.status !== 200) {
-      //     console.log('4', response.data);
-      //     setIsErrorModal({ state: true, message: response.data });
-      //   } else {
-      //     setEmailChecked(true);
-      //     setIsSucessModal({ state: true, message: response.data });
-      //   }
 
       await axios
         .post(`${API.serverUrl}/join/check-email`, {
           userEmail: emailValue,
         })
         .then((response) => {
-          console.log(response);
           if (response.status === 409) {
             //이미 가입된 이메일인 경우
-            console.log(response.data);
             setIsErrorModal({ state: true, message: response.data });
           } else if (response.status === 200) {
             //회원가입 성공
@@ -98,7 +84,6 @@ const RegistUserPage = () => {
           }
         })
         .catch((e) => {// 이 부분 수정 지워야함 
-          console.log(e);
           setIsErrorModal({ state: true, message: e.response.data });
         });
     }

@@ -34,7 +34,6 @@ const FarmerDetailPage = () => {
     const getFarmerInfo = async () => {
       const response = await API.get(`/findfarmer/${farmerId}`, token);
 
-      console.log(response.data);
       setFarmerInfo({
         ...response.data.farmer,
       });

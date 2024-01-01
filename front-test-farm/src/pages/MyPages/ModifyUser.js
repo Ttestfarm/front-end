@@ -140,7 +140,6 @@ const ModifyUserPage = () => {
           state: true,
           message: '인증번호를 발송했어요!',
         });
-        console.log(response.data);
         setAuthNum(response.data);
       }
     );
@@ -168,7 +167,6 @@ const ModifyUserPage = () => {
   }
 
   const RegistHandler = async () => {
-    console.log("updateData",updateData);
     try {
       const response = await API.put(`/user/modify-user`, token, updateData);
       // resetName();
@@ -177,7 +175,6 @@ const ModifyUserPage = () => {
       // resetAddressDetail();
       // resetTel();
 
-      console.log(response.data);
       //성공했다고 메시지
       setUserInfo({ ...response.data });
       if (response.status === 200) {

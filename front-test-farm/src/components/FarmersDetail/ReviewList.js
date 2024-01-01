@@ -19,10 +19,8 @@ const ReviewList = ({ farmerId }) => {
   useEffect(() => {
     const getLists = async () => {
       const response = await API.get(`/findfarmer/${farmerId}/review/${page}`);
-      console.log(response.data.reviewList);
       setReviewList(response.data.reviewList);
       setPageInfo(response.data.pageInfo);
-      console.log('리뷰페이지', pageInfo);
     };
 
     getLists();
@@ -35,14 +33,16 @@ const ReviewList = ({ farmerId }) => {
   return (
     <main className={style.list}>
       <div className={style.reviewList}>
-        {reviewList.length > 0
-          ? reviewList.map((review) => (
-              <ReviewCard
-                key={review.reviewId}
-                review={review}
-              />
-            ))
-          : '등록된 리뷰가 없습니다.'}
+        {reviewList.length > 0 ? (
+          reviewList.map((review) => (
+            <ReviewCard
+              key={review.reviewId}
+              review={review}
+            />
+          ))
+        ) : (
+          <div className={style.infoText}>등록된 리뷰가 없습니다.</div>
+        )}
       </div>
       <div className={style.pagination}>
         <Stack spacing={2}>

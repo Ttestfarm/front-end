@@ -43,7 +43,6 @@ const MatchingListPage = () => {
       );
       const data = response.data;
 
-      console.log('data', data);
       setInfo({
         average: data.average,
         matchingProgress: data.matchingProgress,
@@ -62,7 +61,6 @@ const MatchingListPage = () => {
 
   useEffect(() => {
     if (inView && info.pageInfo.curPage <= info.pageInfo.allPage) {
-      console.log(inView, '무한스크롤 요청했시유');
 
       fetchData(page);
     }
@@ -115,7 +113,12 @@ const MatchingListPage = () => {
         <p>필요하신 만큼만 주문하세요!</p>
         <p className={style.context}>공동구매처럼 기다릴 필요도 없습니다.</p>
         <p> 프리티 파머스가 여러분의 요청서를 확인 후 배송해 드립니다.</p>
-        <button onClick={joinHandler}>매칭 요청서 작성하기</button>
+        <button
+          onClick={joinHandler}
+          className={style.reqBtn}
+        >
+          매칭 요청서 작성하기
+        </button>
       </section>
       <section className={style.infoBox}>
         <div>

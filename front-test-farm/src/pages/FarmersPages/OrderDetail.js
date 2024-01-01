@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './style/OrderDeatil.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { tokenAtom } from '../../recoil/Atoms'; //리코일 
+import {
+  tokenAtom,
+  isErrorModalAtom,
+  isSuccessModalAtom,
+} from '../../recoil/Atoms'; //리코일
 import { useRecoilValue } from 'recoil'; // 리코일
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -11,6 +15,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogContent } from '@mui/material';
 import * as API from '../../api/index';
+import { useRecoilState } from 'recoil';
 
 const OrderDetail = () => {
   const token = useRecoilValue(tokenAtom); //리코일
@@ -19,45 +24,51 @@ const OrderDetail = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [cancelText, setCancelText] = useState();
+  const [, setIsErrorModal] = useRecoilState(isErrorModalAtom);
+  const [, setIsSucceessModal] = useRecoilState(isSuccessModalAtom);
 
-  const testFunction = async() => {
+  const testFunction = async () => {
     try {
-      const response = await API.get(`/farmer/orderdetail/${receiptId}/${type}`, token);
+      const response = await API.get(
+        `/farmer/orderdetail/${receiptId}/${type}`,
+        token
+      );
       const data = response.data;
       setOrd(data);
-      console.log(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }
+  };
   useEffect(() => {
-    testFunction()
+    testFunction();
   }, []);
 
   const changeCancelText = (e) => {
     setCancelText(e.target.value);
-  }
+  };
 
   const sendCancelText = async () => {
-    // console.log(cancelText);
     try {
       if (cancelText !== null) {
-        const response = await API.post(`/farmer/ordercancel`, token, { "receiptId": receiptId, "cancelText": cancelText });
-        const data = response.data; 
-        alert(data);
-        console.log(data);
+        const response = await API.post(`/farmer/ordercancel`, token, {
+          receiptId: receiptId,
+          cancelText: cancelText,
+        });
+        const data = response.data;
+        setIsSucceessModal({ state: true, message: data });
         setOpen(false);
         // 결제 완료 페이지로 이동
         navigate('/farmerpage/orderList');
       } else {
-        alert("판매 취소 사유를 적어주세요.")
+        setIsErrorModal({
+          state: true,
+          message: '판매 취소 사유를 적어주세요.',
+        });
       }
-    } catch(error) {
-      alert(error.data);
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
-    
-  }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -72,7 +83,7 @@ const OrderDetail = () => {
       <div className="compleate-detail-form-header">
         <h2>주문번호 {ord.receiptId}</h2>
         <span>
-          {ord.paymentState === "1" ? "결제완료" : "결제취소"} {ord.paidAt}
+          {ord.paymentState === '1' ? '결제완료' : '결제취소'} {ord.paidAt}
         </span>
       </div>
       <hr />
@@ -120,7 +131,9 @@ const OrderDetail = () => {
         </p>
         <p>
           <span>배송비</span>
-          <span>{ord.paymentDelivery === 0 ? "무료" : ord.paymentDelivery}</span>
+          <span>
+            {ord.paymentDelivery === 0 ? '무료' : ord.paymentDelivery}
+          </span>
         </p>
         <p>
           <h3>총 결제금액</h3>
@@ -132,33 +145,44 @@ const OrderDetail = () => {
         <button className="compleate-detail-form-btn">
           <Link to={'/farmerpage/orderlist'}>목록으로</Link>
         </button>
-        <button className="compleate-detail-form-btn" id="myBtn" onClick={handleClickOpen}>판매 취소</button>
+        <button
+          className="compleate-detail-form-btn"
+          id="myBtn"
+          onClick={handleClickOpen}
+        >
+          판매 취소
+        </button>
 
-        {open && <React.Fragment>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>판매 취소</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                &nbsp;잦은 판매 취소는 서비스 이용에 페널티가 주어 질 수 있습니다. 결제 완료한 고객에게 취소 사유를 적어서 보내주세요.
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="취소 사유"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={changeCancelText}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>취소</Button>
-              <Button onClick={sendCancelText}>확인</Button>
-            </DialogActions>
-          </Dialog>
-        </React.Fragment>
-        }
+        {open && (
+          <React.Fragment>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+            >
+              <DialogTitle>판매 취소</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  &nbsp;잦은 판매 취소는 서비스 이용에 페널티가 주어 질 수
+                  있습니다. 결제 완료한 고객에게 취소 사유를 적어서 보내주세요.
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="취소 사유"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={changeCancelText}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>취소</Button>
+                <Button onClick={sendCancelText}>확인</Button>
+              </DialogActions>
+            </Dialog>
+          </React.Fragment>
+        )}
       </div>
       <div className="compleate-detail-form-notice">
         <span>

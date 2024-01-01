@@ -3,9 +3,11 @@ import axios from "axios";
 //  http://localhost:8090
 const backendPort = "8090";
 // process.env.REACT_APP_URL
-const serverUrl = "http://" + window.location.hostname + ":" + backendPort;
-const imgUrl =
-  "http://" + window.location.hostname + ":" + backendPort + "/img";
+// const serverUrl = "http://" + window.location.hostname + ":" + backendPort;
+// const imgUrl =
+//   "http://" + window.location.hostname + ":" + backendPort + "/img";
+const serverUrl = "http://" + "43.203.34.139" + ":" + backendPort;
+const imgUrl = "http://" + "43.203.34.139" + ":" + backendPort + "/img";
 
 async function get(endpoint, authToken) {
   return axios.get(serverUrl + endpoint, {

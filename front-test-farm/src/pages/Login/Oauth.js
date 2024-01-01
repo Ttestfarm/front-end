@@ -12,7 +12,6 @@ const Oauth = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
 
   useEffect(() => {
-    console.log('token:' + stoken);
     setToken(stoken);
 
     axios

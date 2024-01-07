@@ -12,19 +12,27 @@ const BuyDetailPage = () => {
   const { state } = location;
   const ord = state?.ord;
 
-  const handleDelivery = () => {
+  const handleDelivery = async () => {
     const formDataObj = new FormData();
     formDataObj.append("t_code", "04");
     formDataObj.append("t_invoice", "1000214214");
     formDataObj.append("t_key", "OstBNzBg0PI7Tr96ol661A");
-    navigate("http://info.sweettracker.co.kr/tracking/5", {
-      state: { formDataObj: { ...formDataObj } },
-    });
-    // const res = axios.post(
-    //   "http://info.sweettracker.co.kr/tracking/5",
-    //   formDataObj
-    // );
-    // console.log(res);
+    await axios
+      .post("http://info.sweettracker.co.kr/tracking/5", formDataObj)
+      .then((response) => {
+        console.log(response);
+        const queryString = new URLSearchParams(formDataObj).toString();
+
+        const absoluteUrl = `https://info.sweettracker.co.kr/tracking/5?${queryString}`;
+
+        window.open(absoluteUrl, "_blank");
+        // navigate(absoluteUrl, {
+        //   state: { formDataObj: { ...formDataObj } },
+        // });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   console.log(ord);

@@ -1,15 +1,15 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { useInView } from 'react-intersection-observer';
-import FarmerCard from '../../components/Farmers/FarmerCard';
-import style from './FindFarmer.module.css';
-import * as API from '../../api/index';
-import { AnimatePresence } from 'framer-motion';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import React, { Fragment, useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
+import FarmerCard from "../../components/Farmers/FarmerCard";
+import style from "./FindFarmer.module.css";
+import * as API from "../../api/index";
+import { AnimatePresence } from "framer-motion";
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 
 const FindFarmerPage = () => {
-  const [keyword, setKeyword] = useState('all');
-  const [sortType, setSortType] = useState('latest');
+  const [keyword, setKeyword] = useState("");
+  const [sortType, setSortType] = useState("latest");
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({});
   const [farmerList, setFarmerList] = useState([]);
@@ -20,7 +20,7 @@ const FindFarmerPage = () => {
   const scrollRef = useRef(0);
 
   const handleFocus = () => {
-    setKeyword('');
+    setKeyword("");
   };
 
   //키워드 검색어 입력
@@ -58,7 +58,6 @@ const FindFarmerPage = () => {
 
   useEffect(() => {
     if (inView) {
-
       //패치 요청
       listHandler(keyword, sortType, page);
     }
@@ -67,11 +66,11 @@ const FindFarmerPage = () => {
   //scroll to top
   useEffect(() => {
     const timer = setInterval(() => {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     }, 100);
     return () => {
       clearInterval(timer);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -87,7 +86,7 @@ const FindFarmerPage = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -110,43 +109,40 @@ const FindFarmerPage = () => {
             placeholder="품목명을 입력하세요"
           />
           <button
-            className={`${style['button']} ${style['searchButton']}`}
+            className={`${style["button"]} ${style["searchButton"]}`}
             onClick={() => listHandler(keyword, sortType, 1)}
           >
             검색
           </button>
           <button
-            className={`${style['button']} ${style['resetButton']}`}
+            className={`${style["button"]} ${style["resetButton"]}`}
             // onClick={() => listHandler('all', 'latest', 1)}
             onClick={handleRefresh}
           >
             초기화
           </button>
         </div>
-        <div className={style['sorts']}>
-          <button onClick={() => listHandler(keyword, 'latest', 1)}>
+        <div className={style["sorts"]}>
+          <button onClick={() => listHandler(keyword, "latest", 1)}>
             최신 순
           </button>
-          {' | '}
-          <button onClick={() => listHandler(keyword, 'rating', 1)}>
+          {" | "}
+          <button onClick={() => listHandler(keyword, "rating", 1)}>
             별점 순
           </button>
-          {' | '}
-          <button onClick={() => listHandler(keyword, 'followCount', 1)}>
+          {" | "}
+          <button onClick={() => listHandler(keyword, "followCount", 1)}>
             찜이 많은 순
           </button>
         </div>
       </section>
 
-      <div className={style['farmercardlist']}>
+      <div className={style["farmercardlist"]}>
         {farmerList?.length > 0
           ? farmerList.map((farmer) => (
-              <FarmerCard
-                key={farmer.farmerId}
-                farmer={farmer}
-              />
+              <FarmerCard key={farmer.farmerId} farmer={farmer} />
             ))
-          : '파머 목록이 없습니다.'}
+          : "파머 목록이 없습니다."}
       </div>
       <div ref={ref}></div>
       <div className={style.upIcon}>
@@ -154,7 +150,7 @@ const FindFarmerPage = () => {
           {btnView ? (
             <ArrowCircleUpIcon
               color="success"
-              sx={{ fontSize: { lg: '50px' } }}
+              sx={{ fontSize: { lg: "50px" } }}
               initial={{ opacity: 0, y: 50 }}
               animate={{
                 opacity: 1,
